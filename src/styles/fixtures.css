@@ -1,0 +1,47 @@
+.fixture-div{
+   text-align: center;
+}
+.fixture-date{
+    background-color: darkblue;
+    color:white;
+}
+.fixture-result{
+    height:auto;
+    width:80%;
+    margin:auto;
+    text-align: center;
+}
+.fixture{    
+    cursor:pointer;
+    text-align: center;
+    margin:5px 0;
+    /* display: flex;
+    justify-content: space-between; */
+}
+.fixture-teams{
+    display: flex;
+    justify-content: center;
+}
+.fixture-teams img{
+    width:80px;
+    height: 80px;
+}
+.fixture-teams .team{
+    width:25%;
+}
+.fixture-teams .result{
+    width:10%
+}
+.fixture span{
+    border: 1px solid black;
+    margin-left:2px;
+    padding: 2px;
+    box-sizing: border-box;    
+}
+.fixture-details span{
+    cursor: pointer;
+}
+.fixture img{
+    width:40px;
+    height: 40px;
+}

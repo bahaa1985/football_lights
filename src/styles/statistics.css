@@ -1,0 +1,20 @@
+
+span{
+    width:auto;
+}
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    background:gray !important;    
+    height: 75%; 
+    width:100%;
+  }
+.progress-home{
+    direction: rtl;
+}
+.progress-home::-webkit-progress-value{
+    background:green !important;      
+}
+.progress-away::-webkit-progress-value{
+    background:blue !important;
+}

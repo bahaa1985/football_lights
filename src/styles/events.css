@@ -1,0 +1,54 @@
+
+.event{
+    display: flex;
+    justify-content:center;
+    width:60%;
+    height: auto;
+    margin:10px auto;
+    text-align: center;
+}
+.events-home,.events-away{
+    display:flex;
+    justify-content:flex-end;
+    margin:5px;
+    height: auto;
+    border:1px solid black;
+    box-sizing: border-box;
+    width:95%;
+    padding: 5px 0;
+}
+.events-away{
+    justify-content:flex-start;
+}
+
+span{
+    border: 1px solid black;
+}
+.div-details{
+    height: auto;
+    display: flex;
+    width:45%;
+    padding:0 5px;
+    box-sizing: border-box;
+}
+.span-type{
+width:20%;
+}
+.div-players{
+width:50%;
+height: auto;
+display: block;
+
+}
+.label-player,.label-assist{
+    font-size: large;
+    width:100%;
+}
+.label-assist{
+    font-size: medium;
+    width:100%;
+}
+.events-home img,.events-away img{
+    width: 50px;
+    height: 50px;
+}
