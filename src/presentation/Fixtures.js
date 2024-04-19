@@ -19,7 +19,7 @@ function Fixtures(props){
     const season=props.season
           
     useEffect(()=>{                                                  
-        getFixtures(league,season).then((result)=>{                                 
+        if( league > 0 && season > 0 )getFixtures(league,season).then((result)=>{                                 
             setFixtures( result.data.response )
         });
     },[league,season])
