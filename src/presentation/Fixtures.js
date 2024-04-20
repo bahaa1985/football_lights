@@ -17,16 +17,17 @@ function Fixtures(props){
    
     const league=props.league
     const season=props.season
-          
+        console.log("season and league:",season,league)  ;
     useEffect(()=>{                                                  
-        if( league > 0 && season > 0 )getFixtures(league,season).then((result)=>{                                 
-            setFixtures( result.data.response )
-        });
+        if( league > 0 && season > 0 )
+            {getFixtures(league,season).then((result)=>{                                 
+                setFixtures( result.data.response )
+            });
+        }
     },[league,season])
             
     const groupedFixtures=Fixtures.reduce((group,elem)=>{
         const gw=elem.league.round;            
-        // const date= new Date(elem.fixture.date).toDateString()  
         if(group[gw]==null) 
         {
             group[gw]=[]
@@ -35,14 +36,6 @@ function Fixtures(props){
         return group
     },{})
 
-    // const groupedGWs=groupedFixtures.reduce((group,elem)=>{
-    //     const gw=elem.league.round;
-    //     if(group[gw]==null){
-    //         group[gw]=[]
-    //     }
-    //     group[gw].push(elem)
-    //     return group;
-    // })
     console.log("GWs: ",groupedFixtures)
     let i=0;
     return(
@@ -71,9 +64,10 @@ function Fixtures(props){
                                         <span onClick={()=>{setTab('Statistics');
                                                             setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Statistics</span>
-                                        <span onClick={()=>{setTab('Line Ups');
+                                        <span onClick={()=>{setTab('Line Up');
                                                             setFixture(elem.fixture.id);
-                                                            setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Line Ups</span>
+                                                            setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Line Up</span>
+                                        <span onClick={()=>{setTab('Close')}}>Close</span>
                                         <Fragment> 
                                             {
                                                 //to display events, statistics and lineup panes belo the fixture, 
@@ -82,9 +76,10 @@ function Fixtures(props){
                                                 <Events fixture={fixture} teams={teams}/>:
                                                 tab==='Statistics' && fixture===elem.fixture.id? 
                                                 <Statistics fixture={fixture} teams={teams}/>: 
-                                                tab==='Line Ups' && fixture===elem.fixture.id? 
+                                                tab==='Line Up' && fixture===elem.fixture.id? 
                                                 <LineUp fixture={fixture} teams={teams}/>: 
-                                                null
+                                                tab==='Close' ?
+                                                <></>:null
                                             }                                       
                                             
                                         </Fragment>                                    

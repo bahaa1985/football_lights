@@ -79,7 +79,6 @@ function LineUp(props){
     const [awaySub,setAwaySub]=useState([]);
     const [homeEvents,setHomeEvents]=useState([]);
     const [awayEvents,setAwayEvents]=useState([]);
-    // const [homeSub]
     let [clickedTeam,setClickedTeam]=useState("");   
     
     useEffect(()=>{ // call formation and line up players:
