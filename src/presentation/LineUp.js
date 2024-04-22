@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import getLinesUps from '../api/getLineUp.js'
+import getLineUps from '../api/getLineUp.js'
 import getPlayers from '../api/getPlayers.js';
 import getEvents from '../api/getEvents.js';
 // import Player from './Player';
@@ -65,6 +65,7 @@ function LineUp(props){
     const homeId=props.teams[0];
     const awayId=props.teams[1];
     const fixtureId=props.fixture;
+    console.log("line up props:",props);
     const [homeTeam,setHomeTeam]=useState("");
     const [awayTeam,setAwayTeam]=useState("");
     const [homeLineUp,setHomeLineUp]=useState([]);
@@ -77,21 +78,22 @@ function LineUp(props){
     const [awayCoach,setAwayCoash]=useState({})
     const [homeSub,setHomeSub]=useState([])
     const [awaySub,setAwaySub]=useState([]);
-    const [homeEvents,setHomeEvents]=useState([]);
-    const [awayEvents,setAwayEvents]=useState([]);
+    // const [homeEvents,setHomeEvents]=useState([]);
+    // const [awayEvents,setAwayEvents]=useState([]);
     let [clickedTeam,setClickedTeam]=useState("");   
     
     useEffect(()=>{ // call formation and line up players:
-        getLinesUps(fixtureId).then((result)=>{
+        getLineUps(fixtureId).then((result)=>{
+            console.log("line up:",result);
             setHomeLineUp(result.data.response[0].startXI);
             setHomeFormation(Array.from(result.data.response[0].formation.replaceAll('-','')));
             setHomeTeam(result.data.response[0].team.name);
+            setHomeCoash(result.data.response[0].coach)  
+            setHomeSub(result.data.response[0].substitutes) 
             setAwayLineUp(result.data.response[1].startXI);
             setAwayFormation(Array.from(result.data.response[1].formation.replaceAll('-','')));
-            setAwayTeam(result.data.response[1].team.name);
-            setHomeCoash(result.data.response[0].coach)                                    
-            setAwayCoash(result.data.response[1].coach)  
-            setHomeSub(result.data.response[0].substitutes) 
+            setAwayTeam(result.data.response[1].team.name);                                           
+            setAwayCoash(result.data.response[1].coach)           
             setAwaySub(result.data.response[1].substitutes) 
         })        
 
@@ -100,8 +102,13 @@ function LineUp(props){
             setAwayPlayers(result.data.response[1].players);
         });   
         
-
-    },[fixtureId]);
+    //     getEvents(fixtureId).then((result)=>{
+    //         setHomeEvents(result.data.response.filter(event=>event.team.id===homeId))   
+    //     })
+    //     getEvents(fixtureId).then((result)=>{
+    //         setAwayEvents(result.data.response.filter(event=>event.team.id===awayId))   
+    //     });
+    },[homeId,awayId,fixtureId]);
 
     homeLineUp.forEach((player,index)=>{
         homePlayers.forEach((home_player,index)=>{
@@ -140,18 +147,18 @@ function LineUp(props){
     })    
 
     //get events:
-   useEffect(()=>{
-       getEvents(fixtureId).then((result)=>{
-            setHomeEvents(result.data.response.filter(event=>event.team.id===homeId))   
-        })
-        getEvents(fixtureId).then((result)=>{
-            setAwayEvents(result.data.response.filter(event=>event.team.id===awayId))   
-        })
+//    useEffect(()=>{
+//        getEvents(fixtureId).then((result)=>{
+//             setHomeEvents(result.data.response.filter(event=>event.team.id===homeId))   
+//         })
+//         getEvents(fixtureId).then((result)=>{
+//             setAwayEvents(result.data.response.filter(event=>event.team.id===awayId))   
+//         })
        
-   },[fixtureId])
+//    },[fixtureId])
 
-    console.log("homeEvents:",homeEvents);
-console.log("awayEvents:",awayEvents);
+//     console.log("homeEvents:",homeEvents);
+// console.log("awayEvents:",awayEvents);
     // console.log('Home:',homeSub);
     // console.log('Away:',awayCoach);
     // eslint-disable-next-line no-unused-vars

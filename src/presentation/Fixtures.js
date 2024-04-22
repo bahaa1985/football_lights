@@ -13,11 +13,10 @@ function Fixtures(props){
     const [fixture,setFixture]=useState(0)
     const [teams,setTeams]=useState([])
     const [tab,setTab]=useState('')
-    const [displayed,setDisplay]=useState(false)
+    const [display,setDisplay]=useState(true)
    
     const league=props.league
     const season=props.season
-        console.log("season and league:",season,league)  ;
     useEffect(()=>{                                                  
         if( league > 0 && season > 0 )
             {getFixtures(league,season).then((result)=>{                                 
@@ -37,7 +36,7 @@ function Fixtures(props){
     },{})
 
     console.log("GWs: ",groupedFixtures)
-    let i=0;
+
     return(
         <div>
             {               
@@ -48,7 +47,7 @@ function Fixtures(props){
                         <div key={day_index} className="fixture-date">Game Week {day_index+1} </div>                                     
                         {groupedFixtures[elem].map((elem,fixture_index)=>{
                             return(
-                                <div key={fixture_index}>
+                                <div key={fixture_index} onClick={()=>[setDisplay(!display),setFixture(elem.fixture.id),console.log("display",display)]}>
                                     <div className="fixture-teams" key={elem.fixture.id}>                                                                                                                      
                                             <img src={elem.teams.home.logo}></img>
                                             <span className='team'>{elem.teams.home.name}</span>
@@ -56,18 +55,25 @@ function Fixtures(props){
                                             <span className='result'>{elem.goals.away}</span>
                                             <span className='team'>{elem.teams.away.name}</span>
                                             <img src={elem.teams.away.logo}></img>                                                                                                                                                       
-                                    </div>                                     
-                                    <div className='fixture-details'>
-                                        <span onClick={()=>{setTab('Events');
-                                                            setFixture(elem.fixture.id);
+                                    </div> 
+                                    {
+                                        display === true && fixture===elem.fixture.id ? 
+                                        <div className='fixture-details'>
+                                        <span onClick={(event)=>{
+                                                            event.stopPropagation();
+                                                            setTab('Events');
+                                                            // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Events</span>
-                                        <span onClick={()=>{setTab('Statistics');
-                                                            setFixture(elem.fixture.id);
+                                        <span onClick={(event)=>{
+                                                            event.stopPropagation();
+                                                            setTab('Statistics');
+                                                            // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Statistics</span>
-                                        <span onClick={()=>{setTab('Line Up');
-                                                            setFixture(elem.fixture.id);
+                                        <span onClick={(event)=>{
+                                                            event.stopPropagation();
+                                                            setTab('Line Up');
+                                                            // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Line Up</span>
-                                        <span onClick={()=>{setTab('Close')}}>Close</span>
                                         <Fragment> 
                                             {
                                                 //to display events, statistics and lineup panes belo the fixture, 
@@ -77,15 +83,15 @@ function Fixtures(props){
                                                 tab==='Statistics' && fixture===elem.fixture.id? 
                                                 <Statistics fixture={fixture} teams={teams}/>: 
                                                 tab==='Line Up' && fixture===elem.fixture.id? 
-                                                <LineUp fixture={fixture} teams={teams}/>: 
-                                                tab==='Close' ?
-                                                <></>:null
+                                                <LineUp fixture={fixture} teams={teams}/>: null
                                             }                                       
                                             
                                         </Fragment>                                    
                                     </div>
+                                    :null
+                                    }                                    
+                                    
                                 </div>
-
                             )
                         })}                         
                         </div>                                 
