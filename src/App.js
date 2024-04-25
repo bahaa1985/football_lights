@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import './App.css';
-import Fixtures from './presentation/Fixtures.js'
+import Fixtures from './presentation/Fixtures.js';
 
 function App() {
-
   let [leagueId,setLeagueId]=useState(0)
   let [season,setSeason]=useState(0) 
-  const year=2023;
-
+  const year=2022;
+  
   return (
     <div >
      <div>
@@ -17,6 +16,7 @@ function App() {
       <button onClick={()=>{setLeagueId(135);setSeason(year)}}>Le Calcio</button>
       <button onClick={()=>{setLeagueId(78);setSeason(year)}}>Bundesliga</button>
       <button onClick={()=>{setLeagueId(61);setSeason(year)}}>Liga Un</button>
+      <h2>{process.env.REACT_APP_XRAPIDAPIKEY}</h2>
      </div>
     {/* <Standings league={leagueId} season={season}/> */}
     <Fixtures league={leagueId} season={season}/>

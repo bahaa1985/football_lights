@@ -17,13 +17,14 @@ function Fixtures(props){
    
     const league=props.league
     const season=props.season
+    
     useEffect(()=>{                                                  
-        if( league > 0 && season > 0 )
-            {getFixtures(league,season).then((result)=>{                                 
-                setFixtures( result.data.response )
+            console.log(league,season);
+                getFixtures(league,season).then((result)=>{                                 
+               setFixtures( result.data.response )
             });
         }
-    },[league,season])
+    ,[league,season])
             
     const groupedFixtures=Fixtures.reduce((group,elem)=>{
         const gw=elem.league.round;            
