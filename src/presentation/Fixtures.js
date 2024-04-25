@@ -41,8 +41,7 @@ function Fixtures(props){
     return(
         <div>
             {               
-               Object.keys(groupedFixtures).sort((a,b)=>Date.parse(a)-Date.parse(b)).map((elem,day_index)=>{
-                              
+               Object.keys(groupedFixtures).sort((a,b)=>Date.parse(a)-Date.parse(b)).map((elem,day_index)=>{                            
                 return(
                     <div>                
                         <div key={day_index} className="fixture-date">Game Week {day_index+1} </div>                                     
@@ -60,18 +59,18 @@ function Fixtures(props){
                                     {
                                         display === true && fixture===elem.fixture.id ? 
                                         <div className='fixture-details'>
-                                        <span onClick={(event)=>{
-                                                            event.stopPropagation();
+                                        <span onClick={(e)=>{
+                                                            e.stopPropagation();
                                                             setTab('Events');
                                                             // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Events</span>
-                                        <span onClick={(event)=>{
-                                                            event.stopPropagation();
+                                        <span onClick={(e)=>{
+                                                            e.stopPropagation();
                                                             setTab('Statistics');
                                                             // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Statistics</span>
-                                        <span onClick={(event)=>{
-                                                            event.stopPropagation();
+                                        <span onClick={(e)=>{
+                                                            e.stopPropagation();
                                                             setTab('Line Up');
                                                             // setFixture(elem.fixture.id);
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Line Up</span>
