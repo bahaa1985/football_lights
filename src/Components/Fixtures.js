@@ -1,6 +1,6 @@
 import React,{ Fragment, ReactDOM } from 'react'
 import { useState,useEffect,useRef } from 'react'
-import getFixtures from '../api/getFixtures.js'
+import getFixtures from '../Api/getFixtures.js'
 import  '../styles/fixtures.css'
 import Events from './Events.js'
 import Statistics from './Statistics.js'
@@ -36,7 +36,7 @@ function Fixtures(props){
         return group
     },{})
 
-    console.log("GWs: ",groupedFixtures)
+    // console.log("GWs: ",groupedFixtures)
 
     return(
         <div>
@@ -49,12 +49,12 @@ function Fixtures(props){
                             return(
                                 <div key={fixture_index} onClick={()=>[setDisplay(!display),setFixture(elem.fixture.id),console.log("display",display)]}>
                                     <div className="fixture-teams" key={elem.fixture.id}>                                                                                                                      
-                                            <img src={elem.teams.home.logo}></img>
+                                            <img alt="" src={elem.teams.home.logo}></img>
                                             <span className='team'>{elem.teams.home.name}</span>
                                             <span className='result'>{elem.goals.home}</span>                                
                                             <span className='result'>{elem.goals.away}</span>
                                             <span className='team'>{elem.teams.away.name}</span>
-                                            <img src={elem.teams.away.logo}></img>                                                                                                                                                       
+                                            <img alt="" src={elem.teams.away.logo}></img>                                                                                                                                                       
                                     </div> 
                                     {
                                         display === true && fixture===elem.fixture.id ? 
@@ -76,7 +76,7 @@ function Fixtures(props){
                                                             setTeams([elem.teams.home.id,elem.teams.away.id]);}}>Line Up</span>
                                         <Fragment> 
                                             {
-                                                //to display events, statistics and lineup panes belo the fixture, 
+                                                //to display events, statistics and lineup panes below the fixture, 
                                                 //depending on what user click:
                                                 tab==='Events' && fixture===elem.fixture.id?
                                                 <Events fixture={fixture} teams={teams}/>:

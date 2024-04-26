@@ -1,5 +1,5 @@
 import { useState,useEffect,useRef } from "react";
-import getEvents from '../api/getEvents.js'
+import getEvents from '../Api/getEvents.js'
 import '../styles/events.css'
 import goal from '../images/goal.png'
 import penalty from '../images/letter-p.png'

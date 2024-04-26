@@ -1,28 +1,32 @@
 import { useState } from 'react';
+import { BrowserRouter as Router , Route, Routes, Link, Outlet } from 'react-router-dom';
 import './App.css';
-import Fixtures from './presentation/Fixtures.js';
+import League from './Components/League.js';
+
 
 function App() {
   let [leagueId,setLeagueId]=useState(0)
   let [season,setSeason]=useState(0) 
-  const year=2022;
+  const year=2023;
   
   return (
-    <div >
-     <div>
-      <button onClick={()=>{setLeagueId(2);setSeason(year)}}>UFL</button>
-      <button onClick={()=>{setLeagueId(39);setSeason(year)}}>EPL</button>
-      <button onClick={()=>{setLeagueId(140);setSeason(year)}}>La Liga</button>
-      <button onClick={()=>{setLeagueId(135);setSeason(year)}}>Le Calcio</button>
-      <button onClick={()=>{setLeagueId(78);setSeason(year)}}>Bundesliga</button>
-      <button onClick={()=>{setLeagueId(61);setSeason(year)}}>Liga Un</button>
-      <h2>{process.env.REACT_APP_XRAPIDAPIKEY}</h2>
-     </div>
-    {/* <Standings league={leagueId} season={season}/> */}
-    <Fixtures league={leagueId} season={season}/>
-    {/* <Statistics fixture={867946} teams={[52, 42]}/> */}
-    </div>
-  );
+     <Router>
+      <Routes>
+        {/* <Route path="/" element={<App/>}/> */}
+        <Route path="/league" element={<League season={year}/>}>
+          <Route path=":id"/>
+          {/* <Route path=":id=39"/>
+          <Route path=":id=140"/>
+          <Route path=":id=135"/>
+          <Route path=":id=78"/>
+          <Route path=":id=61"/> */}
+        </Route>
+      </Routes>
+      <Link to="/league/2">UFL</Link>
+      <Link to="/league/39">EPL</Link>
+      <Outlet/>
+     </Router>
+     );
 }
 
 export default App;

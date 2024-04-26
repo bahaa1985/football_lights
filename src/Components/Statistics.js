@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import getStatistics from "../api/getStatistics.js";
+import getStatistics from "../Api/getStatistics.js";
 import '../styles/statistics.css'
 import { useEffect,useState } from "react";
 

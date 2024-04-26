@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import getLineUps from '../api/getLineUp.js'
-import getPlayers from '../api/getPlayers.js';
-import getEvents from '../api/getEvents.js';
+import getLineUps from '../Api/getLineUp.js'
+import getPlayers from '../Api/getPlayers.js';
+import getEvents from '../Api/getEvents.js';
 // import Player from './Player';
 import '../styles/lineup.css';
 import goal from '../images/goal.png'
