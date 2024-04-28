@@ -1,6 +1,6 @@
 import React, { Fragment, ReactDOM } from "react";
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { Routes, Route, Link, NavLink, Outlet } from "react-router-dom";
 import getFixtures from "../Api/getFixtures.js";
 import "../styles/fixtures.css";
 import Events from "./Events.js";
@@ -35,8 +35,7 @@ function Fixtures(props) {
   }, {});
 
   return (
-    <div>
-      
+    <div>     
       {Object.keys(groupedFixtures)
         .sort((a, b) => Date.parse(a) - Date.parse(b))
         .map((elem, gw_index) => {
@@ -49,7 +48,8 @@ function Fixtures(props) {
               {groupedFixtures[elem].map((elem) => {
                 //iterate to display GW fixtures
                 return (
-                  <Link to={`/game/${elem.fixture.id}`} element={<Game teams={teams}/>}>
+                  <NavLink to={`/game/${elem.fixture.id}`} element={<Game teams={[90,80]
+                  } />}>
                     <div key={elem.fixture.id} className="fixture-teams" onClick={()=>[setFixture(elem.fixture.id),setTeams(elem.teams)]}>
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>
@@ -58,13 +58,15 @@ function Fixtures(props) {
                       <span className="team">{elem.teams.away.name}</span>
                       <img alt="" src={elem.teams.away.logo}></img>
                     </div>
-                  </Link>
+                  </NavLink>
                 );
               })}
             </div>
           );
         })}
-      <Outlet />
+      {/* <Outlet
+           
+      /> */}
     </div>
   );
 }

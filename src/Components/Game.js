@@ -13,7 +13,6 @@ export default function Game(props){
     const teams = props.teams;
     console.log("teams",teams)
     const {fixture_id}=useParams();
-
     return(
 <div>
     <h1>{fixture_id}</h1>
