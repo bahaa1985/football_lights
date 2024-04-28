@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router , Route, Routes, NavLink, Outlet } from 'react-router-dom';
 import './App.css';
 import League from './Components/League.js';
+import Game from './Components/Game.js';
 import goal from '../src/images/goal.png'
 
 function App() {
@@ -13,7 +14,6 @@ function App() {
      <Router>
       <div><NavLink to="/league/2">
         UFL
-        <img alt="" src={goal}/>
       </NavLink></div>
       <div><NavLink to="/league/39">EPL</NavLink></div>
       <NavLink to="/league/140">La Liga</NavLink>
@@ -22,13 +22,15 @@ function App() {
       <NavLink to="/league/61">Lige Un</NavLink>
 
       <Routes>
-        {/* <Route path="/" element={<App/>}/> */}
         <Route path="/league" element={<League season={year}/>}>
           <Route path=":id"/>          
         </Route>
+        <Route path="/game" element={<Game teams={''}/>}>
+                <Route path=":fixture_id"></Route>
+        </Route>
       </Routes>
      
-      {/* <Outlet/> */}
+      <Outlet/>
      </Router>
      );
 }

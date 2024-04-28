@@ -14,14 +14,17 @@ function Events(props){
     
     const fixture=props.fixture
     const teams=props.teams   
-
+    
     const [events,setEvents]=useState([])  
     const event_div=useRef(HTMLElement);
+
     useEffect(()=>{
         getEvents(fixture).then((result)=>{
            setEvents( result.data.response )
+          
         })        
-    },[fixture,teams])
+    },[fixture])
+
     const eventsHome = events.filter((event)=>event.team.id===teams[0])
     const eventsAway = events.filter((event)=>event.team.id===teams[1])
 
