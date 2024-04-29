@@ -7,7 +7,7 @@ import Events from './Events.js'
 import Statistics from './Statistics.js'
 import LineUp from './LineUp.js'
 
-export default function Game(props){
+export default function Game(props,getTeams){
     const [tab, setTab] = useState("");
     const [display, setDisplay] = useState(true);
     const teams = props.teams;

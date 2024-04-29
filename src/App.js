@@ -3,12 +3,16 @@ import { BrowserRouter as Router , Route, Routes, NavLink, Outlet } from 'react-
 import './App.css';
 import League from './Components/League.js';
 import Game from './Components/Game.js';
+import { useState } from 'react';
 
 
 function App() {
 
   const year=2023;
-  
+  const [teams,setTeams]=useState([]); // to get teams ids from Fixture component while routing
+  function getTeams(fixture_teams){
+    setTeams(fixture_teams)
+  }
   return (
      <Router>
       <NavLink to="/league/2">UFL</NavLink>
@@ -22,7 +26,7 @@ function App() {
         <Route path="/league" element={<League season={year}/>}>
           <Route path=":league_id"/>          
         </Route>
-        <Route path="/game" element={<Game/>}>
+        <Route path="/game" element={<Game getTeams={getTeams} teams={teams} />}>
           <Route path=":fixture_id"></Route>
         </Route>
       </Routes>

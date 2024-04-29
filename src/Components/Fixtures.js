@@ -12,8 +12,6 @@ function Fixtures(props) {
   const [Fixtures, setFixtures] = useState([]);
   const [fixture, setFixture] = useState(0);
   const [teams, setTeams] = useState([]);
-//   const [tab, setTab] = useState("");
-//   const [display, setDisplay] = useState(true);
 
   const league = props.league;
   const season = props.season;
@@ -48,9 +46,8 @@ function Fixtures(props) {
               {groupedFixtures[elem].map((elem) => {
                 //iterate to display GW fixtures
                 return (
-                  <NavLink to={`/game/${elem.fixture.id}`} element={<Game teams={[90,80]
-                  } />}>
-                    <div key={elem.fixture.id} className="fixture-teams" onClick={()=>[setFixture(elem.fixture.id),setTeams(elem.teams)]}>
+                  <NavLink to={`/game/${elem.fixture.id}`}>
+                    <div key={elem.fixture.id} className="fixture-teams" onClick={(e)=>[e.stopPropagation(),setFixture(elem.fixture.id),setTeams([90,60])]}>
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>
                       <span className="result">{elem.goals.home}</span>

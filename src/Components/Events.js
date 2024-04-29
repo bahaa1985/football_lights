@@ -16,6 +16,7 @@ function Events(props){
     const teams=props.teams   
     
     const [events,setEvents]=useState([])  
+    // const [teams,setteams]=useState([]);
     const event_div=useRef(HTMLElement);
 
     useEffect(()=>{
