@@ -26,12 +26,11 @@ function App() {
         <Route path="/league" element={<League season={year}/>}>
           <Route path=":league_id"/>          
         </Route>
-        <Route path="/game" element={<Game getTeams={getTeams} teams={teams} />}>
+        <Route path="/game" element={<Game teams={[]}/>}>
           <Route path=":fixture_id"></Route>
         </Route>
       </Routes>
-     
-      <Outlet/>
+
      </Router>
      );
 }

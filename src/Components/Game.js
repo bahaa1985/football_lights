@@ -10,7 +10,7 @@ import LineUp from './LineUp.js'
 export default function Game(props,getTeams){
     const [tab, setTab] = useState("");
     const [display, setDisplay] = useState(true);
-    const teams = props.teams;
+    const teams = 
     console.log("teams",teams)
     const {fixture_id}=useParams();
     return(
