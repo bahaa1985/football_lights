@@ -1,21 +1,20 @@
-import React,{ Fragment, ReactDOM } from 'react'
-import { useState,useEffect,useRef} from 'react'
-import { useParams } from 'react-router-dom'
+import React,{ Fragment } from 'react'
+import { useState} from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 import  '../styles/fixtures.css'
-import getFixtures from '../Api/getFixtures.js'
 import Events from './Events.js'
 import Statistics from './Statistics.js'
 import LineUp from './LineUp.js'
 
-export default function Game(props,getTeams){
-    const [tab, setTab] = useState("");
-    const [display, setDisplay] = useState(true);
-    const teams = 
-    console.log("teams",teams)
-    const {fixture_id}=useParams();
+export default function Game(){
+    const [tab, setTab] = useState("");  
+    const [searchparams]=useSearchParams();
+    const teams=[searchparams.get('home'),searchparams.get('away')]; //get teams ids from url  query string
+    // console.log("teams",teams);
+    const {fixture_id}=useParams(); //get fixture id from /game/:fixture_id route
     return(
 <div>
-    <h1>{fixture_id}</h1>
+    {/* <h1>{fixture_id}</h1> */}
 {
             <div className='fixture-details'>
             <span onClick={(e)=>{

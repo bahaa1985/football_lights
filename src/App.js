@@ -10,9 +10,9 @@ function App() {
 
   const year=2023;
   const [teams,setTeams]=useState([]); // to get teams ids from Fixture component while routing
-  function getTeams(fixture_teams){
-    setTeams(fixture_teams)
-  }
+  // function handleTeams(fixture_teams){
+  //   setTeams(fixture_teams)
+  // }
   return (
      <Router>
       <NavLink to="/league/2">UFL</NavLink>
@@ -26,7 +26,7 @@ function App() {
         <Route path="/league" element={<League season={year}/>}>
           <Route path=":league_id"/>          
         </Route>
-        <Route path="/game" element={<Game teams={[]}/>}>
+        <Route path="/game" element={<Game/>}>
           <Route path=":fixture_id"></Route>
         </Route>
       </Routes>
