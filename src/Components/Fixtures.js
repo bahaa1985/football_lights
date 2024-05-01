@@ -1,7 +1,7 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
-import getFixtures from "../Api/getFixtures.js";
+import getAllFixtures from "../Api/getFixtures.js";
 import "../styles/fixtures.css";
 import Game from "./Game.js";
 
@@ -15,7 +15,7 @@ function Fixtures(props) {
 
   useEffect(() => {
     console.log(league, season);
-    getFixtures(league, season).then((result) => {
+    getAllFixtures(league, season).then((result) => {
       setFixtures(result.data.response);
     });
   }, [league, season]);
