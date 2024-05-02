@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 import getLineUps from '../Api/getLineUp.js'
 import getPlayers from '../Api/getPlayers.js';
 import getEvents from '../Api/getEvents.js';
@@ -25,21 +26,10 @@ function PlayerPosition(props){
                             playerNameArr=player.player.name.split(' ');
                             playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
                             return(
-                            <div key={index} className='player-card' >                                                                                                                                                  
+                            <NavLink to={`/player${player.player.id}`} key={index} className='player-card' >                                                                                                                                                  
                                 <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
                                     {player.statistics[0].games.rating}
-                                </span>                                
-                                    {/* {                                        
-                                        player.statistics[0].goals.total > 0 ? 
-                                            <img  alt='' className='player-action' src={goal}></img>:
-                                        player.statistics[0].cards.red > 0 ?
-                                            <img alt='' className='player-action' src={red}></img>:
-                                        player.statistics[0].cards.yellow > 0 ?
-                                        <img alt='' className='player-action' src={yellow}></img>:
-                                        // player.statistics[0].
-                                        null
-                                    } */}
-                                                                
+                                </span>                                                                                                                                    
                                 <img className='player-photo' src={player.player.photo} alt=""></img>
                                 <div className='player-info'>
                                     <span className='player-number'>{player.player.number}</span>
@@ -52,7 +42,7 @@ function PlayerPosition(props){
                                     </span> 
                                 </div>
                                                                                                                                                                                                                                                             
-                            </div>
+                            </NavLink>
                             )
                         })                       
                     }

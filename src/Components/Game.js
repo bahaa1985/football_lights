@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import "../styles/fixtures.css";
-import  getSelectedGame  from "../Api/getFixtures.js";
+import  { getSelectedGame }  from "../Api/getFixtures.js";
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
@@ -11,20 +11,24 @@ export default function Game() {
   const [tab, setTab] = useState("");
   const [gameData, setGameData] = useState([]);
   const [searchparams] = useSearchParams();
+  console.log("search",searchparams);
   const teams = [searchparams.get("home"), searchparams.get("away")]; //get teams ids from url  query string
-  const { fixture_id } = useParams(); //get fixture id from /game/:fixture_id route
+  const  {fixture_id}  = useParams(); //get fixture id from /game/:fixture_id route
 
-  //get the selected Game from Api:
+  // get the selected Game from Api:
   useEffect(() => {
-    getSelectedGame(parseInt(fixture_id)).then((result) => {
+    getSelectedGame(fixture_id).then((result) => {
         console.log("status",result.status);
-      setGameData(result.data.response);
+      setGameData(result.data.response[0]);
      
-    });
+    })
+    .catch(err=>console.log(err));
   }, [fixture_id]);
-  console.log(gameData);
+  console.log("game data",gameData);
   return (
     <div>
+      <h2>{fixture_id}</h2>
+      <h2>{teams[0]}</h2>
       <div key={gameData.fixture.id} className="fixture-teams">
         <img alt="" src={gameData.teams.home.logo}></img>
         <span className="team">{gameData.teams.home.name}</span>
