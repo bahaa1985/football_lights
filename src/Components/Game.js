@@ -1,35 +1,27 @@
-import React, { Fragment, useEffect } from "react";
-import { useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import "../styles/fixtures.css";
-import  { getSelectedGame }  from "../Api/getFixtures.js";
+import {React, useState, useEffect} from 'react'
+import { NavLink } from 'react-router-dom'
+import   getSelectedGame   from "../Api/getGame.js";
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
 
-export default function Game() {
-  const [tab, setTab] = useState("");
-  const [gameData, setGameData] = useState([]);
-  const [searchparams] = useSearchParams();
-  console.log("search",searchparams);
-  const teams = [searchparams.get("home"), searchparams.get("away")]; //get teams ids from url  query string
-  const  {fixture_id}  = useParams(); //get fixture id from /game/:fixture_id route
+function Game(){
 
-  // get the selected Game from Api:
-  useEffect(() => {
-    getSelectedGame(fixture_id).then((result) => {
-        console.log("status",result.status);
-      setGameData(result.data.response[0]);
-     
-    })
-    .catch(err=>console.log(err));
-  }, [fixture_id]);
-  console.log("game data",gameData);
-  return (
-    <div>
-      <h2>{fixture_id}</h2>
-      <h2>{teams[0]}</h2>
-      <div key={gameData.fixture.id} className="fixture-teams">
+    const [id,setId]=useState(0)
+    const [gameData,setGameData]=useState([]);
+
+    useEffect(()=>{
+        console.log("ues effect ....")
+        // setId(4);
+        getSelectedGame(239625).then((result)=>{
+            setGameData(result.data.response[0])
+        })
+    },[])
+console.log(gameData);
+    return(
+        <div>
+            Hi Game {id}
+            <div key={gameData.fixture.id} className="fixture-teams">
         <img alt="" src={gameData.teams.home.logo}></img>
         <span className="team">{gameData.teams.home.name}</span>
         <span className="result">{gameData.goals.home}</span>
@@ -37,46 +29,8 @@ export default function Game() {
         <span className="team">{gameData.teams.away.name}</span>
         <img alt="" src={gameData.teams.away.logo}></img>
       </div>
-
-      <div className="fixture-details">
-        <span
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Events");
-          }}
-        >
-          Events
-        </span>
-        <span
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Statistics");
-          }}
-        >
-          Statistics
-        </span>
-        <span
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Line Up");
-          }}
-        >
-          Line Up
-        </span>
-        <Fragment>
-          {
-            //to display events, statistics and lineup panes below the fixture,
-            //depending on what user click:
-            tab === "Events" ? (
-              <Events fixture={fixture_id} teams={teams} />
-            ) : tab === "Statistics" ? (
-              <Statistics fixture={fixture_id} teams={teams} />
-            ) : tab === "Line Up" ? (
-              <LineUp fixture={fixture_id} teams={teams} />
-            ) : null
-          }
-        </Fragment>
-      </div>
-    </div>
-  );
+        </div>
+    )
 }
+
+export default Game

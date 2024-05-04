@@ -2,6 +2,7 @@
 import { BrowserRouter as Router , Route, Routes, NavLink, Outlet } from 'react-router-dom';
 import './App.css';
 import League from './Components/League.js';
+// import Game from './Components/Gametest.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
 
