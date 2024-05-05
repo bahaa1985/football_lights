@@ -30,12 +30,7 @@ function Fixtures(props) {
   }, {});
 
   return (
-    <div> 
-      {/* <Routes>
-        <Route path="/game" element={<Game  />}>
-          <Route path=":fixture_id"></Route>
-        </Route>
-      </Routes>    */}
+    <div>       
       {Object.keys(groupedFixtures)
         .sort((a, b) => Date.parse(a) - Date.parse(b))
         .map((elem, gw_index) => {
@@ -48,7 +43,7 @@ function Fixtures(props) {
               {groupedFixtures[elem].map((elem) => {
                 //iterate to display GW fixtures
                 return ( 
-                  <NavLink to={`/game/${elem.fixture.id}?home=${elem.teams.home.id}&away=${elem.teams.away.id}`} >
+                  <NavLink to={`/game/${elem.fixture.id}`} >
                     <div key={elem.fixture.id} className="fixture-teams" onClick={(e)=>e.stopPropagation()}>
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>

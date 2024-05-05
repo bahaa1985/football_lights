@@ -1,8 +1,7 @@
 
-import { BrowserRouter as Router , Route, Routes, NavLink, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
 import './App.css';
 import League from './Components/League.js';
-// import Game from './Components/Gametest.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
 
@@ -23,13 +22,13 @@ function App() {
 
       <Routes>
         <Route path="/league" element={<League season={season}/>}>
-          <Route path=":league_id"/>          
+          <Route path=":leagueId"/>          
         </Route>
-        <Route path="/game" element={<Game/>}>
-          <Route path=":fixture_id"></Route>
+        <Route path="/game" element={<Game/>} >
+          <Route path=":fixtureId"/>
         </Route>
         <Route path="/player" element={<Player season={season}/>}>
-          <Route path=":player_id"></Route>
+          <Route path=":playerId"/>
         </Route>
       </Routes>
 

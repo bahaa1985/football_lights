@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default function getSelectedGame(fixture){
+ function getGame(fixture){
     let config = {
       method: 'GET',
       url: `https://v3.football.api-sports.io/fixtures?id=${fixture}`,
@@ -13,3 +13,5 @@ export default function getSelectedGame(fixture){
     return axios(config)
     
   }
+
+  export default getGame
