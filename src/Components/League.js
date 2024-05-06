@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Fixtures from "./Fixtures.js";
@@ -9,6 +9,9 @@ export default function League(props){
     let {leagueId} = useParams()
     let [tab,setTab]=useState(true)
 
+    useEffect(()=>{
+        console.log(`league${leagueId}`)
+    })
     return(
         <div>
             <h1>{leagueId}</h1>

@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, Link } from "react-router-dom";
 import getAllFixtures from "../Api/getFixtures.js";
 import "../styles/fixtures.css";
 import Game from "./Game.js";
@@ -18,7 +18,7 @@ function Fixtures(props) {
     getAllFixtures(league, season).then((result) => {
       setFixtures(result.data.response);
     });
-  }, [league, season]);
+  }, []);
 
   const groupedFixtures = Fixtures.reduce((group, elem) => {
     const gw = elem.league.round;
@@ -43,7 +43,7 @@ function Fixtures(props) {
               {groupedFixtures[elem].map((elem) => {
                 //iterate to display GW fixtures
                 return ( 
-                  <NavLink to={`/game/${elem.fixture.id}`} >
+                  <Link to={`/game/${elem.fixture.id}`} >
                     <div key={elem.fixture.id} className="fixture-teams" onClick={(e)=>e.stopPropagation()}>
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>
@@ -52,7 +52,7 @@ function Fixtures(props) {
                       <span className="team">{elem.teams.away.name}</span>
                       <img alt="" src={elem.teams.away.logo}></img>
                     </div>
-                  </NavLink>
+                  </Link>
                 );
               })}
             </div>
