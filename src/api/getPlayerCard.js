@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function getPlayerInfo(playerId,season){
+function getPlayerCard(playerId,season){
     const config={
         method:"GET",
         url:`https://v3.football.api-sports.io/players?player=${playerId}&season=${season}`,
@@ -14,4 +14,4 @@ function getPlayerInfo(playerId,season){
     return axios(config);
 }
 
-export default getPlayerInfo;
+export default getPlayerCard;

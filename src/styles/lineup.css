@@ -58,6 +58,15 @@
     left: 70%; 
     z-index:2;   
 }
+.player-mark{
+    position:absolute;
+    top:15%;
+    left:50%;
+    transform: translateX(-50%);
+    width:60px;
+    height: 60px;
+    border-radius: 50%;
+}
 .player-photo{
     position: absolute;
     top:15%;
@@ -73,7 +82,9 @@
     top:65%;  
     width:100%;
 }
-.player-name,.player-number{  
+.player-name
+/* ,.player-number */
+{  
     background-color: white;
     width: 90%;
     height: 1.2em;

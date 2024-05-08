@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import getPlayerInfo from '../Api/getPlayerInfo.js';
+import getPlayerCard from '../Api/getPlayerCard.js';
 
 function Player(props) {
     const season=props.season;
@@ -8,7 +8,7 @@ function Player(props) {
     const player_id =useParams();
     
     useEffect(()=>{
-        getPlayerInfo(player_id,season)
+        getPlayerCard(player_id,season)
         .then((result)=>{
             setPlayerStats(result.data.response[0]);
         })
