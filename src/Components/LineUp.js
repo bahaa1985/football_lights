@@ -19,7 +19,8 @@ function PlayerPosition(props){
     
     const sp_lineup=lineup.filter((player)=>player.player.grid[0]===grid)
         .sort((playerA,playerB)=>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]))                      
-        console.log("sp",sp_lineup)          
+        console.log("sp",sp_lineup)   
+        console.log("colors",colors);       
     let playerNameArr=[],playerName="";           
     return(
         <>
@@ -28,23 +29,26 @@ function PlayerPosition(props){
                     playerNameArr=player.player.name.split(' ');
                     playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
                     return(
-                    <NavLink to={`/player${player.player.id}`} key={index} className='player-card' >                                                                                                                                                  
-                        <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
-                            {player.statistics[0].games.rating}
-                        </span>                                                                                                                                    
-                        {/* <img className='player-photo' src={player.player.photo} alt=""></img> */}
-                        <span className="player-mark" style={{backgroundColor:colors.primary}}>
-                            <span className='player-number' style={{backgroundColor:colors.number}}>{player.player.number}</span>
-                        </span>
-                        <div className='player-info'>                           
-                            <span className='player-name'>
+                    <NavLink to={`/player${player.player.id}`} key={index} style={{textAlign:'center'}} >
+                        <div className='player-mark' style={{backgroundColor:'#'+colors.primary}}>
+                            <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
+                                {player.statistics[0].games.rating}
+                            </span>
+                            <span className='player-number' style={{color:colors.number}}>{player.player.number}</span>
+                        </div>                                                                                                                                                  
+                        <span className='player-name'>
                                 {
                                     playerNameArr.length> 1 ?
                                     playerNameArr.slice(1) :
                                     playerNameArr[0]
                                 }
-                            </span> 
-                        </div>
+                            </span>                                                                                                                                                        
+                        {/* <span className="player-mark" style={{backgroundColor:colors.primary}}>
+                            
+                        </span>
+                        <div className='player-info'>                           
+                            
+                        </div> */}
                                                                                                                                                                                                                                                     
                     </NavLink>
                     )
@@ -106,12 +110,7 @@ function LineUp(props){
             setAwayPlayers(result.data.response[1].players);
         });   
         
-    //     getEvents(fixtureId).then((result)=>{
-    //         setHomeEvents(result.data.response.filter(event=>event.team.id===homeId))   
-    //     })
-    //     getEvents(fixtureId).then((result)=>{
-    //         setAwayEvents(result.data.response.filter(event=>event.team.id===awayId))   
-    //     });
+  
     },[homeId,awayId,fixtureId]);
 
     homeLineUp.forEach((player,index)=>{
@@ -149,24 +148,6 @@ function LineUp(props){
             }                
         }) 
     })    
-
-    //get events:
-//    useEffect(()=>{
-//        getEvents(fixtureId).then((result)=>{
-//             setHomeEvents(result.data.response.filter(event=>event.team.id===homeId))   
-//         })
-//         getEvents(fixtureId).then((result)=>{
-//             setAwayEvents(result.data.response.filter(event=>event.team.id===awayId))   
-//         })
-       
-//    },[fixtureId])
-
-//     console.log("homeEvents:",homeEvents);
-// console.log("awayEvents:",awayEvents);
-    // console.log('Home:',homeSub);
-    // console.log('Away:',awayCoach);
-    // eslint-disable-next-line no-unused-vars
-
     
     let playerNameArr=[],playerName="";  
     return(    
