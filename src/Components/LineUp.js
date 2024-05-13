@@ -29,7 +29,7 @@ function PlayerPosition(props){
                     playerNameArr=player.player.name.split(' ');
                     playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
                     return(
-                    <NavLink to={`/player${player.player.id}`} key={index} style={{textAlign:'center'}} >
+                    <NavLink to={`/player/${player.player.id}`} key={index} style={{textAlign:'center'}} >
                         <div className='player-mark' style={{backgroundColor:'#'+colors.primary}}>
                             <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
                                 {player.statistics[0].games.rating}
