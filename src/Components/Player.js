@@ -21,9 +21,9 @@ function Player(props) {
         // .then(result=>{
         //     setPlayerProfile(result.data.response[0])
         // })
-        setFilteredStats(playerStats?.statistics?.filter((item,index)=>item.league.id===parseInt(leagueId)));
+        setFilteredStats(playerStats.statistics.filter((item,index)=>item.league.id===parseInt(leagueId)));
 
-    },[params.playerId,season,leagueId])
+    },[params.playerId,season,leagueId,playerStats.statistics])
 
     console.log("player",playerStats);
     console.log("filtered",filteredStats);
