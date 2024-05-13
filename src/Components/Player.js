@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import getPlayerProfile from '../Api/getPlayerCard.js';
+import { getPlayerStats } from '../Api/getPlayerProfile.js';
+import  getPlayerProfile  from '../Api/getPlayerProfile.js';
 
 function Player(props) {
     const season=props.season;
     const [playerStats,setPlayerStats]=useState([]);
+    const [playerProfile,setPlayerProfile]=useState([]);
     const [filteredStats,setFilteredStats]=useState([]);
     const [leagueId,setLeagueId]=useState(0);
     const params =useParams();
     
     useEffect(()=>{
-        getPlayerProfile(params.playerId,season)
+        getPlayerStats(params.playerId,season)
         .then((result)=>{
             setPlayerStats(result.data.response[0]);
         });
 
+        // getPlayerProfile(params.playerId,season,leagueId)
+        // .then(result=>{
+        //     setPlayerProfile(result.data.response[0])
+        // })
+        setFilteredStats(playerStats?.statistics?.filter((item,index)=>item.league.id===parseInt(leagueId)));
 
-    },[params.playerId,season])
+    },[params.playerId,season,leagueId])
 
     console.log("player",playerStats);
+    console.log("filtered",filteredStats);
+    
     return ( 
         <div>
             <div>
@@ -36,14 +45,14 @@ function Player(props) {
                 <div>League Id {leagueId}</div>
             </div>
             <div>
-                {/* <div id="games">
-                    <h4>Games</h4>
-                    <p><span>Appearences</span><span>{playerStats?.statistics[0]?.games?.appearences}</span></p>
-                    <p><span>Lineups</span><span>{playerStats?.statistics[0]?.games?.lineups}</span></p>
-                    <p><span>Minutes</span><span>{playerStats?.statistics[0]?.games?.minutes}</span></p>
-                    <p><span>Rating</span><span>{playerStats?.statistics[0]?.games?.rating}</span></p>                    
+                <div id="games">
+                    <h4>Games</h4>                
+                        <p><span>Appearences</span><span>{filteredStats[0]?.games?.appearences}</span></p>
+                        <p><span>Lineups</span><span>{filteredStats[0]?.games?.lineups}</span></p>
+                        <p><span>Minutes</span><span>{filteredStats[0]?.games?.minutes}</span></p>
+                        <p><span>Rating</span><span>{filteredStats[0]?.games?.rating}</span></p>                                                                                    
                 </div>
-                <div id="substitutes">
+                {/* <div id="substitutes">
                     <h4>Substitutes</h4>
                     <p><span>In</span><span>{playerStats?.statistics[0]?.substitutes?.in}</span></p>
                     <p><span>Out</span><span>{playerStats?.statistics[0]?.substitutes?.out}</span></p>
