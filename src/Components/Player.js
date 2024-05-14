@@ -15,15 +15,15 @@ function Player(props) {
         getPlayerStats(params.playerId,season)
         .then((result)=>{
             setPlayerStats(result.data.response[0]);
-        });
+            setLeagueId(result.data.response[0].statistics[0].league.id)
+        });               
+       
+    },[params.playerId,season])
 
-        // getPlayerProfile(params.playerId,season,leagueId)
-        // .then(result=>{
-        //     setPlayerProfile(result.data.response[0])
-        // })
-        setFilteredStats(playerStats.statistics.filter((item,index)=>item.league.id===parseInt(leagueId)));
-
-    },[params.playerId,season,leagueId,playerStats.statistics])
+    function filterByleague(){
+        console.log(("trigger filter"));
+        setFilteredStats(playerStats?.statistics?.filter((item)=>item.league.id===parseInt(leagueId)));
+    }
 
     console.log("player",playerStats);
     console.log("filtered",filteredStats);
@@ -33,8 +33,8 @@ function Player(props) {
             <div>
                 <h2>{playerStats?.player?.name}</h2>
                 <img src={playerStats?.player?.photo} alt={playerStats?.player?.name}/>
-                <select onChange={(e)=>setLeagueId(e.target.value)}>
-                    {
+                <select onSelect={[(e)=>setLeagueId(e.target.value),filterByleague()]}>
+                {
                         playerStats?.statistics?.map((item,index)=>{
                             return(
                                 <option key={index}  value={item.league.id}>{item.league.name}<img src={item.league.flag} alt={item.league.name}/></option>
@@ -42,7 +42,7 @@ function Player(props) {
                         })
                     }
                 </select>
-                <div>League Id {leagueId}</div>
+                {/* <div>League Id {params().leagueId}</div> */}
             </div>
             <div>
                 <div id="games">
