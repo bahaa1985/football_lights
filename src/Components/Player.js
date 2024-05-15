@@ -1,56 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPlayerStats } from '../Api/getPlayerProfile.js';
-import  getPlayerProfile  from '../Api/getPlayerProfile.js';
 
 function Player(props) {
     const season=props.season;
-    const [playerStats,setPlayerStats]=useState([]);
-    const [playerProfile,setPlayerProfile]=useState([]);
-    const [filteredStats,setFilteredStats]=useState([]);
-    const [leagueId,setLeagueId]=useState(0);
+    const [playerStats,setPlayerStats]=useState([]); 
+    const [index,setIndex]=useState(0);
     const params =useParams();
     
     useEffect(()=>{
         getPlayerStats(params.playerId,season)
         .then((result)=>{
             setPlayerStats(result.data.response[0]);
-            setLeagueId(result.data.response[0].statistics[0].league.id)
+            // setLeagueId(result.data.response[0].statistics[0].league.id)
         });               
        
-    },[params.playerId,season])
+    },[params.playerId,season])   
 
-    function filterByleague(){
-        console.log(("trigger filter"));
-        setFilteredStats(playerStats?.statistics?.filter((item)=>item.league.id===parseInt(leagueId)));
-    }
-
-    console.log("player",playerStats);
-    console.log("filtered",filteredStats);
+    console.log("player",playerStats);   
     
     return ( 
         <div>
             <div>
                 <h2>{playerStats?.player?.name}</h2>
                 <img src={playerStats?.player?.photo} alt={playerStats?.player?.name}/>
-                <select onSelect={[(e)=>setLeagueId(e.target.value),filterByleague()]}>
+                <select onSelect={(e)=>setIndex(e.target.value)}>
                 {
-                        playerStats?.statistics?.map((item,index)=>{
-                            return(
-                                <option key={index}  value={item.league.id}>{item.league.name}<img src={item.league.flag} alt={item.league.name}/></option>
-                            )
-                        })
-                    }
+                    playerStats?.statistics?.map((item,index)=>{                  
+                        return(                                
+                            <option key={index}  value={index}><div>{item.league.name}<img src={item.league.flag} alt={item.league.name}/></div></option>
+                        )
+                    })
+                }
                 </select>
-                {/* <div>League Id {params().leagueId}</div> */}
+               
             </div>
             <div>
                 <div id="games">
-                    <h4>Games</h4>                
-                        <p><span>Appearences</span><span>{filteredStats[0]?.games?.appearences}</span></p>
-                        <p><span>Lineups</span><span>{filteredStats[0]?.games?.lineups}</span></p>
-                        <p><span>Minutes</span><span>{filteredStats[0]?.games?.minutes}</span></p>
-                        <p><span>Rating</span><span>{filteredStats[0]?.games?.rating}</span></p>                                                                                    
+                    <h4>Games</h4>
+                    {
+                        playerStats ?
+                        <>
+                            <p><span>Appearences</span><span>{playerStats?.statistics[index]?.games?.appearences}</span></p>
+                            <p><span>Lineups</span><span>{playerStats?.statistics[index]?.games?.lineups}</span></p>
+                            <p><span>Minutes</span><span>{playerStats?.statistics[index]?.games?.minutes}</span></p>
+                            <p><span>Rating</span><span>{playerStats?.statistics[index]?.games?.rating}</span></p> 
+                        </>
+                        :null                        
+                    }                
+                                                                                                           
                 </div>
                 {/* <div id="substitutes">
                     <h4>Substitutes</h4>
