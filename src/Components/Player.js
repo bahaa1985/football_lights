@@ -16,7 +16,34 @@ function Player(props) {
        
     },[params.playerId,season])   
     
-    console.log("player",playerStats);
+    // console.log("player",playerStats);
+
+    function func(){
+        let arr=[]
+        Object.entries(playerStats.statistics[0]).map((elem,index)=>{
+            elem.map((elem,index)=>{
+                arr.push(elem);
+            })
+        })
+        return  arr
+    }
+    // function iter(){
+    //     let arr=[];
+    //     func().map((elem,index)=>{
+    //         elem.map((elem,index)=>{
+    //             arr.push(elem);
+    //         })
+    //     })
+    //     return  arr
+    // }
+    function fff(){
+        Object.entries(func()).map((element,index) => {
+            console.log(element[0],element[1]);
+        });      
+    }
+    console.log("func all",func());
+    // console.log("iter",iter());
+    console.log("fff",fff());
 
 
     return ( 
@@ -36,6 +63,26 @@ function Player(props) {
                
             </div>
             <div>
+                {
+                    // playerStats?.statistics? 
+                    // Object.entries(func()).map((element,index) => {
+                    //     // console.log(element[0],element[1]);
+                    //     return(
+                    //         <p>
+                    //             <span>{element[0]}</span><span></span>
+                    //         </p>
+                    //     )
+                    // })
+                    // [func(),iter(),
+                    // fff().map((elem,index)=>{
+                    //     return (
+                    //         <div>
+                    //             <div>{elem}</div>
+                    //         </div>
+                    //     )
+                    // })]
+                    // :null
+                }
                 {/* <div id="games">
                     <h4>Games</h4>
                     {
@@ -204,43 +251,43 @@ function Player(props) {
 
                 </div> */}
                 {
-                    playerStats.statistics ?                    
-                    Object.entries(playerStats.statistics[index])
-                    .map((item,ind)=>{
-                        return(
-                            <div>
-                            {
-                                ind > 1 ? 
-                                <>
-                                <h4>{Object.keys(playerStats.statistics[index])[ind]}</h4>
-                                {
-                                    Object.entries(item).map((obj,index)=>{
-                                        return(
-                                            <div key={index}>
-                                                {
-                                                    Object.entries(obj).map((elem,index)=>{
-                                                        return(
-                                                            <p key={index}>
-                                                                <span>{elem[1][0]}</span>
-                                                                <span>{elem[1][1]}</span>
-                                                            </p>
-                                                        )
+                    // playerStats.statistics ?                    
+                    // Object.entries(playerStats.statistics[index])
+                    // .map((item,ind)=>{
+                    //     return(
+                    //         <div>
+                    //         {
+                    //             ind > 1 ? 
+                    //             <>
+                    //             <h4>{Object.keys(playerStats.statistics[index])[ind]}</h4>
+                    //             {
+                    //                 Object.entries(item).map((obj,index)=>{
+                    //                     return(
+                    //                         <div key={index}>
+                    //                             {
+                    //                                 Object.entries(obj).map((elem,index)=>{
+                    //                                     return(
+                    //                                         <p key={index}>
+                    //                                             <span>{elem[0]}</span>
+                    //                                             <span>{elem[1]}</span>
+                    //                                         </p>
+                    //                                     )
                                                         
-                                                    })
-                                                }
+                    //                                 })
+                    //                             }
                                                 
                                              
-                                            </div>
-                                        )
-                                    })
-                                }
-                                </>
-                                :null
-                            }
-                          </div>
-                        )
+                    //                         </div>
+                    //                     )
+                    //                 })
+                    //             }
+                    //             </>
+                    //             :null
+                    //         }
+                    //       </div>
+                    //     )
                     
-                    })
+                    // })
                     // Object.keys(playerStats.statistics[index]).map((key,index)=>{
                     //     return(
                     //         <>
@@ -255,7 +302,7 @@ function Player(props) {
                     //         </>
                     //     )
                     // })
-                    :null
+                    // :null
                 }
             </div>
             
