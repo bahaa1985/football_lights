@@ -64,15 +64,15 @@ function Player(props) {
             </div>
             <div>
                 {
-                    // playerStats?.statistics? 
-                    // Object.entries(func()).map((element,index) => {
-                    //     // console.log(element[0],element[1]);
-                    //     return(
-                    //         <p>
-                    //             <span>{element[0]}</span><span></span>
-                    //         </p>
-                    //     )
-                    // })
+                    playerStats?.statistics? 
+                    Object.entries(func()).map((element,index) => {
+                        // console.log(element[0],element[1]);
+                        return(
+                            <p>
+                                <span>{element[1]}</span><span></span>
+                            </p>
+                        )
+                    })
                     // [func(),iter(),
                     // fff().map((elem,index)=>{
                     //     return (
@@ -81,7 +81,7 @@ function Player(props) {
                     //         </div>
                     //     )
                     // })]
-                    // :null
+                    :null
                 }
                 {/* <div id="games">
                     <h4>Games</h4>
