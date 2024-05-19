@@ -41,9 +41,9 @@ function Player(props) {
             console.log(element[0],element[1]);
         });      
     }
-    console.log("func all",func());
+    // console.log("func all",func());
     // console.log("iter",iter());
-    console.log("fff",fff());
+    // console.log("fff",fff());
 
 
     return ( 
@@ -67,12 +67,51 @@ function Player(props) {
                     playerStats?.statistics? 
                     Object.entries(func()).map((element,index) => {
                         // console.log(element[0],element[1]);
+                        
                         return(
-                            <p>
-                                <span>{element[1]}</span><span></span>
-                            </p>
+                            index > 3 ?
+                            <div key={index}>
+                                {
+                                    index % 2 === 0 ?
+                                    <p>{element[1][0].toUpperCase()+element[1].slice(1)}</p>
+                                    : 
+                                    <div>
+                                        {
+                                            element.map((elem,index)=>{
+                                                return(
+                                                    Object.entries(elem).map((ele,index)=>{
+                                                      
+                                                        // console.log("ele ele",ele)
+                                                        
+                                                        return(
+                                                            <div key={index}> 
+                                                            {
+                                                                isNaN(ele[0]) ?
+                                                                <>
+                                                                    <span>{ele[0][0].toUpperCase()+ele[0].slice(1)}</span>
+                                                                    {
+                                                                        ele[1] === null ?   <span>NA</span> :   <span>{ele[1]}</span>
+                                                                    }
+                                                                  
+                                                                </>
+                                                                :null
+                                                            }                                                                                                              
+                                                            </div>                                                    
+                                                        )
+                                                      
+                                                    })
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                }
+                                {/* <span>{element[1][1]}</span><span></span> */}
+                            </div>
+                            :null
                         )
+                        
                     })
+                    
                     // [func(),iter(),
                     // fff().map((elem,index)=>{
                     //     return (
