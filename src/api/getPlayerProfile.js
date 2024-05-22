@@ -28,7 +28,7 @@ export function getPlayerStats(playerId,season){
     return axios(config);
 }
 
-function getPlayerProfile(playerId,season,leagueId){
+export function getPlayerProfile(playerId,season,leagueId){
     const config={
         method:"GET",
         url:`https://v3.football.api-sports.io/players?id=${playerId}&season=${season}&league=${leagueId}`,
