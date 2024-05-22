@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getTeamSeasons, getTeamInformation, getTeamStatistics } from '../Api/getTeamDetails';
+import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
 
 export default function Team(props){
     const season=props.season;
-    const teamId=useParams.teamId;
+    const teamId=useParams().teamId;
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
@@ -14,17 +14,24 @@ export default function Team(props){
     useEffect(()=>{
         getTeamSeasons(teamId)
         .then(result=>{
-            setTeamSeasons(result.data.response[0]);
+            setTeamSeasons(result.data.response);
         })
+        .catch(()=>setTeamSeasons([]))
 
-        getTeamStatistics(season,teamId)
+        getTeamLeagues(teamId,selectedSeason)
         .then(result=>{
-            setTeamStatistics(result.data.response)
+            setTeamLeagues(result.data.response)
         })
+        .catch(()=>setTeamLeagues([]))
 
+        // getTeamStatistics(teamId,season,leagueId)
+        // .then(result=>{
+        //     setTeamStatistics(result.data.response)
+        // })
+        // .catch(()=>setTeamStatistics([]))
+    },[teamId,selectedSeason,leagueId])
 
-    })
-
+    console.log("team seasons",teamSeasons);
     return(
         <div>
             <div>
@@ -41,7 +48,7 @@ export default function Team(props){
                     {/* leagues dropdownbox */}
                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))}>  
                     {
-                        teamStatistics?.map((item,index)=>{                  
+                        teamLeagues?.map((item,index)=>{                  
                             return(                                
                                 <option key={index}  value={item.league.id}><div>{item.league.name}</div></option>
                             )
