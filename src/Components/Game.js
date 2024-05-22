@@ -1,5 +1,5 @@
 import {React, useState, useEffect, Fragment} from 'react'
-import { useParams  } from 'react-router-dom'
+import { Link, useParams,NavLink  } from 'react-router-dom'
 import  getGame from '../Api/getGame.js' 
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
@@ -23,12 +23,12 @@ console.log("gd",gameData);
     return(
         <div>                            
             <div key={gameData?.fixture?.id} className="fixture-teams">
-              <img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img>
-              <span className="team">{gameData?.teams?.home?.name}</span>
+              <NavLink to={`/team/${gameData?.teams?.home?.id}`}><img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.home?.id}`}><span className="team">{gameData?.teams?.home?.name}</span></NavLink>
               <span className="result">{gameData?.goals?.home}</span>
               <span className="result">{gameData?.goals?.away}</span>
-              <span className="team">{gameData?.teams?.away?.name}</span>
-              <img alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}`}><span className="team">{gameData?.teams?.away?.name}</span></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}`}><img alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
             </div>
 
             <div className="fixture-details">

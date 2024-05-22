@@ -52,7 +52,7 @@ function Player(props) {
                 <img src={playerStats?.player?.photo} alt={playerStats?.player?.name}/>
                 <div>
                     {/*seasons dropdown box when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={season}> 
                     {                        
                         playerSeasons?.map((item,index)=>{
                             return(
@@ -75,75 +75,79 @@ function Player(props) {
                 </div>                               
             </div>
             <div>
-                {
-                    // playerStats?.statistics? 
-                    // Object.entries(playerStats.statistics[leagueId]).map((element,index) => {
-                    //     return(
-                    //         index > 3 ?
-                    //         <div key={index}>
-                    //             {
-                    //                 index % 2 === 0 ?
-                    //                 <p>{element[1][0].toUpperCase()+element[1].slice(1)}</p>
-                    //                 :     
-                    //                 element.map((elem,index)=>{
-                    //                     return(
-                    //                         Object.entries(elem).map((ele,index)=>{
-                    //                             return(
-                    //                                 <div key={index}> 
-                    //                                 {
-                    //                                     isNaN(ele[0]) ?
-                    //                                     <>
-                    //                                         <span>{ele[0][0].toUpperCase()+ele[0].slice(1)}</span>
-                    //                                         {
-                    //                                             ele[1] === null ?   <span>NA</span> :   <span>{ele[1]}</span>
-                    //                                         }
-                    //                                     </>
-                    //                                     :null
-                    //                                 }                                                                                                              
-                    //                                 </div>                                                    
-                    //                             )
-                                                
-                    //                         })
-                    //                     )
-                    //                 })
-                    //             }
-                    //         </div>
-                    //         :null
-                    //     )
-                        
-                    // })
-                    // :null
+                {                
                     playerStats?.statistics?
-                    [
+                    [<div>
+                        <div> {/** team div */}
+                            <p>
+                                <span>Team</span><span> {playerStats.statistics[leagueId].team.name}</span>
+                                <img src={playerStats.statistics[leagueId].team.logo} alt={playerStats.statistics[leagueId].team.name}/>
+                            </p>                      
+                        </div>
+                        <div> {/** leaguw div */}
+                            <p>
+                                <img src={playerStats.statistics[leagueId].league.logo} alt={playerStats.statistics[leagueId].league.name} />
+                                <span>Name</span><span> {playerStats.statistics[leagueId].league.name}</span>
+                                
+                            </p>
+                            <p>
+                                <span>Country</span>
+                                <span>{playerStats.statistics[leagueId].league.country}</span> <img src={playerStats.statistics[leagueId].league.flag} alt={playerStats.statistics[leagueId].league.country} />                   
+                            </p>                           
+                        </div>
+                    </div>,
                     Object.entries(playerStats.statistics[leagueId]).map((item,index)=>{
                         return(
-                        // console.log("item",item)
-                        <>
-                        <p key={index}>{item[0]}</p>
-                        <p>{
-                            Object.entries(item[1]).map((elem,index)=>{
-                                return(
-                                    <p>{Object.keys(elem)[1][index]}</p>
-                                )
-                            })
-                            // Object.keys(item[1]).map((item,index)=>{
-                            //     return(
-                            //         <>
-                            //             <span>{item}</span>
-                            //             <span>{Object.values(item[1][index])}</span>
-                            //         </>
-                            //     )
-                            // })
-                            // [console.log("item branch",item[1]),
-                            // <>
-                            // <span>{Object.keys(item[1])}</span> 
-                            // <span>{Object.values(item[1])}</span>
-                            // </>   
-                        // ]
-                            }</p>
-                        </>
-                    )
-                    })]
+                            <>
+                            {
+                                index>1 ?
+                                // <div>
+                                // <p key={index}>{item[0]}</p>
+                            
+                                //     {
+                                //     Object.entries(item[1]).map((elem,index)=>{                                       
+                                //         return(
+                                //             Object.values(elem)[0] !== 'id' ?
+                                //             <div>
+                                //             <span>{Object.values(elem)[0][0].toUpperCase()+Object.values(elem)[0].slice(1)}</span>
+                                //             {
+                                //                 Object.values(elem)[1] === null ?
+                                //                 <span>NA</span> :
+                                //                 Object.values(elem)[0] === 'logo' ?
+                                //                 <img src= {Object.values(elem)[1]} alt='NA'/>:
+                                //                 <span>{Object.values(elem)[1]}</span>
+                                //             }
+                                //             </div>
+                                //              :null
+                                //         )                                       
+                                //     })                        
+                                //     }
+                                // </div>
+                                // :
+                                <>
+                                <p key={index}>{item[0]}</p>
+                                <div>{
+                                    Object.entries(item[1]).map((elem,index)=>{
+                                        return(
+                                            <div>
+                                            <span>{Object.values(elem)[0][0].toUpperCase()+Object.values(elem)[0].slice(1)}</span>
+                                            {
+                                                Object.values(elem)[1] === null ?
+                                                <span>NA</span> :
+                                                <span>{Object.values(elem)[1]}</span>
+                                            }
+                                            </div>
+                                        )
+                                    })                        
+                                }</div>
+                                </>
+                                :null
+                            }
+                           
+                            </>
+                        )
+                    })
+                    ]
                     :null
                 }
             </div>

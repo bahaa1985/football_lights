@@ -4,6 +4,7 @@ import './App.css';
 import League from './Components/League.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
+import Team from './Components/Team.js';
 
 
 
@@ -27,9 +28,13 @@ function App() {
         <Route path="/game" element={<Game/>} >
           <Route path=":fixtureId"/>
         </Route>
+        <Route path="/team" element={<Team season={season}/>}>
+          <Route path=":teamId"/>
+        </Route>
         <Route path="/player" element={<Player season={season}/>}>
           <Route path=":playerId"/>
         </Route>
+        
       </Routes>
 
      </Router>
