@@ -44,6 +44,43 @@ export default function Team(props){
     console.log("team statistics",teamStatistics);
     return(
         <div>
+            {/** Team's basic information */}
+            <div className='team-basic'>
+                <div className='team'>
+                    <div>
+                        <img src={teamInformation?.team?.logo} alt={teamInformation?.team?.name}/>
+                    </div>
+                    <div>
+                        <p>
+                            <span>Name</span><span>{teamInformation?.team?.name}</span>
+                        </p>
+                        <p>
+                            <span>Country</span><span>{teamInformation?.team?.country}</span>
+                        </p>
+                        <p>
+                            <span>Founded</span><span>{teamInformation?.team?.founded}</span>
+                        </p>
+                    </div>                  
+                </div>               
+            </div>
+            {/** Venue details */}            
+            <div className='venue'>
+                <div>
+                    <p>
+                        <span>Name</span><span>{teamInformation?.venue?.name}</span>
+                    </p>
+                    <p>
+                        <span>City</span><span>{teamInformation?.venue?.city}</span>
+                    </p>
+                    <p>
+                        <span>Capacity</span><span>{teamInformation?.venue?.capacity}</span>
+                    </p>
+                </div>
+                <div>
+                    <img src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
+                </div>
+            </div>
+            {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box when select a season then leagues dropdown box will be manipulated*/}
                     <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={season}> 
@@ -65,8 +102,36 @@ export default function Team(props){
                         })
                     }
                     </select>
+            </div>    
+            {/** Team statistics specified to a league */}
+            <div>
+                {
+                    teamStatistics?
+                    Object.entries(teamStatistics).map((item,index)=>{
+                        return (
+                            <div>
+                                <p>{item[0]}</p>
+                                {
+                                    Object.entries(item[1]).map((elem,index)=>{
+                                        return(
+                                            <>
+                                            <span>{Object.values(elem)[0]}</span>
+                                            {
+                                                // !Array.isArray(Object.values(elem)[1][0]) ?
 
-                </div>    
+                                                // :null
+                                            }
+                                            <span>{Object.values(elem[1])[0]}</span>
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+                        )
+                    })
+                    :null
+                }
+            </div>
         </div>
     )
 }

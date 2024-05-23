@@ -25,26 +25,6 @@ function Player(props) {
        
     },[params.playerId,selectedSeason])
     
-    
-    // function getPlayerStatistcis(leagueId){
-    //     getPlayerProfile(params.playerId,selectedSeason,leagueId).then((result)=>
-    //         setPlayerStats(result.data.response[0])
-    //     )  
-    // }
-
-    // function playerStatsArr(leagueId){
-    //     let arr=[]
-    //     Object.entries(playerStats.statistics.filter(e=>e.league.id===leagueId)).map((elem)=>{
-    //         elem.map((elem)=>{
-    //             arr.push(elem);
-    //         })
-    //     })
-    //     console.log("arr",arr);
-    //     return  arr[1]
-    // }
-   
-    // console.log("player stats",playerStats);
-    // console.log("league id",leagueId);
     return ( 
         <div>
             <div>
@@ -100,30 +80,7 @@ function Player(props) {
                         return(
                             <>
                             {
-                                index>1 ?
-                                // <div>
-                                // <p key={index}>{item[0]}</p>
-                            
-                                //     {
-                                //     Object.entries(item[1]).map((elem,index)=>{                                       
-                                //         return(
-                                //             Object.values(elem)[0] !== 'id' ?
-                                //             <div>
-                                //             <span>{Object.values(elem)[0][0].toUpperCase()+Object.values(elem)[0].slice(1)}</span>
-                                //             {
-                                //                 Object.values(elem)[1] === null ?
-                                //                 <span>NA</span> :
-                                //                 Object.values(elem)[0] === 'logo' ?
-                                //                 <img src= {Object.values(elem)[1]} alt='NA'/>:
-                                //                 <span>{Object.values(elem)[1]}</span>
-                                //             }
-                                //             </div>
-                                //              :null
-                                //         )                                       
-                                //     })                        
-                                //     }
-                                // </div>
-                                // :
+                                index>1 ?                                
                                 <>
                                 <p key={index}>{item[0]}</p>
                                 <div>{
