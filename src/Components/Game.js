@@ -23,12 +23,12 @@ console.log("gd",gameData);
     return(
         <div>                            
             <div key={gameData?.fixture?.id} className="fixture-teams">
-              <NavLink to={`/team/${gameData?.teams?.home?.id}`}><img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
-              <NavLink to={`/team/${gameData?.teams?.home?.id}`}><span className="team">{gameData?.teams?.home?.name}</span></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span className="team">{gameData?.teams?.home?.name}</span></NavLink>
               <span className="result">{gameData?.goals?.home}</span>
               <span className="result">{gameData?.goals?.away}</span>
-              <NavLink to={`/team/${gameData?.teams?.away?.id}`}><span className="team">{gameData?.teams?.away?.name}</span></NavLink>
-              <NavLink to={`/team/${gameData?.teams?.away?.id}`}><img alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><span className="team">{gameData?.teams?.away?.name}</span></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><img alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
             </div>
 
             <div className="fixture-details">
