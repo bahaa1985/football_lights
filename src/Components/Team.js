@@ -47,10 +47,15 @@ export default function Team(props){
         for(let key in obj){
             if(typeof(obj[key])==='object' && obj[key]!==null){
                 // console.log("Key&Value",obj[key]+' ' +key);
+                if(typeof(obj[key])!=='object'){
+                    console.log("value",key);
+                }
+                else{
                 teamStatisticsFunc(obj[key]);
+                }
             }
             else{
-                console.log("HEAD",key);
+                console.log("key",key);
             }
         }
     }
