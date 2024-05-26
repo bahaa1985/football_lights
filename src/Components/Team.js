@@ -44,16 +44,18 @@ export default function Team(props){
     // console.log("team statistics",teamStatistics);
 
     let statsElements=[];
+    let divElement=new HTMLDivElement();
     function teamStatisticsFunc(obj){
-        
+        statsElements.push(divElement);
         for(let key in obj){
             if(typeof(obj[key])==='object' && obj[key]!==null){
                 statsElements.push(<div>{key}</div>)
                 teamStatisticsFunc(obj[key])
-                
+                divElement=new HTMLDivElement()
             }
             else{
-                statsElements.push(<span><span>{key}</span><span>{obj[key]}</span></span>)
+                divElement.appendChild(<div><span>{key}</span><span>{obj[key]}</span></div>)
+                // statsElements.push(<span><span>{key}</span><span>{obj[key]}</span></span>)
             }
         }
     }
