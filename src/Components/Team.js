@@ -43,25 +43,22 @@ export default function Team(props){
 
     // console.log("team statistics",teamStatistics);
 
+    let statsElements=[];
     function teamStatisticsFunc(obj){
+        
         for(let key in obj){
             if(typeof(obj[key])==='object' && obj[key]!==null){
-                // console.log("Key&Value",obj[key]+' ' +key);
-                
-                
-                        <span>{key}</span>
-                        console.log("key",key);
-                        teamStatisticsFunc(obj[key])
+                statsElements.push(<div>{key}</div>)
+                teamStatisticsFunc(obj[key])
                 
             }
             else{
-              
-                console.log(key,obj[key]);
-                    // <div style={{backgroundColor:'#606060'}}>{key}:{obj[key]}</div>
-                
+                statsElements.push(<span><span>{key}</span><span>{obj[key]}</span></span>)
             }
         }
     }
+
+
     return(
         <div>
             {/** Team's basic information */}
@@ -150,7 +147,13 @@ export default function Team(props){
                     //         </div>
                     //     )
                     // }),
-                    teamStatisticsFunc(teamStatistics)
+                    teamStatisticsFunc(teamStatistics),
+                    statsElements.map((item,index)=>{
+                        return(
+                            <div key={index}>{item}</div>
+                        )
+                    }),
+                    console.log("array",...statsElements)
                 ]
                     :null
                 }
