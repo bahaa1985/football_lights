@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../styles/nestedStatistics.css';
 const NestedObjectComponent = ({ data, isParent=true }) => {
   const renderNestedObject = (obj) => {
     return Object.entries(obj).map(([key, value]) => {
@@ -14,7 +14,7 @@ const NestedObjectComponent = ({ data, isParent=true }) => {
         return (
           <div key={key}>
             <h2 >{key}:</h2>
-            {renderNestedObject(value)}
+            <div className='stat_details'>{renderNestedObject(value)}</div>
           </div>
         );
       } else {
