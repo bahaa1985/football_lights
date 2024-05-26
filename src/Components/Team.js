@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
+import NestedObjectComponent from './NestedObjectComponent.js';
 
 export default function Team(props){
     const season=props.season;
@@ -43,24 +44,45 @@ export default function Team(props){
 
     // console.log("team statistics",teamStatistics);
 
-    let statsElements=[];
-    let divElement=new HTMLDivElement();
-    function teamStatisticsFunc(obj){
-        statsElements.push(divElement);
-        for(let key in obj){
-            if(typeof(obj[key])==='object' && obj[key]!==null){
-                statsElements.push(<div>{key}</div>)
-                teamStatisticsFunc(obj[key])
-                divElement=new HTMLDivElement()
-            }
-            else{
-                divElement.appendChild(<div><span>{key}</span><span>{obj[key]}</span></div>)
-                // statsElements.push(<span><span>{key}</span><span>{obj[key]}</span></span>)
-            }
+    // let statsElementsArr=[];
+    // let divElement= document.createElement('div');
+    // function teamStatisticsFunc(obj){
+        
+    //     for(let key in obj){
+    //         if(typeof(obj[key])==='object' && obj[key]!==null){
+    //             if(divElement.children.length > 0)  {
+    //                 statsElementsArr.push(divElement) 
+    //                 // console.log("div element",divElement);
+    //             }
+    //             statsElementsArr.push(<div>{key}</div>)
+    //             while(divElement.hasChildNodes()){
+    //                 divElement.removeChild(divElement.firstChild)
+    //             }
+    //             teamStatisticsFunc(obj[key])                                
+    //         }
+    //         else{
+    //             let span=document.createElement("span")
+    //             span.innerText =key + ' ' +obj[key]
+    //             divElement.appendChild(span)                
+    //         }
+            
+    //     }
+    // }
+    const data = {
+        name: "John",
+        age: 30,
+        address: {
+          street: "123 Main St",
+          city: "New York",
+          country: "USA"
+        },
+        contact: {
+          email: "john@example.com",
+          phone: "123-456-7890"
         }
-    }
+      };
 
-
+      console.log(teamStatistics);
     return(
         <div>
             {/** Team's basic information */}
@@ -125,8 +147,9 @@ export default function Team(props){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics?
-                    [
+                    teamStatistics? 
+                    <NestedObjectComponent data={teamStatistics} isParent={false}/>
+                    
                     //     Object.entries(teamStatistics).map((item,index)=>{
                     //     return (
                     //         <div>
@@ -149,14 +172,15 @@ export default function Team(props){
                     //         </div>
                     //     )
                     // }),
-                    teamStatisticsFunc(teamStatistics),
-                    statsElements.map((item,index)=>{
-                        return(
-                            <div key={index}>{item}</div>
-                        )
-                    }),
-                    console.log("array",...statsElements)
-                ]
+                    // teamStatisticsFunc(teamStatistics),
+                    // statsElementsArr.map((item,index)=>{
+                    //     return(
+                    //         <div key={index}>{item}</div>
+                    //     )
+                    // }),
+                    // console.log("array",...statsElementsArr)
+                    
+                
                     :null
                 }
             </div>

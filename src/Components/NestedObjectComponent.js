@@ -1,0 +1,38 @@
+import React from 'react';
+
+const NestedObjectComponent = ({ data, isParent=true }) => {
+  const renderNestedObject = (obj) => {
+    return Object.entries(obj).map(([key, value]) => {
+      if (value === null) {
+        return (
+          <p key={key}>
+            {key}: NA
+          </p>
+        );
+      } 
+      else if (typeof(value) === 'object') {
+        return (
+          <div key={key}>
+            <h2 >{key}:</h2>
+            {renderNestedObject(value)}
+          </div>
+        );
+      } else {
+        return (
+          <p style={{color: isParent ? 'red' : 'black'}}  key={key}>
+            {key}: {value}
+          </p>
+        );
+      }
+    });
+  };
+
+  return (
+    <div>
+      <h1>User Information</h1>
+      {renderNestedObject(data)}
+    </div>
+  );
+};
+
+export default NestedObjectComponent;
