@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Fixtures from "./Fixtures.js";
-import TopScoresrs from "./TopScorers.js";
+import TopPlayers from "./TopPlayers.js";
 
 
 export default function League(props){
@@ -26,8 +26,9 @@ export default function League(props){
             tab === "Fixtures" ?
             <Fixtures league={leagueId} season={season}/>
             : tab==="TopScorer" ?
-            <TopScoresrs league={leagueId} season={season} />
-            // : tab === "TopAssists" 
+            <TopPlayers league={leagueId} season={season} type={'goals'} />
+            : tab === "TopAssists" ?
+            <TopPlayers league={leagueId} season={season} type={'assists'} />
             :null
            }
           

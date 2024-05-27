@@ -36,6 +36,7 @@ function Events(props){
         return group;
     },[])   
 
+    console.log("grouped events",GROUPED_EVENTS);
     const home_events_div=(player,assist,type,detail,index)=>{
         
     return(
@@ -119,34 +120,50 @@ function Events(props){
                     return(                       
                             <div ref={event_div} key={index} style={{display:'flex',justifyContent:'center',margin:'5px auto',width:'100%'}}>
                                 {
-                                    <div style={{width:'45%',float:'right'}}>
-                                        {
-                                            eventsHome.map((event) => {                                        
-                                                return(
-                                                    event.time.elapsed===index? 
-                                                    home_events_div( event.player.name,event.assist.name,event.type,event.detail,i++):
-                                                    null
-                                                )                                                                                                                                
-                                            })
-                                        }
-                                    </div>
+                                    parseInt(event[0].team.id)===teams[0] ?
+                                        <div style={{width:'45%',float:'right'}}>
+                                            {
+                                                event.map((event) => {                                        
+                                                    return(
+                                                        event.time.elapsed===index ? 
+                                                        home_events_div( event.player.name,event.assist.name,event.type,event.detail,i++):
+                                                        null
+                                                    )                                                                                                                                
+                                                })
+                                            }
+                                        </div>
+                                    :
+                                        <div style={{width:'45%',float:'left'}}>
+                                            {
+                                                event.map((event) => {                                                                                
+                                                    return(
+                                                        event.time.elapsed===index ? 
+                                                        away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
+                                                        null
+                                                    )                                                                                        
+                                                
+                                                })
+                                            }
+                                        </div> 
                                     
                                 }
                                 <span style={{width:'10%'}}>{index}</span>
-                                {
+                                {/* {
+                                    parseInt(event[0].team.id)===teams[1] ?
                                     <div style={{width:'45%',float:'left'}}>
                                         {
-                                            eventsAway.map((event) => {                                                                                
+                                            event.map((event) => {                                                                                
                                                 return(
-                                                    event.time.elapsed===index? 
+                                                    event.time.elapsed===index ? 
                                                     away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
                                                     null
                                                 )                                                                                        
                                             
                                             })
                                         }
-                                    </div>                                    
-                                }  
+                                    </div>                              
+                                    :null      
+                                }   */}
                             </div>
                     )
                 })
