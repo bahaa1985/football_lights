@@ -20,7 +20,7 @@ export function getPlayerStats(playerId,season){
         url:`https://v3.football.api-sports.io/players?id=${playerId}&season=${season}`,
         headers: {
             'x-rapidapi-host': 'v3.football.api-sports.io',
-            'x-rapidapi-key': '12c3d051c8f77e0840cd9c5e35fd8cd0'
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
         },
 
     };
@@ -34,11 +34,35 @@ export function getPlayerProfile(playerId,season,leagueId){
         url:`https://v3.football.api-sports.io/players?id=${playerId}&season=${season}&league=${leagueId}`,
         headers: {
             'x-rapidapi-host': 'v3.football.api-sports.io',
-            'x-rapidapi-key': '12c3d051c8f77e0840cd9c5e35fd8cd0'
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
         },
 
     };
 
+    return axios(config);
+}
+
+export function getTopScorers(leagueId,season){
+    const config={
+        method:"GET",
+        url:`https://v3.football.api-sports.io/players/topscorers?league=${leagueId}&season=${season}`,
+        headers:{
+            'x-rapidapi-host': 'v3.football.api-sports.io',
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+        }
+    }
+    return axios(config);
+}
+
+export function getTopAssists(leagueId,season){
+    const config={
+        method:"GET",
+        url:`https://v3.football.api-sports.io/players/topassists?league=${leagueId}&season=${season}`,
+        headers:{
+            'x-rapidapi-host': 'v3.football.api-sports.io',
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+        }
+    }
     return axios(config);
 }
 

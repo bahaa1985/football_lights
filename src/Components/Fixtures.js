@@ -6,19 +6,18 @@ import "../styles/fixtures.css";
 import Game from "./Game.js";
 
 function Fixtures(props) {
-  const [Fixtures, setFixtures] = useState([]);
-  // const [fixture, setFixture] = useState(0);
-  const [teams, setTeams] = useState([]);
   
   const league = props.league;
   const season = props.season;
+
+  const [Fixtures, setFixtures] = useState([]);
 
   useEffect(() => {
     console.log(league, season);
     getAllFixtures(league, season).then((result) => {
       setFixtures(result.data.response);
     });
-  }, []);
+  }, [league,season]);
 
   const groupedFixtures = Fixtures.reduce((group, elem) => {
     const gw = elem.league.round;
@@ -29,6 +28,8 @@ function Fixtures(props) {
     return group;
   }, {});
 
+  console.log("fixtures", groupedFixtures);
+
   return (
     <div>       
       {Object.keys(groupedFixtures)
@@ -38,13 +39,14 @@ function Fixtures(props) {
           return (
             <div key={gw_index}>
               <div  className="fixture-date">
-                Game Week {gw_index + 1}
+                { parseInt(league)!==2 ? 'Game Week ' + gw_index + 1 : 'Round ' + Object.keys(groupedFixtures)[gw_index]}
               </div>
               {groupedFixtures[elem].map((elem) => {
                 //iterate to display GW fixtures
                 return ( 
                   <Link to={`/game/${elem.fixture.id}`} >
-                    <div key={elem.fixture.id} className="fixture-teams" onClick={(e)=>e.stopPropagation()}>
+                    <div>{new Date(elem.fixture.date).toDateString() + ' ' + new Date(elem.fixture.date).toTimeString()}</div>
+                    <div key={elem.fixture.id} className="fixture-teams" onClick={(e)=>e.stopPropagation()}>                      
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>
                       <span className="result">{elem.goals.home}</span>
@@ -57,9 +59,7 @@ function Fixtures(props) {
               })}
             </div>
           );
-        })}
-       
-       
+        })}              
     </div>
   );
 }
