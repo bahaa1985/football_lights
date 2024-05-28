@@ -116,57 +116,94 @@ function Events(props){
     return(        
         <div className='events' >          
             {                
-                GROUPED_EVENTS.map((event,index)=>{                    
-                    return(                       
-                            <div ref={event_div} key={index} style={{display:'flex',justifyContent:'center',margin:'5px auto',width:'100%'}}>
-                                {
-                                    parseInt(event[0].team.id)===teams[0] ?
-                                        <div style={{width:'45%',float:'right'}}>
-                                            {
-                                                event.map((event) => {                                        
-                                                    return(
-                                                        event.time.elapsed===index ? 
-                                                        home_events_div( event.player.name,event.assist.name,event.type,event.detail,i++):
-                                                        null
-                                                    )                                                                                                                                
-                                                })
-                                            }
-                                        </div>
-                                    :
-                                        <div style={{width:'45%',float:'left'}}>
-                                            {
-                                                event.map((event) => {                                                                                
-                                                    return(
-                                                        event.time.elapsed===index ? 
-                                                        away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
-                                                        null
-                                                    )                                                                                        
-                                                
-                                                })
-                                            }
-                                        </div> 
-                                    
-                                }
-                                <span style={{width:'10%'}}>{index}</span>
-                                {/* {
-                                    parseInt(event[0].team.id)===teams[1] ?
-                                    <div style={{width:'45%',float:'left'}}>
-                                        {
-                                            event.map((event) => {                                                                                
-                                                return(
-                                                    event.time.elapsed===index ? 
-                                                    away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
-                                                    null
-                                                )                                                                                        
-                                            
-                                            })
-                                        }
-                                    </div>                              
-                                    :null      
-                                }   */}
+                
+                GROUPED_EVENTS.map((events,index)=>{                    
+                    return(                        
+                        <div>
+                             <span>{index}</span>
+                            {
+                            events.map((elem,index)=>{
+                                return(
+                                                            
+                                    <div key={index} style={{width:'90%',margin:'auto'}}>
+                                            {                                        
+                                            home_events_div( elem.player.name,elem.assist.name,elem.type,elem.detail,i++)                                            
+                                            }                                             
+                                    </div>                           
+                                    )
+                            })
+                            }                                                     
                             </div>
-                    )
-                })
+                        )})
+                            // <div ref={event_div} key={index} style={{display:'flex',justifyContent:'center',margin:'5px auto',width:'100%'}}>
+                            //     {
+                            //         event.map((event,index)=>{
+                            //             return(
+                            //             event.team.id===teams[0] && event.time.elapsed===index ? 
+                            //             <div style={{width:'45%',float:'left'}}>
+                            //             {                                        
+                            //             home_events_div( event.player.name,event.assist.name,event.type,event.detail,i++)                                            
+                            //             }
+                            //             </div>
+                            //             :
+                            //             event.team.id===teams[1] && event.time.elapsed===index ? 
+                            //             <div style={{width:'45%',float:'right'}}>
+                            //             {                                        
+                            //             away_events_div( event.player.name,event.assist.name,event.type,event.detail,i++)                                            
+                            //             }
+                            //             </div>
+                            //             :null
+                            //             )                                        
+                            //         })
+                            //         <span style={{width:'10%'}}>{index}</span>
+
+                            //         parseInt(event[0].team.id)===teams[0] ?
+                            //             <div style={{width:'45%',float:'right'}}>
+                            //                 {
+                            //                     event.map((event) => {                                        
+                            //                         return(
+                            //                             event.time.elapsed===index ? 
+                            //                             home_events_div( event.player.name,event.assist.name,event.type,event.detail,i++):
+                            //                             null
+                            //                         )                                                                                                                                
+                            //                     })
+                            //                 }
+                            //             </div>
+                            //         :
+                            //             <div style={{width:'45%',float:'left'}}>
+                            //                 {
+                            //                     event.map((event) => {                                                                                
+                            //                         return(
+                            //                             event.time.elapsed===index ? 
+                            //                             away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
+                            //                             null
+                            //                         )                                                                                        
+                                                
+                            //                     })
+                            //                 }
+                            //             </div> 
+                                    
+                            //     }
+                                // <span style={{width:'10%'}}>{index}</span>
+                            //     {
+                            //         parseInt(event[0].team.id)===teams[1] ?
+                            //         <div style={{width:'45%',float:'left'}}>
+                            //             {
+                            //                 event.map((event) => {                                                                                
+                            //                     return(
+                            //                         event.time.elapsed===index ? 
+                            //                         away_events_div(event.player.name,event.assist.name,event.type,event.detail,i++):
+                            //                         null
+                            //                     )                                                                                        
+                                            
+                            //                 })
+                            //             }
+                            //         </div>                              
+                            //         :null      
+                                // }  
+                            // </div>
+                //     )
+                // })
             }
         </div>
     )}
