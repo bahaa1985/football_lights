@@ -1,5 +1,5 @@
 import React,{ ReactDOM } from 'react'
-import { useState,useEffect, useMemo } from 'react'
+import { useState,useEffect} from 'react'
 import getStandings from '../Api/getStandings.js'
 
 function Standings(props){    
@@ -11,8 +11,7 @@ function Standings(props){
 
     useEffect(()=>{              
         getStandings(league,season).then((result)=>{        
-            setStandings(result.data.response[0].league.standings) 
-            console.log("standing",standings);                                         
+            setStandings(result.data.response[0].league.standings)                                       
     })            
     },[league,season])
     
