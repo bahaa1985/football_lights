@@ -50,6 +50,7 @@ function Fixtures(props) {
                       <img alt="" src={elem.teams.home.logo}></img>
                       <span className="team">{elem.teams.home.name}</span>
                       <span className="result">{elem.goals.home}</span>
+                      <span>{elem.fixture.status.short}</span>
                       <span className="result">{elem.goals.away}</span>
                       <span className="team">{elem.teams.away.name}</span>
                       <img alt="" src={elem.teams.away.logo}></img>

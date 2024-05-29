@@ -39,6 +39,7 @@ function Standings(props){
                                     return(
                                         <tr key={index}>
                                             <td>{elem.rank}</td>
+                                            <td><img src={elem.team.logo} style={{width:'30px',height:'30px'}} alt={elem.team.name}/></td>
                                             <td>{elem.team.name}</td>
                                             <td>{elem.all.played}</td>
                                             <td>{elem.all.win}</td>

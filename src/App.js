@@ -5,7 +5,7 @@ import League from './Components/League.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
 import Team from './Components/Team.js';
-
+import SelectLeagues from './Components/SelectLeagues.js';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
       <NavLink to="/league/135">Le Calcio</NavLink>
       <NavLink to="/league/78">Bundisliga</NavLink>
       <NavLink to="/league/61">Lige Un</NavLink>
-
+      <SelectLeagues />
       <Routes>
         <Route path="/league" element={<League season={season}/>}>
           <Route path=":leagueId"/>          
