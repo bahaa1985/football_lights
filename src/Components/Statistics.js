@@ -4,20 +4,11 @@ import '../styles/statistics.css'
 import { useEffect,useState } from "react";
 
 function Statistics(props){
-    // const home_team=props.teams[0]
-    // const away_team=props.teams[1]
+
     const fixture=props.fixture
     const [homeStatistics,setHomeStatistics]=useState([])
     const [awayStatistics,setAwayStatistics]=useState([])
     const progress_div_ref=useRef();
-    
-    let statistic_obj={
-        "home":0,
-        "away":0,
-        "type":''
-    }
-    
-
     
     useEffect(()=>{
         getStatistics(fixture).then((result)=>{
@@ -25,17 +16,9 @@ function Statistics(props){
             setHomeStatistics(result.data.response[0].statistics);
             setAwayStatistics(result.data.response[1].statistics);
         });                                      
-        console.log(homeStatistics)
+        // console.log(homeStatistics)
     },[fixture])
-
-    // useEffect(()=>{
-    //     getStatistics(fixture.then((result)=>{
-    //         setAwayStatistics(result.data.response[1].statistics)
-    //     });
-    //     console.log('home effect!')
-    // },[fixture,away_team])
-  
-       
+ 
 
     let statistics_arr=[];
     for(let i=0;i<17;i++){

@@ -1,19 +1,21 @@
 import React,{ ReactDOM } from 'react'
-import { useState,useEffect } from 'react'
-import getStandings from '../api/getStandings.js'
+import { useState,useEffect, useMemo } from 'react'
+import getStandings from '../Api/getStandings.js'
 
 function Standings(props){    
-    const [standings,setStandings]=useState([])
+    
     let league=props.league;
     let season=props.season
-    useEffect(()=>{              
-        getStandings(league,season).then((response)=>{        
-            setStandings( response.data.response[0].league.standings[0] )                                          
-    })            
-     
-    },[props])
 
-     
+    const [standings,setStandings]=useState([])
+
+    useEffect(()=>{              
+        getStandings(league,season).then((result)=>{        
+            setStandings(result.data.response[0].league.standings) 
+            console.log("standing",standings);                                         
+    })            
+    },[league,season])
+    
     return(
         <div>
             <table className='table table-hover'>
@@ -31,23 +33,28 @@ function Standings(props){
                     </tr>
                 </thead>
                 <tbody>
-                    {standings.map((d)=>{                                              
-                       
-                        return(
-                            <tr key={d.team.id}>
-                                <td>{d.rank}</td>
-                                <td>{d.team.name}</td>
-                                <td>{d.all.played}</td>
-                                <td>{d.all.win}</td>
-                                <td>{d.all.draw}</td>
-                                <td>{d.all.lose}</td>
-                                <td>{d.all.goals.for}</td>
-                                <td>{d.all.goals.against}</td>
-                                <td>{d.points}</td>
-                            </tr>
-                            
-                        )                      
-                    })}
+                    {
+                        standings.map((group)=>{ 
+                            return(
+                                group.map((elem,index)=>{
+                                    return(
+                                        <tr key={index}>
+                                            <td>{elem.rank}</td>
+                                            <td>{elem.team.name}</td>
+                                            <td>{elem.all.played}</td>
+                                            <td>{elem.all.win}</td>
+                                            <td>{elem.all.draw}</td>
+                                            <td>{elem.all.lose}</td>
+                                            <td>{elem.all.goals.for}</td>
+                                            <td>{elem.all.goals.against}</td>
+                                            <td>{elem.points}</td>
+                                        </tr> 
+                                    )
+                                }
+                            )                                             
+                        )                     
+                        })
+                    }
                 </tbody>
             </table>
         </div>

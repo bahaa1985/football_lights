@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import Standings from './Standing.js';
 import Fixtures from "./Fixtures.js";
 import TopPlayers from "./TopPlayers.js";
 
@@ -23,6 +24,9 @@ export default function League(props){
            <button onClick={()=>setTab("TopScorer")}>Top Scorers</button>
            <button onClick={()=>setTab("TopAssists")}>Top Assists</button>
            {
+            tab === "Standing" ?
+            <Standings league={leagueId} season ={season} />
+            :
             tab === "Fixtures" ?
             <Fixtures league={leagueId} season={season}/>
             : tab==="TopScorer" ?

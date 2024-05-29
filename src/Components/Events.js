@@ -37,7 +37,7 @@ function Events(props){
     },[])   
 
     console.log("grouped events",GROUPED_EVENTS);
-    const home_events_div=(player,assist,type,detail,index)=>{
+    const home_events_div=(player,assist,type,detail,index,team)=>{
         
     return(
             <div key={index} className="events-home">           
@@ -69,7 +69,9 @@ function Events(props){
                     <label className="label-palyer">{type==="subst" ? "Out: " + player: player}</label>
                     <br></br>
                     <label className="label-assist">{type==="subst" ? "In: " + assist: assist}</label>
-                </div>            
+                </div> 
+
+                <img src={team.logo} alt={team.name} />           
             </div>)
     }
 
@@ -125,14 +127,16 @@ function Events(props){
                             events.map((elem,index)=>{
                                 return(
                                                             
-                                    <div key={index} style={{width:'90%',margin:'auto'}}>
+                                    <div key={index} style={{width:'60%',margin:'auto'}}>
                                             {                                        
-                                            home_events_div( elem.player.name,elem.assist.name,elem.type,elem.detail,i++)                                            
-                                            }                                             
+                                            home_events_div( elem.player.name,elem.assist.name,elem.type,elem.detail,i++,elem.team)                                            
+                                            }  
+                                            {/* <img style={{width:'60px',height:'60px'}} src={elem.team.logo}  alt={elem.team.name}/>                                              */}
                                     </div>                           
                                     )
                             })
-                            }                                                     
+                            }  
+                                                                            
                             </div>
                         )})
                             // <div ref={event_div} key={index} style={{display:'flex',justifyContent:'center',margin:'5px auto',width:'100%'}}>
