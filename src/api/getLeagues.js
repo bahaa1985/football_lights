@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-function getLeagues(country){
+function getLeagues(country,season){
     let config={
         method:'GET',
-        url:`https://v3.football.api-sports.io/leagues?country=${country}`,
+        url:`https://v3.football.api-sports.io/leagues?country=${country}&season=${season}`,
         headers: {
             'x-rapidapi-host': 'v3.football.api-sports.io',
-            'x-rapidapi-key': '12c3d051c8f77e0840cd9c5e35fd8cd0'
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
           }
     };
     return axios(config)
