@@ -157,33 +157,59 @@ function LineUp(props){
                 <button onClick={()=>setClickedTeam("away")}>{awayTeam}</button>
             </div>
            
-                {                    
-                    clickedTeam==="home"?
-                    <>
+                {/* {                     */}
+                    // clickedTeam==="home"?
+                    // <>
                         <div>Formation: {homeFormation.join('-')}</div>
                         <div className='scoresheet'>                            
                             <div className='pitch'>
-                                <div className='line' key={1} >                                   
-                                <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
+                                <div className="home-scoresheet">
+                                    <div className='line' key={1} >                                   
+                                    <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
+                                    </div>
+                                    
+                                    <div className='line' key={2} >                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} />                                    
+                                    </div>
+                                    
+                                    <div className='line' key={3} >                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor}/>                                   
+                                    </div>
+                                    
+                                    <div className='line' key={4}>                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor}/>                                   
+                                    </div>
+                                    {
+                                        homeFormation.length>3 ?
+                                        <div className='line' key={5} >                                   
+                                            <PlayerPosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} />                                   
+                                        </div>:null
+                                    }         
                                 </div>
-                                
-                                <div className='line' key={2} >                                    
-                                    <PlayerPosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} />                                    
-                                </div>
-                                
-                                <div className='line' key={3} >                                    
-                                    <PlayerPosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor}/>                                   
-                                </div>
-                                
-                                <div className='line' key={4}>                                    
-                                    <PlayerPosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor}/>                                   
-                                </div>
-                                {
-                                    homeFormation.length>3 ?
-                                    <div className='line' key={5} >                                   
-                                        <PlayerPosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} />                                   
-                                    </div>:null
-                                }                            
+                                <div className="away-scoresheet">
+                                    <div className='line' key={1} > 
+                                        <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
+                                    </div>
+                                    
+                                    <div className='line' key={2}>                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
+                                    </div>
+                                    
+                                    <div className='line' key={3} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    
+                                    <div className='line' key={4} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    {
+                                        awayFormation.length > 3 ? 
+                                            <div className='line' key={5} >                                   
+                                                <PlayerPosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor}/>                                   
+                                            </div>
+                                        :null
+                                    } 
+                                </div>                                                   
                             </div>
                             <div className='bench'>
                                 <div className='coach'>
@@ -224,44 +250,23 @@ function LineUp(props){
                            
                         </div> 
                         
-                    </>
+                //     </>
                                                                     
-                :
+                // :
 
-                clickedTeam==="away"? 
-                <>
-                    <div>Formation: {awayFormation.join('-')}</div> 
+                // clickedTeam==="away"? 
+                // <>
+                    {/* <div>Formation: {awayFormation.join('-')}</div> 
                     <div className='scoresheet'>
                         <div className='pitch'> 
-                            <div className='line' key={1} > 
-                                <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
-                            </div>
-                            
-                            <div className='line' key={2}>                                    
-                                <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
-                            </div>
-                            
-                            <div className='line' key={3} >                                    
-                                <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
-                            </div>
-                            
-                            <div className='line' key={4} >                                    
-                                <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
-                            </div>
-                            {
-                                awayFormation.length > 3 ? 
-                                    <div className='line' key={5} >                                   
-                                        <PlayerPosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor}/>                                   
-                                    </div>
-                                :null
-                            }                   
+                                              
                         </div>
                         <div className='bench'>
                                 <div className='coach'>
                                     <img alt='' src={awayCoach.photo}/>                                    
                                     <span>Coach: {awayCoach.name}</span>
                                 </div>
-                                {/*  */}
+                              
                                 <div className='substitues'>
                                 {
                                     awaySub.map((sub)=>{                                        
@@ -293,12 +298,12 @@ function LineUp(props){
                                 }
                             </div>
                             </div>
-                    </div>
+                    </div> */}
                     
-                </>                                          
-                :
-                null  
-            }
+                // </>                                          
+                // :
+                // null  
+            {/* } */}
         </div>
     )
 }

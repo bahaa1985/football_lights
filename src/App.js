@@ -17,6 +17,11 @@ function App() {
   
   return (
      <Router>
+      <nav>
+        <div><img />Preference</div>
+        <div></div>
+        <div></div>
+      </nav>
       <NavLink to="/league/2">UFL</NavLink>
       <NavLink to="/league/39">EPL</NavLink>
       <NavLink to="/league/140">La Liga</NavLink>
