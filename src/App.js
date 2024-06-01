@@ -1,13 +1,14 @@
 
 import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import League from './Components/League.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
 import Team from './Components/Team.js';
-import SelectLeagues from './Components/SelectLeagues.js';
+import PreferedLeagues from './Components/PreferedLeagues.js';
+import PreferedTeams from './Components/PreferedTeams.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
-import { useState } from 'react';
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
       <NavLink to="/league/135">Le Calcio</NavLink>
       <NavLink to="/league/78">Bundisliga</NavLink>
       <NavLink to="/league/61">Lige Un</NavLink>
-      <SelectLeagues season={season} />
+      <PreferedLeagues />
+      <PreferedTeams />
       <button onClick={()=>setViewCurrent(!viewCurrent)}>Currrent</button>
       {
         viewCurrent ? <CurrentFixtures /> : null
