@@ -156,7 +156,7 @@ function LineUp(props){
                 <button onClick={()=>setClickedTeam("home")}>{homeTeam}</button>
                 <button onClick={()=>setClickedTeam("away")}>{awayTeam}</button>
             </div>
-           
+            
                 {/* {                     */}
                     // clickedTeam==="home"?
                     // <>
