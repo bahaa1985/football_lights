@@ -29,20 +29,20 @@ function PlayerPosition(props){
                     playerNameArr=player.player.name.split(' ');
                     playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
                     return(
-                    <NavLink to={`/player/${player.player.id}`} key={index} style={{textAlign:'center'}} >
+                    <NavLink to={`/player/${player.player.id}`} key={index} style={{textAlign:'center',width:'18%'}} >
                         <div className='player-mark' style={{backgroundColor:'#'+colors.primary}}>
                             <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
                                 {player.statistics[0].games.rating}
-                            </span>
-                            <span className='player-number' style={{color:colors.number}}>{player.player.number}</span>
-                        </div>                                                                                                                                                  
+                            </span>                           
+                        </div> 
+                        <span className='player-number' style={{color:colors.number}}>{player.player.number}</span>                                                                                                                                                 
                         <span className='player-name'>
                                 {
                                     playerNameArr.length> 1 ?
                                     playerNameArr.slice(1) :
                                     playerNameArr[0]
                                 }
-                            </span>                                                                                                                                                        
+                        </span>                                                                                                                                                        
                         {/* <span className="player-mark" style={{backgroundColor:colors.primary}}>
                             
                         </span>
@@ -166,8 +166,7 @@ function LineUp(props){
                                 <div className="home-scoresheet">
                                     <div className='line' key={1} >                                   
                                     <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
-                                    </div>
-                                    
+                                    </div>                                    
                                     <div className='line' key={2} >                                    
                                         <PlayerPosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} />                                    
                                     </div>
@@ -187,21 +186,6 @@ function LineUp(props){
                                     }         
                                 </div>
                                 <div className="away-scoresheet">
-                                    <div className='line' key={1} > 
-                                        <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
-                                    </div>
-                                    
-                                    <div className='line' key={2}>                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
-                                    </div>
-                                    
-                                    <div className='line' key={3} >                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
-                                    </div>
-                                    
-                                    <div className='line' key={4} >                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
-                                    </div>
                                     {
                                         awayFormation.length > 3 ? 
                                             <div className='line' key={5} >                                   
@@ -209,6 +193,18 @@ function LineUp(props){
                                             </div>
                                         :null
                                     } 
+                                    <div className='line' key={4} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    <div className='line' key={3} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    <div className='line' key={2}>                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
+                                    </div>
+                                    <div className='line' key={1} > 
+                                        <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
+                                    </div>
                                 </div>                                                   
                             </div>
                             <div className='bench'>
