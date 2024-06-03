@@ -153,6 +153,7 @@ function LineUp(props){
     return(    
         <div>         
             <div className='pitch'>
+            
                                 <div className="home-scoresheet">
                                     <div className='line' key={1} >                                   
                                     <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
@@ -202,7 +203,7 @@ function LineUp(props){
                                     <img alt='' src={homeCoach.photo}/>                                    
                                     <span>Coach: {homeCoach.name}</span>
                                 </div>
-                                {/*  */}
+                                <div>Formation: {homeFormation.join('-')}</div>
                                 <div className='substitues'>
                                 {
                                     homeSub.map((sub)=>{
@@ -236,7 +237,7 @@ function LineUp(props){
                                     <img alt='' src={awayCoach.photo}/>                                    
                                     <span>Coach: {awayCoach.name}</span>
                                 </div>
-                              
+                                <div>Formation: {awayFormation.join('-')}</div>
                                 <div className='substitues'>
                                 {
                                     awaySub.map((sub)=>{                                        
@@ -267,155 +268,7 @@ function LineUp(props){
                                     })
                                 }
                             </div>
-            </div>                   
-            {/* <div style={{display:'flex',justifyContent:'center',width:'50%',margin:'auto'}}>
-                <button onClick={()=>setClickedTeam("home")}>{homeTeam}</button>
-                <button onClick={()=>setClickedTeam("away")}>{awayTeam}</button>
-            </div> */}
-            
-            
-                    clickedTeam==="home"?
-                    <>
-                        {/* <div>Formation: {homeFormation.join('-')}</div> */}
-                        {/* <div className='scoresheet'>                            
-                            <div className='pitch'>
-                                <div className="home-scoresheet">
-                                    <div className='line' key={1} >                                   
-                                    <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
-                                    </div>                                    
-                                    <div className='line' key={2} >                                    
-                                        <PlayerPosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} />                                    
-                                    </div>
-                                    
-                                    <div className='line' key={3} >                                    
-                                        <PlayerPosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor}/>                                   
-                                    </div>
-                                    
-                                    <div className='line' key={4}>                                    
-                                        <PlayerPosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor}/>                                   
-                                    </div>
-                                    {
-                                        homeFormation.length>3 ?
-                                        <div className='line' key={5} >                                   
-                                            <PlayerPosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} />                                   
-                                        </div>:null
-                                    }         
-                                </div>
-                                <div className="away-scoresheet">
-                                    {
-                                        awayFormation.length > 3 ? 
-                                            <div className='line' key={5} >                                   
-                                                <PlayerPosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor}/>                                   
-                                            </div>
-                                        :null
-                                    } 
-                                    <div className='line' key={4} >                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
-                                    </div>
-                                    <div className='line' key={3} >                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
-                                    </div>
-                                    <div className='line' key={2}>                                    
-                                        <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
-                                    </div>
-                                    <div className='line' key={1} > 
-                                        <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
-                                    </div>
-                                </div>                                                   
-                            </div>
-                            <div className='bench'>
-                                <div className='coach'>
-                                    <img alt='' src={homeCoach.photo}/>                                    
-                                    <span>Coach: {homeCoach.name}</span>
-                                </div>
-                                {/*  */}
-                                {/* <div className='substitues'>
-                                {
-                                    homeSub.map((sub)=>{
-                                        // eslint-disable-next-line no-lone-blocks
-                                        {
-                                            playerNameArr=sub.player.name.split(' ');
-                                            playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
-                                        }
-                                        return(
-                                            <div>
-                                                <span className='player-number'>{sub.player.number}</span>
-                                                <span className='player-name'>
-                                                {
-                                                    playerNameArr.length> 1 ?
-                                                    playerNameArr.slice(1) :
-                                                    playerNameArr[0]
-                                                }
-                                                </span> 
-                                                <span>{sub.player.pos}</span>                                                                                            
-                                                <span>
-                                                    {
-
-                                                    }
-                                                </span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div> 
-                            </div>
-                           
-                        </div>  */}
-                        
-                //     </>
-                                                                    
-                // :
-
-                // clickedTeam==="away"? 
-                // <>
-                    {/* <div>Formation: {awayFormation.join('-')}</div> 
-                    <div className='scoresheet'>
-                        <div className='pitch'> 
-                                              
-                        </div>
-                        <div className='bench'>
-                                <div className='coach'>
-                                    <img alt='' src={awayCoach.photo}/>                                    
-                                    <span>Coach: {awayCoach.name}</span>
-                                </div>
-                              
-                                <div className='substitues'>
-                                {
-                                    awaySub.map((sub)=>{                                        
-                                        playerNameArr=sub.player.name.split(' ')
-                                        playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0]                                        
-                                        
-                                        return(
-                                            <div>
-                                                <span className='player-number'>{sub.player.number}</span>
-                                                <span className='player-name'>
-                                                {
-                                                    // playerNameArr.length> 1 ?
-                                                    // playerNameArr.slice(1) :
-                                                    // playerNameArr[0]
-                                                    playerName
-                                                    // sub.player.id
-                                                }
-                                                </span> 
-                                                <span>{sub.player.pos}</span>                                                                                            
-                                                <span>
-                                                    {
-                                                        //event:
-
-                                                    }
-                                                </span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            </div>
-                    </div> */}
-                    
-                // </>                                          
-                // :
-                // null  
-            {/* } */}
+            </div>                              
         </div>
     )
 }
