@@ -29,7 +29,7 @@ function PlayerPosition(props){
                     playerNameArr=player.player.name.split(' ');
                     playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
                     return(
-                    <NavLink to={`/player/${player.player.id}`} key={index} style={{textAlign:'center',width:'18%'}} >
+                    <NavLink to={`/player/${player.player.id}`} key={index} style={{textAlign:'center',maxWidth:'18%'}} >
                         <div className='player-mark' style={{backgroundColor:'#'+colors.primary}}>
                             <span className="player-rating" style={{ backgroundColor:player.statistics[0].games.ratingColor}}>
                                 {player.statistics[0].games.rating}
@@ -151,17 +151,133 @@ function LineUp(props){
     
     let playerNameArr=[],playerName="";  
     return(    
-        <div>                   
-            <div style={{display:'flex',justifyContent:'center',width:'50%',margin:'auto'}}>
+        <div>         
+            <div className='pitch'>
+                                <div className="home-scoresheet">
+                                    <div className='line' key={1} >                                   
+                                    <PlayerPosition lineup={homeLineUp}  grid={"1"} colors={homeGkColor}/>
+                                    </div>                                    
+                                    <div className='line' key={2} >                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} />                                    
+                                    </div>
+                                    
+                                    <div className='line' key={3} >                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor}/>                                   
+                                    </div>
+                                    
+                                    <div className='line' key={4}>                                    
+                                        <PlayerPosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor}/>                                   
+                                    </div>
+                                    {
+                                        homeFormation.length>3 ?
+                                        <div className='line' key={5} >                                   
+                                            <PlayerPosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} />                                   
+                                        </div>:null
+                                    }         
+                                </div>
+                                <div className="away-scoresheet">
+                                    {
+                                        awayFormation.length > 3 ? 
+                                            <div className='line' key={5} >                                   
+                                                <PlayerPosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor}/>                                   
+                                            </div>
+                                        :null
+                                    } 
+                                    <div className='line' key={4} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    <div className='line' key={3} >                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor}/>                                   
+                                    </div>
+                                    <div className='line' key={2}>                                    
+                                        <PlayerPosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor}/>                                    
+                                    </div>
+                                    <div className='line' key={1} > 
+                                        <PlayerPosition lineup={awayLineUp}  grid={"1"} colors={awayGkColor}/>
+                                    </div>
+                                </div>                                                   
+            </div>
+            <div className='coachSubs-div'>
+            <div className='coach'>
+                                    <img alt='' src={homeCoach.photo}/>                                    
+                                    <span>Coach: {homeCoach.name}</span>
+                                </div>
+                                {/*  */}
+                                <div className='substitues'>
+                                {
+                                    homeSub.map((sub)=>{
+                                        // eslint-disable-next-line no-lone-blocks
+                                        {
+                                            playerNameArr=sub.player.name.split(' ');
+                                            playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0];
+                                        }
+                                        return(
+                                            <div>
+                                                <span className='player-number'>{sub.player.number}</span>
+                                                <span className='player-name'>
+                                                {
+                                                    playerNameArr.length> 1 ?
+                                                    playerNameArr.slice(1) :
+                                                    playerNameArr[0]
+                                                }
+                                                </span> 
+                                                <span>{sub.player.pos}</span>                                                                                            
+                                                <span>
+                                                    {
+
+                                                    }
+                                                </span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div> 
+                            <div className='coach'>
+                                    <img alt='' src={awayCoach.photo}/>                                    
+                                    <span>Coach: {awayCoach.name}</span>
+                                </div>
+                              
+                                <div className='substitues'>
+                                {
+                                    awaySub.map((sub)=>{                                        
+                                        playerNameArr=sub.player.name.split(' ')
+                                        playerNameArr.length> 1 ? playerName= playerNameArr.slice(1) : playerName= playerNameArr[0]                                        
+                                        
+                                        return(
+                                            <div>
+                                                <span className='player-number'>{sub.player.number}</span>
+                                                <span className='player-name'>
+                                                {
+                                                    // playerNameArr.length> 1 ?
+                                                    // playerNameArr.slice(1) :
+                                                    // playerNameArr[0]
+                                                    playerName
+                                                    // sub.player.id
+                                                }
+                                                </span> 
+                                                <span>{sub.player.pos}</span>                                                                                            
+                                                <span>
+                                                    {
+                                                        //event:
+
+                                                    }
+                                                </span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+            </div>                   
+            {/* <div style={{display:'flex',justifyContent:'center',width:'50%',margin:'auto'}}>
                 <button onClick={()=>setClickedTeam("home")}>{homeTeam}</button>
                 <button onClick={()=>setClickedTeam("away")}>{awayTeam}</button>
-            </div>
+            </div> */}
             
-                {/* {                     */}
-                    // clickedTeam==="home"?
-                    // <>
-                        <div>Formation: {homeFormation.join('-')}</div>
-                        <div className='scoresheet'>                            
+            
+                    clickedTeam==="home"?
+                    <>
+                        {/* <div>Formation: {homeFormation.join('-')}</div> */}
+                        {/* <div className='scoresheet'>                            
                             <div className='pitch'>
                                 <div className="home-scoresheet">
                                     <div className='line' key={1} >                                   
@@ -213,7 +329,7 @@ function LineUp(props){
                                     <span>Coach: {homeCoach.name}</span>
                                 </div>
                                 {/*  */}
-                                <div className='substitues'>
+                                {/* <div className='substitues'>
                                 {
                                     homeSub.map((sub)=>{
                                         // eslint-disable-next-line no-lone-blocks
@@ -241,10 +357,10 @@ function LineUp(props){
                                         )
                                     })
                                 }
-                            </div>
+                            </div> 
                             </div>
                            
-                        </div> 
+                        </div>  */}
                         
                 //     </>
                                                                     
