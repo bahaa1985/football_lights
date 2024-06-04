@@ -106,7 +106,7 @@ a{
     height:max-content;  
     text-align: center;
     border-color: black;
-    color:#fff;
+    /* color:#fff; */
     font-size: 12px;
     padding: 4px;    
 }

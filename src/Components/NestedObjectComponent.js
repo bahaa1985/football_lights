@@ -29,7 +29,6 @@ const NestedObjectComponent = ({ data, isParent=true }) => {
 
   return (
     <div>
-      <h1>User Information</h1>
       {renderNestedObject(data)}
     </div>
   );

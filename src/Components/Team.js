@@ -95,7 +95,7 @@ export default function Team(props){
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))}>  
+                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId}>  
                     {
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
