@@ -2,10 +2,8 @@
 import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js'
 import League from './Components/League.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
@@ -13,6 +11,7 @@ import Team from './Components/Team.js';
 import PreferedLeagues from './Components/PreferedLeagues.js';
 import PreferedTeams from './Components/PreferedTeams.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
+import Preferences from './Components/Preference.js';
 
 function App() {
 
@@ -21,48 +20,45 @@ function App() {
   
   return (
      <Router>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Logo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Teams</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Leagues</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Statistics</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="/preferences">Preferences</a>
+              </li>     
+            </ul>
+          </div>
+        </div>
+</nav>
       <NavLink to="/league/2">UFL</NavLink>
       <NavLink to="/league/39">EPL</NavLink>
       <NavLink to="/league/140">La Liga</NavLink>
       <NavLink to="/league/135">Le Calcio</NavLink>
       <NavLink to="/league/78">Bundisliga</NavLink>
       <NavLink to="/league/61">Lige Un</NavLink>
-      <PreferedLeagues />
+      {/* <PreferedLeagues />
       <PreferedTeams />
       <button onClick={()=>setViewCurrent(!viewCurrent)}>Currrent</button>
       {
         viewCurrent ? <CurrentFixtures /> : null
-      }
+      } */}
       <Routes>
+        {/* <Route path='/' element={<App />}>
+        </Route> */}
         <Route path="/league" element={<League season={season}/>}>
           <Route path=":leagueId"/>          
         </Route>
@@ -75,7 +71,9 @@ function App() {
         <Route path="/player" element={<Player season={season}/>}>
           <Route path=":playerId"/>
         </Route>
-        
+        <Route path="/preferences" element={<Preferences />}>
+
+        </Route>
       </Routes>
 
      </Router>
