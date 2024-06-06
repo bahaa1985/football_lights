@@ -11,7 +11,7 @@ export default function Preferences(params) {
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
   let selectedTeams = [];
-  let selectedLeagues = [];
+  const [selectedLeagues,setSelectedLeagues] = useState([]);
 
   useEffect(() => {
     getLeagues(searchLeague).then((result) => {
@@ -51,10 +51,10 @@ export default function Preferences(params) {
                 alt={elem.league.name}
               />
               <input
-                type="checkbox" checked={false}
-                onChange={(e) =>
+                type="checkbox" value={elem.league.id} defaultChecked={(e)=>e.target.value === elem.league.id ? false:null}
+                onChange={(e)=>
                   e.target.checked
-                    ? [selectedLeagues.push(parseInt(elem.league.id)),console.log(selectedLeagues)]
+                    ? [selectedLeagues.push(parseInt(elem.league.id)),setSelectedLeagues(selectedLeagues),console.log(selectedLeagues)]
                     : [selectedLeagues.splice(
                         selectedLeagues.indexOf(parseInt(elem.league.id)),
                         1
@@ -64,11 +64,11 @@ export default function Preferences(params) {
             </div>
           );
         })}
-        <div>
+        {/* <div>
           {selectedLeagues.map((elem, index) => {
             return <div>{elem}</div>;
           })}
-        </div>
+        </div> */}
         <div>
           <button onClick={() => handleLeaguesCookie()}>
             Selected Leagues
