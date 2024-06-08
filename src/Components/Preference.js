@@ -8,18 +8,34 @@ export default function Preferences(params) {
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [selectedLeagues,setSelectedLeagues] = useState([]);
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
   let selectedTeams = [];
-  const [selectedLeagues,setSelectedLeagues] = useState([]);
+
 
   useEffect(() => {
     getLeagues(searchLeague).then((result) => {
       setLeagues(result.data.response);
+      for(let i=0;i<leagues.length;i++){
+        // leagues[i].selected=true;
+        if(selectedLeagues.indexOf(leagues[i].id)===-1) {
+          leagues[i].selected=false;
+        }
+        else{
+          leagues[i].selected=true;
+        }
+      };
+      console.log("leagues",leagues);
     });
+    
     getTeam(searchTeam).then((result) => {
       setTeams(result.data.response);
     });
+    for(let i=0;i<teams.length;i++){
+      teams[i].selected=false;
+    }
+    
   }, [searchLeague, searchTeam]);
 
   function handleLeaguesCookie() {
@@ -31,6 +47,14 @@ export default function Preferences(params) {
     const cookie = new Cookies();
     cookie.set("preferedTeams", selectedTeams);
   }
+
+  function addSelectedLeagueToArray(elem){
+    selectedLeagues.push(parseInt(elem.league.id))
+    setSelectedLeagues(selectedLeagues)
+    elem.league.selected=true;
+  }
+console.log("selected",selectedLeagues);
+
   return (
     <div>
       {/* search leagues */}
@@ -51,10 +75,10 @@ export default function Preferences(params) {
                 alt={elem.league.name}
               />
               <input
-                type="checkbox" value={elem.league.id} defaultChecked={(e)=>e.target.value === elem.league.id ? false:null}
+                type="checkbox" value={elem.league.id} checked={elem.selected}
                 onChange={(e)=>
                   e.target.checked
-                    ? [selectedLeagues.push(parseInt(elem.league.id)),setSelectedLeagues(selectedLeagues),console.log(selectedLeagues)]
+                    ? [addSelectedLeagueToArray(elem),console.log(selectedLeagues)]
                     : [selectedLeagues.splice(
                         selectedLeagues.indexOf(parseInt(elem.league.id)),
                         1
