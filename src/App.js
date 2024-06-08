@@ -8,8 +8,6 @@ import League from './Components/League.js';
 import Game from './Components/Game.js';
 import Player from './Components/Player.js';
 import Team from './Components/Team.js';
-import PreferedLeagues from './Components/PreferedLeagues.js';
-import PreferedTeams from './Components/PreferedTeams.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
 

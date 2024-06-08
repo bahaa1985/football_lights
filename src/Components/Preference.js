@@ -9,31 +9,34 @@ export default function Preferences(params) {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [selectedLeagues,setSelectedLeagues] = useState([]);
+  const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
   let selectedTeams = [];
 
 
   useEffect(() => {
-    getLeagues(searchLeague).then((result) => {
-      setLeagues(result.data.response);
-      for(let i=0;i<leagues.length;i++){
-        // leagues[i].selected=true;
-        if(selectedLeagues.indexOf(leagues[i].id)===-1) {
-          leagues[i].selected=false;
-        }
-        else{
-          leagues[i].selected=true;
-        }
-      };
-      console.log("leagues",leagues);
-    });
-    
-    getTeam(searchTeam).then((result) => {
-      setTeams(result.data.response);
-    });
-    for(let i=0;i<teams.length;i++){
-      teams[i].selected=false;
+    if(searchLeague.trim().length>0){
+      getLeagues(searchLeague).then((result) => {
+        // setLeagues(result.data.response);
+        // for(let i=0;i<result.data.response.length;i++){
+        //   // leagues[i].selected=true;
+        //   if(selectedLeagues.indexOf(result.data.response[i].league.id)===-1) {
+        //     result.data.response[i].selected=false;
+        //   }
+        //   else{
+        //     result.data.response[i].selected=true;
+        //   }
+        // };
+        setLeagues(result.data.response);
+        
+      });
+    }
+        
+    if(searchTeam.trim().length>0){
+      getTeam(searchTeam).then((result) => {
+        setTeams(result.data.response);
+      });
     }
     
   }, [searchLeague, searchTeam]);
@@ -49,10 +52,29 @@ export default function Preferences(params) {
   }
 
   function addSelectedLeagueToArray(elem){
-    selectedLeagues.push(parseInt(elem.league.id))
-    setSelectedLeagues(selectedLeagues)
-    elem.league.selected=true;
+    if(selectedLeagues.indexOf(elem.league.id) === -1){
+      selectedLeagues.push(parseInt(elem.league.id))
+      return true;
+    }
+    else {
+      selectedLeagues.splice(selectedLeagues.indexOf(parseInt(elem.league.id)),1)
+      return false;
+    }
   }
+
+  function isLeagueSelected(leagueId){
+    if(selectedLeagues.indexOf(leagueId) > -1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  
+  function toggleBackgroundColor(){
+    if(backgroundSelected === 'white');
+  }
+  console.log("leagues",leagues);
 console.log("selected",selectedLeagues);
 
   return (
@@ -67,24 +89,27 @@ console.log("selected",selectedLeagues);
         </button>
         {leagues?.map((elem, index) => {
           return (
-            <div key={index}>
-              {elem.league.name} {elem.league.id} ({elem.country.name})         
+            <div key={index} onClick={()=>{
+              addSelectedLeagueToArray(elem);
+              console.log("selected",selectedLeagues);
+              backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
+            }}          
+            style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}>
               <img
                 src={elem.league?.logo}
                 style={{ width: "40px", height: "40px" }}
                 alt={elem.league.name}
-              />
-              <input
+              /> 
+              {elem.league.name} {elem.league.id} ({elem.country.name})         
+                           
+              {/* <input
                 type="checkbox" value={elem.league.id} checked={elem.selected}
-                onChange={(e)=>
+                onChange={(e)=>[
                   e.target.checked
-                    ? [addSelectedLeagueToArray(elem),console.log(selectedLeagues)]
-                    : [selectedLeagues.splice(
-                        selectedLeagues.indexOf(parseInt(elem.league.id)),
-                        1
-                      ),console.log(selectedLeagues)]
+                    ? addSelectedLeagueToArray(elem) : removeFromSelectedLeagueArray(elem)
+                  ,console.log(selectedLeagues)]
                 }
-              />
+              /> */}
             </div>
           );
         })}
