@@ -11,11 +11,10 @@ export default function Preferences(params) {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [selectedLeagues,setSelectedLeagues] = useState([]);
+  const [selectedTeams,setSelectedTeams]=useState([]);
   const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
-  let selectedTeams = [];
-
 
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -43,22 +42,26 @@ export default function Preferences(params) {
     cookie.set("preferedTeams", selectedTeams);
   }
 
-  function handleSelectedLeague(elem,leagueId=0){
-    if(elem !== null && selectedLeagues.indexOf(selectedLeagues.filter(elem=>elem.league.id===leagueId)[0]) === -1){
-      setSelectedLeagues(selectedLeagues.push(elem));
-    }
-    else {
-      setSelectedLeagues(selectedLeagues.splice(selectedLeagues.indexOf(selectedLeagues.filter(elem=>elem.league.id===leagueId)[0]),1));
+  function addToSelectedLeagues(elem){
+    if(elem !== null && selectedLeagues.indexOf(elem) === -1){
+      selectedLeagues.push(elem);
     }
   }
 
-  function isLeagueSelected(leagueId){
-    if(selectedLeagues.indexOf(leagueId) > -1){
-      return true;
+  function removeFromSelectedLeagues(index){       
+    setSelectedLeagues(selectedLeagues.slice(0,index).concat(selectedLeagues.slice(index+1)));
+    selectedLeagues.splice(index,1);
+  }
+
+  function addToSelectedTeams(elem){
+    if(elem !== null && selectedTeams.indexOf(elem) === -1){
+      selectedTeams.push(elem);
     }
-    else{
-      return false;
-    }
+  }
+
+  function removeFromSelectedTeams(index){       
+    setSelectedTeams(selectedTeams.slice(0,index).concat(selectedTeams.slice(index+1)));
+    selectedTeams.splice(index,1);
   }
   
 // console.log("leagues",leagues);
@@ -77,11 +80,12 @@ export default function Preferences(params) {
           {leagues?.map((elem, index) => {
             return (
               <div key={index} onClick={()=>{
-                handleSelectedLeague(elem);
+                addToSelectedLeagues(elem);
                 console.log("selected",selectedLeagues);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
               }}          
-              style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}>
+              // style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}
+              >
                 <img
                   src={elem.league?.logo}
                   style={{ width: "40px", height: "40px" }}
@@ -96,9 +100,13 @@ export default function Preferences(params) {
         <div className="col-sm-6">
           {selectedLeagues?.map((elem, index) => {
             return (
-                  <div key={index} onClick={()=>[handleSelectedLeague(elem,elem.league.id),console.log("selected",selectedLeagues)]}>
+                  <div key={index} onClick={()=>[
+                    removeFromSelectedLeagues(index),
+                    console.log("selected",selectedLeagues)
+                    ]}>
                     <img src={elem.league.logo} alt={elem.league.name}/>
                     <div>{elem.league.name}</div>
+                    <span>{index}</span>
                   </div>
                 )
           })}
@@ -110,43 +118,43 @@ export default function Preferences(params) {
       {/* search leagues */}
      
       {/* search teams */}
-      <div>
-        <input type="text" ref={searchTeamInput} />
-        <button onClick={() => setSearchTeam(searchTeamInput.current.value)}>
-          Search
-        </button>
-        {teams?.map((elem, index) => {
-          return (
-            <div key={index}>
-              {elem.team.name} {elem.team.id} ({elem.team.country})
-              <img
-                src={elem.team?.logo}
-                style={{ width: "40px", height: "40px" }}
-                alt={elem.team.name}
-              />
-              <input
-                type="checkbox"
-                onChange={(e) =>
-                  e.target.checked
-                    ? [selectedTeams.push(parseInt(elem.team.id)),console.log(selectedTeams)]
-                    : selectedTeams.splice(
-                        selectedTeams.indexOf(parseInt(elem.team.id)),
-                        1
-                      )
-                }
-              />
+      <div className="container-fluid d-flex flex-wrap text-center">
+              <div className="col-sm-6">
+            <input type="text" ref={searchTeamInput} />
+            <button onClick={() => setSearchTeam(searchTeamInput.current.value)}>
+              Search
+            </button>
+            {teams?.map((elem, index) => {
+              return (
+                <div key={index} onClick={()=>[addToSelectedTeams(elem),console.log("selected teams",selectedTeams)]}>
+                  {elem.team.name} {elem.team.id} ({elem.team.country})
+                  <img
+                    src={elem.team?.logo}
+                    style={{ width: "40px", height: "40px" }}
+                    alt={elem.team.name}
+                  />              
+                </div>
+              );
+            })}
+            <div>          
+        </div>
             </div>
-          );
-        })}
-        <div>
-          {selectedTeams.map((elem, index) => {
-            return <div>{elem}</div>;
-          })}
-        </div>
-        <div>
-          <button onClick={() => handleTeamsCookie()}>Selected Teams</button>
-        </div>
+            <div className="col-sm-6">
+              {selectedTeams?.map((elem, index) => {
+                return (
+                  <div key={index} onClick={()=>[
+                    removeFromSelectedTeams(index),
+                    console.log("selected teams",selectedTeams)
+                    ]}>
+                    <img src={elem.team.logo} alt={elem.team.name}/>
+                    <div>{elem.team.name}</div>
+                    <span>{index}</span>
+                  </div>
+                )
+              })}
+              <button onClick={() => [handleTeamsCookie(),console.log("selected teams",selectedTeams)]}>Selected Teams</button>
+            </div>
+      </div>                      
       </div>
-    </div>
   );
 }

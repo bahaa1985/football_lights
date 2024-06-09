@@ -42,12 +42,12 @@ function App() {
           </div>
         </div>
 </nav>
-      <NavLink to="/league/2">UFL</NavLink>
+      {/* <NavLink to="/league/2">UFL</NavLink>
       <NavLink to="/league/39">EPL</NavLink>
       <NavLink to="/league/140">La Liga</NavLink>
       <NavLink to="/league/135">Le Calcio</NavLink>
       <NavLink to="/league/78">Bundisliga</NavLink>
-      <NavLink to="/league/61">Lige Un</NavLink>
+      <NavLink to="/league/61">Lige Un</NavLink> */}
       {/* <PreferedLeagues />
       <PreferedTeams />
       <button onClick={()=>setViewCurrent(!viewCurrent)}>Currrent</button>
@@ -55,8 +55,8 @@ function App() {
         viewCurrent ? <CurrentFixtures /> : null
       } */}
       <Routes>
-        {/* <Route path='/' element={<App />}>
-        </Route> */}
+        <Route path='/' element={<CurrentFixtures />}>
+        </Route>
         <Route path="/league" element={<League season={season}/>}>
           <Route path=":leagueId"/>          
         </Route>

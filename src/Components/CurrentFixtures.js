@@ -26,7 +26,7 @@ export default function CurrentFixtures() {
     }
     const teamsArr=getTeamsCookie()
     return(
-        <div>
+        <div> Welcome to home!
            <div id="div-leagues" onLoad={()=>getLeaguesCookie()}> HI
                 {
                     leaguesArr?
