@@ -10,11 +10,22 @@ export default function Preferences(params) {
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [selectedLeagues,setSelectedLeagues] = useState([]);
-  const [selectedTeams,setSelectedTeams]=useState([]);
+  const [preferedLeagues,setPreferedLeagues] = useState([]);
+  const [preferedTeams,setPreferedTeams]=useState([]);
   const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
+
+  function getLeaguesCookie(){
+    const cookies = new Cookies();
+    const cookie=cookies.get('preferedLeagues');
+    return cookie
+}
+function getTeamsCookie(){
+    const cookies = new Cookies();
+    const cookie=cookies.get('preferedTeams')
+    return cookie
+}
 
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -29,43 +40,52 @@ export default function Preferences(params) {
         setTeams(result.data.response);
       });
     }
+
+    if(getLeaguesCookie().length>0) { setPreferedLeagues(getLeaguesCookie())}
+
+    if(getTeamsCookie().length > 0) { setPreferedTeams(getTeamsCookie())}
     
   }, [searchLeague, searchTeam]);
 
-  function handleLeaguesCookie() {
-    const cookie = new Cookies();
-    cookie.set("selectedLeagues", selectedLeagues);
-  }
-
-  function handleTeamsCookie() {
-    const cookie = new Cookies();
-    cookie.set("preferedTeams", selectedTeams);
-  }
-
   function addToSelectedLeagues(elem){
-    if(elem !== null && selectedLeagues.indexOf(elem) === -1){
-      selectedLeagues.push(elem);
+    if(elem !== null && preferedLeagues.indexOf(elem) === -1){
+      preferedLeagues.push(elem);
     }
   }
 
   function removeFromSelectedLeagues(index){       
-    setSelectedLeagues(selectedLeagues.slice(0,index).concat(selectedLeagues.slice(index+1)));
-    selectedLeagues.splice(index,1);
+    setPreferedLeagues(preferedLeagues.slice(0,index).concat(preferedLeagues.slice(index+1)));
+    preferedLeagues.splice(index,1);
   }
 
   function addToSelectedTeams(elem){
-    if(elem !== null && selectedTeams.indexOf(elem) === -1){
-      selectedTeams.push(elem);
+    if(elem !== null && preferedTeams.indexOf(elem) === -1){
+      preferedTeams.push(elem);
     }
   }
 
   function removeFromSelectedTeams(index){       
-    setSelectedTeams(selectedTeams.slice(0,index).concat(selectedTeams.slice(index+1)));
-    selectedTeams.splice(index,1);
+    setPreferedTeams(preferedTeams.slice(0,index).concat(preferedTeams.slice(index+1)));
+    preferedTeams.splice(index,1);
   }
   
-// console.log("leagues",leagues);
-// console.log("selected",selectedLeagues);
+  function handleLeaguesCookie() {
+    const cookie = new Cookies();
+    // let leaguesIds=[];
+    // preferedLeagues.map((elem,index)=>{
+    //   leaguesIds.push(elem.league.id)
+    // })
+    cookie.set("preferedLeagues", preferedLeagues);
+  }
+
+  function handleTeamsCookie() {
+    const cookie = new Cookies();
+    // let teamsIds=[];
+    // preferedTeams.map((elem,index)=>{
+    //   teamsIds.push(elem.team.id)
+    // })
+    cookie.set("preferedTeams", preferedTeams);
+  }
 
   return (
     <div>
@@ -81,7 +101,7 @@ export default function Preferences(params) {
             return (
               <div key={index} onClick={()=>{
                 addToSelectedLeagues(elem);
-                console.log("selected",selectedLeagues);
+                console.log("selected",preferedLeagues);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
               }}          
               // style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}
@@ -98,11 +118,11 @@ export default function Preferences(params) {
         </div>
         {/*  */}
         <div className="col-sm-6">
-          {selectedLeagues?.map((elem, index) => {
+          {preferedLeagues?.map((elem, index) => {
             return (
                   <div key={index} onClick={()=>[
                     removeFromSelectedLeagues(index),
-                    console.log("selected",selectedLeagues)
+                    console.log("selected",preferedLeagues)
                     ]}>
                     <img src={elem.league.logo} alt={elem.league.name}/>
                     <div>{elem.league.name}</div>
@@ -126,7 +146,7 @@ export default function Preferences(params) {
             </button>
             {teams?.map((elem, index) => {
               return (
-                <div key={index} onClick={()=>[addToSelectedTeams(elem),console.log("selected teams",selectedTeams)]}>
+                <div key={index} onClick={()=>[addToSelectedTeams(elem),console.log("selected teams",preferedTeams)]}>
                   {elem.team.name} {elem.team.id} ({elem.team.country})
                   <img
                     src={elem.team?.logo}
@@ -140,11 +160,11 @@ export default function Preferences(params) {
         </div>
             </div>
             <div className="col-sm-6">
-              {selectedTeams?.map((elem, index) => {
+              {preferedTeams?.map((elem, index) => {
                 return (
                   <div key={index} onClick={()=>[
                     removeFromSelectedTeams(index),
-                    console.log("selected teams",selectedTeams)
+                    console.log("selected teams",preferedTeams)
                     ]}>
                     <img src={elem.team.logo} alt={elem.team.name}/>
                     <div>{elem.team.name}</div>
@@ -152,7 +172,7 @@ export default function Preferences(params) {
                   </div>
                 )
               })}
-              <button onClick={() => [handleTeamsCookie(),console.log("selected teams",selectedTeams)]}>Selected Teams</button>
+              <button onClick={() => [handleTeamsCookie(),console.log("selected teams",preferedTeams)]}>Selected Teams</button>
             </div>
       </div>                      
       </div>

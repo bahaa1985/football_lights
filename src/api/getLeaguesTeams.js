@@ -1,9 +1,16 @@
 import axios from 'axios'
 
-export function getLeagues(search){
+export function getLeagues(search=null,leagueId=0){
+    let leaguesURL="";
+    if(search){
+        leaguesURL=`https://v3.football.api-sports.io/leagues?search=${search}`
+    }
+    else{
+        leaguesURL=`https://v3.football.api-sports.io/leagues?id=${leagueId}`
+    }
     let config={
         method:'GET',
-        url:`https://v3.football.api-sports.io/leagues?search=${search}`,
+        url:leaguesURL,
         headers: {
             'x-rapidapi-host': 'v3.football.api-sports.io',
             'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
