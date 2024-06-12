@@ -3,44 +3,63 @@ import { useState, useEffect } from "react";
 import { Routes, Route, NavLink, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { getLiveFixtures, getTodayFixtures } from "../Api/getFixtures.js";
+import { getLeagues } from "../Api/getLeaguesTeams.js";
 
 export default function CurrentFixtures() {
 
     const [liveFixtures,setLiveFixtures]=useState([]);
     const [todayFixtures,setToDayFixtures]=useState([])
     const [preferedLeagues,setPreferedLeagues] = useState([]);
+    const [leaguesIds,setLeaguesIds]=useState([]);
     const [preferedTeams,setPreferedTeams]=useState([]);
+    const [teamsIds,setTeamsIds]=useState([]);
 
-    function getLeaguesCookie(){
+    async function getLeaguesCookie(){
         const cookies = new Cookies();
-        const prefLeagues=cookies.get('preferedLeagues');
-        console.log(prefLeagues);
+        const prefLeagues=cookies.get('preferedLeagues');       
         if(prefLeagues){
-          setPreferedLeagues(prefLeagues);
+          setLeaguesIds(prefLeagues);                
         }
         else{
-          setPreferedLeagues([]);
+          setLeaguesIds([]);          
         }
-        console.log(prefLeagues);
     }
+
     function getTeamsCookie(){
         const cookies = new Cookies();
-        const prefTeams=cookies.get('preferedTeams')
-        setPreferedTeams(prefTeams);
+        const cookie=cookies.get('preferedTeams')
+        return cookie
     }
-    useEffect(()=>{
-        getLeaguesCookie();
-    },[])
-    // getLeaguesCookie()
 
-    // getTeamsCookie()
+    // if(getLeaguesCookie){
+    //     console.log("current cookie",getLeaguesCookie());
+    // }
+
+    useEffect(()=>{       
+        // if(getLeaguesCookie().length>0) { setPreferedLeagues(getLeaguesCookie())}
+
+        // if(getTeamsCookie().length > 0) { setPreferedTeams(getTeamsCookie())}
+        getLeaguesCookie().then(()=>{
+            console.log("leaguesIds",...leaguesIds);    
+            for(let i=0;i<leaguesIds.length;i++){
+                getLeagues(null,leaguesIds[i]).then(result=>{
+                    console.log("current result:",result.data.response);
+                    setPreferedLeagues(preferedLeagues.push(result.data.response));               
+                })
+            }
+            // if(fetchedLeagues.length > 0) setPreferedLeagues(fetchedLeagues)
+            console.log("current prefered cookie",preferedLeagues);
+        });
+
+       
+    },[])
     
     return(
         <div> Welcome to home!
-           <div id="div-leagues"> HI
+           <div id="div-leagues" onLoad={()=>getLeaguesCookie()}> HI
                 {
                     preferedLeagues?
-                    preferedLeagues.map((elem,index)=>{
+                    preferedLeagues?.map((elem,index)=>{
                         return(
                             <div>
                                 {elem.league.name}
