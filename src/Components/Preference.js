@@ -11,27 +11,39 @@ export default function Preferences(params) {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [preferedLeagues,setPreferedLeagues] = useState([]);
+  const [leaguesIds,setLeaguesIds]=useState(0);
   const [preferedTeams,setPreferedTeams]=useState([]);
+  const [teamsIds,setTeamsIds]=useState(0);
   const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
 
   function getLeaguesCookie(){
     const cookies = new Cookies();
-    const cookie=cookies.get('preferedLeagues');
-    return cookie
+    const prefLeagues=cookies.get('preferedLeagues');
+    if(prefLeagues){
+      setLeaguesIds(prefLeagues);
+    }
+    else{
+      setLeaguesIds([]);
+    }
 }
 function getTeamsCookie(){
     const cookies = new Cookies();
-    const cookie=cookies.get('preferedTeams')
-    return cookie
+    const prefTeams=cookies.get('preferedTeams')
+    if(prefTeams){
+      setTeamsIds(prefTeams);
+    }
+    else{
+      setTeamsIds([]);
+    }
 }
 
+  //use Effect:
   useEffect(() => {
     if(searchLeague.trim().length>0){
       getLeagues(searchLeague).then((result) => {
         setLeagues(result.data.response);
-        
       });
     }
         
@@ -40,15 +52,16 @@ function getTeamsCookie(){
         setTeams(result.data.response);
       });
     }
-
-    if(getLeaguesCookie().length>0) { setPreferedLeagues(getLeaguesCookie())}
-
-    if(getTeamsCookie().length > 0) { setPreferedTeams(getTeamsCookie())}
     
+    //fill prefered leagues and teams:
+    getLeaguesCookie();
+
+    getTeamsCookie()
+
   }, [searchLeague, searchTeam]);
 
   function addToSelectedLeagues(elem){
-    if(elem !== null && preferedLeagues.indexOf(elem) === -1){
+    if(preferedLeagues !== null && preferedLeagues.indexOf(elem) === -1){
       preferedLeagues.push(elem);
     }
   }
@@ -68,25 +81,19 @@ function getTeamsCookie(){
     setPreferedTeams(preferedTeams.slice(0,index).concat(preferedTeams.slice(index+1)));
     preferedTeams.splice(index,1);
   }
-  
+
   function handleLeaguesCookie() {
     const cookie = new Cookies();
-    // let leaguesIds=[];
-    // preferedLeagues.map((elem,index)=>{
-    //   leaguesIds.push(elem.league.id)
-    // })
-    cookie.set("preferedLeagues", preferedLeagues);
+    cookie.set("preferedLeagues",preferedLeagues,{path:'/'});
+    console.log("cookie get",cookie.get("preferedLeagues"));
   }
 
   function handleTeamsCookie() {
     const cookie = new Cookies();
-    // let teamsIds=[];
-    // preferedTeams.map((elem,index)=>{
-    //   teamsIds.push(elem.team.id)
-    // })
     cookie.set("preferedTeams", preferedTeams);
+    console.log("prefered teams cookie is created");
   }
-
+  console.log("prefered leagues",preferedLeagues);
   return (
     <div>
       <div className="container-fluid d-flex flex-wrap text-center">

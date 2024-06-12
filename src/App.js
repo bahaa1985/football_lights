@@ -10,6 +10,7 @@ import Player from './Components/Player.js';
 import Team from './Components/Team.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
+import Test from './Components/Test.js'
 
 function App() {
 
@@ -17,6 +18,9 @@ function App() {
   const [viewCurrent,setViewCurrent]=useState(false);
   
   return (
+    // <div>
+    //   <Test />
+    // </div>
      <Router>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">

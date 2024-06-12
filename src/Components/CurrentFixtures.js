@@ -13,26 +13,31 @@ export default function CurrentFixtures() {
 
     function getLeaguesCookie(){
         const cookies = new Cookies();
-        const cookie=cookies.get('preferedLeagues');
-        return cookie
+        const prefLeagues=cookies.get('preferedLeagues');
+        console.log(prefLeagues);
+        if(prefLeagues){
+          setPreferedLeagues(prefLeagues);
+        }
+        else{
+          setPreferedLeagues([]);
+        }
+        console.log(prefLeagues);
     }
-    const leaguesArr=getLeaguesCookie();
     function getTeamsCookie(){
         const cookies = new Cookies();
-        const cookie=cookies.get('preferedTeams')
-        return cookie
+        const prefTeams=cookies.get('preferedTeams')
+        setPreferedTeams(prefTeams);
     }
-    const teamsArr=getTeamsCookie()
-
     useEffect(()=>{
-        if(getLeaguesCookie().length>0) { setPreferedLeagues(getLeaguesCookie())}
-
-        if(getTeamsCookie().length > 0) { setPreferedTeams(getTeamsCookie())}
+        getLeaguesCookie();
     },[])
+    // getLeaguesCookie()
+
+    // getTeamsCookie()
     
     return(
         <div> Welcome to home!
-           <div id="div-leagues" onLoad={()=>getLeaguesCookie()}> HI
+           <div id="div-leagues"> HI
                 {
                     preferedLeagues?
                     preferedLeagues.map((elem,index)=>{
