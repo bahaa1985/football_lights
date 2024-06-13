@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
-import NestedObjectComponent from './NestedObjectComponent.js';
+import NestedTeamStatistics from './NestedTeamStatistics.js';
 
 export default function Team(props){
     const season=props.season;
@@ -109,7 +109,7 @@ export default function Team(props){
             <div>
                 {
                     teamStatistics? 
-                    <NestedObjectComponent data={teamStatistics} isParent={false}/>                                                                         
+                    <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
                     :null
                 }
             </div>

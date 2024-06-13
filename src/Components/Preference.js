@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js'
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getTeam } from "../Api/getLeaguesTeams.js";
-import { setLeaguesCookie , getLeaguesCookie } from "../Api/cookie.js";
+import { setPreferedLeaguesCookie , getPreferdLeaguesFromCookie } from "../Api/cookie.js";
 import Cookies from "universal-cookie";
 
 export default function Preferences(params) {
@@ -20,17 +20,6 @@ export default function Preferences(params) {
   const searchTeamInput = useRef("");
 
 
-function getTeamsCookie(){
-    const cookies = new Cookies();
-    const prefTeams=cookies.get('preferedTeams')
-    if(prefTeams){
-      setTeamsIds(prefTeams);
-    }
-    else{
-      setTeamsIds([]);
-    }
-}
-
   //use Effect:
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -45,9 +34,8 @@ function getTeamsCookie(){
       });
     }
     
-    //fill prefered leagues and teams:
-    setPreferedLeagues(getLeaguesCookie());
-
+    //fill prefered leagues and teams:  
+    setPreferedLeagues(getPreferdLeaguesFromCookie());
     // getTeamsCookie()
 
   }, [searchLeague, searchTeam]);
@@ -124,8 +112,8 @@ function getTeamsCookie(){
                   </div>
                 )
           })}
-          <button onClick={() => setLeaguesCookie(preferedLeagues)}>
-            Selected Leagues
+          <button onClick={() => setPreferedLeaguesCookie(preferedLeagues)}>
+            Save Leagues
           </button>
         </div>
       </div>

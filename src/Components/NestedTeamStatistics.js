@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/nestedStatistics.css';
-const NestedObjectComponent = ({ data, isParent=true }) => {
+const NestedTeamStatistics = ({ data, isParent=true }) => {
   const renderNestedObject = (obj) => {
     return Object.entries(obj).map(([key, value]) => {
       if (value === null) {
@@ -34,4 +34,4 @@ const NestedObjectComponent = ({ data, isParent=true }) => {
   );
 };
 
-export default NestedObjectComponent;
+export default NestedTeamStatistics;
