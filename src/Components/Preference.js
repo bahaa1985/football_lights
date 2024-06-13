@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js'
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getTeam } from "../Api/getLeaguesTeams.js";
+import { setLeaguesCookie , getLeaguesCookie } from "../Api/cookie.js";
 import Cookies from "universal-cookie";
 
 export default function Preferences(params) {
@@ -18,17 +19,7 @@ export default function Preferences(params) {
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
 
-  function getLeaguesCookie(){    
-    const cookies = new Cookies();
-    const prefLeagues=cookies.get('preferedLeagues');
-    if(prefLeagues){
-      setLeaguesIds(prefLeagues);   
-      console.log("leaguesIds",...leaguesIds);             
-    }
-    else{
-      setLeaguesIds([]);
-    }
-}
+
 function getTeamsCookie(){
     const cookies = new Cookies();
     const prefTeams=cookies.get('preferedTeams')
@@ -55,9 +46,9 @@ function getTeamsCookie(){
     }
     
     //fill prefered leagues and teams:
-    getLeaguesCookie();
+    setPreferedLeagues(getLeaguesCookie());
 
-    getTeamsCookie()
+    // getTeamsCookie()
 
   }, [searchLeague, searchTeam]);
 
@@ -83,16 +74,6 @@ function getTeamsCookie(){
     preferedTeams.splice(index,1);
   }
 
-  function handleLeaguesCookie(){
-    if(preferedLeagues.length>0){
-      preferedLeagues.map((league)=>{
-        leaguesIds.push(league.league.id);
-      })
-      const cookie = new Cookies();
-      cookie.set("preferedLeagues",leaguesIds,{path:'/',expires:Date.parse("06-12-2024 23:00:00")});
-      console.log("cookie get",cookie.get("preferedLeagues"));
-    }  
-  }
 
   function handleTeamsCookie() {
     const cookie = new Cookies();
@@ -143,7 +124,7 @@ function getTeamsCookie(){
                   </div>
                 )
           })}
-          <button onClick={() => handleLeaguesCookie()}>
+          <button onClick={() => setLeaguesCookie(preferedLeagues)}>
             Selected Leagues
           </button>
         </div>

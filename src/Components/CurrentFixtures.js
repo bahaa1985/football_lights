@@ -16,7 +16,8 @@ export default function CurrentFixtures() {
 
     async function getLeaguesCookie(){
         const cookies = new Cookies();
-        const prefLeagues=cookies.get('preferedLeagues');       
+        const prefLeagues=cookies.get('preferedLeagues');  
+        console.log("pref leagues",prefLeagues);     
         if(prefLeagues){
           setLeaguesIds(prefLeagues);                
         }
@@ -36,39 +37,36 @@ export default function CurrentFixtures() {
     // }
 
     useEffect(()=>{       
-        // if(getLeaguesCookie().length>0) { setPreferedLeagues(getLeaguesCookie())}
-
-        // if(getTeamsCookie().length > 0) { setPreferedTeams(getTeamsCookie())}
-        getLeaguesCookie().then(()=>{
-            console.log("leaguesIds",...leaguesIds);    
-            for(let i=0;i<leaguesIds.length;i++){
-                getLeagues(null,leaguesIds[i]).then(result=>{
-                    console.log("current result:",result.data.response);
-                    setPreferedLeagues(preferedLeagues.push(result.data.response));               
-                })
-            }
-            // if(fetchedLeagues.length > 0) setPreferedLeagues(fetchedLeagues)
-            console.log("current prefered cookie",preferedLeagues);
-        });
-
-       
+        // let arr=[];
+        // getLeaguesCookie();
+        // console.log("leaguesIds",...leaguesIds);
+        // for(let i=0;i<leaguesIds.length;i++){
+        //     getLeagues(null,leaguesIds[i]).then(result=>{
+        //         console.log("current result:",result.data.response[0]);
+        //         arr.push(result.data.response[0]);               
+        //         // console.log("current prefered cooki",arr);
+        //     })
+        // };
+        // setPreferedLeagues(arr);
     },[])
     
+    console.log("current prefered cookie",preferedLeagues);
+
     return(
         <div> Welcome to home!
-           <div id="div-leagues" onLoad={()=>getLeaguesCookie()}> HI
+           <div id="div-leagues"> HI
                 {
-                    preferedLeagues?
-                    preferedLeagues?.map((elem,index)=>{
-                        return(
-                            <div>
-                                {elem.league.name}
-                                <img src={elem.league.logo} alt={elem.league.name} />
-                            </div>
-                        )
-                        })
-                    :
-                    <p>No current games</p> 
+                //     preferedLeagues?
+                //     preferedLeagues?.map((elem,index)=>{
+                //         return(
+                //             <div>
+                //                 {elem.league.name}
+                //                 <img src={elem.league.logo} alt={elem.league.name} />
+                //             </div>
+                //         )
+                //         })
+                //     :
+                //     <p>No current games</p> 
                 }
             <div id="div-teams" onLoad={()=>getTeamsCookie()}></div>
                 {
