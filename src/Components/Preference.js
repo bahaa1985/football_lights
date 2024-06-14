@@ -33,16 +33,17 @@ export default function Preferences(params) {
         setTeams(result.data.response);
       });
     }
-    
-    //fill prefered leagues and teams:  
-    setPreferedLeagues(getPreferdLeaguesFromCookie());
-    // getTeamsCookie()
 
   }, [searchLeague, searchTeam]);
 
-  function addToSelectedLeagues(elem){
-    if(preferedLeagues !== null && preferedLeagues.indexOf(elem) === -1){
-      preferedLeagues.push(elem);
+  let preferedArr=[];
+  function addToSelectedLeagues(leagueId){
+    console.log("prefered leagues: ",getPreferdLeaguesFromCookie());
+    // preferedArr=getPreferdLeaguesFromCookie();
+    if(preferedArr !== null && preferedArr.indexOf(leagueId) === -1){
+      // preferedArr.push(getPreferdLeaguesFromCookie())
+      preferedArr.push(leagueId);
+      setPreferedLeaguesCookie(preferedArr)
     }
   }
 
@@ -51,10 +52,9 @@ export default function Preferences(params) {
     preferedLeagues.splice(index,1);
   }
 
-  function addToSelectedTeams(elem){
-    if(elem !== null && preferedTeams.indexOf(elem) === -1){
-      preferedTeams.push(elem);
-    }
+  function addToSelectedTeams(leagueId){
+      
+      setPreferedLeaguesCookie(leagueId)
   }
 
   function removeFromSelectedTeams(index){       
@@ -68,7 +68,8 @@ export default function Preferences(params) {
     cookie.set("preferedTeams", preferedTeams);
     console.log("prefered teams cookie is created");
   }
-  console.log("prefered leagues",preferedLeagues);
+
+  // console.log("prefered leagues",preferedLeagues);
   return (
     <div>
       <div className="container-fluid d-flex flex-wrap text-center">
@@ -82,8 +83,8 @@ export default function Preferences(params) {
           {leagues?.map((elem, index) => {
             return (
               <div key={index} onClick={()=>{
-                addToSelectedLeagues(elem);
-                console.log("selected",preferedLeagues);
+                addToSelectedLeagues(elem.league.id);
+                // console.log("selected",preferedLeagues);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
               }}          
               // style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}
@@ -100,7 +101,7 @@ export default function Preferences(params) {
         </div>
         {/*  */}
         <div className="col-sm-6">
-          {preferedLeagues?.map((elem, index) => {
+          {/* {preferedLeagues?.map((elem, index) => {
             return (
                   <div key={index} onClick={()=>[
                     removeFromSelectedLeagues(index),
@@ -111,7 +112,7 @@ export default function Preferences(params) {
                     <span>{index}</span>
                   </div>
                 )
-          })}
+          })} */}
           <button onClick={() => setPreferedLeaguesCookie(preferedLeagues)}>
             Save Leagues
           </button>

@@ -1,26 +1,21 @@
 import Cookies from "universal-cookie";
-import { getLeagues } from "./getLeaguesTeams";
 
 export function getPreferdLeaguesFromCookie(){
-    const cookie=new Cookies();
-    let leaguesIds=[],preferedLeagues=[];
-    leaguesIds =  cookie.get("prefered leagues")
-    if(leaguesIds){
-        for(let i=0;i<leaguesIds.length;i++){
-            getLeagues(null,leaguesIds[i])
-            .then(result=>{
-                preferedLeagues.push(result.data.response[0]);
-            })
-        }
+    const cookie=new Cookies();    
+    const leaguesIds =  cookie.get("prefered leagues")
+    if(typeof(leaguesIds)!=='undefined'){
+        console.log("prefered leagues cookie",leaguesIds);
+       return leaguesIds;       
     }
-    console.log("prefered leagues",preferedLeagues);
-    return preferedLeagues;
+    else{
+        return [];
+    }
 }
 
-export function setPreferedLeaguesCookie(preferedLeagues){
+export function setPreferedLeaguesCookie(leaguesIds){
       const cookie = new Cookies();
-      cookie.set("prefered leagues",preferedLeagues,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
-      console.log("cookie get",cookie.get("prefered leagues"));
+      cookie.set("prefered leagues",leaguesIds,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
+      console.log("cookie get",cookie.get("prefered league"));
 }
 
 export function getTeamsCookie(){

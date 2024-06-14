@@ -28,10 +28,10 @@ export function getLiveFixtures(leagues){
 }
 
 
-export function getTodayFixtures(league,date){
+export function getTodayFixtures(league,season,date){
   let config = {
     method: 'GET',
-    url: `https://v3.football.api-sports.io/fixtures?league=${league}&date=${date}`,
+    url: `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}&date=${date}`,
     headers: {
       'x-rapidapi-host': 'v3.football.api-sports.io',
       'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
