@@ -19,9 +19,9 @@ export default function CurrentFixtures(props) {
 
     useEffect(()=>{       
         // if(getPreferdLeaguesFromCookie){
-            setLeaguesIds(getPreferdLeaguesFromCookie())
-            console.log("current prefered cookie",leaguesIds);
-            let ids=leaguesIds.join('-');
+            let lees=getPreferdLeaguesFromCookie()
+            console.log("current prefered cookie",lees);
+            let ids=lees.join('-');
             //get live fixtures:
             getLiveFixtures(ids)
             .then(result=>{
@@ -40,7 +40,7 @@ export default function CurrentFixtures(props) {
             // Form the date string in 'yyyy-mm-dd' format
             var dateString = year + '-' + month + '-' + day;
 
-            if(leaguesIds.length>0){
+            if(lees.length>0){
                 let  todayArray= [];
                 for(const leagueId in leaguesIds){
                     getTodayFixtures(leagueId,season,dateString).then(result=>{ 
@@ -79,8 +79,8 @@ export default function CurrentFixtures(props) {
                 }
             <div id="div-teams"></div>
                 {
-                    preferedTeams?
-                    preferedTeams.map((elem,index)=>{
+                    todayFixtures?
+                    todayFixtures.map((elem,index)=>{
                         return(
                             <div>
                                 {elem.team.name}

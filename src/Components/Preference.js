@@ -36,20 +36,21 @@ export default function Preferences(params) {
 
   }, [searchLeague, searchTeam]);
 
-  let preferedArr=[];
-  function addToSelectedLeagues(leagueId){
+ 
+  function handlePreferedLeagues(leagueId){
+    let preferedArr=[];
     console.log("prefered leagues: ",getPreferdLeaguesFromCookie());
-    // preferedArr=getPreferdLeaguesFromCookie();
-    if(preferedArr !== null && preferedArr.indexOf(leagueId) === -1){
-      // preferedArr.push(getPreferdLeaguesFromCookie())
+    preferedArr=getPreferdLeaguesFromCookie();
+    if(preferedArr.indexOf(leagueId) === -1){
       preferedArr.push(leagueId);
-      setPreferedLeaguesCookie(preferedArr)
+      console.log(preferedArr);
     }
-  }
-
-  function removeFromSelectedLeagues(index){       
-    setPreferedLeagues(preferedLeagues.slice(0,index).concat(preferedLeagues.slice(index+1)));
-    preferedLeagues.splice(index,1);
+    else{
+      const index=preferedArr.indexOf(leagueId)
+      preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
+      console.log(preferedArr);      
+    }
+    setPreferedLeaguesCookie(preferedArr)
   }
 
   function addToSelectedTeams(leagueId){
@@ -83,7 +84,7 @@ export default function Preferences(params) {
           {leagues?.map((elem, index) => {
             return (
               <div key={index} onClick={()=>{
-                addToSelectedLeagues(elem.league.id);
+                handlePreferedLeagues(elem.league.id);
                 // console.log("selected",preferedLeagues);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
               }}          
