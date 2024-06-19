@@ -10,11 +10,11 @@ import Player from './Components/Player.js';
 import Team from './Components/Team.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
-import Test from './Components/Test.js'
+// import Test from './Components/Test.js'
 
 function App() {
 
-  const season=2023;
+  const season=2024;
   const [viewCurrent,setViewCurrent]=useState(false);
   
   return (
@@ -59,7 +59,7 @@ function App() {
         viewCurrent ? <CurrentFixtures /> : null
       } */}
       <Routes>
-        <Route path='/' element={<CurrentFixtures />}>
+        <Route path='/' element={<CurrentFixtures season={season}/>}>
         </Route>
         <Route path="/league" element={<League season={season}/>}>
           <Route path=":leagueId"/>          

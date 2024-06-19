@@ -19,14 +19,18 @@ export default function CurrentFixtures(props) {
 
     useEffect(()=>{       
         // if(getPreferdLeaguesFromCookie){
-            let lees=getPreferdLeaguesFromCookie()
-            console.log("current prefered cookie",lees);
-            let ids=lees.join('-');
-            //get live fixtures:
-            getLiveFixtures(ids)
-            .then(result=>{
-                setLiveFixtures(result.data.response)
-            })
+            let leagues=getPreferdLeaguesFromCookie()
+            let ids=leagues.map(league=>league.id).join('-');
+            console.log("current prefered cookie",ids);
+            // get live fixtures:
+            setInterval(()=>{
+                getLiveFixtures(ids)
+                .then(result=>{
+                    setLiveFixtures(result.data.response)
+                })
+                console.log("triggered!");
+            },1000*60*10)
+            
 
             //get today fixtures:
             // Get current date
@@ -38,60 +42,117 @@ export default function CurrentFixtures(props) {
             var day = ('0' + currentDate.getDate()).slice(-2);
 
             // Form the date string in 'yyyy-mm-dd' format
-            var dateString = year + '-' + month + '-' + day;
-
-            if(lees.length>0){
+            var dateString = year.toString() + '-' + month.toString() + '-' + day.toString();
+            console.log(dateString);
+            
+            if(leagues.length>0){
                 let  todayArray= [];
-                for(const leagueId in leaguesIds){
-                    getTodayFixtures(leagueId,season,dateString).then(result=>{ 
-                        todayArray.push(result.data.response[0])
-                })}
-                setToDayFixtures(todayArray);
+                for(const league in leagues){
+                    console.log("i",league);
+                    getTodayFixtures(league.id,league.season,dateString).then(result=>{ 
+                        todayArray.push(result.data.response)
+                        setToDayFixtures(todayArray);
+                })}               
             }
             
         // }        
-    },[])
+    },[season])
     
-  
+    const groupedLiveFixtures=liveFixtures?.reduce((group,elem)=>{
+        const title= elem.league.name + '  ' + elem.league.round;
+        if(group[title] ==null){
+            group[title]=[];
+        }
+        group[title].push(elem);
+        return group;
+
+    },{})
+
+    const groupedTodayFixtures=todayFixtures[0]?.reduce((group,elem)=>{
+        const title= elem.league.name + '  ' + elem.league.round;
+        if(group[title] ==null){
+            group[title]=[];
+        }
+        group[title].push(elem);
+        return group;
+
+    },{})
+
+    
+
+    console.log("today",todayFixtures);
 
     return(
         <div> Welcome to home!
-           <div id="div-leagues"> HI
+           <div id="div-leagues"> Live
                 {
-                //     preferedLeagues?
-                //     preferedLeagues?.map((elem,index)=>{
-                //         return(
-                //             <div>
-                //                 {elem.league.name}
-                //                 <img src={elem.league.logo} alt={elem.league.name} />
-                //             </div>
-                //         )
-                //         })
-                //     :
-                //     <p>No current games</p> 
-                liveFixtures?.map((fixture,index)=>{
+                groupedLiveFixtures?
+                Object.keys(groupedLiveFixtures)
+                .sort((a,b)=>a-b)
+                .map((elem,index)=>{
                     return(
                         <div>
-                            <div><span>{fixture.teams.home.name}</span><span>{fixture.teams.away.name}</span></div>
-                        </div>
+                            <img src={groupedLiveFixtures[elem][0].league.logo} alt={''}/>
+                            <span>{Object.keys(groupedLiveFixtures)[index]}</span>
+                            <div>
+                            {
+                                 groupedLiveFixtures[elem].map((fixture,index)=>{
+                                    return(
+                                        <div key={index}>
+                                            <span>{fixture.fixture.status.long}</span>
+                                            <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
+                                            <span>{fixture.teams.home.name}</span>
+                                            <span>{fixture.goals.home}</span>
+                                            <span>{fixture.goals.away}</span>
+                                            <span>{fixture.teams.away.name}</span>
+                                            <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
+                                        </div>
+                                    ) 
+                            })
+                            }
+                            </div>
+                        </div>  
                     )
                 })
-                }
-            <div id="div-teams"></div>
-                {
-                    todayFixtures?
-                    todayFixtures.map((elem,index)=>{
-                        return(
-                            <div>
-                                {elem.team.name}
-                                <img src={elem.team.logo} alt={elem.team.name} />
-                            </div>
-                        )
-                    })
                 :
                 <p>No current games</p>
                 }
-            </div>
+                </div>
+            <div id="div-teams"> Today Fixtures
+                {
+                    groupedTodayFixtures?
+                    Object.keys(groupedTodayFixtures)
+                    .sort((a,b)=>a-b)
+                    .map((elem,index)=>{
+                        return(
+                            <div>
+                                <img src={groupedTodayFixtures[elem][0].league.logo} alt={''}/>
+                                <span>{Object.keys(groupedTodayFixtures)[index]}</span>
+                                <div>
+                                {
+                                     groupedTodayFixtures[elem].map((fixture,index)=>{
+                                        return(
+                                            <div key={index}>
+                                                <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
+                                                <span>{fixture.teams.home.name}</span>
+                                                <span>{fixture.goals.home}</span>
+                                                <span>{fixture.goals.away}</span>
+                                                <span>{fixture.teams.away.name}</span>
+                                                <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
+                                            </div>
+                                        )
+                                        
+                                })
+                                }
+                                </div>
+                            </div>  
+                        )
+                    })
+                    :
+                    <p>No current games</p>
+                }
+                </div>
+            
         </div>  
     )
     

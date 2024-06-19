@@ -37,16 +37,16 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
  
-  function handlePreferedLeagues(leagueId){
+  function handlePreferedLeagues(leagueId,season){
     let preferedArr=[];
     console.log("prefered leagues: ",getPreferdLeaguesFromCookie());
     preferedArr=getPreferdLeaguesFromCookie();
-    if(preferedArr.indexOf(leagueId) === -1){
-      preferedArr.push(leagueId);
+    if(preferedArr.filter(obj=>obj.id===leagueId)[0] === undefined){
+      preferedArr.push({'id':leagueId,'season':season});
       console.log(preferedArr);
     }
     else{
-      const index=preferedArr.indexOf(leagueId)
+      const index=preferedArr.indexOf(preferedArr.filter(obj=>obj.id===leagueId)[0])
       preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
       console.log(preferedArr);      
     }
@@ -84,8 +84,8 @@ export default function Preferences(params) {
           {leagues?.map((elem, index) => {
             return (
               <div key={index} onClick={()=>{
-                handlePreferedLeagues(elem.league.id);
-                // console.log("selected",preferedLeagues);
+                const latestSeasonIndex = elem.seasons.length-1;
+                handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
               }}          
               // style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}
