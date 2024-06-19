@@ -20,9 +20,14 @@ export default function CurrentFixtures(props) {
     useEffect(()=>{       
         // if(getPreferdLeaguesFromCookie){
             let leagues=getPreferdLeaguesFromCookie()
+            console.log(leagues);
             let ids=leagues.map(league=>league.id).join('-');
             console.log("current prefered cookie",ids);
             // get live fixtures:
+            getLiveFixtures(ids)
+            .then(result=>{
+                setLiveFixtures(result.data.response)
+            });
             setInterval(()=>{
                 getLiveFixtures(ids)
                 .then(result=>{
@@ -30,7 +35,6 @@ export default function CurrentFixtures(props) {
                 })
                 console.log("triggered!");
             },1000*60*10)
-            
 
             //get today fixtures:
             // Get current date
@@ -47,10 +51,10 @@ export default function CurrentFixtures(props) {
             
             if(leagues.length>0){
                 let  todayArray= [];
-                for(const league in leagues){
-                    console.log("i",league);
-                    getTodayFixtures(league.id,league.season,dateString).then(result=>{ 
-                        todayArray.push(result.data.response)
+                for(let i=0;i<leagues.length;i++){
+                    console.log("i",leagues[i]);
+                    getTodayFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
+                        todayArray.push(...result.data.response)
                         setToDayFixtures(todayArray);
                 })}               
             }
@@ -68,7 +72,7 @@ export default function CurrentFixtures(props) {
 
     },{})
 
-    const groupedTodayFixtures=todayFixtures[0]?.reduce((group,elem)=>{
+    const groupedTodayFixtures=todayFixtures?.reduce((group,elem)=>{
         const title= elem.league.name + '  ' + elem.league.round;
         if(group[title] ==null){
             group[title]=[];
@@ -80,7 +84,8 @@ export default function CurrentFixtures(props) {
 
     
 
-    console.log("today",todayFixtures);
+    console.log("live",groupedLiveFixtures);
+    console.log("today",groupedTodayFixtures);
 
     return(
         <div> Welcome to home!
