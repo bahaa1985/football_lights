@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Standings from './Standing.js';
-import Fixtures from "./Fixtures.js";
+import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
 import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
@@ -67,7 +67,7 @@ export default function League(props){
                     <Standings league={leagueId} season ={season} />
                     :
                     tab === "Fixtures" ?
-                    <Fixtures league={leagueId} season={season}/>
+                    <LeagueFixtures league={leagueId} season={season}/>
                     : tab==="TopScorer" ?
                     <TopPlayers league={leagueId} season={season} type={'goals'} />
                     : tab === "TopAssists" ?

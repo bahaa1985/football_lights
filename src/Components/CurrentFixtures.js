@@ -2,7 +2,7 @@ import { React } from "react";
 import { useState, useEffect } from "react";
 import { Routes, Route, NavLink, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { getLiveFixtures, getTodayFixtures } from "../Api/getFixtures.js";
+import { getLiveFixtures, getDateFixtures } from "../Api/getFixtures.js";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
 
@@ -53,7 +53,7 @@ export default function CurrentFixtures(props) {
                 let  todayArray= [];
                 for(let i=0;i<leagues.length;i++){
                     console.log("i",leagues[i]);
-                    getTodayFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
+                    getDateFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
                         todayArray.push(...result.data.response)
                         setToDayFixtures(todayArray);
                 })}               

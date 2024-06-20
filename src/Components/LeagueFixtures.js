@@ -5,7 +5,7 @@ import getAllFixtures from "../Api/getFixtures.js";
 import "../styles/fixtures.css";
 import Game from "./Game.js";
 
-function Fixtures(props) {
+export default function LeagueFixtures(props) {
   
   const league = props.league;
   const season = props.season;
@@ -65,4 +65,3 @@ function Fixtures(props) {
   );
 }
 
-export default Fixtures;

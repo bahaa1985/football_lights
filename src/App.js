@@ -10,6 +10,7 @@ import Player from './Components/Player.js';
 import Team from './Components/Team.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
+import DateFixtures from './Components/DateFixtures.js';
 // import Test from './Components/Test.js'
 
 function App() {
@@ -31,14 +32,14 @@ function App() {
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Teams</a>
+                <a class="nav-link" href="/fixtures">Fixtures</a>
               </li>
-              <li class="nav-item">
+              {/* <li class="nav-item">
                 <a class="nav-link" href="/leagues">Leagues</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Statistics</a>
-              </li> 
+              </li>  */}
               <li class="nav-item">
                 <a class="nav-link" href="/preferences">Preferences</a>
               </li>     
@@ -61,6 +62,7 @@ function App() {
       <Routes>
         <Route path='/' element={<CurrentFixtures season={season}/>}>
         </Route>
+        <Route path='/fixtures' element={<DateFixtures />}/>
         <Route path="/leagues" element={<League season={season}/>}>
           <Route path=":leagueId"/>          
         </Route>

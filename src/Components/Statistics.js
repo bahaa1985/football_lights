@@ -16,7 +16,6 @@ function Statistics(props){
             setHomeStatistics(result.data.response[0].statistics);
             setAwayStatistics(result.data.response[1].statistics);
         });                                      
-        // console.log(homeStatistics)
     },[fixture])
  
 
@@ -27,8 +26,6 @@ function Statistics(props){
         })
     } 
     
-    // console.log(statistics_arr)
-
     let total=0;
 
     return(

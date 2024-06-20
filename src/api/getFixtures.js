@@ -28,7 +28,7 @@ export function getLiveFixtures(leagues){
 }
 
 
-export function getTodayFixtures(league,season,date){
+export function getDateFixtures(league,season,date){
   let config = {
     method: 'GET',
     url: `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}&date=${date}`,
