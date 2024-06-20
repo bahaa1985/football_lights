@@ -34,7 +34,7 @@ function App() {
                 <a class="nav-link" href="#">Teams</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Leagues</a>
+                <a class="nav-link" href="/leagues">Leagues</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Statistics</a>
@@ -61,7 +61,7 @@ function App() {
       <Routes>
         <Route path='/' element={<CurrentFixtures season={season}/>}>
         </Route>
-        <Route path="/league" element={<League season={season}/>}>
+        <Route path="/leagues" element={<League season={season}/>}>
           <Route path=":leagueId"/>          
         </Route>
         <Route path="/game" element={<Game/>} >

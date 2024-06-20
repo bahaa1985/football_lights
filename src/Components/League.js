@@ -14,28 +14,42 @@ export default function League(props){
     let leaguesCookie=getPreferdLeaguesFromCookie();
     // let {leagueId} = useParams()
     let [tab,setTab]=useState(true)
-    const [leagueId,setLeagueid]=useState(0);
+    const [leagueId,setLeagueId]=useState(0);
     const[search,setSearch]=useState('')
     const [season,setSeason]=useState(0);
     const [leagues,setLeagues]=useState([]);
 
     useEffect(()=>{
         let leaguesArr=[];
-        for(const league in leaguesCookie){
-            getLeagues(null,league.id)
+        for(let i=0;i < leaguesCookie.length ; i++){
+            setLeagueId(leaguesCookie[i].id);
+            getLeagues(null,leaguesCookie[i].id)
             .then(result=>{
                 leaguesArr.push(result.data.response[0]);
+                setLeagues(leaguesArr);
             })
         }
-        setLeagues(leaguesArr);
+       
+    },[])
 
-        console.log(`league${leagueId}`)
-    })
+    console.log("leagues",leagues)
+
     return(
         <div>
             <div>
                 <select>
-
+                {
+                    leagues?.map((elem,index)=>{
+                        return(
+                            // <option key={index} value={elem?.league.id}>
+                                <div key={index}>
+                                    <span>{elem?.league.name}</span>
+                                    <img src={elem?.league.logo} alt={elem?.league.name} />
+                                </div>
+                            // </option>
+                        )
+                    })
+                }
                 </select>
                 <input type="text" onChange={(e)=>setSearch(e.target.value)} />
                 {/* div for display search leagues result */}
