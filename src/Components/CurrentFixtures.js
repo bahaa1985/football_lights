@@ -130,7 +130,7 @@ export default function CurrentFixtures(props) {
                     .sort((a,b)=>a-b)
                     .map((elem,index)=>{
                         return(
-                            <div>
+                            <div key={index}>
                                 <img src={groupedTodayFixtures[elem][0].league.logo} alt={''}/>
                                 <span>{Object.keys(groupedTodayFixtures)[index]}</span>
                                 <div>

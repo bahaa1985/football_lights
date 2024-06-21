@@ -7,7 +7,8 @@ import {Nav, Button, Container } from "react-bootstrap";
 
 export default function DateFixtures(){
 
-    const [datefixtures,setDateFixtures]=useState();
+    const [datefixtures,setDateFixtures]=useState([]);
+    const [groupedFixtures,setGroupedFixtures]=useState([]);
     //
     let dates=[];
     for(let i=0;i<7 ;i++){
@@ -20,18 +21,19 @@ export default function DateFixtures(){
     }
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
+    let  todayArray= [];
     useEffect(()=>{
         let leagues=getPreferdLeaguesFromCookie();
         if(leagues.length>0){
             console.log("triggered!");
-            let  todayArray= [];
+          
             for(let i=0;i<leagues.length;i++){
-                console.log("i",dateString);
                 getDateFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
-                    console.log('res',result);
                     todayArray.push(...result.data.response)
                     setDateFixtures(todayArray);
-            })}               
+            })}
+
+                     
         }
         
     },[dateString])
@@ -44,10 +46,9 @@ export default function DateFixtures(){
         group[title].push(elem);
         return group;
 
-    },{})
+    },[])
     
-    console.log("dates",dates);
-    console.log("fixtures",datefixtures);
+    console.log("fixtures",groupedDateFixtures);
     return(
         <Container>
             <Nav variant="tabs">
@@ -75,7 +76,7 @@ export default function DateFixtures(){
                                 <span>{Object.keys(groupedDateFixtures)[index]}</span>
                                 <div>
                                 {
-                                     groupedDateFixtures[elem].map((fixture,index)=>{
+                                     groupedDateFixtures[elem]?.map((fixture,index)=>{
                                         return(
                                             <div key={index}>
                                                 <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
