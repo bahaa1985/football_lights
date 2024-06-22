@@ -127,17 +127,17 @@ export default function CurrentFixtures(props) {
                 {
                     groupedTodayFixtures?
                     Object.keys(groupedTodayFixtures)
-                    .sort((a,b)=>a-b)
+                    // .sort((a,b)=>a-b)
                     .map((elem,index)=>{
                         return(
                             <div key={index}>
-                                <img src={groupedTodayFixtures[elem][0].league.logo} alt={''}/>
+                                {/* <img src={groupedTodayFixtures[elem][0].league.logo} alt={''}/>
                                 <span>{Object.keys(groupedTodayFixtures)[index]}</span>
-                                <div>
+                                <div> */}
                                 {
-                                     groupedTodayFixtures[elem].map((fixture,index)=>{
+                                     groupedTodayFixtures[elem].map((fixture,i)=>{
                                         return(
-                                            <div key={index}>
+                                            <div key={i}>
                                                 <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
                                                 <span>{fixture.teams.home.name}</span>
                                                 <span>{fixture.goals.home}</span>
@@ -149,7 +149,7 @@ export default function CurrentFixtures(props) {
                                         
                                 })
                                 }
-                                </div>
+                                {/* </div> */}
                             </div>  
                         )
                     })

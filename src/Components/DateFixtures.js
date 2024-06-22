@@ -22,36 +22,48 @@ export default function DateFixtures(){
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
     let  todayArray= [];
-    useEffect(()=>{
-        let leagues=getPreferdLeaguesFromCookie();
-        if(leagues.length>0){
-            console.log("triggered!");
-          
-            for(let i=0;i<leagues.length;i++){
-                getDateFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
-                    todayArray.push(...result.data.response)
-                    setDateFixtures(todayArray);
-            })}
+    async function createGroupedFixtures(){
+        let promise =new Promise(resolve=>{
+            let leagues=getPreferdLeaguesFromCookie();
+            if(leagues.length>0){
+                console.log("triggered!");
+                for(let i=0;i<leagues.length;i++){
+                    getDateFixtures(leagues[i].id,leagues[i].season,dateString).then(result=>{ 
+                        todayArray.push(...result.data.response)
+                        console.log("today"+i,todayArray);
+                        resolve(todayArray)    
+                })}
+                  
+            }
+        })
+        await promise;
+        return todayArray;
+    }
 
-                     
-        }
-        
+    useEffect(()=>{
+       createGroupedFixtures()?.then(result=>{
+        console.log("result",...result);
+        const gg=result?.reduce((group,elem)=>{
+            const title= elem.league.name + '  ' + elem.league.round;
+            if(group[title] ==null){
+                group[title]=[];
+            }
+            group[title].push(elem);
+            return group;
+            // setGroupedFixtures(group);
+        },[])
+        // console.log("group",gg);
+       })
+    //    console.log("grouped",groupedFixtures);
+
     },[dateString])
 
-    const groupedDateFixtures=datefixtures?.reduce((group,elem)=>{
-        const title= elem.league.name + '  ' + elem.league.round;
-        if(group[title] ==null){
-            group[title]=[];
-        }
-        group[title].push(elem);
-        return group;
-
-    },[])
     
-    console.log("fixtures",groupedDateFixtures);
+    
+   
     return(
         <Container>
-            <Nav variant="tabs">
+            {/* <Nav variant="tabs">
                 {
                     dates.map((date,index)=>{
                         return(
@@ -62,23 +74,24 @@ export default function DateFixtures(){
                         </Nav.Item>)
                     })
                 }
-            </Nav>
+            </Nav> */}
             {/* selected date fixtures */}
             <Container>
-            {
+            {/* {
                     groupedDateFixtures?
                     Object.keys(groupedDateFixtures)
-                    .sort((a,b)=>a-b)
                     .map((elem,index)=>{
                         return(
-                            <div>
+                            <div key={elem}>
                                 <img src={groupedDateFixtures[elem][0].league.logo} alt={''}/>
                                 <span>{Object.keys(groupedDateFixtures)[index]}</span>
+                                <span>{index}</span>
                                 <div>
                                 {
-                                     groupedDateFixtures[elem]?.map((fixture,index)=>{
+                                     groupedDateFixtures[elem]?.map((fixture,i)=>{
                                         return(
-                                            <div key={index}>
+                                            <div key={i}>
+                                                 <span>{i}</span>
                                                 <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
                                                 <span>{fixture.teams.home.name}</span>
                                                 <span>{fixture.goals.home}</span>
@@ -96,7 +109,7 @@ export default function DateFixtures(){
                     })
                     :
                     <p>No current games</p>
-                }
+                } */}
             </Container>
         </Container>
         
