@@ -1,5 +1,5 @@
 import React ,{useState, useEffect} from "react";
-import { getDateFixtures } from "../Api/getFixtures.js";
+import { getDateFixtures,createGroupedDateFixtures } from "../Api/getFixtures.js";
 import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
@@ -21,43 +21,14 @@ export default function DateFixtures(){
     }
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
-    
-    async function createGroupedFixtures(){
-        let leagues=getPreferdLeaguesFromCookie(); 
-        if(leagues.length>0){
-        let  todayArray= []; 
-        let promises = leagues.map(league => 
-            getDateFixtures(league.id, league.season, dateString).then(result => {
-                todayArray.push(...result.data.response);
-                console.log(`today ${league.id}`, todayArray); // logging by league id instead of index
-            })
-        );            
-            await Promise.all(promises);
-            return todayArray;
-        }
-       return [];
-    }
-
     useEffect(()=>{
-       createGroupedFixtures()?.then(result=>{
-        console.log("result",result);
-        result?.reduce((group,elem)=>{
-            const title= elem.league.name + '  ' + elem.league.round;
-            if(group[title] ==null){
-                group[title]=[];
-            }
-            group[title].push(elem);
-            // return group;
-            setGroupedFixtures(group);
-        },[])
-        // console.log("group",gg);
-       })
-    //    console.log("grouped",groupedFixtures);
-
+        createGroupedDateFixtures(dateString).then(result=>{
+            setGroupedFixtures(result);
+        })        
     },[dateString])
 
     
-    
+    console.log("date fixtures",groupedFixtures);
    
     return(
         <Container>
