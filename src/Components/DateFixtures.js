@@ -3,7 +3,7 @@ import { getDateFixtures,createGroupedDateFixtures } from "../Api/getFixtures.js
 import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import {Nav, Button, Container } from "react-bootstrap";
+// import {Nav, Button, Container } from "react-bootstrap";
 
 export default function DateFixtures(){
 
@@ -21,66 +21,66 @@ export default function DateFixtures(){
     }
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
-    useEffect(()=>{
-        createGroupedDateFixtures(dateString).then(result=>{
-            setGroupedFixtures(result);
-        })        
-    },[dateString])
+    // useEffect(()=>{
+    //     createGroupedDateFixtures(dateString).then(result=>{
+    //         setGroupedFixtures(result);
+    //     })        
+    // },[dateString])
 
     
     console.log("date fixtures",groupedFixtures);
    
     return(
-        <Container>
-            {/* <Nav variant="tabs">
+        <div>
+            <div  className="flex justify-center m-4 ">
                 {
                     dates.map((date,index)=>{
                         return(
-                        <Nav.Item 
+                        <div
                             onClick={()=>setDateString(dates[index].year+'-'+dates[index].month+'-'+dates[index].date)} 
-                            className="m-2 bg-primary text-light" role="button" key={index}
-                        >{date.date + '/' + date.month}
-                        </Nav.Item>)
+                            className="text-2x-l w-8 mx-1 px-2 rounded-4 border-solid border-2 border-black" key={index}>
+                            {date.date + '/' + date.month}
+                        </div>)
                     })
                 }
-            </Nav> */}
+            </div>
             {/* selected date fixtures */}
-            <Container>
+            <div>
             {
-                    groupedFixtures?
-                    Object.keys(groupedFixtures)
-                    .map((elem,index)=>{
-                        return(
-                            <div key={elem}>
-                                <img src={groupedFixtures[elem][0].league.logo} alt={''}/>
-                                <span>{Object.keys(groupedFixtures)[index]}</span>
-                                <span>{index}</span>
-                                <div>
-                                {
-                                     groupedFixtures[elem]?.map((fixture,i)=>{
-                                        return(
-                                            <div key={i}>
-                                                 <span>{i}</span>
-                                                <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
-                                                <span>{fixture.teams.home.name}</span>
-                                                <span>{fixture.goals.home}</span>
-                                                <span>{fixture.goals.away}</span>
-                                                <span>{fixture.teams.away.name}</span>
-                                                <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
-                                            </div>
-                                        )
+                    // groupedFixtures?
+                    // Object.keys(groupedFixtures)
+                    // .map((elem,index)=>{
+                    //     return(
+                    //         <div key={elem}>
+                    //             <img src={groupedFixtures[elem][0].league.logo} alt={''}/>
+                    //             <span>{Object.keys(groupedFixtures)[index]}</span>
+                    //             <span>{index}</span>
+                    //             <div>
+                    //             {
+                    //                  groupedFixtures[elem]?.map((fixture,i)=>{
+                    //                     return(
+                    //                         <div key={i}>
+                    //                              <span>{i}</span>
+                    //                             <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
+                    //                             <span>{fixture.teams.home.name}</span>
+                    //                             <span>{fixture.goals.home}</span>
+                    //                             <span>{fixture.goals.away}</span>
+                    //                             <span>{fixture.teams.away.name}</span>
+                    //                             <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
+                    //                         </div>
+                    //                     )
                                         
-                                })
-                                }
-                                </div>
-                            </div>  
-                        )
-                    })
-                    :
-                    <p>No current games</p>
+                    //             })
+                    //             }
+                    //             </div>
+                    //         </div>  
+                    //     )
+                    // })
+                    // :
+                    // <p>No current games</p>
                 }
-            </Container>
-        </Container>
+            </div>
+        </div>
         
     )
 }
