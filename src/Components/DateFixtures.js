@@ -1,11 +1,10 @@
 import React ,{useState, useEffect} from "react";
-import { createGroupedDateFixtures } from "../Api/getFixtures.js";
+import { groupDateFixtures } from "../Api/getFixtures.js";
 import {Container, Box, Button, Typography, Avatar} from '@mui/material';
 
 export default function DateFixtures(){
 
-    const [datefixtures,setDateFixtures]=useState([]);
-    const [groupedFixtures,setGroupedFixtures]=useState([]);
+    const [groupFixtures,setGroupFixtures]=useState([]);
     //
     let dates=[];
     for(let i=0;i<7 ;i++){
@@ -19,13 +18,13 @@ export default function DateFixtures(){
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
     useEffect(()=>{
-        createGroupedDateFixtures(dateString).then(result=>{
-            setGroupedFixtures(result);
+        groupDateFixtures(dateString).then(result=>{
+            setGroupFixtures(result);
         })        
     },[dateString])
 
     
-    console.log("date fixtures",groupedFixtures);
+    console.log("date fixtures",groupFixtures);
    
     return(
         <Container>
@@ -48,18 +47,18 @@ export default function DateFixtures(){
                     </Typography>
                 </Box>
                 {
-                    groupedFixtures?
-                    Object.keys(groupedFixtures)
+                    groupFixtures?
+                    Object.keys(groupFixtures)
                     .map((elem,index)=>{
                         return(
                             <Box key={index}>
                                 <Box sx={{borderBottom:'1px solid black',borderTop:'1px solid black'}} display={'flex'} justifyContent={'start'} padding={1} my={2}  >
-                                    <Avatar sx={{ml:'2px',width:'80px', height:'80px', objectFit:'contain'}} variant="square" src={groupedFixtures[elem][0].league.logo} alt={''}/>
-                                    <Typography>{Object.keys(groupedFixtures)[index]}</Typography>                              
+                                    <Avatar sx={{ml:'2px',width:'80px', height:'80px', objectFit:'contain'}} variant="square" src={groupFixtures[elem][0].league.logo} alt={''}/>
+                                    <Typography>{Object.keys(groupFixtures)[index]}</Typography>                              
                                 </Box>
                                 <Box padding={2} margin={2} justifyContent={'start'}>
                                     {
-                                        groupedFixtures[elem]?.map((fixture,i)=>{
+                                        groupFixtures[elem]?.map((fixture,i)=>{
                                             return(
                                                 <Box display={"flex"} justifyContent={'space-around'} width={'60%'} padding={2} my={2} mx={'auto'} key={i}>
                                                     <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
