@@ -62,12 +62,6 @@ function LinePosition(props) {
                 ? playerNameArr.slice(1)
                 : playerNameArr[0]}
             </span>
-            {/* <span className="player-mark" style={{backgroundColor:colors.primary}}>
-                            
-                        </span>
-                        <div className='player-info'>                           
-                            
-                        </div> */}
           </NavLink>
         );
       })}

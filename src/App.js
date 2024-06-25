@@ -11,7 +11,7 @@ import Team from './Components/Team.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
 import DateFixtures from './Components/DateFixtures.js';
-// import Test from './Components/Test.js'
+
 
 function App() {
 
@@ -23,16 +23,16 @@ function App() {
     //   <Test />
     // </div>
      <Router>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Logo</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
+      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="/">Logo</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="/fixtures">Fixtures</a>
+          <div className="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/fixtures">Fixtures</a>
               </li>
               {/* <li class="nav-item">
                 <a class="nav-link" href="/leagues">Leagues</a>
@@ -40,8 +40,8 @@ function App() {
               <li class="nav-item">
                 <a class="nav-link" href="#">Statistics</a>
               </li>  */}
-              <li class="nav-item">
-                <a class="nav-link" href="/preferences">Preferences</a>
+              <li className="nav-item">
+                <a className="nav-link" href="/preferences">Preferences</a>
               </li>     
             </ul>
           </div>

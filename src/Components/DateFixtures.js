@@ -1,9 +1,6 @@
 import React ,{useState, useEffect} from "react";
-import { getDateFixtures,createGroupedDateFixtures } from "../Api/getFixtures.js";
-import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-// import {Nav, Button, Container } from "react-bootstrap";
+import { createGroupedDateFixtures } from "../Api/getFixtures.js";
+import {Container, Box, Button, Typography, Avatar} from '@mui/material';
 
 export default function DateFixtures(){
 
@@ -21,66 +18,70 @@ export default function DateFixtures(){
     }
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
-    // useEffect(()=>{
-    //     createGroupedDateFixtures(dateString).then(result=>{
-    //         setGroupedFixtures(result);
-    //     })        
-    // },[dateString])
+    useEffect(()=>{
+        createGroupedDateFixtures(dateString).then(result=>{
+            setGroupedFixtures(result);
+        })        
+    },[dateString])
 
     
     console.log("date fixtures",groupedFixtures);
    
     return(
-        <div>
-            <div  className="flex justify-center m-4 ">
+        <Container>
+            <Box  display={"flex"} justifyContent={"center"} margin={2}>
                 {
                     dates.map((date,index)=>{
                         return(
-                        <div
-                            onClick={()=>setDateString(dates[index].year+'-'+dates[index].month+'-'+dates[index].date)} 
-                            className="text-2x-l w-8 mx-1 px-2 rounded-4 border-solid border-2 border-black" key={index}>
+                        <Button variant={'contained'} sx={{mx:'4px',borderRadius:'15px',backgroundColor:'navy',color:'#fff'}}
+                            onClick={()=>setDateString(dates[index].year+'-'+dates[index].month+'-'+dates[index].date)}>
                             {date.date + '/' + date.month}
-                        </div>)
+                        </Button>)
                     })
                 }
-            </div>
+            </Box>
             {/* selected date fixtures */}
-            <div>
-            {
-                    // groupedFixtures?
-                    // Object.keys(groupedFixtures)
-                    // .map((elem,index)=>{
-                    //     return(
-                    //         <div key={elem}>
-                    //             <img src={groupedFixtures[elem][0].league.logo} alt={''}/>
-                    //             <span>{Object.keys(groupedFixtures)[index]}</span>
-                    //             <span>{index}</span>
-                    //             <div>
-                    //             {
-                    //                  groupedFixtures[elem]?.map((fixture,i)=>{
-                    //                     return(
-                    //                         <div key={i}>
-                    //                              <span>{i}</span>
-                    //                             <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
-                    //                             <span>{fixture.teams.home.name}</span>
-                    //                             <span>{fixture.goals.home}</span>
-                    //                             <span>{fixture.goals.away}</span>
-                    //                             <span>{fixture.teams.away.name}</span>
-                    //                             <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
-                    //                         </div>
-                    //                     )
-                                        
-                    //             })
-                    //             }
-                    //             </div>
-                    //         </div>  
-                    //     )
-                    // })
-                    // :
-                    // <p>No current games</p>
+            <Container maxWidth={'lg'}>
+                <Box margin={2}>
+                    <Typography margin={2} padding={2} sx={{textAlign:'left',borderBottom:'1px solid black',borderTop:'1px solid black'}}>
+                        Fixtures of {dateString}
+                    </Typography>
+                </Box>
+                {
+                    groupedFixtures?
+                    Object.keys(groupedFixtures)
+                    .map((elem,index)=>{
+                        return(
+                            <Box key={index}>
+                                <Box sx={{borderBottom:'1px solid black',borderTop:'1px solid black'}} display={'flex'} justifyContent={'start'} padding={1} my={2}  >
+                                    <Avatar sx={{ml:'2px',width:'80px', height:'80px', objectFit:'contain'}} variant="square" src={groupedFixtures[elem][0].league.logo} alt={''}/>
+                                    <Typography>{Object.keys(groupedFixtures)[index]}</Typography>                              
+                                </Box>
+                                <Box padding={2} margin={2} justifyContent={'start'}>
+                                    {
+                                        groupedFixtures[elem]?.map((fixture,i)=>{
+                                            return(
+                                                <Box display={"flex"} justifyContent={'space-around'} width={'60%'} padding={2} my={2} mx={'auto'} key={i}>
+                                                    <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
+                                                    <Typography>{fixture.teams.home.name}</Typography>
+                                                    <Typography>{fixture.goals.home}</Typography>
+                                                    <Typography>{fixture.goals.away}</Typography>
+                                                    <Typography>{fixture.teams.away.name}</Typography>
+                                                    <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
+                                                </Box>
+                                            )
+                                            
+                                        })
+                                    }
+                                </Box>
+                            </Box>
+                        )
+                    })
+                    :
+                    <p>No current games</p>
                 }
-            </div>
-        </div>
+            </Container>
+        </Container>
         
     )
 }
