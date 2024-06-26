@@ -8,7 +8,7 @@ export default function Team(props){
     const teamId=useParams().teamId;
     const {search}=useLocation();
     const leagueQuery=new URLSearchParams(search).get("league");
-    // console.log("search",query);
+    console.log("season",season);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
@@ -27,19 +27,19 @@ export default function Team(props){
         .then(result=>{
             setTeamSeasons(result.data.response);
         })
-        .catch(()=>setTeamSeasons([]))
+        // .catch(()=>setTeamSeasons([]))
 
         getTeamLeagues(teamId,selectedSeason)
         .then(result=>{
             setTeamLeagues(result.data.response)
         })
-        .catch(()=>setTeamLeagues([]))
+        // .catch(()=>setTeamLeagues([]))
 
         getTeamStatistics(teamId,selectedSeason,leagueId)
         .then(result=>{
             setTeamStatistics(result.data.response)
         })
-        .catch(()=>setTeamStatistics([]))
+        // .catch(()=>setTeamStatistics([]))
     },[teamId,selectedSeason,leagueId,season])
 
     console.log(teamStatistics);
@@ -85,7 +85,7 @@ export default function Team(props){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={season}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={()=>parseInt(season)}> 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
