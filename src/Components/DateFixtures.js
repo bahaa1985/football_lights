@@ -1,9 +1,11 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../Api/getFixtures.js";
 import {Container, Box, Button, Typography, Avatar} from '@mui/material';
+import useTheme from "@mui/material/styles/useTheme.js";
 
 export default function DateFixtures(){
 
+    const theme = useTheme();
     const [groupFixtures,setGroupFixtures]=useState([]);
     //
     let dates=[];
@@ -42,7 +44,7 @@ export default function DateFixtures(){
             {/* selected date fixtures */}
             <Container maxWidth={'lg'}>
                 <Box margin={2}>
-                    <Typography margin={2} padding={2} sx={{textAlign:'left',borderBottom:'1px solid black',borderTop:'1px solid black'}}>
+                    <Typography className={theme.typography}>
                         Fixtures of {dateString}
                     </Typography>
                 </Box>

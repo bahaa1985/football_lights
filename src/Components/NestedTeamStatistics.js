@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/nestedStatistics.css';
+
 const NestedTeamStatistics = ({ data, isParent=true }) => {
+
   const renderNestedObject = (obj) => {
     return Object.entries(obj).map(([key, value]) => {
       if (value === null) {
@@ -13,8 +15,8 @@ const NestedTeamStatistics = ({ data, isParent=true }) => {
       else if (typeof(value) === 'object') {
         return (
           <div key={key}>
-            <h2 >{key}:</h2>
-            <div className='stat_details'>{renderNestedObject(value)}</div>
+            <h2 style={{backgroundColor: key === 'fixtures' || key === 'goals' || key ==='biggest ' ? '#808080':null}}>{key}:</h2>
+            <div className={value !== null ? 'stat_details': null}>{renderNestedObject(value)}</div>
           </div>
         );
       } else {

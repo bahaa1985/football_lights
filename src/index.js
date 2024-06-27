@@ -4,11 +4,18 @@ import './index.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals.js';
 import '@fontsource/roboto/300.css';
+import  ThemeProvider  from '@mui/material/styles/ThemeProvider.js';
+import CssBaseline from '@mui/material/CssBaseline/CssBaseline.js';
+import theme from './styles/muiTheme.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <App />
+      </CssBaseline>
+    </ThemeProvider>
   </StrictMode>
 );
 
