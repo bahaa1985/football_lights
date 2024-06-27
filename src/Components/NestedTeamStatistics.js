@@ -10,23 +10,26 @@ const NestedTeamStatistics = ({ data, isParent=true }) => {
           <p key={key}>
             {key}: NA
           </p>
-        );
+        )
       } 
       else if (typeof(value) === 'object') {
         return (
-          <div key={key}>
-            <h2 style={{backgroundColor: key === 'fixtures' || key === 'goals' || key ==='biggest ' ? '#808080':null}}>{key}:</h2>
-            <div className={value !== null ? 'stat_details': null}>{renderNestedObject(value)}</div>
+          <div key={key} style={{display: key !== 'fixtures' || key !== 'goals' || key !=='biggest ' ? 'flex':null}}>
+            <h2>{key}:</h2>
+            <div style={{display:'flex'}}>{renderNestedObject(value)}</div>
           </div>
-        );
+        )
       } else {
         return (
-          <p style={{color: isParent ? 'red' : 'black'}}  key={key}>
-            {key}: {value}
-          </p>
-        );
+          <div>
+            <p style={{color: isParent ? 'red' : 'black'}}  key={key}>
+              {key}: {value}
+            </p>
+          </div>
+          
+        )
       }
-    });
+    })
   };
 
   return (

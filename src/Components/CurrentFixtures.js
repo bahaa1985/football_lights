@@ -98,7 +98,7 @@ export default function CurrentFixtures(props) {
                             }
                             </Box>  
                         )
-                    })
+                    }) 
                     :
                     <p>No current games</p>
                 }

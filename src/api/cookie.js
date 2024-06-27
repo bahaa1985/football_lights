@@ -19,7 +19,7 @@ export function setPreferedLeaguesCookie(leagues){
 export function getTeamsCookie(){
     const cookie=new Cookies();
     let teamsIds=[]
-    teamsIds =  cookie.get("prefered teams")
+    teamsIds =  cookie.get("prefered teams") 
     return teamsIds
 }
 
