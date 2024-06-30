@@ -22,9 +22,9 @@ export default function CurrentFixtures(props) {
         // Form the date string in 'yyyy-mm-dd' format
         var dateString = year.toString() + '-' + month.toString() + '-' + day.toString();
 
-        groupDateFixtures(dateString).then(result=>{
-            setToDayFixtures(result);
-        })
+        // groupDateFixtures(dateString).then(result=>{
+        //     setToDayFixtures(result);
+        // })
 
         // setInterval(()=>{
         //     groupLiveFixtures().then(result=>{
@@ -76,31 +76,31 @@ export default function CurrentFixtures(props) {
                 </Container>
             <div id="div-teams"> Today Fixtures
                 {
-                    todayFixtures?
-                    Object.keys(todayFixtures)
-                    .map((elem,index)=>{
-                        return(
-                            <Box>
-                            {
-                                todayFixtures[elem].map((fixture,i)=>{
-                                return(
-                                    <Box display={"flex"} justifyContent={'center'} key={i}>
-                                        <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
-                                        <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.home.name}</Typography></NavLink>
-                                        <Typography>{fixture.goals.home}</Typography>
-                                        <Typography>{fixture.goals.away}</Typography>
-                                        <NavLink to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.away.name}</Typography></NavLink>
-                                        <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
-                                    </Box>
-                                )
+                    // todayFixtures?
+                    // Object.keys(todayFixtures)
+                    // .map((elem,index)=>{
+                    //     return(
+                    //         <Box>
+                    //         {
+                    //             todayFixtures[elem].map((fixture,i)=>{
+                    //             return(
+                    //                 <Box display={"flex"} justifyContent={'center'} key={i}>
+                    //                     <img className="image" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
+                    //                     <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.home.name}</Typography></NavLink>
+                    //                     <Typography>{fixture.goals.home}</Typography>
+                    //                     <Typography>{fixture.goals.away}</Typography>
+                    //                     <NavLink to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.away.name}</Typography></NavLink>
+                    //                     <img className="image" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
+                    //                 </Box>
+                    //             )
                                     
-                            })
-                            }
-                            </Box>  
-                        )
-                    }) 
-                    :
-                    <p>No current games</p>
+                    //         })
+                    //         }
+                    //         </Box>  
+                    //     )
+                    // }) 
+                    // :
+                    // <p>No current games</p>
                 }
                 </div>           
         </Container>  

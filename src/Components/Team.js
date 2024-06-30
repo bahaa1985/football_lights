@@ -8,7 +8,7 @@ export default function Team(props){
     const teamId=useParams().teamId;
     const {search}=useLocation();
     const leagueQuery=new URLSearchParams(search).get("league");
-    console.log("season",season);
+    console.log("leagueQuert",leagueQuery);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
@@ -84,8 +84,8 @@ export default function Team(props){
             </div>
             {/** Season and leagues dropdowns */}
             <div>
-                    {/*seasons dropdown box when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={()=>parseInt(season)}> 
+                    {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={()=>teamSeasons[teamSeasons[teamSeasons.length-1]]}> 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
@@ -95,11 +95,11 @@ export default function Team(props){
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId}>  
+                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={parseInt(leagueId)}>  
                     {
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
-                                <option key={index}  value={item.league.id}><div>{item.league.name}</div></option>
+                                <option key={index}  value={item.league.id}>{item.league.name}</option>
                             )
                         })
                     }

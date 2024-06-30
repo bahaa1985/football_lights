@@ -1,7 +1,10 @@
 import React from 'react';
 import '../styles/nestedStatistics.css';
+import { useRef } from 'react';
 
-const NestedTeamStatistics = ({ data, isParent=true }) => {
+function NestedTeamStatistics({ data, isParent=true }) {
+
+  const parentDiv =useRef();
 
   const renderNestedObject = (obj) => {
     return Object.entries(obj).map(([key, value]) => {
@@ -14,19 +17,24 @@ const NestedTeamStatistics = ({ data, isParent=true }) => {
       } 
       else if (typeof(value) === 'object') {
         return (
-          <div key={key} style={{display: key !== 'fixtures' || key !== 'goals' || key !=='biggest ' ? 'flex':null}}>
+          <div key={key} style={{display: 'block'}}>
             <h2>{key}:</h2>
-            <div style={{display:'flex'}}>{renderNestedObject(value)}</div>
+            <div ref={parentDiv} style={{display: typeof(value) === 'object' ? 'block' : 'flex'}}>
+              {renderNestedObject(value)}
+            </div>
           </div>
         )
-      } else {
+      } 
+      else {
         return (
-          <div>
+          <div id='atomic'>
+            {
+              parentDiv.current.style.backgroundColor='lightblue'
+            }
             <p style={{color: isParent ? 'red' : 'black'}}  key={key}>
-              {key}: {value}
+              {key} : {value}
             </p>
           </div>
-          
         )
       }
     })

@@ -1,6 +1,7 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../Api/getFixtures.js";
 import {Container, Box, Button, Typography, Avatar} from '@mui/material';
+import { NavLink } from "react-router-dom";
 import useTheme from "@mui/material/styles/useTheme.js";
 
 export default function DateFixtures(){
@@ -64,10 +65,10 @@ export default function DateFixtures(){
                                             return(
                                                 <Box display={"flex"} justifyContent={'space-around'} width={'60%'} padding={2} my={2} mx={'auto'} key={i}>
                                                     <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
-                                                    <Typography>{fixture.teams.home.name}</Typography>
+                                                    <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.home.name}</Typography></NavLink>
                                                     <Typography>{fixture.goals.home}</Typography>
                                                     <Typography>{fixture.goals.away}</Typography>
-                                                    <Typography>{fixture.teams.away.name}</Typography>
+                                                    <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.away.name}</Typography></NavLink>
                                                     <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
                                                 </Box>
                                             )
