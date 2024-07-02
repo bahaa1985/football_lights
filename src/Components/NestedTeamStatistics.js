@@ -4,9 +4,9 @@ import { useRef } from 'react';
 
 function NestedTeamStatistics({ data, isParent=true }) {
 
-  const parentDiv =useRef();
+  const atomicDiv =useRef();
 
-  const renderNestedObject = (obj) => {
+  const renderNestedObject = (obj) => {    
     return Object.entries(obj).map(([key, value]) => {
       if (value === null) {
         return (
@@ -17,9 +17,19 @@ function NestedTeamStatistics({ data, isParent=true }) {
       } 
       else if (typeof(value) === 'object') {
         return (
-          <div key={key} style={{display: 'block'}}>
-            <h2>{key}:</h2>
-            <div ref={parentDiv} style={{display: typeof(value) === 'object' ? 'block' : 'flex'}}>
+          <div key={key}>
+            {
+              console.log("value",value)
+            }
+            <h2>{key}</h2>
+            <div 
+            style={
+              {
+                display: ['played','wins','draws','loses','total','average','streak','wins','loses','for','against',
+                'clean_sheet','failed_to_score','scored','missed'].indexOf(key) >-1 && typeof(value.total) !==  'object'  ? 'flex' : 'block'
+              }
+            }
+            >
               {renderNestedObject(value)}
             </div>
           </div>
@@ -27,14 +37,9 @@ function NestedTeamStatistics({ data, isParent=true }) {
       } 
       else {
         return (
-          <div id='atomic'>
-            {
-              parentDiv.current.style.backgroundColor='lightblue'
-            }
             <p style={{color: isParent ? 'red' : 'black'}}  key={key}>
-              {key} : {value}
+              {key} {value}
             </p>
-          </div>
         )
       }
     })

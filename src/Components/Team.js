@@ -85,7 +85,7 @@ export default function Team(props){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={()=>teamSeasons[teamSeasons[teamSeasons.length-1]]}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={teamSeasons[teamSeasons.length-1]}> 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
