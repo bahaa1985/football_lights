@@ -63,7 +63,7 @@ export default function DateFixtures(){
                                     {
                                         groupFixtures[elem]?.map((fixture,i)=>{
                                             return(
-                                                <Box display={"flex"} justifyContent={'space-around'} width={'60%'} padding={2} my={2} mx={'auto'} key={i}>
+                                                <Box sx={{display:'flex',justifyContent:'space-between',width:'60%',padding:'2px',my:'2px',mx:'auto'}} key={i}>
                                                     <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
                                                     <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.home.name}</Typography></NavLink>
                                                     <Typography>{fixture.goals.home}</Typography>

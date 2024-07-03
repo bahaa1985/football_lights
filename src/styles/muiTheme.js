@@ -17,11 +17,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: 'red',
-          padding: '2px',
+          padding: 'auto',
           margin: '2px',
-          textAlign: 'left',
-          borderBottom: '1px solid black',
-          borderTop: '1px solid black',
+          textAlign: 'center',
+          lineHeight:'4.5'
         },
       },
     },
