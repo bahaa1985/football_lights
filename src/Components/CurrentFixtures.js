@@ -83,34 +83,34 @@ export default function CurrentFixtures(props) {
                         return(
                             <Box>
                                 <Box display={"flex"} justifyContent={"flex-start"}>
-                                   <Avatar src={todayFixtures[elem][0].league.logo} variant="circle" sx={{ml:'2px',width:'80px', height:'80px', objectFit:'contain'}} />
+                                   <Avatar src={todayFixtures[elem][0].league.logo} variant="circle" sx={{ml:'2px',width:{xs:'60px',sm:'80px'},height:'50px', objectFit:'contain'}} />
                                    <Typography sx={{textAlign:'left'}}>{elem}</Typography>
                                 </Box>
                             {
                                 todayFixtures[elem].map((fixture,i)=>{
                                 return(
                                     <Box sx={{
-                                                display:{xs:'block',md:'flex'}
-                                                ,justifyContent:'space-between',width:'80%',padding:'2px',my:'2px',mx:'auto',borderBottom:'1px black solid'}} key={i}>
-                                        <Box display={"flex"} >
-                                            <Avatar src={fixture.teams.home.logo} variant="circle" sx={{width:'80px', height:'80px', objectFit:'contain'}} alt={fixture.teams.home.name}/>
-                                            <NavLink style={{width:'25%'}} to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}>
-                                                <Typography>{fixture.teams.home.name}</Typography>
+                                                display:{xs:'block',sm:'flex'},width:'80%',
+                                                px:'2px',py:'auto',my:'2px',mx:'auto',borderBottom:'1px black solid'}} key={i}>
+                                        <Box sx={{display:'flex',justifyContent:'space-between',width:{xs:'100%',sm:'50%'}}} >
+                                            <Avatar src={fixture.teams.home.logo} variant='rounded' sx={{width:{xs:'60px',sm:'80px'},height:'50px', objectFit:'contain', objectPosition:'center'}} alt={fixture.teams.home.name}/>
+                                            <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}>
+                                                <Typography style={{width:'25%'}}>{fixture.teams.home.name}</Typography>
                                             </NavLink>
                                             <Typography sx={{width:'10%'}}>{fixture.goals.home}</Typography>
                                         </Box>
-                                        <Box  display={"flex"} 
-                                            // sx={{
-                                            // direction:{
-                                            //     xs:'rtl',
-                                            //     sm:'ltr'
-                                            // }}}
-                                            >
+                                        <Box  sx={{
+                                                    display:'flex',justifyContent:'space-between',width:{xs:'100%',sm:'50%'},
+                                                    direction:{
+                                                        xs:'rtl',
+                                                        sm:'ltr'
+                                                    }
+                                                }}>
                                             <Typography sx={{width:'10%'}}>{fixture.goals.away}</Typography>
-                                            <NavLink style={{width:'25%'}} to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}>
-                                                <Typography>{fixture.teams.away.name}</Typography>
+                                            <NavLink to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}>
+                                                <Typography style={{width:'25%'}}>{fixture.teams.away.name}</Typography>
                                             </NavLink>
-                                            <Avatar src={fixture.teams.away.logo} variant="circle" sx={{width:'80px', height:'80px', objectFit:'contain'}} alt={fixture.teams.away.name}/>
+                                            <Avatar src={fixture.teams.away.logo} variant="rounded" sx={{width:{xs:'60px',sm:'80px'}, height:'50px', objectFit:'contain', objectPosition:'center'}} alt={fixture.teams.away.name}/>
                                         </Box>                                        
                                     </Box>
                                 )

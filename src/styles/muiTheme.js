@@ -16,11 +16,10 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          color: 'red',
           padding: 'auto',
           margin: '2px',
-          textAlign: 'center',
-          lineHeight:'4.5'
+          textAlign: 'center'
+          // ,lineHeight:'4.5'
         },
       },
     },
