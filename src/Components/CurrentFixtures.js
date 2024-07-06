@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { groupDateFixtures,groupLiveFixtures } from "../Api/getFixtures.js";
 import {Container, Box, Button, Typography, Avatar} from '@mui/material';
+import { DataGrid } from "@mui/x-data-grid/DataGrid/index.js";
 
+  
 
 export default function CurrentFixtures(props) {
 
     const [liveFixtures,setLiveFixtures]=useState([]);
     const [todayFixtures,setToDayFixtures]=useState([])
-    
 
     useEffect(()=>{            
         // Get current date
@@ -95,7 +96,7 @@ export default function CurrentFixtures(props) {
                                         <Box sx={{display:'flex',justifyContent:'space-between',width:{xs:'100%',sm:'50%'}}} >
                                             <Avatar src={fixture.teams.home.logo} variant='rounded' sx={{width:{xs:'60px',sm:'80px'},height:'50px', objectFit:'contain', objectPosition:'center'}} alt={fixture.teams.home.name}/>
                                             <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}>
-                                                <Typography style={{width:'25%'}}>{fixture.teams.home.name}</Typography>
+                                                <Typography>{fixture.teams.home.name}</Typography>
                                             </NavLink>
                                             <Typography sx={{width:'10%'}}>{fixture.goals.home}</Typography>
                                         </Box>
@@ -108,7 +109,7 @@ export default function CurrentFixtures(props) {
                                                 }}>
                                             <Typography sx={{width:'10%'}}>{fixture.goals.away}</Typography>
                                             <NavLink to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}>
-                                                <Typography style={{width:'25%'}}>{fixture.teams.away.name}</Typography>
+                                                <Typography>{fixture.teams.away.name}</Typography>
                                             </NavLink>
                                             <Avatar src={fixture.teams.away.logo} variant="rounded" sx={{width:{xs:'60px',sm:'80px'}, height:'50px', objectFit:'contain', objectPosition:'center'}} alt={fixture.teams.away.name}/>
                                         </Box>                                        
@@ -124,7 +125,7 @@ export default function CurrentFixtures(props) {
                     <p>No current games</p>
                 }
                 </div>           
-        </Container>  
+        </Container>         
     )
     
 }

@@ -18,7 +18,8 @@ const theme = createTheme({
         root: {
           padding: 'auto',
           margin: '2px',
-          textAlign: 'center'
+          textAlign: 'left',
+          fontSize:'1rem'
           // ,lineHeight:'4.5'
         },
       },
