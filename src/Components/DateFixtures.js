@@ -3,6 +3,7 @@ import { groupDateFixtures } from "../Api/getFixtures.js";
 import {Container, Box, Button, Typography, Avatar} from '@mui/material';
 import { NavLink } from "react-router-dom";
 import useTheme from "@mui/material/styles/useTheme.js";
+import FixtureRow from "./FixtureRow.js";
 
 export default function DateFixtures(){
 
@@ -51,34 +52,7 @@ export default function DateFixtures(){
                 </Box>
                 {
                     groupFixtures?
-                    Object.keys(groupFixtures)
-                    .map((elem,index)=>{
-                        return(
-                            <Box key={index}>
-                                <Box sx={{borderBottom:'1px solid black',borderTop:'1px solid black'}} display={'flex'} justifyContent={'start'} padding={1} my={2}  >
-                                    <Avatar sx={{ml:'2px',width:'80px', height:'80px', objectFit:'contain'}} variant="square" src={groupFixtures[elem][0].league.logo} alt={''}/>
-                                    <Typography>{Object.keys(groupFixtures)[index]}</Typography>                              
-                                </Box>
-                                <Box padding={2} margin={2} justifyContent={'start'}>
-                                    {
-                                        groupFixtures[elem]?.map((fixture,i)=>{
-                                            return(
-                                                <Box sx={{display:'flex',justifyContent:'space-between',width:'60%',padding:'2px',my:'2px',mx:'auto'}} key={i}>
-                                                    <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.home.logo} alt={fixture.teams.home.name}/>
-                                                    <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.home.name}</Typography></NavLink>
-                                                    <Typography>{fixture.goals.home}</Typography>
-                                                    <Typography>{fixture.goals.away}</Typography>
-                                                    <NavLink to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}`}><Typography>{fixture.teams.away.name}</Typography></NavLink>
-                                                    <Avatar  sx={{ml:'2px',minWidth:'80px', minHeight:'60px', objectFit:'contain'}} variant="square" src={fixture.teams.away.logo} alt={fixture.teams.away.name}/>
-                                                </Box>
-                                            )
-                                            
-                                        })
-                                    }
-                                </Box>
-                            </Box>
-                        )
-                    })
+                    <FixtureRow fixturesSource={groupFixtures}/>
                     :
                     <p>No current games</p>
                 }

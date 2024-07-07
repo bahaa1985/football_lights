@@ -8,12 +8,13 @@ export default function Team(props){
     const teamId=useParams().teamId;
     const {search}=useLocation();
     const leagueQuery=new URLSearchParams(search).get("league");
-    console.log("leagueQuert",leagueQuery);
+    const seasonQuery=new URLSearchParams(search).get("season");
+    // console.log("leagueQuert",leagueQuery);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
-    const [selectedSeason,setSelectedSeason]=useState(season);
+    const [selectedSeason,setSelectedSeason]=useState(seasonQuery);
     const [leagueId,setLeagueId]=useState(leagueQuery);
 
     useEffect(()=>{
@@ -25,24 +26,22 @@ export default function Team(props){
 
         getTeamSeasons(teamId)
         .then(result=>{
-            setTeamSeasons(result.data.response);
+            setTeamSeasons(result.data.response);           
         })
-        // .catch(()=>setTeamSeasons([]))
-
+        
         getTeamLeagues(teamId,selectedSeason)
         .then(result=>{
             setTeamLeagues(result.data.response)
         })
-        // .catch(()=>setTeamLeagues([]))
 
         getTeamStatistics(teamId,selectedSeason,leagueId)
         .then(result=>{
             setTeamStatistics(result.data.response)
         })
-        // .catch(()=>setTeamStatistics([]))
-    },[teamId,selectedSeason,leagueId,season])
 
-    console.log(teamStatistics);
+    },[teamId,selectedSeason,leagueId])
+
+    // console.log(teamStatistics);
     
     return(
         <div>
@@ -85,7 +84,7 @@ export default function Team(props){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={teamSeasons[teamSeasons.length-1]}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={parseInt(selectedSeason)}> 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
