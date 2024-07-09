@@ -78,7 +78,7 @@ function FixtureRow(props) {
                     {fixture.goals.away}
                     </Typography>
                     <NavLink
-                    to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}`}
+                    to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}&season=${fixture.league.season}`}
                     >
                     <Typography>{fixture.teams.away.name}</Typography>
                     </NavLink>

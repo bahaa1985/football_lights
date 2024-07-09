@@ -69,7 +69,7 @@ function App() {
         <Route path="/fixtures" element={<Game/>} >
           <Route path=":fixtureId"/>
         </Route>
-        <Route path="/teams" element={<Team season={season}/>}>
+        <Route path="/teams" element={<Team />}>
           <Route path=":teamId"/>
         </Route>
         <Route path="/players" element={<Player season={season}/>}>

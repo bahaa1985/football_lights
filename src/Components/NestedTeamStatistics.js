@@ -4,8 +4,6 @@ import { useRef } from 'react';
 
 function NestedTeamStatistics({ data, isParent=true }) {
 
-  const atomicDiv =useRef();
-
   const renderNestedObject = (obj) => {    
     return Object.entries(obj).map(([key, value]) => {
       if (value === null) {
@@ -18,15 +16,16 @@ function NestedTeamStatistics({ data, isParent=true }) {
       else if (typeof(value) === 'object') {
         return (
           <div key={key}>
-            {
+            {/* {
               console.log("value",value)
-            }
+            } */}
             <h2>{key}</h2>
             <div 
             style={
               {
                 display: ['played','wins','draws','loses','total','average','streak','wins','loses','for','against',
-                'clean_sheet','failed_to_score','scored','missed'].indexOf(key) >-1 && typeof(value.total) !==  'object'  ? 'flex' : 'block'
+                'clean_sheet','failed_to_score','scored','missed'].indexOf(key) >-1 && 
+                typeof(value.total) !==  'object'  ? 'flex' : 'block'
               }
             }
             >

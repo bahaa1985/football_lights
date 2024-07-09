@@ -3,19 +3,19 @@ import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
 import NestedTeamStatistics from './NestedTeamStatistics.js';
 
-export default function Team(props){
-    const season=props.season;
-    const teamId=useParams().teamId;
+export default function Team(){
+
     const {search}=useLocation();
     const leagueQuery=new URLSearchParams(search).get("league");
     const seasonQuery=new URLSearchParams(search).get("season");
-    // console.log("leagueQuert",leagueQuery);
+
+    const [teamId,setTeamId]=useState(useParams().teamId);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
-    const [selectedSeason,setSelectedSeason]=useState(seasonQuery);
-    const [leagueId,setLeagueId]=useState(leagueQuery);
+    const [selectedSeason,setSelectedSeason]=useState(parseInt(seasonQuery));
+    const [leagueId,setLeagueId]=useState(parseInt(leagueQuery));
 
     useEffect(()=>{
 
@@ -41,7 +41,6 @@ export default function Team(props){
 
     },[teamId,selectedSeason,leagueId])
 
-    // console.log(teamStatistics);
     
     return(
         <div>
@@ -84,7 +83,11 @@ export default function Team(props){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={parseInt(selectedSeason)}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} 
+                        defaultValue={
+                            selectedSeason
+                        }
+                    > 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
@@ -94,7 +97,11 @@ export default function Team(props){
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={parseInt(leagueId)}>  
+                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} 
+                        defaultValue={
+                            leagueId
+                        }
+                    >  
                     {
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
