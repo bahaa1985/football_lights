@@ -25,7 +25,6 @@ export default function CurrentFixtures(props) {
     var dateString = year.toString() + '-' + month.toString() + '-' + day.toString();
 
     useEffect(()=>{            
-        
 
         groupDateFixtures(dateString).then(result=>{
             setToDayFixtures(result);
@@ -39,7 +38,7 @@ export default function CurrentFixtures(props) {
         
     },[dateString])
 
-    // console.log("live",groupedLiveFixtures);
+    console.log("today",todayFixtures);
     console.log("live",liveFixtures);
 
     return(

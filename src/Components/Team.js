@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
 import NestedTeamStatistics from './NestedTeamStatistics.js';
@@ -6,41 +6,41 @@ import NestedTeamStatistics from './NestedTeamStatistics.js';
 export default function Team(){
 
     const {search}=useLocation();
-    const leagueQuery=new URLSearchParams(search).get("league");
-    const seasonQuery=new URLSearchParams(search).get("season");
+    const leagueQuery=parseInt(new URLSearchParams(search).get("league"));
+    const seasonQuery=parseInt(new URLSearchParams(search).get("season"));
 
-    const [teamId,setTeamId]=useState(useParams().teamId);
+    const teamId =parseInt(useParams().teamId);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
-    const [selectedSeason,setSelectedSeason]=useState(parseInt(seasonQuery));
-    const [leagueId,setLeagueId]=useState(parseInt(leagueQuery));
+    const [selectedSeason,setSelectedSeason]=useState(seasonQuery);
+    const [leagueId,setLeagueId]=useState(leagueQuery);
 
-    useEffect(()=>{
-
+    const fetchTeamData = useCallback(() => {
         getTeamInformation(teamId)
-        .then(result=>{
-            setTeamInformation(result.data.response[0])
-        })
+            .then(result => setTeamInformation(result.data.response[0]));
 
         getTeamSeasons(teamId)
-        .then(result=>{
-            setTeamSeasons(result.data.response);           
-        })
-        
-        getTeamLeagues(teamId,selectedSeason)
-        .then(result=>{
-            setTeamLeagues(result.data.response)
-        })
+            .then(result => setTeamSeasons(result.data.response));
 
-        getTeamStatistics(teamId,selectedSeason,leagueId)
-        .then(result=>{
-            setTeamStatistics(result.data.response)
-        })
+        getTeamLeagues(teamId, selectedSeason)
+            .then((result)=>{
+                setTeamLeagues(result.data.response)
+                
+                setLeagueId(result.data.response[0].league.id)
+            });
 
-    },[teamId,selectedSeason,leagueId])
+        getTeamStatistics(teamId, selectedSeason, leagueId)
+            .then(result => setTeamStatistics(result.data.response));
+    }, [teamId, selectedSeason, leagueId]);
 
+    useEffect(()=>{
+        fetchTeamData();
+    },[fetchTeamData])
+
+    console.log("leagues",teamLeagues);
+    // console.log("selected season:",selectedSeason);
     
     return(
         <div>
@@ -83,11 +83,7 @@ export default function Team(){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} 
-                        defaultValue={
-                            selectedSeason
-                        }
-                    > 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} value={selectedSeason}> 
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
@@ -97,15 +93,11 @@ export default function Team(){
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} 
-                        defaultValue={
-                            leagueId
-                        }
-                    >  
+                    <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} value={leagueId} >  
                     {
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
-                                <option key={index}  value={item.league.id}>{item.league.name}</option>
+                                <option key={index} value={item.league.id}>{item.league.name}</option>
                             )
                         })
                     }
