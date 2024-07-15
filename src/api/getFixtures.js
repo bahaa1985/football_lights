@@ -45,6 +45,7 @@ function getDateFixtures(league, season, date) {
 
 async function getPromisedFixtures(dateString) {
   let leagues = getPreferdLeaguesFromCookie();
+  console.log("leagues",leagues);
   if (leagues.length > 0) {
     let todayArray = [];
     let promises = leagues.map(league =>

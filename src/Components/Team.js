@@ -19,27 +19,36 @@ export default function Team(){
 
     const fetchTeamData = useCallback(() => {
         getTeamInformation(teamId)
-            .then(result => setTeamInformation(result.data.response[0]));
+            .then(result => {
+                setTeamInformation(result.data.response[0])
+                console.log("info triggered");
+            }
+            );
 
         getTeamSeasons(teamId)
-            .then(result => setTeamSeasons(result.data.response));
+            .then(result =>{
+                setTeamSeasons(result.data.response);
+                console.log("seasons triggered");
+            });
 
         getTeamLeagues(teamId, selectedSeason)
             .then((result)=>{
                 setTeamLeagues(result.data.response)
-                
-                setLeagueId(result.data.response[0].league.id)
+                console.log("leagues triggered");
+                // setLeagueId(result.data.response[0].league.id)
             });
 
         getTeamStatistics(teamId, selectedSeason, leagueId)
-            .then(result => setTeamStatistics(result.data.response));
-    }, [teamId, selectedSeason, leagueId]);
+            .then(result =>{
+                console.log("stats triggered");
+            });
+    }, [teamId,selectedSeason,leagueId]);
 
     useEffect(()=>{
         fetchTeamData();
     },[fetchTeamData])
 
-    console.log("leagues",teamLeagues);
+    // console.log("leagues",teamLeagues);
     // console.log("selected season:",selectedSeason);
     
     return(
@@ -83,23 +92,25 @@ export default function Team(){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} value={selectedSeason}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))}> 
                     {                        
+                        
                         teamSeasons?.map((item,index)=>{
                             return(
                                 <option key={index} value={item}>{item}</option>
                             )
-                        })            
+                        })           
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                    <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} value={leagueId} >  
+                    <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} >  
                     {
+                        [<option>Select league</option>,
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
                                 <option key={index} value={item.league.id}>{item.league.name}</option>
                             )
-                        })
+                        })]
                     }
                     </select>
             </div>    
@@ -108,7 +119,7 @@ export default function Team(){
                 {
                     teamStatistics? 
                     <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
-                    :null
+                    :"No data"
                 }
             </div>
         </div>
