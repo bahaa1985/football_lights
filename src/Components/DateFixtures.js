@@ -10,7 +10,7 @@ export default function DateFixtures(){
     const theme = useTheme();
     const [groupFixtures,setGroupFixtures]=useState([]);
     //
-    let dates=[];
+    let dates=[{'date':16,'month':7,'year':2024}];
     for(let i=0;i<7 ;i++){
         const nowValue=Date.now();
         const date =new  Date((nowValue+ i*24*60*60*1000));
@@ -19,11 +19,13 @@ export default function DateFixtures(){
         const year=date.getFullYear();
         dates.push({'date':day,'month':month,'year':year});
     }
+    // dates[0]=
     const [dateString,setDateString]=useState(dates[0].year.toString()+'-'+dates[0].month.toString()+'-'+dates[0].date.toString())
 
     useEffect(()=>{
         groupDateFixtures(dateString).then(result=>{
             setGroupFixtures(result);
+
         })        
     },[dateString])
 

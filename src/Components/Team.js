@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect,useCallback,useMemo } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
 import NestedTeamStatistics from './NestedTeamStatistics.js';
@@ -18,39 +18,56 @@ export default function Team(){
     const [leagueId,setLeagueId]=useState(leagueQuery);
 
     const fetchTeamData = useCallback(() => {
+       
+    }, [teamId,selectedSeason,leagueId]);
+
+    useEffect(()=>{
         getTeamInformation(teamId)
             .then(result => {
                 setTeamInformation(result.data.response[0])
-                console.log("info triggered");
+                // console.log("info triggered");
             }
             );
 
         getTeamSeasons(teamId)
             .then(result =>{
                 setTeamSeasons(result.data.response);
-                console.log("seasons triggered");
+                // console.log("seasons triggered");
             });
 
         getTeamLeagues(teamId, selectedSeason)
             .then((result)=>{
                 setTeamLeagues(result.data.response)
-                console.log("leagues triggered");
+                // console.log("leagues triggered");
                 // setLeagueId(result.data.response[0].league.id)
             });
 
         getTeamStatistics(teamId, selectedSeason, leagueId)
             .then(result =>{
-                console.log("stats triggered");
+                // console.log("stats triggered");
+                setTeamStatistics(result.data.response);
             });
-    }, [teamId,selectedSeason,leagueId]);
+    },[teamId,selectedSeason,leagueId])
 
-    useEffect(()=>{
-        fetchTeamData();
-    },[fetchTeamData])
-
-    // console.log("leagues",teamLeagues);
+    console.log("leagues",teamLeagues);
     // console.log("selected season:",selectedSeason);
-    
+    // Memoize the options rendering to avoid unnecessary re-renders
+    const renderedSeasons = useMemo(() => {
+        return teamSeasons?.map((season, index) => (
+        <option key={index} value={season}>
+            {season}
+        </option>
+        ));
+    }, [teamSeasons]);
+
+    const renderedLeagues=useMemo(()=>{
+        return teamLeagues?.map((item,index)=>(
+            <option key={index} value={item.league.id}>
+                {item.league.name}
+            </option>
+        ))
+    },[teamLeagues])
+
     return(
         <div>
             {/** Team's basic information */}
@@ -94,23 +111,24 @@ export default function Team(){
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
                     <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))}> 
                     {                        
-                        
-                        teamSeasons?.map((item,index)=>{
-                            return(
-                                <option key={index} value={item}>{item}</option>
-                            )
-                        })           
+                        // teamSeasons?.map((item,index)=>{
+                        //     return(
+                        //         <option key={index} value={item}>{item}</option>
+                        //     )
+                        // })
+                        renderedSeasons           
                     }
                     </select>
                     {/* leagues dropdownbox */}
                     <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} >  
                     {
-                        [<option>Select league</option>,
-                        teamLeagues?.map((item,index)=>{                  
-                            return(                                
-                                <option key={index} value={item.league.id}>{item.league.name}</option>
-                            )
-                        })]
+                        // <option>Select league</option>,
+                        // teamLeagues?.map((item,index)=>{                  
+                        //     return(                                
+                        //         <option key={index} value={item.league.id}>{item.league.name}</option>
+                        //     )
+                        // })
+                        renderedLeagues
                     }
                     </select>
             </div>    

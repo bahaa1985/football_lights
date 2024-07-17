@@ -1,14 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Box, Button, Typography, Avatar } from "@mui/material";
+import { getPreferdLeaguesFromCookie,setPreferedLeaguesCookie } from "../Api/cookie.js";
+import StarIcon from '@mui/icons-material/Star';
 
 function FixtureRow(props) {
 
     const fixtures =props.fixturesSource;
-    
+    const preferedLeagues = getPreferdLeaguesFromCookie();
+
     return Object.keys(fixtures).map((elem, index) => {
         return (
-        <Box>
+        <Box key={index}>
             <Box display={"flex"} justifyContent={"flex-start"}>
             <Avatar
                 src={fixtures[elem][0].league.logo}
@@ -22,6 +25,9 @@ function FixtureRow(props) {
             />
             <Typography sx={{ textAlign: "left" }}>{elem}</Typography>
             </Box>
+            <Button onClick={setPreferedLeaguesCookie(preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
+                <StarIcon></StarIcon>
+            </Button>
             {fixtures[elem].map((fixture, i) => {
             return (
                 <Box
