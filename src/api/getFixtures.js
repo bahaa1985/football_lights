@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getPreferdLeaguesFromCookie } from './cookie.js';
+import { getCookies } from './cookie.js';
 
 export function getAllFixtures(league, season) {
   let config = {
@@ -44,7 +44,7 @@ function getDateFixtures(league, season, date) {
 }
 
 async function getPromisedFixtures(dateString) {
-  let leagues = getPreferdLeaguesFromCookie();
+  let leagues = getCookies("prefered_leagues");
   console.log("leagues",leagues);
   if (leagues.length > 0) {
     let todayArray = [];
@@ -63,7 +63,7 @@ async function getPromisedFixtures(dateString) {
 }
 
 async function getPromisedLiveFixtures() {
-  let leagues = getPreferdLeaguesFromCookie();
+  let leagues = getCookies("prefered_leagues");
   let ids=leagues.map(league=>league.id).join('-');
   if (leagues.length > 0) {
     let liveArray=[];

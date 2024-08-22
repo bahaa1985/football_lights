@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js'
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getTeam } from "../Api/getLeaguesTeams.js";
-import { setPreferedLeaguesCookie , getPreferdLeaguesFromCookie } from "../Api/cookie.js";
+import { setCookies,getCookies } from "../Api/cookie.js";
 import Cookies from "universal-cookie";
 
 export default function Preferences(params) {
@@ -39,8 +37,8 @@ export default function Preferences(params) {
  
   function handlePreferedLeagues(leagueId,season){
     let preferedArr=[];
-    console.log("prefered leagues: ",getPreferdLeaguesFromCookie());
-    preferedArr=getPreferdLeaguesFromCookie();
+    console.log("prefered leagues: ",getCookies("prefered_leagues"));
+    preferedArr=getCookies("prefered_leagues");
     if(preferedArr.filter(obj=>obj.id===leagueId)[0] === undefined){
       preferedArr.push({'id':leagueId,'season':season});
       console.log(preferedArr);
@@ -50,17 +48,23 @@ export default function Preferences(params) {
       preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
       console.log(preferedArr);      
     }
-    setPreferedLeaguesCookie(preferedArr)
+    // setCookies(preferedArr,"prefered_leagues")
   }
 
-  function addToSelectedTeams(leagueId){
-      
-      setPreferedLeaguesCookie(leagueId)
-  }
-
-  function removeFromSelectedTeams(index){       
-    setPreferedTeams(preferedTeams.slice(0,index).concat(preferedTeams.slice(index+1)));
-    preferedTeams.splice(index,1);
+  function handlePreferedTeams(teamId){
+    let preferedArr=[];
+    console.log("prefered leagues: ",getCookies("prefered_leagues"));
+    preferedArr=getCookies("prefered_teams");
+    if(preferedArr.filter(obj=>obj.id===teamId)[0] === undefined){
+      preferedArr.push({'id':teamId});
+      console.log(preferedArr);
+    }
+    else{
+      const index=preferedArr.indexOf(preferedArr.filter(obj=>obj.id===teamId)[0])
+      preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
+      console.log(preferedArr);      
+    }
+    // setCookies(preferedArr,"prefered_teams")
   }
 
 
@@ -72,11 +76,11 @@ export default function Preferences(params) {
 
   // console.log("prefered leagues",preferedLeagues);
   return (
-    <div>
-      <div className="container-fluid d-flex flex-wrap text-center">
-        <div className="col-sm-6 text-start">
-          <input type="text" ref={searchLeagueInput} />
-          <button
+    <div className="relative top-20 left-0 p-4">
+      <div className="flex flex-wrap text-center">
+        <div className="text-left">
+          <input type="text" ref={searchLeagueInput} className="outline" />
+          <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
             onClick={() => setSearchLeague(searchLeagueInput.current.value)}
           >
             SearchLeague
@@ -101,7 +105,7 @@ export default function Preferences(params) {
           })}
         </div>
         {/*  */}
-        <div className="col-sm-6">
+        <div>
           {/* {preferedLeagues?.map((elem, index) => {
             return (
                   <div key={index} onClick={()=>[
@@ -114,23 +118,23 @@ export default function Preferences(params) {
                   </div>
                 )
           })} */}
-          <button onClick={() => setPreferedLeaguesCookie(preferedLeagues)}>
-            Save Leagues
+          <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setCookies(preferedLeagues,"prefered_leagues")}>
+            Save
           </button>
         </div>
       </div>
       {/* search leagues */}
      
       {/* search teams */}
-      <div className="container-fluid d-flex flex-wrap text-center">
-              <div className="col-sm-6">
-            <input type="text" ref={searchTeamInput} />
-            <button onClick={() => setSearchTeam(searchTeamInput.current.value)}>
+      <div className="flex flex-wrap text-center mt-4">
+              <div className="">
+            <input type="text" ref={searchTeamInput} className="outline" />
+            <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setSearchTeam(searchTeamInput.current.value)}>
               Search
             </button>
             {teams?.map((elem, index) => {
               return (
-                <div key={index} onClick={()=>[addToSelectedTeams(elem),console.log("selected teams",preferedTeams)]}>
+                <div key={index} onClick={()=>[handlePreferedTeams(elem.team.id),console.log("selected teams",preferedTeams)]}>
                   {elem.team.name} {elem.team.id} ({elem.team.country})
                   <img
                     src={elem.team?.logo}
@@ -143,20 +147,10 @@ export default function Preferences(params) {
             <div>          
         </div>
             </div>
-            <div className="col-sm-6">
-              {preferedTeams?.map((elem, index) => {
-                return (
-                  <div key={index} onClick={()=>[
-                    removeFromSelectedTeams(index),
-                    console.log("selected teams",preferedTeams)
-                    ]}>
-                    <img src={elem.team.logo} alt={elem.team.name}/>
-                    <div>{elem.team.name}</div>
-                    <span>{index}</span>
-                  </div>
-                )
-              })}
-              <button onClick={() => [handleTeamsCookie(),console.log("selected teams",preferedTeams)]}>Selected Teams</button>
+            <div>
+              <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => [handleTeamsCookie(),console.log("selected teams",preferedTeams)]}>
+                Save
+              </button>
             </div>
       </div>                      
       </div>

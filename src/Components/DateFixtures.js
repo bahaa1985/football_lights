@@ -7,7 +7,7 @@ export default function DateFixtures(){
 
     const [groupFixtures,setGroupFixtures]=useState([]);
     //
-    let dates=[{'date':16,'month':7,'year':2024}];
+    let dates=[];
     for(let i=0;i<7 ;i++){
         const nowValue=Date.now();
         const date =new  Date((nowValue+ i*24*60*60*1000));
@@ -27,15 +27,15 @@ export default function DateFixtures(){
     },[dateString])
 
     
-    console.log("date fixtures",groupFixtures);
+    console.log("date fixtures",dates);
    
     return(
-        <div>
-            <div className="flex justify-center m"  display={"flex"} justifyContent={"center"} margin={2}>
+        <div className="relative top-20 left-0">
+            <div className="flex justify-center mx-auto">
                 {
                     dates.map((date,index)=>{
                         return(
-                        <button className="mx rounded-sm bg-red-950 text-[#fff]"
+                        <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
                             onClick={()=>setDateString(dates[index].year+'-'+dates[index].month+'-'+dates[index].date)}>
                             {date.date + '/' + date.month}
                         </button>)

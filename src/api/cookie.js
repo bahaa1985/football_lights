@@ -1,29 +1,29 @@
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
+import Cookies from 'js-cookie';
 
-export function getPreferdLeaguesFromCookie(){
-    const cookie=new Cookies();    
-    const leagues =  cookie.get("prefered_leagues")
-    if(typeof(leagues)!=='undefined'){
-       return leagues;       
+export function setCookies(data,name){
+    // const cookie = new Cookies();
+    const jsonData = JSON.stringify(data);
+    if(name==="prefered_leagues"){
+    Cookies.set("prefered_leagues",jsonData,{path:'/',expires:-1});
+    }
+    else{
+        Cookies.set("prefered_teams",jsonData,{path:'/',expires:-1});
+    }
+}
+
+export function getCookies(name){
+    // const cookie=new Cookies();    
+    const jsonData =  Cookies.get(name);
+    if(typeof(jsonData)!=='undefined'){
+       const data=JSON.parse(jsonData);       
+       return data;
     }
     else{
         return [];
     }
 }
 
-export function setPreferedLeaguesCookie(leagues){
-      const cookie = new Cookies();
-      cookie.set("prefered_leagues",leagues,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
-}
 
-export function getTeamsCookie(){
-    const cookie=new Cookies();
-    let teamsIds=[]
-    teamsIds =  cookie.get("prefered teams") 
-    return teamsIds
-}
 
-export function setTeamsCookie(preferedTeams){
-      const cookie = new Cookies();
-      cookie.set("prefered teams",preferedTeams,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
-}
+// new Date('9999-12-31T23:59:59.000Z')

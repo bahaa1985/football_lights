@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { getPreferdLeaguesFromCookie,setPreferedLeaguesCookie } from "../Api/cookie.js";
+import { getCookies, setCookies } from "../Api/cookie.js";
 
 function FixtureRow(props) {
 
     const fixtures =props.fixturesSource;
-    const preferedLeagues = getPreferdLeaguesFromCookie();
+    const preferedLeagues = getCookies("prefered_leagues");;
 
     return Object.keys(fixtures).map((elem, index) => {
         return (
@@ -17,7 +17,7 @@ function FixtureRow(props) {
             />
             <span className="text-left">{elem}</span>
             </div>
-            <button onClick={setPreferedLeaguesCookie(preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
+            <button onClick={setCookies("prefered_leagues",preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
                 {/* <StarIcon></StarIcon> */}
             </button>
             {fixtures[elem].map((fixture, i) => {

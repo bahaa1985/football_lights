@@ -3,14 +3,14 @@ import { useState } from "react";
 import Standings from './Standing.js';
 import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
-import { getPreferdLeaguesFromCookie } from "../Api/cookie.js";
+import { getCookies } from "../Api/cookie.js";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 
 
 export default function League(props){
     
     // const season=props.season;
-    let leaguesCookie=getPreferdLeaguesFromCookie();
+    let leaguesCookie=getCookies("prefered_leagues");
     // let {leagueId} = useParams()
     let [tab,setTab]=useState(true)
     const [leagueId,setLeagueId]=useState(0);
