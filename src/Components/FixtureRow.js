@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Box, Button, Typography, Avatar } from "@mui/material";
 import { getPreferdLeaguesFromCookie,setPreferedLeaguesCookie } from "../Api/cookie.js";
-import StarIcon from '@mui/icons-material/Star';
 
 function FixtureRow(props) {
 
@@ -11,65 +9,38 @@ function FixtureRow(props) {
 
     return Object.keys(fixtures).map((elem, index) => {
         return (
-        <Box key={index}>
-            <Box display={"flex"} justifyContent={"flex-start"}>
-            <Avatar
+        <div key={index}>
+            <div className="flex float-start">
+            <img alt=""
                 src={fixtures[elem][0].league.logo}
-                variant="circle"
-                sx={{
-                ml: "2px",
-                width: { xs: "60px", sm: "80px" },
-                height: "50px",
-                objectFit: "contain",
-                }}
+                className="ml xs:w-15 sm:w-20 h-12 object-contain"
             />
-            <Typography sx={{ textAlign: "left" }}>{elem}</Typography>
-            </Box>
-            <Button onClick={setPreferedLeaguesCookie(preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
-                <StarIcon></StarIcon>
-            </Button>
+            <span className="text-left">{elem}</span>
+            </div>
+            <button onClick={setPreferedLeaguesCookie(preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
+                {/* <StarIcon></StarIcon> */}
+            </button>
             {fixtures[elem].map((fixture, i) => {
             return (
-                <Box
-                sx={{
-                    display: { xs: "block", sm: "flex" },
-                    width: "80%",
-                    px: "2px",
-                    py: "auto",
-                    my: "2px",
-                    mx: "auto",
-                    borderBottom: "1px black solid",
-                }}
+                <div className="xs:block sm:flex w-[80%] px py-auto my mx-auto border-b border-b-black border-solid"
                 key={i}
                 >
-                <Box
-                    sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: { xs: "100%", sm: "50%" },
-                    }}
-                >
-                    <Avatar
+                <div className="flex justify-between xs:w-full sm:w-[50%]">
+                    <img
                     src={fixture.teams.home.logo}
-                    variant="rounded"
-                    sx={{
-                        width: { xs: "60px", sm: "80px" },
-                        height: "50px",
-                        objectFit: "contain",
-                        objectPosition: "center",
-                    }}
+                    className="ml xs:w-15 sm:w-20 h-12 object-contain"
                     alt={fixture.teams.home.name}
                     />
                     <NavLink
                     to={`/teams/${fixture.teams.home.id}?league=${fixture.league.id}&season=${fixture.league.season}`}
                     >
-                    <Typography>{fixture.teams.home.name}</Typography>
+                    <span>{fixture.teams.home.name}</span>
                     </NavLink>
-                    <Typography sx={{ width: "10%" }}>
-                    {fixture.goals.home}
-                    </Typography>
-                </Box>
-                <Box
+                    <span className="w-[10%]">
+                        {fixture.goals.home}
+                    </span>
+                </div>
+                <div
                     sx={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -78,32 +49,25 @@ function FixtureRow(props) {
                         xs: "rtl",
                         sm: "ltr",
                     },
-                    }}
-                >
-                    <Typography sx={{ width: "10%" }}>
+                    }}>
+                    <span className="w-[10%]">
                     {fixture.goals.away}
-                    </Typography>
+                    </span>
                     <NavLink
                     to={`/teams/${fixture.teams.away.id}?league=${fixture.league.id}&season=${fixture.league.season}`}
                     >
-                    <Typography>{fixture.teams.away.name}</Typography>
+                    <span>{fixture.teams.away.name}</span>
                     </NavLink>
-                    <Avatar
+                    <img
                     src={fixture.teams.away.logo}
-                    variant="rounded"
-                    sx={{
-                        width: { xs: "60px", sm: "80px" },
-                        height: "50px",
-                        objectFit: "contain",
-                        objectPosition: "center",
-                    }}
+                    className="xs:w-15 sm:w-20 h-12 object-contain object-center"
                     alt={fixture.teams.away.name}
                     />
-                </Box>
-                </Box>
+                </div>
+                </div>
             );
             })}
-        </Box>
+        </div>
         );
     });
     }

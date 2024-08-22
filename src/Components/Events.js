@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef } from "react";
+import { useState,useEffect } from "react";
 import getEvents from '../Api/getEvents.js'
 import '../styles/events.css'
 import goal from '../images/goal.png'

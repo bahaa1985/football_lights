@@ -1,5 +1,5 @@
 import {React, useState, useEffect, Fragment} from 'react'
-import { Link, useParams,NavLink  } from 'react-router-dom'
+import { useParams,NavLink  } from 'react-router-dom'
 import  getGame from '../Api/getGame.js' 
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";

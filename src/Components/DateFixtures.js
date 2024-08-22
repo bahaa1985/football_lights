@@ -1,13 +1,10 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../Api/getFixtures.js";
-import {Container, Box, Button, Typography, Avatar} from '@mui/material';
 import { NavLink } from "react-router-dom";
-import useTheme from "@mui/material/styles/useTheme.js";
 import FixtureRow from "./FixtureRow.js";
 
 export default function DateFixtures(){
 
-    const theme = useTheme();
     const [groupFixtures,setGroupFixtures]=useState([]);
     //
     let dates=[{'date':16,'month':7,'year':2024}];
@@ -33,33 +30,33 @@ export default function DateFixtures(){
     console.log("date fixtures",groupFixtures);
    
     return(
-        <Container>
-            <Box  display={"flex"} justifyContent={"center"} margin={2}>
+        <div>
+            <div className="flex justify-center m"  display={"flex"} justifyContent={"center"} margin={2}>
                 {
                     dates.map((date,index)=>{
                         return(
-                        <Button variant={'contained'} sx={{mx:'4px',borderRadius:'15px',backgroundColor:'navy',color:'#fff'}}
+                        <button className="mx rounded-sm bg-red-950 text-[#fff]"
                             onClick={()=>setDateString(dates[index].year+'-'+dates[index].month+'-'+dates[index].date)}>
                             {date.date + '/' + date.month}
-                        </Button>)
+                        </button>)
                     })
                 }
-            </Box>
+            </div>
             {/* selected date fixtures */}
-            <Container maxWidth={'lg'}>
-                <Box margin={2}>
-                    <Typography className={theme.typography}>
+            <div className="max-w-lg">
+                <div className="m-2">
+                    <span className="text-lg">
                         Fixtures of {dateString}
-                    </Typography>
-                </Box>
+                    </span>
+                </div>
                 {
                     groupFixtures?
                     <FixtureRow fixturesSource={groupFixtures}/>
                     :
                     <p>No current games</p>
                 }
-            </Container>
-        </Container>
+            </div>
+        </div>
         
     )
 }

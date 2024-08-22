@@ -2,7 +2,7 @@ import Cookies from "universal-cookie";
 
 export function getPreferdLeaguesFromCookie(){
     const cookie=new Cookies();    
-    const leagues =  cookie.get("prefered leagues")
+    const leagues =  cookie.get("prefered_leagues")
     if(typeof(leagues)!=='undefined'){
        return leagues;       
     }
@@ -13,7 +13,7 @@ export function getPreferdLeaguesFromCookie(){
 
 export function setPreferedLeaguesCookie(leagues){
       const cookie = new Cookies();
-      cookie.set("prefered leagues",leagues,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
+      cookie.set("prefered_leagues",leagues,{path:'/',expires:new Date('9999-12-31T23:59:59.000Z')});
 }
 
 export function getTeamsCookie(){

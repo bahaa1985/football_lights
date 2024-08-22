@@ -2,9 +2,8 @@ import { React } from "react";
 import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { groupDateFixtures,groupLiveFixtures } from "../Api/getFixtures.js";
-import {Container, Box, Button, Typography, Avatar} from '@mui/material';
 import FixtureRow from "./FixtureRow.js";
-// import { DataGrid } from "@mui/x-data-grid/DataGrid/index.js";
+
 
   
 
@@ -30,11 +29,11 @@ export default function CurrentFixtures(props) {
             setToDayFixtures(result);
         })
 
-        // setInterval(()=>{
-        //     groupLiveFixtures().then(result=>{
-        //         setLiveFixtures(result);
-        //     })          
-        // },1000*60*10)
+        setInterval(()=>{
+            groupLiveFixtures().then(result=>{
+                setLiveFixtures(result);
+            })          
+        },1000*60*10)
         
     },[dateString])
 
@@ -42,24 +41,26 @@ export default function CurrentFixtures(props) {
     console.log("live",liveFixtures);
 
     return(
-        <Container> Welcome to home!
-           <Container> Live
-                {/* {
-                liveFixtures?
+        <div>
+           <div>
+                <h4>Live</h4>
+                {
+                liveFixtures.length>0 ?
                     <FixtureRow fixturesSource={liveFixtures} />
                 :
-                <p>No current games</p>
-                } */}
-            </Container>
-            <Container> Today Fixtures
+                <p className="text-md font-bold">No current games</p>
+                }
+            </div>
+            <div> 
+                <h4>Today Fixtures</h4>
                 {
-                    todayFixtures?
+                    todayFixtures.length>0 ?
                     <FixtureRow fixturesSource={todayFixtures}/>
                     :
-                    <p>No current games</p>
+                    <p className="text-md font-bold">No current games</p>
                 }
-            </Container>           
-        </Container>         
+            </div>           
+        </div>         
     )
     
 }
