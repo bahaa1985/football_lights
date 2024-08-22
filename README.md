@@ -1,3 +1,7 @@
+# Football lights is an application for football daily games and statistics
+
+# The application is build in React and Material UI and web service api from `https://dashboard.api-football.com/login/expirate`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
