@@ -41,14 +41,14 @@ export default function Preferences(params) {
     preferedArr=getCookies("prefered_leagues");
     if(preferedArr.filter(obj=>obj.id===leagueId)[0] === undefined){
       preferedArr.push({'id':leagueId,'season':season});
-      console.log(preferedArr);
+      console.log("selected leagues: ",preferedArr);
     }
     else{
       const index=preferedArr.indexOf(preferedArr.filter(obj=>obj.id===leagueId)[0])
       preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
-      console.log(preferedArr);      
+      console.log("selected leagues: ",preferedArr);    
     }
-    // setCookies(preferedArr,"prefered_leagues")
+    setPreferedLeagues(preferedArr);
   }
 
   function handlePreferedTeams(teamId){
@@ -64,7 +64,7 @@ export default function Preferences(params) {
       preferedArr=preferedArr.slice(0,index).concat(preferedArr.slice(index+1));
       console.log(preferedArr);      
     }
-    // setCookies(preferedArr,"prefered_teams")
+    setPreferedTeams(preferedArr);
   }
 
 
@@ -80,14 +80,14 @@ export default function Preferences(params) {
       <div className="flex flex-wrap text-center">
         <div className="text-left">
           <input type="text" ref={searchLeagueInput} className="outline" />
-          <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
-            onClick={() => setSearchLeague(searchLeagueInput.current.value)}
-          >
-            SearchLeague
+          <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
+            onClick={() => [setSearchLeague(searchLeagueInput.current.value),console.log(searchLeagueInput.current.value)
+             ]}>
+            Search League
           </button>
           {leagues?.map((elem, index) => {
             return (
-              <div key={index} onClick={()=>{
+              <div key={index} className="cursor-pointer" onClick={()=>{
                 const latestSeasonIndex = elem.seasons.length-1;
                 handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year);
                 backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
@@ -106,19 +106,8 @@ export default function Preferences(params) {
         </div>
         {/*  */}
         <div>
-          {/* {preferedLeagues?.map((elem, index) => {
-            return (
-                  <div key={index} onClick={()=>[
-                    removeFromSelectedLeagues(index),
-                    console.log("selected",preferedLeagues)
-                    ]}>
-                    <img src={elem.league.logo} alt={elem.league.name}/>
-                    <div>{elem.league.name}</div>
-                    <span>{index}</span>
-                  </div>
-                )
-          })} */}
-          <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setCookies(preferedLeagues,"prefered_leagues")}>
+          <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" 
+          onClick={() => [setCookies(preferedLeagues,"prefered_leagues"),setLeagues([])]}>
             Save
           </button>
         </div>
@@ -127,10 +116,10 @@ export default function Preferences(params) {
      
       {/* search teams */}
       <div className="flex flex-wrap text-center mt-4">
-              <div className="">
+              <div className="text-left">
             <input type="text" ref={searchTeamInput} className="outline" />
-            <button className="w-auto text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setSearchTeam(searchTeamInput.current.value)}>
-              Search
+            <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setSearchTeam(searchTeamInput.current.value)}>
+              Search Team
             </button>
             {teams?.map((elem, index) => {
               return (

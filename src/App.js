@@ -8,7 +8,7 @@ import Team from './Components/Team.js';
 import CurrentFixtures from './Components/CurrentFixtures.js';
 import Preferences from './Components/Preference.js';
 import DateFixtures from './Components/DateFixtures.js';
-
+import logo from './images/logo.jpg';
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
       <div className="relative -top-6 px-3 xs:basis-1/3 sm:basis-1/12">
         <NavLink className="px-3" to="/">
           <img className="mx-auto sm:mx-0 rounded-full max-w-14 h-14" alt="" 
-          src="https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTAxNzEyNzZ8&ixlib=rb-4.0.3&q=85"/>
+          src={logo}/>
         </NavLink>
       </div>
 

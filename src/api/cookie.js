@@ -4,18 +4,22 @@ import Cookies from 'js-cookie';
 export function setCookies(data,name){
     // const cookie = new Cookies();
     const jsonData = JSON.stringify(data);
+    console.log("jsonData: ",jsonData);
+    
     if(name==="prefered_leagues"){
-    Cookies.set("prefered_leagues",jsonData,{path:'/',expires:-1});
+    Cookies.set("prefered_leagues",jsonData,{expires:365 * 100});
+    console.log("new cookie: ",getCookies("prefered_leagues"));
+    
     }
     else{
-        Cookies.set("prefered_teams",jsonData,{path:'/',expires:-1});
+        Cookies.set("prefered_teams",jsonData,{expires:365 * 100});
     }
 }
 
 export function getCookies(name){
     // const cookie=new Cookies();    
     const jsonData =  Cookies.get(name);
-    if(typeof(jsonData)!=='undefined'){
+    if(jsonData){
        const data=JSON.parse(jsonData);       
        return data;
     }
