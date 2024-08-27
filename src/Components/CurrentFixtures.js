@@ -30,11 +30,11 @@ export default function CurrentFixtures(props) {
             setToDayFixtures(result);
         })
 
-        setInterval(()=>{
-            groupLiveFixtures().then(result=>{
-                setLiveFixtures(result);
-            })          
-        },1000*60*10)
+        // setInterval(()=>{
+        //     groupLiveFixtures().then(result=>{
+        //         setLiveFixtures(result);
+        //     })          
+        // },1000*60*10)
         
     },[dateString])
 
@@ -50,7 +50,7 @@ export default function CurrentFixtures(props) {
                 <div>  
                     <h4>Live</h4>
                     {              
-                    liveFixtures.length>0 ?
+                    liveFixtures?.length > 0 ?
                         <FixtureRow fixturesSource={liveFixtures} />
                     :
                     <p className="text-md font-bold">No current games</p>
@@ -60,10 +60,10 @@ export default function CurrentFixtures(props) {
                 <div> 
                     <h4>Today Fixtures</h4>
                     {
-                        todayFixtures.length>0 ?
-                        <FixtureRow fixturesSource={todayFixtures}/>
-                        :
-                        <p className="text-md font-bold">No current games</p>
+                        // todayFixtures.length > 0 ?
+                            <FixtureRow fixturesSource={todayFixtures}/>
+                        // :
+                        // <p className="text-md font-bold">No current games</p>
                     }
                 </div>  
                 </>
