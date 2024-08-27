@@ -9,14 +9,24 @@ function FixtureRow(props) {
     
     const preferedLeagues = getCookies("prefered_leagues");;
 
-    return(
-        
+    // return(
+    //     preferedLeagues.map((league,index)=>{
+    //         <div key={index}>
+    //              <div className="flex float-start">
+    //              <img alt=""
+    //                 src={fixtures[elem][0].league.logo}
+    //                 className="ml xs:w-15 sm:w-20 h-12 object-contain"
+    //             />
+    //             <span className="text-left">{elem}</span>
+    //             </div>
+    //         </div>
+    //     })
+    // )
 
     return Object.keys(fixtures).map((elem, index) => {
         return (
         <div key={index}>
-            {
-               
+            {               
                 <>
                 <div className="flex float-start">
                 <img alt=""
@@ -48,16 +58,7 @@ function FixtureRow(props) {
                             {fixture.goals.home}
                         </span>
                     </div>
-                    <div
-                        sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: { xs: "100%", sm: "50%" },
-                        direction: {
-                            xs: "rtl",
-                            sm: "ltr",
-                        },
-                        }}>
+                    <div className="flex justify-between w-full sm:w-[50%] rtl:mr-2 ltr:ml-2">
                         <span className="w-[10%]">
                         {fixture.goals.away}
                         </span>

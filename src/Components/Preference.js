@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getTeam } from "../Api/getLeaguesTeams.js";
 import { setCookies,getCookies } from "../Api/cookie.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "universal-cookie";
 
 export default function Preferences(params) {
@@ -13,6 +15,7 @@ export default function Preferences(params) {
   const [leaguesIds,setLeaguesIds]=useState([]);
   const [preferedTeams,setPreferedTeams]=useState([]);
   const [teamsIds,setTeamsIds]=useState([]);
+  const [isActive, setIsActive] = useState(false);
   const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
@@ -81,8 +84,7 @@ export default function Preferences(params) {
         <div className="text-left">
           <input type="text" ref={searchLeagueInput} className="outline" />
           <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
-            onClick={() => [setSearchLeague(searchLeagueInput.current.value),console.log(searchLeagueInput.current.value)
-             ]}>
+            onClick={() => [setSearchLeague(searchLeagueInput.current.value),console.log(searchLeagueInput.current.value)]}>
             Search League
           </button>
           {leagues?.map((elem, index) => {
@@ -99,7 +101,10 @@ export default function Preferences(params) {
                   style={{ width: "40px", height: "40px" }}
                   alt={elem.league.name}
                 /> 
-                {elem.league.name} {elem.league.id} ({elem.country.name})         
+                {elem.league.name} ({elem.country.name})         
+                <FontAwesomeIcon icon={faStar} 
+                                 className={`border-black ${preferedLeagues.find(ele=>ele.id===elem.league.id) ? "text-blue-700" : "text-white"}`} 
+                                 onClick={()=>setIsActive(!isActive)}/>
               </div>
             );
           })}
