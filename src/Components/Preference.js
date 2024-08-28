@@ -18,6 +18,7 @@ export default function Preferences(params) {
   const [activeIndex, setIsActiveIndex] = useState(0);
   const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
+  const preference_star=useRef();
   const searchTeamInput = useRef("");
 
 
@@ -37,11 +38,9 @@ export default function Preferences(params) {
 
   }, [searchLeague, searchTeam]);
   
-  let preferedLeaguesArr=[];  
-  function handlePreferedLeagues(leagueId,season){
     
-    console.log("prefered leagues: ",getCookies("prefered_leagues"));
-    preferedLeaguesArr=getCookies("prefered_leagues");
+  let preferedLeaguesArr=getCookies("prefered_leagues"); console.log("prefered leagues: ",preferedLeaguesArr); 
+  function handlePreferedLeagues(leagueId,season){        
     if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
       preferedLeaguesArr.push({'id':leagueId,'season':season});
       console.log("selected leagues: ",preferedLeaguesArr);
@@ -54,21 +53,21 @@ export default function Preferences(params) {
     setCookies(preferedLeaguesArr,"prefered_leagues");
   }
   
-  let preferedTeamsArr=[];
-  function handlePreferedTeams(teamId){
-    console.log("prefered leagues: ",getCookies("prefered_leagues"));
-    preferedTeamsArr=getCookies("prefered_teams");
-    if(preferedTeamsArr.filter(obj=>obj.id===teamId)[0] === undefined){
-      preferedTeamsArr.push({'id':teamId});
-      console.log(preferedTeamsArr);
-    }
-    else{
-      const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===teamId)[0])
-      preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
-      console.log(preferedLeaguesArr);      
-    }
+  // let preferedTeamsArr=[];
+  // function handlePreferedTeams(teamId){
+  //   console.log("prefered leagues: ",getCookies("prefered_leagues"));
+  //   preferedTeamsArr=getCookies("prefered_teams");
+  //   if(preferedTeamsArr.filter(obj=>obj.id===teamId)[0] === undefined){
+  //     preferedTeamsArr.push({'id':teamId});
+  //     console.log(preferedTeamsArr);
+  //   }
+  //   else{
+  //     const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===teamId)[0])
+  //     preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
+  //     console.log(preferedLeaguesArr);      
+  //   }
     
-  }
+  // }
 
 
   function handleTeamsCookie() {
@@ -88,7 +87,7 @@ export default function Preferences(params) {
             Search League
           </button>
           {leagues?.map((elem, index) => {
-            return (
+            return (            
               <div key={index}
                 className="w-full flex justify-start my-2" 
               //   onClick={()=>{
@@ -104,14 +103,22 @@ export default function Preferences(params) {
                   alt={elem.league.name}
                 /> 
                 <span className="w-[70%] border-b border-b-black">{elem.league.name} {elem.league.id}</span>         
-                <FontAwesomeIcon icon={faStar}
-                                 className={`${'star'+index}  w-10 h-10 bg-black cursor-pointer ${preferedLeagues.find((item)=>item.id===elem.league.id) ? "text-blue-700" : "text-white"}`} 
-                                 onClick={()=>
+                <FontAwesomeIcon ref={preference_star} icon={faStar}
+                                 className={`stroke-black stroke-[4px]  w-10 h-10 text-white cursor-pointer
+                                              ${preferedLeaguesArr.length> 0 ? "text-blue-700" : "text-red-300" }
+                                          `}                                 
+                                 onClick={(event)=>
                                  {
                                   // index===activeIndex ? setIsActiveIndex(-1) : setIsActiveIndex(index);
                                   // console.log("active index",activeIndex);
                                   const latestSeasonIndex = elem.seasons.length-1;
-                                  handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year)}}/>
+                                  const senderElement = event.currentTarget;
+                                  console.log("sender",senderElement);
+                                  
+                                  senderElement.classList.toggle("text-blue-700");
+                                  senderElement.classList.toggle("text-white");
+                                  handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year)                                  
+                                }}/>
               </div>
             );
           })}
@@ -133,7 +140,7 @@ export default function Preferences(params) {
             <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" onClick={() => setSearchTeam(searchTeamInput.current.value)}>
               Search Team
             </button>
-            {teams?.map((elem, index) => {
+            {/* {teams?.map((elem, index) => {
               return (
                 <div key={index} onClick={()=>[handlePreferedTeams(elem.team.id),console.log("selected teams",preferedTeams)]}>
                   {elem.team.name} {elem.team.id} ({elem.team.country})
@@ -144,7 +151,7 @@ export default function Preferences(params) {
                   />              
                 </div>
               );
-            })}
+            })} */}
             <div>          
         </div>
             </div>
