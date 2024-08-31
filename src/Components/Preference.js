@@ -5,6 +5,7 @@ import { setCookies,getCookies } from "../Api/cookie.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "universal-cookie";
+import { color } from "@mui/system";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
@@ -39,11 +40,12 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
   
     
-  let preferedLeaguesArr=getCookies("prefered_leagues"); console.log("prefered leagues: ",preferedLeaguesArr); 
+  let preferedLeaguesArr=getCookies("prefered_leagues"); 
+  console.log("prefered leagues: ",preferedLeaguesArr); 
   function handlePreferedLeagues(leagueId,season){        
     if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
       preferedLeaguesArr.push({'id':leagueId,'season':season});
-      console.log("selected leagues: ",preferedLeaguesArr);
+      // console.log("selected leagues: ",preferedLeaguesArr);
     }
     else{
       const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
@@ -76,6 +78,29 @@ export default function Preferences(params) {
     console.log("prefered teams cookie is created");
   }
 
+  function setPreferedLeaguesColor(leagueId){
+    let strokeClass="text-blue-100";
+    // for(let i=0;i<preferedLeaguesArr.length;i++){
+    //   if(preferedLeaguesArr[i].id===leagueId){
+    //     strokeClass= "text-blue-600";
+    //   }
+    //   else{
+    //     strokeClass= "text-blue-100";
+    //   }
+    // }
+    // return strokeClass;
+     preferedLeaguesArr.map((elem)=>{
+      if(elem.id===leagueId){
+        console.log("mark:",elem.id)
+        strokeClass= "text-blue-600";
+      }
+      // else{
+      //   strokeClass="text-blue-100";
+      // } 
+     })
+     return strokeClass;
+  }
+
   // console.log("prefered leagues",preferedLeagues);
   return (
     <div className="relative top-20 left-0 px-auto flex justify-around">
@@ -83,7 +108,9 @@ export default function Preferences(params) {
         <div className="text-left w-full">
           <input type="text" ref={searchLeagueInput} className="outline" />
           <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
-            onClick={() => [setSearchLeague(searchLeagueInput.current.value),console.log(searchLeagueInput.current.value)]}>
+            onClick={() => [setSearchLeague(searchLeagueInput.current.value),
+            // console.log(searchLeagueInput.current.value)
+            ]}>
             Search League
           </button>
           {leagues?.map((elem, index) => {
@@ -103,20 +130,16 @@ export default function Preferences(params) {
                   alt={elem.league.name}
                 /> 
                 <span className="w-[70%] border-b border-b-black">{elem.league.name} {elem.league.id}</span>         
-                <FontAwesomeIcon ref={preference_star} icon={faStar}
-                                 className={`stroke-black stroke-[4px]  w-10 h-10 text-white cursor-pointer
-                                              ${preferedLeaguesArr.length> 0 ? "text-blue-700" : "text-red-300" }
-                                          `}                                 
+                <FontAwesomeIcon icon={faStar}
+                                 className={`stroke-[4px]  w-10 h-10 cursor-pointer
+                                              ${setPreferedLeaguesColor(elem.league.id)}`}                             
                                  onClick={(event)=>
                                  {
-                                  // index===activeIndex ? setIsActiveIndex(-1) : setIsActiveIndex(index);
-                                  // console.log("active index",activeIndex);
                                   const latestSeasonIndex = elem.seasons.length-1;
                                   const senderElement = event.currentTarget;
-                                  console.log("sender",senderElement);
                                   
-                                  senderElement.classList.toggle("text-blue-700");
-                                  senderElement.classList.toggle("text-white");
+                                  senderElement.classList.toggle("text-blue-600");
+                                  senderElement.classList.toggle("text-blue-100");
                                   handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year)                                  
                                 }}/>
               </div>
