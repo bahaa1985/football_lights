@@ -30,11 +30,11 @@ export default function CurrentFixtures(props) {
             setToDayFixtures(result);
         })
 
-        // setInterval(()=>{
-        //     groupLiveFixtures().then(result=>{
-        //         setLiveFixtures(result);
-        //     })          
-        // },1000*60*10)
+        setInterval(()=>{
+            groupLiveFixtures().then(result=>{
+                setLiveFixtures(result);
+            })          
+        },1000*60*10)
         
     },[dateString])
 

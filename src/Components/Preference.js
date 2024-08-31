@@ -11,15 +11,14 @@ export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
+  const [pagesCount,setPagesCount]=useState(0);
+  const [page,setPage]=useState([]);
   const [teams, setTeams] = useState([]);
   const [preferedLeagues,setPreferedLeagues] = useState([]);
   const [leaguesIds,setLeaguesIds]=useState([]);
   const [preferedTeams,setPreferedTeams]=useState([]);
   const [teamsIds,setTeamsIds]=useState([]);
-  const [activeIndex, setIsActiveIndex] = useState(0);
-  const [backgroundSelected,setBackgroundSelected]=useState('white');
   const searchLeagueInput = useRef("");
-  const preference_star=useRef();
   const searchTeamInput = useRef("");
 
 
@@ -28,6 +27,9 @@ export default function Preferences(params) {
     if(searchLeague.trim().length>0){
       getLeagues(searchLeague).then((result) => {
         setLeagues(result.data.response);
+        if(leagues.length>0){
+          setPagesCount(Math.ceil(leagues.length/8))          
+        }        
       });
     }
         
@@ -39,9 +41,15 @@ export default function Preferences(params) {
 
   }, [searchLeague, searchTeam]);
   
+  function setLeaguesPages(){
+    for(let i=0;i<pagesCount;i++){
+        leagues.map((league,index)=>{
+         
+        })    
+    }
+  }
     
   let preferedLeaguesArr=getCookies("prefered_leagues"); 
-  console.log("prefered leagues: ",preferedLeaguesArr); 
   function handlePreferedLeagues(leagueId,season){        
     if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
       preferedLeaguesArr.push({'id':leagueId,'season':season});
@@ -79,24 +87,12 @@ export default function Preferences(params) {
   }
 
   function setPreferedLeaguesColor(leagueId){
-    let strokeClass="text-blue-100";
-    // for(let i=0;i<preferedLeaguesArr.length;i++){
-    //   if(preferedLeaguesArr[i].id===leagueId){
-    //     strokeClass= "text-blue-600";
-    //   }
-    //   else{
-    //     strokeClass= "text-blue-100";
-    //   }
-    // }
-    // return strokeClass;
+     let strokeClass="text-blue-100";  
      preferedLeaguesArr.map((elem)=>{
       if(elem.id===leagueId){
         console.log("mark:",elem.id)
         strokeClass= "text-blue-600";
       }
-      // else{
-      //   strokeClass="text-blue-100";
-      // } 
      })
      return strokeClass;
   }
@@ -113,16 +109,13 @@ export default function Preferences(params) {
             ]}>
             Search League
           </button>
+          {
+            
+          }
           {leagues?.map((elem, index) => {
             return (            
               <div key={index}
                 className="w-full flex justify-start my-2" 
-              //   onClick={()=>{
-              //   const latestSeasonIndex = elem.seasons.length-1;
-              //   handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year);
-              //   backgroundSelected === 'white' ? setBackgroundSelected('lightgreen'): setBackgroundSelected('white')
-              // }}          
-              // style={{backgroundColor: (isLeagueSelected(elem.league.id) ? 'lightgreen':'white')}}
               >
                 <img
                   src={elem.league?.logo}
@@ -136,8 +129,7 @@ export default function Preferences(params) {
                                  onClick={(event)=>
                                  {
                                   const latestSeasonIndex = elem.seasons.length-1;
-                                  const senderElement = event.currentTarget;
-                                  
+                                  const senderElement = event.currentTarget;                                  
                                   senderElement.classList.toggle("text-blue-600");
                                   senderElement.classList.toggle("text-blue-100");
                                   handlePreferedLeagues(elem.league.id,elem.seasons[latestSeasonIndex].year)                                  
