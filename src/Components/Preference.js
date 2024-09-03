@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 import { getTeam } from "../Api/getLeaguesTeams.js";
-import { setCookies,getCookies } from "../Api/cookie.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import Cookies from "universal-cookie";
-import { color } from "@mui/system";
 import Pagination from "./Pagination.js";
 
 export default function Preferences(params) {
@@ -13,9 +8,6 @@ export default function Preferences(params) {
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [leaguesIds,setLeaguesIds]=useState([]);
-  const [preferedTeams,setPreferedTeams]=useState([]);
-  const [teamsIds,setTeamsIds]=useState([]);
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
 

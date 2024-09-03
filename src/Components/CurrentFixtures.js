@@ -1,6 +1,5 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
 import { groupDateFixtures,groupLiveFixtures } from "../Api/getFixtures.js";
 import { getCookies, setCookies } from "../Api/cookie.js";
 import FixtureRow from "./FixtureRow.js";
@@ -34,9 +33,6 @@ export default function CurrentFixtures(props) {
         },1000*60*10)
         
     },[dateString])
-
-    console.log("today",todayFixtures);
-    console.log("live",liveFixtures);
 
     return(
         <div className="relative top-20 left-0 p-4">
