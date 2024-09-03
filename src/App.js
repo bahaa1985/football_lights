@@ -73,38 +73,25 @@ function App() {
         </li>
       </ul>
     </div>
-      {/* <NavLink to="/league/2">UFL</NavLink>
-      <NavLink to="/league/39">EPL</NavLink>
-      <NavLink to="/league/140">La Liga</NavLink>
-      <NavLink to="/league/135">Le Calcio</NavLink>
-      <NavLink to="/league/78">Bundisliga</NavLink>
-      <NavLink to="/league/61">Lige Un</NavLink> */}
-      {/* <PreferedLeagues />
-      <PreferedTeams />
-      <button onClick={()=>setViewCurrent(!viewCurrent)}>Currrent</button>
-      {
-        viewCurrent ? <CurrentFixtures /> : null
-      } */}
-      <Routes>
-        <Route path='/' element={<CurrentFixtures season={season}/>}>
-        </Route>
-        <Route path='/fixtures' element={<DateFixtures />}/>
-        <Route path="/leagues" element={<League season={season}/>}>
-          <Route path=":leagueId"/>          
-        </Route>
-        <Route path="/fixtures" element={<Game/>} >
-          <Route path=":fixtureId"/>
-        </Route>
-        <Route path="/teams" element={<Team />}>
-          <Route path=":teamId"/>
-        </Route>
-        <Route path="/players" element={<Player season={season}/>}>
-          <Route path=":playerId"/>
-        </Route>
-        <Route path="/preference" element={<Preferences />}>
-
-        </Route>
-      </Routes>
+    <Routes>
+      <Route path='/' element={<CurrentFixtures season={season}/>}>
+      </Route>
+      <Route path='/fixtures' element={<DateFixtures />}/>
+      <Route path="/leagues" element={<League season={season}/>}>
+        <Route path=":leagueId"/>          
+      </Route>
+      <Route path="/fixtures" element={<Game/>} >
+        <Route path=":fixtureId"/>
+      </Route>
+      <Route path="/teams" element={<Team />}>
+        <Route path=":teamId"/>
+      </Route>
+      <Route path="/players" element={<Player season={season}/>}>
+        <Route path=":playerId"/>
+      </Route>
+      <Route path="/preference" element={<Preferences />}>
+      </Route>
+    </Routes>
 
      </Router>
      );

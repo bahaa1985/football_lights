@@ -5,9 +5,6 @@ import { groupDateFixtures,groupLiveFixtures } from "../Api/getFixtures.js";
 import { getCookies, setCookies } from "../Api/cookie.js";
 import FixtureRow from "./FixtureRow.js";
 
-
-  
-
 export default function CurrentFixtures(props) {
 
     const [liveFixtures,setLiveFixtures]=useState([]);
@@ -53,17 +50,13 @@ export default function CurrentFixtures(props) {
                     liveFixtures?.length > 0 ?
                         <FixtureRow fixturesSource={liveFixtures} />
                     :
-                    <p className="text-md font-bold">No current games</p>
-                
+                    <p className="text-md font-bold">No current games</p>                
                     }
                 </div>
                 <div> 
                     <h4>Today Fixtures</h4>
                     {
-                        // todayFixtures.length > 0 ?
-                            <FixtureRow fixturesSource={todayFixtures}/>
-                        // :
-                        // <p className="text-md font-bold">No current games</p>
+                       <FixtureRow fixturesSource={todayFixtures}/>
                     }
                 </div>  
                 </>

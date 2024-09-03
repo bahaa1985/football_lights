@@ -1,5 +1,6 @@
 // import Cookies from "universal-cookie";
 import Cookies from 'js-cookie';
+import  getLeagues  from './getLeaguesTeams.js';
 
 export function setCookies(data,name){
     // const cookie = new Cookies();
@@ -17,10 +18,11 @@ export function setCookies(data,name){
 }
 
 export function getCookies(name){
-    // const cookie=new Cookies();    
+
     const jsonData =  Cookies.get(name);
     if(jsonData){
-       const data=JSON.parse(jsonData);       
+       const data=JSON.parse(jsonData);
+             
        return data;
     }
     else{

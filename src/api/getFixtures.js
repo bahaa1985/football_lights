@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getCookies } from './cookie.js';
+import { getLeagues } from './getLeaguesTeams.js';
 
 export function getAllFixtures(league, season) {
   let config = {
@@ -47,13 +48,13 @@ async function getPromisedFixtures(dateString) {
   let leagues = getCookies("prefered_leagues");
   console.log("leagues",leagues);
   if (leagues.length > 0) {
-    let todayArray = [];
-    let promises = leagues.map(league =>
+    let todayArray = [],latestSeason=0;
+    let promises = leagues.map(league =>{
       getDateFixtures(league.id, league.season, dateString).then(result => {
         todayArray.push(...result.data.response);
         // console.log(`today ${league.id}`, todayArray); // logging by league id instead of index
       })
-    );
+    });
     await Promise.all(promises);
     return todayArray;
   }
