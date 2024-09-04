@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookies } from './cookie.js';
+import { getCookies, setCookies } from './cookie.js';
 import { getLeagues } from './getLeaguesTeams.js';
 
 export function getAllFixtures(league, season) {
@@ -39,20 +39,46 @@ function getDateFixtures(league, season, date) {
       'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
     }
   };
-
   return axios(config)
-
 }
+
+
+
+export function groupAllFixtures(leagueId,season){
+  let grouped =[]; 
+  getAllFixtures(leagueId,season).then(result=>{
+      grouped = result.reduce((group, elem) => {
+        const gw = elem.league.round;
+        if (group[gw] == null) {
+          group[gw] = [];
+        }
+        group[gw].push(elem);
+        return group
+      }, {});
+    })
+    return grouped;
+}
+
 
 async function getPromisedFixtures(dateString) {
   let leagues = getCookies("prefered_leagues");
   console.log("leagues",leagues);
   if (leagues.length > 0) {
-    let todayArray = [],latestSeason=0;
+    let todayArray = [];
     let promises = leagues.map(league =>{
       getDateFixtures(league.id, league.season, dateString).then(result => {
-        todayArray.push(...result.data.response);
-        // console.log(`today ${league.id}`, todayArray); // logging by league id instead of index
+        if(result.data.response.length>0){
+          todayArray.push(...result.data.response);
+        }
+       //to check reason of data non-availablty, it may be beacause the season is finished:  
+      })
+      .then(()=>{
+        getDateFixtures(league.id, league.season+1, dateString).then(result => {
+            if(result.data.response.length>0){
+              todayArray.push(...result.data.response);
+              setCookies({'id':league.id,'season':league.season+1}) //update season value in leagues cookie 
+            }
+          })
       })
     });
     await Promise.all(promises);
@@ -61,44 +87,6 @@ async function getPromisedFixtures(dateString) {
   else {
     return [];
   }
-}
-
-async function getPromisedLiveFixtures() {
-  let leagues = getCookies("prefered_leagues");
-  let ids=leagues.map(league=>league.id).join('-');
-  if (leagues.length > 0) {
-    let liveArray=[];
-    let promise = new Promise(()=>{
-      getLiveFixtures(ids).then(result => {
-        liveArray.push(...result.data.response);
-      })
-    })
-    
-    await promise;
-    return liveArray;
-  }
-  else {
-    return [];
-  }
-}
-
-export async function groupLiveFixtures() {
-  let grouped =[];
-  await getPromisedLiveFixtures()?.then(result => {
-    console.log("result", result);
-    result?.reduce((group, elem) => {
-      const title = elem.league.name + '  ' + elem.league.round;
-      if (!group[title]) {
-        // console.log(title,group[title]);
-        group[title] = [];
-      }
-      group[title].push(elem);
-      console.log("grouped live", group);
-      grouped=group;
-      return group;
-    }, [])
-  })
-  return grouped
 }
 
 export async function groupDateFixtures(dateString) {
@@ -120,20 +108,48 @@ export async function groupDateFixtures(dateString) {
   return grouped
 }
 
-export function groupAllFixtures(leagueId,season){
-  let grouped =[]; 
-  getAllFixtures(leagueId,season).then(result=>{
-      grouped = result.reduce((group, elem) => {
-        const gw = elem.league.round;
-        if (group[gw] == null) {
-          group[gw] = [];
-        }
-        group[gw].push(elem);
-        return group
-      }, {});
+async function getPromisedLiveFixtures() {
+  let leagues = getCookies("prefered_leagues");
+  let ids=leagues.map(league=>league.id).join('-');
+  if (leagues.length > 0) {
+    let liveArray=[];
+    let promise = new Promise(()=>{
+      getLiveFixtures(ids).then(result => {
+        liveArray.push(...result.data.response);
+      })
     })
-    return grouped;
+    
+    await promise;
+    return liveArray;
+  }
+  else {
+    return [];
+  }
 }
+
+
+export async function groupLiveFixtures() {
+  let grouped =[];
+  await getPromisedLiveFixtures()?.then(result => {
+    console.log("result", result);
+    result?.reduce((group, elem) => {
+      const title = elem.league.name + '  ' + elem.league.round;
+      if (!group[title]) {
+        // console.log(title,group[title]);
+        group[title] = [];
+      }
+      group[title].push(elem);
+      console.log("grouped live", group);
+      grouped=group;
+      return group;
+    }, [])
+  })
+  return grouped
+}
+
+
+
+
 
 export default getAllFixtures
 

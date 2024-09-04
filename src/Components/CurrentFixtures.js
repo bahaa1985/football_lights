@@ -26,7 +26,7 @@ export default function CurrentFixtures(props) {
             setToDayFixtures(result);
         })
 
-        setInterval(()=>{
+        setInterval(()=>{ //to update live fixtures events every 10 minutes
             groupLiveFixtures().then(result=>{
                 setLiveFixtures(result);
             })          

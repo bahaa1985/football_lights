@@ -1,6 +1,5 @@
 // import Cookies from "universal-cookie";
 import Cookies from 'js-cookie';
-import  getLeagues  from './getLeaguesTeams.js';
 
 export function setCookies(data,name){
     // const cookie = new Cookies();
