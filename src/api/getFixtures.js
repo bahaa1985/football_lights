@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookies, setCookies } from './cookie.js';
+import { getCookie, setCookie , removeCookie} from './cookie.js';
 import { getLeagues } from './getLeaguesTeams.js';
 
 export function getAllFixtures(league, season) {
@@ -61,32 +61,30 @@ export function groupAllFixtures(leagueId,season){
 
 
 async function getPromisedFixtures(dateString) {
-  let leagues = getCookies("prefered_leagues");
-  console.log("leagues",leagues);
-  if (leagues.length > 0) {
-    let todayArray = [];
-    let promises = leagues.map(league =>{
-      getDateFixtures(league.id, league.season, dateString).then(result => {
-        if(result.data.response.length>0){
-          todayArray.push(...result.data.response);
-        }
-       //to check reason of data non-availablty, it may be beacause the season is finished:  
-      })
-      .then(()=>{
-        getDateFixtures(league.id, league.season+1, dateString).then(result => {
+    let leagues = getCookie('prefered_leagues');
+    console.log("leagues",leagues);
+    if (leagues.length > 0) {
+      let todayArray = [];
+      let promises = leagues.map(league =>{
+        if(league.endDate >= Date.now()){ //to check of season status, if it is finished then remove it from the cookie it may be beacause the season is finished: 
+          getDateFixtures(league.id, league.season, dateString).then(result => {
             if(result.data.response.length>0){
               todayArray.push(...result.data.response);
-              setCookies({'id':league.id,'season':league.season+1}) //update season value in leagues cookie 
-            }
+            }         
           })
-      })
-    });
-    await Promise.all(promises);
-    return todayArray;
-  }
-  else {
-    return [];
-  }
+        }
+        else{
+          const currentLeagues=leagues.filter((elem)=>elem.id !== league.id);
+          setCookie(currentLeagues,'prefered_leagues');
+        }
+      });
+      await Promise.all(promises);
+      return todayArray;
+    }
+    else {
+      return [];
+    }
+  
 }
 
 export async function groupDateFixtures(dateString) {
@@ -109,16 +107,15 @@ export async function groupDateFixtures(dateString) {
 }
 
 async function getPromisedLiveFixtures() {
-  let leagues = getCookies("prefered_leagues");
+  let leagues = getCookie("prefered_leagues");
   let ids=leagues.map(league=>league.id).join('-');
-  if (leagues.length > 0) {
+  if (leagues.length > 0) {   
     let liveArray=[];
     let promise = new Promise(()=>{
       getLiveFixtures(ids).then(result => {
         liveArray.push(...result.data.response);
       })
-    })
-    
+    })    
     await promise;
     return liveArray;
   }

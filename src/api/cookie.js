@@ -1,7 +1,7 @@
 // import Cookies from "universal-cookie";
 import Cookies from 'js-cookie';
 
-export function setCookies(data,name){
+export function setCookie(data,name){
     // const cookie = new Cookies();
     const jsonData = JSON.stringify(data);
     console.log("jsonData: ",jsonData);
@@ -16,7 +16,7 @@ export function setCookies(data,name){
     }
 }
 
-export function getCookies(name){
+export function getCookie(name){
 
     const jsonData =  Cookies.get(name);
     if(jsonData){
@@ -26,6 +26,15 @@ export function getCookies(name){
     }
     else{
         return [];
+    }
+}
+
+export function removeCookie(name){
+    try{
+        Cookies.remove(name);
+    }
+    catch{
+        
     }
 }
 

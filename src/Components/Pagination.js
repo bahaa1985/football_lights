@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { setCookies,getCookies } from "../Api/cookie.js";
+import { setCookie,getCookie } from "../Api/cookie.js";
 // import { getLeagueRounds } from "../Api/getLeaguesTeams.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -33,11 +33,11 @@ function Pagination(props) {
         pages.push(page);
     }
 
-    let preferedLeaguesArr=getCookies("prefered_leagues"); 
-    function handlePreferedLeagues(leagueId,season){ //set prefered leagues cookie  
+    let preferedLeaguesArr=getCookie('prefered_leagues'); 
+    function handlePreferedLeagues(league,leagueType,season,endDate){ //set prefered leagues cookie  
         if(preferedLeaguesArr !== null){
-            if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
-                preferedLeaguesArr.push({'id':leagueId,'season':season});
+            if(preferedLeaguesArr.filter(obj=>obj.id===league.id)[0] === undefined){
+                preferedLeaguesArr.push({'id':league.id,'type':leagueType,'season':season,'endDate':endDate});
                 }
                 else{
                 const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
@@ -118,9 +118,13 @@ function Pagination(props) {
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
                                                 senderElement.classList.toggle("text-blue-100");
-                                                
+                                                const filteredSeason=league.seasons.filter((season)=>Date.parse(season.end) > Date.now());
+                                                const seasonYear=filteredSeason.year;
+                                                const endDate=filteredSeason.endDate;
+                                                const leagueType=elem.league.type;
+
                                                 elem.league?         
-                                                    handlePreferedLeagues(elem.league.id,elem.seasons[elem.seasons.length-1].year)
+                                                    handlePreferedLeagues(elem.league.id,leagueType,seasonYear,endDate)
                                                     :
                                                     (handlePreferedTeams(elem.team))
                                             }}/>
