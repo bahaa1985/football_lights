@@ -8,7 +8,7 @@ export default function DateFixtures(){
     const [groupFixtures,setGroupFixtures]=useState([]);
     //
     let dates=[];
-    for(let i=0;i<7 ;i++){
+    for(let i=-1;i<7 ;i++){
         const nowValue=Date.now();
         const date =new  Date((nowValue+ i*24*60*60*1000));
         const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();

@@ -26,21 +26,23 @@ export default function CurrentFixtures(props) {
             setToDayFixtures(result);
         })
 
-        setInterval(()=>{ //to update live fixtures events every 10 minutes
-            groupLiveFixtures().then(result=>{
-                setLiveFixtures(result);
-            })          
-        },1000*60*10)
+        // setInterval(()=>{ //to update live fixtures events every 10 minutes
+        //     groupLiveFixtures().then(result=>{
+        //         setLiveFixtures(result);
+        //     })          
+        // },1000*60*10)
         
     },[dateString])
 
+    console.log("today",todayFixtures);
+    
     return(
         <div className="relative top-20 left-0 p-4">
                    
             {
-                getCookies("prefered_leagues").length>0 ?
+                getCookie("prefered_leagues").length>0 ?
                 <>
-                <div>  
+                {/* <div>  
                     <h4>Live</h4>
                     {              
                     liveFixtures?.length > 0 ?
@@ -48,7 +50,7 @@ export default function CurrentFixtures(props) {
                     :
                     <p className="text-md font-bold">No current games</p>                
                     }
-                </div>
+                </div> */}
                 <div> 
                     <h4>Today Fixtures</h4>
                     {

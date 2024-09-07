@@ -34,21 +34,21 @@ function Pagination(props) {
     }
 
     let preferedLeaguesArr=getCookie('prefered_leagues'); 
-    function handlePreferedLeagues(league,leagueType,season,endDate){ //set prefered leagues cookie  
+    function handlePreferedLeagues(leagueId,season,endDate){ //set prefered leagues cookie  
         if(preferedLeaguesArr !== null){
-            if(preferedLeaguesArr.filter(obj=>obj.id===league.id)[0] === undefined){
-                preferedLeaguesArr.push({'id':league.id,'type':leagueType,'season':season,'endDate':endDate});
+            if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
+                preferedLeaguesArr.push({'id':leagueId,'season':season,'endDate':endDate});
                 }
                 else{
                 const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
                 console.log("selected leagues: ",preferedLeaguesArr);    
                 }
-                setCookies(preferedLeaguesArr,"prefered_leagues");
+                setCookie(preferedLeaguesArr,"prefered_leagues");
         }     
     }
 
-    let preferedTeamsArr=getCookies("prefered_teams"); 
+    let preferedTeamsArr=getCookie("prefered_teams"); 
     console.log("prefered teams",preferedTeamsArr);
     
     function handlePreferedTeams(team){  //set prefered teams cookie  
@@ -61,7 +61,7 @@ function Pagination(props) {
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
             console.log("selected teams: ",preferedTeamsArr);    
             }
-            setCookies(preferedTeamsArr,"prefered_teams");
+            setCookie(preferedTeamsArr,"prefered_teams");
         }     
         
     }
@@ -118,13 +118,17 @@ function Pagination(props) {
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
                                                 senderElement.classList.toggle("text-blue-100");
-                                                const filteredSeason=league.seasons.filter((season)=>Date.parse(season.end) > Date.now());
-                                                const seasonYear=filteredSeason.year;
-                                                const endDate=filteredSeason.endDate;
-                                                const leagueType=elem.league.type;
+                                                console.log("seasons",elem.seasons);
+                                                
+                                                const filteredSeason=elem.seasons.filter((season)=>{
+                                                    return    Date.parse(season.end) > Date.now();
+                                                });
+                                                console.log("filtered season",filteredSeason);
+                                                const seasonYear=filteredSeason[0].year;
+                                                const endDate=filteredSeason[0].end;
 
                                                 elem.league?         
-                                                    handlePreferedLeagues(elem.league.id,leagueType,seasonYear,endDate)
+                                                    handlePreferedLeagues(elem.league.id,seasonYear,endDate)
                                                     :
                                                     (handlePreferedTeams(elem.team))
                                             }}/>

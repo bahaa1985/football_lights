@@ -8,7 +8,7 @@ export function setCookie(data,name){
     
     if(name==="prefered_leagues"){
     Cookies.set("prefered_leagues",jsonData,{expires:365 * 100});
-    console.log("new cookie: ",getCookies("prefered_leagues"));
+    console.log("new cookie: ",getCookie("prefered_leagues"));
     
     }
     else{

@@ -3,16 +3,15 @@ import { useState } from "react";
 import Standings from './Standing.js';
 import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
-import { getCookies } from "../Api/cookie.js";
+import { getCookie } from "../Api/cookie.js";
 import { getLeagues } from "../Api/getLeaguesTeams.js";
 
 
 export default function League(props){
     
     // const season=props.season;
-    let leaguesCookie=getCookies("prefered_leagues");
-    // let {leagueId} = useParams()
-    let [tab,setTab]=useState(true)
+    let leaguesCookie=getCookie("prefered_leagues");
+        let [tab,setTab]=useState(true)
     const [leagueId,setLeagueId]=useState(0);
     const[search,setSearch]=useState('')
     const [season,setSeason]=useState(0);
