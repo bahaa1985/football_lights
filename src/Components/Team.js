@@ -29,18 +29,18 @@ export default function Team(){
             }
             );
 
-        getTeamSeasons(teamId)
-            .then(result =>{
-                setTeamSeasons(result.data.response);
-                // console.log("seasons triggered");
-            });
+        // getTeamSeasons(teamId)
+        //     .then(result =>{
+        //         setTeamSeasons(result.data.response);
+        //         // console.log("seasons triggered");
+        //     });
 
-        getTeamLeagues(teamId, selectedSeason)
-            .then((result)=>{
-                setTeamLeagues(result.data.response)
-                // console.log("leagues triggered");
-                // setLeagueId(result.data.response[0].league.id)
-            });
+        // getTeamLeagues(teamId, selectedSeason)
+        //     .then((result)=>{
+        //         setTeamLeagues(result.data.response)
+        //         // console.log("leagues triggered");
+        //         // setLeagueId(result.data.response[0].league.id)
+        //     });
 
         getTeamStatistics(teamId, selectedSeason, leagueId)
             .then(result =>{
@@ -53,20 +53,45 @@ export default function Team(){
     // console.log("selected season:",selectedSeason);
     // Memoize the options rendering to avoid unnecessary re-renders
     const renderedSeasons = useMemo(() => {
-        return teamSeasons?.map((season, index) => (
-        <option key={index} value={season}>
-            {season}
-        </option>
-        ));
+        getTeamSeasons(teamId)
+            .then(result =>{
+                result.data.response.map((season, index) => {
+                return( 
+                <option key={index} value={season}>
+                    {season}
+                </option>)   
+            })})
+                // setTeamSeasons(result.data.response);
+                // console.log("seasons triggered");
+
+        // return teamSeasons?.map((season, index) => (
+        // <option key={index} value={season}>
+        //     {season}
+        // </option>
+        // ));
     }, [teamSeasons]);
 
     const renderedLeagues=useMemo(()=>{
-        return teamLeagues?.map((item,index)=>(
-            <option key={index} value={item.league.id}>
-                {item.league.name}
-            </option>
-        ))
-    },[teamLeagues])
+        getTeamLeagues(teamId, selectedSeason)
+            .then((result)=>{
+                result.data.response.map((item,index)=>{
+                    return(
+                        <option key={index} value={item.league.id}>
+                            {item.league.name}
+                        </option>
+                    )
+                })
+               
+                // setTeamLeagues(result.data.response)
+                // console.log("leagues triggered");
+                // setLeagueId(result.data.response[0].league.id)
+        });
+        // return teamLeagues?.map((item,index)=>(
+        //     <option key={index} value={item.league.id}>
+        //         {item.league.name}
+        //     </option>
+        // ))
+    },[teamId])
 
     return(
         <div>

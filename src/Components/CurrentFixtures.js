@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
-import { groupDateFixtures,groupLiveFixtures } from "../Api/getFixtures.js";
+import { groupDateFixtures } from "../Api/getFixtures.js";
 import { getCookie, setCookie } from "../Api/cookie.js";
 import FixtureRow from "./FixtureRow.js";
 
@@ -24,13 +24,13 @@ export default function CurrentFixtures(props) {
 
         groupDateFixtures(dateString).then(result=>{
             setToDayFixtures(result);
-        })
+        });
 
-        // setInterval(()=>{ //to update live fixtures events every 10 minutes
-        //     groupLiveFixtures().then(result=>{
-        //         setLiveFixtures(result);
-        //     })          
-        // },1000*60*10)
+        setInterval(()=>{ //to update live fixtures events every 10 minutes
+            groupDateFixtures(dateString).then(result=>{
+            setToDayFixtures(result);
+        })         
+        },1000*60*10)
         
     },[dateString])
 

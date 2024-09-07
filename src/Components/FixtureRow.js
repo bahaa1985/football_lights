@@ -36,14 +36,14 @@ function FixtureRow(props) {
                         <div className="m-4 border-b border-b-black border-solid">
                            
                         <div className="flex justify-start">
-                            <FontAwesomeIcon className="mx-2 h-6" icon={faCalendar}></FontAwesomeIcon>
+                            <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>
                             <span>
                             {
                                 new Date(elem.fixture.date).toDateString() 
                             }
                             </span>
                             <span className="mx-2">|</span>
-                            <FontAwesomeIcon className="h-6" icon={faClock}></FontAwesomeIcon>
+                            <FontAwesomeIcon className="h-4" icon={faClock}></FontAwesomeIcon>
                             <span className="mx-2">
                                 {
                                     new Date(elem.fixture.date).getHours()+

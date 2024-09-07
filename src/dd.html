@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Carousel with Smooth Transition</title>
+    <style>
+        .carousel-container {
+            width: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="carousel-container">
+    <div class="carousel" id="carousel">
+        <img src="https://via.placeholder.com/300x200/FF0000/FFFFFF?text=Slide+1" alt="Slide 1">
+        <img src="https://via.placeholder.com/300x200/00FF00/FFFFFF?text=Slide+2" alt="Slide 2">
+        <img src="https://via.placeholder.com/300x200/0000FF/FFFFFF?text=Slide+3" alt="Slide 3">
+        <!-- Clone of the first image for smooth transition -->
+        <img src="https://via.placeholder.com/300x200/FF0000/FFFFFF?text=Slide+1" alt="Slide 1 Clone">
+    </div>
+    <div class="controls">
+        <button class="prev" onclick="prevSlide()">Prev</button>
+        <button class="next" onclick="nextSlide()">Next</button>
+    </div>
+</div>
+
+<script>
+    const carousel = document.getElementById('carousel');
+    let index = 0;
+    let isTransitioning = false;
+    
+    function showSlide() {
+        carousel.style.transition = 'transform 0.5s ease-in-out';
+        carousel.style.transform = `translateX(-${index * 300}px)`;
+    }
+
+    function nextSlide() {
+        if (isTransitioning) return; // Prevent rapid clicking
+        const slides = carousel.children.length;
+        isTransitioning = true;
+        index++;
+
+        showSlide();
+
+        if (index === slides - 1) {
+            setTimeout(() => {
+                // Jump back to the first image without transition
+                carousel.style.transition = 'none';
+                index = 0;
+                carousel.style.transform = `translateX(0)`;
+                isTransitioning = false;
+            }, 500); // Time must match the CSS transition duration
+        } else {
+            setTimeout(() => isTransitioning = false, 500);
+        }
+    }
+
+    function prevSlide() {
+        if (isTransitioning) return; // Prevent rapid clicking
+        const slides = carousel.children.length;
+        isTransitioning = true;
+
+        if (index === 0) {
+            // Jump to the last image first (visually), then move back
+            carousel.style.transition = 'none';
+            index = slides - 2;
+            carousel.style.transform = `translateX(-${index * 300}px)`;
+            setTimeout(() => {
+                carousel.style.transition = 'transform 0.5s ease-in-out';
+                index--;
+                showSlide();
+                isTransitioning = false;
+            }, 0);
+        } else {
+            index--;
+            showSlide();
+            setTimeout(() => isTransitioning = false, 500);
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -16,18 +16,18 @@ export function getAllFixtures(league, season) {
 
 }
 
-function getLiveFixtures(leagues) {
-  let config = {
-    method: 'GET',
-    url: `https://v3.football.api-sports.io/fixtures?live=${leagues}`,
-    headers: {
-      'x-rapidapi-host': 'v3.football.api-sports.io',
-      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
-    }
-  };
+// function getLiveFixtures(leagues) {
+//   let config = {
+//     method: 'GET',
+//     url: `https://v3.football.api-sports.io/fixtures?live=${leagues}`,
+//     headers: {
+//       'x-rapidapi-host': 'v3.football.api-sports.io',
+//       'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+//     }
+//   };
 
-  return axios(config)
-}
+//   return axios(config)
+// }
 
 
 function getDateFixtures(league, season, date) {
