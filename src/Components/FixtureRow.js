@@ -51,7 +51,7 @@ function FixtureRow(props) {
                                     '0'+new Date(elem.fixture.date).getMinutes().toString():new Date(elem.fixture.date).getMinutes().toString()) 
                                 }
                             </span>
-                            {
+                            {/* {
                                 elem.fixture.status.short === '1H' || elem.fixture.status.short === '2H' || elem.fixture.status.short === 'HT' || 
                                 elem.fixture.short === 'ET' || elem.fixture.short === 'BT' || elem.fixture.short === 'P' || 
                                 elem.fixture.short === 'SUSB' || elem.fixture.short === 'INT' ? 
@@ -63,7 +63,7 @@ function FixtureRow(props) {
                                     <span className="text-red-800">{"  Live"}</span>
                                 </div>
                                 : null
-                            }
+                            } */}
                         </div>
                             
                         <div className="block w-full sm:flex justify-around p-auto my-2 mx-auto " key={i}>
