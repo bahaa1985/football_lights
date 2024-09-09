@@ -73,7 +73,7 @@ function FixtureRow(props) {
                                 
                                 <img src={elem.teams.home.logo} className="ml w-15 sm:w-20 h-14" alt={elem.teams.home.name}/>
                                 
-                                <NavLink  to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}>
+                                <NavLink  to={`/teams/${elem.teams.home.id}`}>
                                     <span>{elem.teams.home.name}</span>
                                 </NavLink>
                                 
@@ -84,7 +84,7 @@ function FixtureRow(props) {
                                 
                                 <img src={elem.teams.away.logo} className="w-15 sm:w-20 h-14"  alt={elem.teams.away.name} />
                                 
-                                <NavLink to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}>
+                                <NavLink to={`/teams/${elem.teams.away.id}`}>
                                     <span>{elem.teams.away.name}</span>
                                 </NavLink> 
 

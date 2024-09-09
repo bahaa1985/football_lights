@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback,useMemo } from 'react';
+import React, { useState, useEffect,useCallback,useMemo,useRef } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
 import NestedTeamStatistics from './NestedTeamStatistics.js';
@@ -6,16 +6,17 @@ import NestedTeamStatistics from './NestedTeamStatistics.js';
 export default function Team(){
 
     const {search}=useLocation();
-    const leagueQuery=parseInt(new URLSearchParams(search).get("league"));
-    const seasonQuery=parseInt(new URLSearchParams(search).get("season"));
+    // const leagueQuery=parseInt(new URLSearchParams(search).get("league"));
+    // const seasonQuery=parseInt(new URLSearchParams(search).get("season"));
 
     const teamId =parseInt(useParams().teamId);
     const [teamSeasons,setTeamSeasons]=useState([]);   
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
-    const [selectedSeason,setSelectedSeason]=useState(seasonQuery);
-    const [leagueId,setLeagueId]=useState(leagueQuery);
+    const [selectedSeason,setSelectedSeason]=useState(0);
+    const [leagueId,setLeagueId]=useState(0);
+    const leaguesOption=useRef();
 
     const fetchTeamData = useCallback(() => {
        
@@ -29,38 +30,39 @@ export default function Team(){
             }
             );
 
-        // getTeamSeasons(teamId)
-        //     .then(result =>{
-        //         setTeamSeasons(result.data.response);
-        //         // console.log("seasons triggered");
-        //     });
-
-        // getTeamLeagues(teamId, selectedSeason)
-        //     .then((result)=>{
-        //         setTeamLeagues(result.data.response)
-        //         // console.log("leagues triggered");
-        //         // setLeagueId(result.data.response[0].league.id)
-        //     });
-
-        getTeamStatistics(teamId, selectedSeason, leagueId)
+        getTeamSeasons(teamId)
             .then(result =>{
-                // console.log("stats triggered");
-                setTeamStatistics(result.data.response);
+                setTeamSeasons(result.data.response);
+                // console.log("seasons triggered");
             });
-    },[teamId,selectedSeason,leagueId])
+
+        getTeamLeagues(teamId, selectedSeason)
+            .then((result)=>{
+                setTeamLeagues(result.data.response)
+                // console.log("leagues triggered");
+                // setLeagueId(result.data.response[0].league.id)
+            });
+
+        // getTeamStatistics(teamId, selectedSeason, leagueId)
+        //     .then(result =>{
+        //         // console.log("stats triggered");
+        //         setTeamStatistics(result.data.response);
+        //     });
+    },
+    [teamId,selectedSeason,leagueId])
 
     console.log("leagues",teamLeagues);
     // console.log("selected season:",selectedSeason);
     // Memoize the options rendering to avoid unnecessary re-renders
-    const renderedSeasons = useMemo(() => {
-        getTeamSeasons(teamId)
-            .then(result =>{
-                result.data.response.map((season, index) => {
-                return( 
-                <option key={index} value={season}>
-                    {season}
-                </option>)   
-            })})
+    // const renderedSeasons = useMemo(() => {
+    //     getTeamSeasons(teamId)
+    //         .then(result =>{
+    //             result.data.response.map((season, index) => {
+    //             return( 
+    //             <option key={index} value={season}>
+    //                 {season}
+    //             </option>)   
+    //         })})
                 // setTeamSeasons(result.data.response);
                 // console.log("seasons triggered");
 
@@ -69,29 +71,29 @@ export default function Team(){
         //     {season}
         // </option>
         // ));
-    }, [teamSeasons]);
+    // }, [teamId]);
 
-    const renderedLeagues=useMemo(()=>{
-        getTeamLeagues(teamId, selectedSeason)
-            .then((result)=>{
-                result.data.response.map((item,index)=>{
-                    return(
-                        <option key={index} value={item.league.id}>
-                            {item.league.name}
-                        </option>
-                    )
-                })
+    // const renderedLeagues=useMemo(()=>{
+    //     getTeamLeagues(teamId, selectedSeason)
+    //         .then((result)=>{
+    //             result.data.response.map((item,index)=>{
+    //                 return(
+    //                     <option key={index} value={item.league.id}>
+    //                         {item.league.name}
+    //                     </option>
+    //                 )
+    //             })
                
                 // setTeamLeagues(result.data.response)
                 // console.log("leagues triggered");
                 // setLeagueId(result.data.response[0].league.id)
-        });
+        // });
         // return teamLeagues?.map((item,index)=>(
         //     <option key={index} value={item.league.id}>
         //         {item.league.name}
         //     </option>
         // ))
-    },[teamId])
+    // },[teamId,selectedSeason])
 
     return(
         <div>
@@ -134,28 +136,34 @@ export default function Team(){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))}> 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={''} > 
                     {                        
-                        // teamSeasons?.map((item,index)=>{
-                        //     return(
-                        //         <option key={index} value={item}>{item}</option>
-                        //     )
-                        // })
-                        renderedSeasons           
+                        teamSeasons?.map((item,index)=>{
+                            return(
+                                // <option key={index} value={item}>{item}</option>
+                                <button onClick={()=>setSelectedSeason(parseInt(item))}>{item}</button>
+                            )
+                        })
+                        // renderedSeasons           
                     }
                     </select>
                     {/* leagues dropdownbox */}
-                    <select onChange={(e)=>setLeagueId(parseInt(e.target.value))} >  
+                    <select ref={leaguesOption} defaultValue={''} >  
                     {
-                        // <option>Select league</option>,
-                        // teamLeagues?.map((item,index)=>{                  
-                        //     return(                                
-                        //         <option key={index} value={item.league.id}>{item.league.name}</option>
-                        //     )
-                        // })
-                        renderedLeagues
+                        <>
+                            <option>Select a league</option>
+                            {
+                                teamLeagues?.map((item,index)=>{                  
+                                return(                                
+                                    <option key={index} value={item.league.id}>{item.league.name}</option>
+                                )})
+                            }
+                        </>                        
+                        // renderedLeagues
                     }
                     </select>
+                    <button onClick={()=>[setLeagueId(leaguesOption.current.value),console.log("ref league",leaguesOption.current.value)
+                    ]}>Display</button>
             </div>    
             {/** Team statistics specified to a league */}
             <div>

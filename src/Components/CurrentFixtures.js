@@ -54,7 +54,7 @@ export default function CurrentFixtures(props) {
                         <span className={` ${liveFixtures?.length > 0 ? "text-red-800" : "text-slate-500"} `}>{"  Live"}</span>
                     </div>
                     {              
-                    liveFixtures?.length > 0 ?
+                    liveFixtures ?
                         <FixtureRow fixturesSource={liveFixtures} />
                     :
                     <p className="text-md font-bold">No live games</p>                

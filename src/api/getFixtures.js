@@ -105,7 +105,7 @@ async function getPromisedLiveFixtures() {
 }
 
 export async function groupLiveFixtures() {
-  let grouped = [];
+  let grouped = {};
   
   try {
     const result = await getPromisedLiveFixtures();
