@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Bending with GSAP and Draggable</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    img {
+      max-width: 200px;
+      cursor: pointer;
+    }
+    #main-div{
+        position: absolute;
+    }
+    #div1, #div2{
+        height: 100px; width: 130px;
+        background-color: burlywood;
+        z-index: 10;
+        position: relative
+        
+    }
+    #div1{
+        transform: skewx(10deg);
+        perspective: '20px';
+    }
+    #div2{
+        transform: skewx(-10deg);
+    }
+    #image1{
+         transform: skewx(20deg);
+        position: absolute;
+        top:0;left:0;
+    }
+    #image2{
+        transform: skewx(15deg);
+        position: absolute;
+        top:-1;left:0;
+        /* transform: translateY(-50%); */
+    }
+  </style>
+</head>
+<body>
+    <div id="main-div">
+        <img src="images/wesam.png" style="position: relative;height: 100%;z-index:1" alt="Draggable Image" id="image" />
+        <div id="div1">
+           
+        </div>
+        <div id="div2">
+           
+            <img src="images/wesam.png" style="clip-path: inset(0  0 50% 0); " alt="Draggable Image" id="image1" />
+            <img src="images/wesam.png" style="clip-path: inset(50% 0 0 0);" alt="Draggable Image" id="image2" />
+        </div>
+    </div>
+    <script>
+
+    </script>
+  <!-- <img src="images/wesam.png" style="transform: skew(10deg);" alt="Draggable Image" id="image" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+
+  <script>
+    // Create draggable instance
+    Draggable.create("#image", {
+      type: "x,y",
+      onDrag: function() {
+        // Calculate the bending effect based on the dragging speed
+        let skewAmount = this.getVelocity("x") / 100;
+        let scaleAmount = 1 + Math.abs(skewAmount) * 0.05;
+
+        gsap.to(this.target, {
+          skewX: skewAmount,
+          scaleY: scaleAmount,
+          duration: 0.1,
+          ease: "power2.out"
+        });
+      },
+      onRelease: function() {
+        // Reset the image once released
+        gsap.to(this.target, {
+          skewX: 0,
+          scaleY: 1,
+          duration: 0.3,
+          ease: "elastic.out(1, 0.5)"
+        });
+      }
+    });
+  </script> -->
+</body>
+</html>
