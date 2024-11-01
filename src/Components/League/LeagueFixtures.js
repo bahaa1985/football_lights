@@ -1,8 +1,8 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { groupAllFixtures } from "../Api/getFixtures.js";
-import "../styles/fixtures.css";
+import { groupAllFixtures } from "../../Api/getFixtures.js";
+// import "../../styles/fixtures.css";
 
 export default function LeagueFixtures(props) {
   

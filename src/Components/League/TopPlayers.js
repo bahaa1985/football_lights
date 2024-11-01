@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { getTopScorers, getTopAssists } from '../Api/getPlayerProfile.js';
+import { getTopScorers, getTopAssists } from '../../Api/getPlayerProfile.js';
 
 export default function TopPlayers(props) {
     const leagueId=props.league;

@@ -1,14 +1,14 @@
 import { useState,useEffect } from "react";
-import getEvents from '../Api/getEvents.js'
-import '../styles/events.css'
-import goal from '../images/goal.png'
-import penalty from '../images/letter-p.png'
-import own_goal from '../images/own-goal.png'
-import missed_penalty from '../images/missed-penalty.png'
-import yellow_card from'../images/yellow.png'
-import red_card from '../images/red.png'
-import VAR from '../images/var.png'
-import substitute from '../images/substitute.png'
+import getEvents from '../../Api/getEvents.js'
+// import '../styles/events.css'
+import goal from '../../images/goal.png'
+import penalty from '../../images/letter-p.png'
+import own_goal from '../../images/own-goal.png'
+import missed_penalty from '../../images/missed-penalty.png'
+import yellow_card from'../../images/yellow.png'
+import red_card from '../../images/red.png'
+import VAR from '../../images/var.png'
+import substitute from '../../images/substitute.png'
 
 function Events(props){
     

@@ -1,6 +1,6 @@
 import React,{ ReactDOM } from 'react'
 import { useState,useEffect} from 'react'
-import getStandings from '../Api/getStandings.js'
+import getStandings from '../../Api/getStandings.js'
 
 function Standings(props){    
     

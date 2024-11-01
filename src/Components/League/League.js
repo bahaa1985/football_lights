@@ -3,8 +3,8 @@ import { useState } from "react";
 import Standings from './Standing.js';
 import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
-import { getCookie } from "../Api/cookie.js";
-import { getLeagues } from "../Api/getLeaguesTeams.js";
+import { getCookie } from "../../Api/cookie.js";
+import { getLeagues } from "../../Api/getLeaguesTeams.js";
 
 
 export default function League(props){

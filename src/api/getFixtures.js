@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookie } from './cookie.js';
+import { getCookie, setCookie } from './cookie.js';
 import { getLeagues } from './getLeaguesTeams.js';
 
 export function getAllFixtures(league, season) {
@@ -8,7 +8,8 @@ export function getAllFixtures(league, season) {
     url: `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`,
     headers: {
       'x-rapidapi-host': 'v3.football.api-sports.io',
-      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY,
+      'Access-Control-Allow-Origin': 'localhost:3000'
     }
   };
 
@@ -46,16 +47,29 @@ function getDateFixtures(league, season, date) {
 
 async function getPromisedFixtures(dateString) {
   let leagues = getCookie("prefered_leagues");
-  console.log("leagues",leagues);
+  console.log("getFixtures-leagues",leagues);
   if (leagues.length > 0) {
-    let todayArray = [];
-    let promises = leagues.map(async (league) =>{
-      await getDateFixtures(league.id, league.season, dateString).then(result => {
-        todayArray.push(...result.data.response);
-      })
+    let dayArray = [];
+    let promises = leagues.map(async (league,index) =>{
+      // if the league is still running get its fixtures, if not delete it from cookie:
+      if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){ 
+        await getDateFixtures(league.id, league.season, dateString).then(result => {
+          dayArray.push(...result.data.response);
+          dayArray.sort((a,b)=>{
+            if(a.fixture.status !== 'FT' && b.fixture.status === 'FT') return -1
+            else if(a.fixture.status === 'FT' && b.fixture.status !== 'FT') return 1
+            return 0;
+          })
+        })
+      }
+      else
+      {
+        let remainedLeagues=leagues.splice(index,1); //remove the finished league
+        setCookie(remainedLeagues,"prefered_leagues");
+      }
     });
     await Promise.all(promises);
-    return todayArray;
+    return dayArray;
   }
   else {
     return [];
@@ -65,7 +79,6 @@ async function getPromisedFixtures(dateString) {
 export async function groupDateFixtures(dateString) {
   let grouped =[];
   await getPromisedFixtures(dateString).then(result => {
-    // console.log("result", result);
     result?.reduce((group, elem) => {
       const title = elem.league.name + '  ' + elem.league.round;
       if (!group[title]) {

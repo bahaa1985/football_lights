@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/nestedStatistics.css';
+import '../../styles/nestedStatistics.css';
 import { useMemo } from 'react';
 
 function NestedTeamStatistics({ data, isParent=true }) {

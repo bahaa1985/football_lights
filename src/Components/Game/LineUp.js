@@ -1,14 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import getLineUps from "../Api/getLineUp.js";
-import getPlayers from "../Api/getPlayers.js";
-import getEvents from "../Api/getEvents.js";
+import getLineUps from "../../Api/getLineUp.js";
+import getPlayers from "../../Api/getPlayers.js";
+import getEvents from "../../Api/getEvents.js";
 // import Player from './Player';
-import "../styles/lineup.css";
-import goal from "../images/goal.png";
-import red from "../images/red.png";
-import yellow from "../images/yellow.png";
+import "../../styles/lineup.css";
+import goal from "../../images/goal.png";
+import red from "../../images/red.png";
+import yellow from "../../images/yellow.png";
 
 function LinePosition(props) {
   //create squad lines

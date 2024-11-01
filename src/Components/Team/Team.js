@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useCallback,useMemo,useRef } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
-import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../Api/getTeamDetails.js';
+import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../../Api/getTeamDetails.js';
 import NestedTeamStatistics from './NestedTeamStatistics.js';
 
 export default function Team(){

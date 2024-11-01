@@ -10,9 +10,6 @@ function Pagination(props) {
     
     let pages=[] // items pages that will be displayed
     const [pageIndex,setPageIndex]=useState(0);
-    // const [leagueId,setLeagueId]=useState(0);
-    // const [season,setSeason]=useState(0);
-    // const [lastRound,setLastRound]=useState("") // to update season value after the season finished 
 
     const items=props.source;
     const pagesCount=Math.ceil(items.length/10); //get pages count by 10 items in each page
@@ -38,13 +35,14 @@ function Pagination(props) {
         if(preferedLeaguesArr !== null){
             if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
                 preferedLeaguesArr.push({'id':leagueId,'season':season,'endDate':endDate});
-                }
-                else{
+            }
+            else
+            {
                 const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
                 console.log("selected leagues: ",preferedLeaguesArr);    
-                }
-                setCookie(preferedLeaguesArr,"prefered_leagues");
+            }
+            setCookie(preferedLeaguesArr,"prefered_leagues");
         }     
     }
 
@@ -118,14 +116,14 @@ function Pagination(props) {
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
                                                 senderElement.classList.toggle("text-blue-100");
-                                                console.log("seasons",elem.seasons);
+                                                // console.log("seasons",elem.seasons);
                                                 
                                                 const filteredSeason=elem.seasons.filter((season)=>{
                                                     return    Date.parse(season.end) > Date.now();
-                                                });
-                                                console.log("filtered season",filteredSeason);
-                                                const seasonYear=filteredSeason[0].year;
-                                                const endDate=filteredSeason[0].end;
+                                                })[0];
+                                                // console.log("filtered season",filteredSeason);
+                                                const seasonYear=filteredSeason.year;
+                                                const endDate=filteredSeason.end;
 
                                                 elem.league?         
                                                     handlePreferedLeagues(elem.league.id,seasonYear,endDate)
