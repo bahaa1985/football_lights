@@ -20,7 +20,7 @@ function FixtureRow(props) {
                 <>
                 <div className="text-left">
                 
-                    <img alt="" src={fixtures[elem][0].league.logo} className="ml xs:w-15 sm:w-20 h-12 object-contain"/>
+                    <img alt="" loading="lazy" src={fixtures[elem][0].league.logo} className="ml xs:w-15 sm:w-20 h-12 object-contain"/>
                     
                     <span className="text-left">{elem}</span>
 
@@ -70,7 +70,7 @@ function FixtureRow(props) {
 
                             <div className="flex justify-between items-center w-full sm:w-[50%] p-2">
                                 
-                                <img src={elem.teams.home.logo} className="ml w-15 sm:w-20 h-14" alt={elem.teams.home.name}/>
+                                <img src={elem.teams.home.logo} loading="lazy" className="ml w-15 sm:w-20 h-14" alt={elem.teams.home.name}/>
                                 
                                 <NavLink  to={`/teams/${elem.teams.home.id}`}>
                                     <span>{elem.teams.home.name}</span>
@@ -81,7 +81,7 @@ function FixtureRow(props) {
                             
                             <div className="flex justify-between items-center w-full sm:w-[50%] sm:flex-row-reverse p-2">
                                 
-                                <img src={elem.teams.away.logo} className="w-15 sm:w-20 h-14"  alt={elem.teams.away.name} />
+                                <img src={elem.teams.away.logo} loading="lazy" className="w-15 sm:w-20 h-14"  alt={elem.teams.away.name} />
                                 
                                 <NavLink to={`/teams/${elem.teams.away.id}`}>
                                     <span>{elem.teams.away.name}</span>
