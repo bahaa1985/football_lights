@@ -1,6 +1,5 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../../Api/getFixtures.js";
-import { NavLink } from "react-router-dom";
 import FixtureRow from "./FixtureRow.js";
 
 export default function DayFixtures(){
@@ -22,7 +21,6 @@ export default function DayFixtures(){
     const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
     const year=date.getFullYear();
     const dateString=year.toString()+'-'+month.toString()+'-'+day.toString()
-    console.log("my date",dateString);
     
     useEffect(()=>{
         groupDateFixtures(dateString).then(result=>{
@@ -35,7 +33,7 @@ export default function DayFixtures(){
     // console.log("date fixtures",dates);
    
     return(
-        <div className="relative top-20 left-0">
+        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[80%]">
             {/* <div className="flex justify-center mx-auto">
                 {
                     dates.map((date,index)=>{
@@ -48,7 +46,7 @@ export default function DayFixtures(){
                 }
             </div> */}
             {/* selected date fixtures */}
-            <div className="max-w-lg">
+            <div className="w-[90%] sm:w-[80%]  mx-auto">
                 {/* <div className="m-2">
                     <span className="text-lg">
                         Fixtures of {dateString}

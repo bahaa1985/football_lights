@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getLeagues } from "../Api/getLeaguesTeams.js";
-import { getTeam } from "../Api/getLeaguesTeams.js";
+import { getLeagues } from "../../Api/getLeaguesTeams.js";
+import { getTeam } from "../../Api/getLeaguesTeams.js";
 import Pagination from "./Pagination.js";
 
 export default function Preferences(params) {

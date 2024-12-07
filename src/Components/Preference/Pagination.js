@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { setCookie,getCookie } from "../Api/cookie.js";
+import { setCookie,getCookie } from "../../Api/cookie.js";
 // import { getLeagueRounds } from "../Api/getLeaguesTeams.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -119,9 +119,9 @@ function Pagination(props) {
                                                 // console.log("seasons",elem.seasons);
                                                 
                                                 const filteredSeason=elem.seasons.filter((season)=>{
-                                                    return    Date.parse(season.end) > Date.now();
+                                                    return Date.parse(season.end) > Date.now()
                                                 })[0];
-                                                // console.log("filtered season",filteredSeason);
+                                                console.log("filtered season",filteredSeason);
                                                 const seasonYear=filteredSeason.year;
                                                 const endDate=filteredSeason.end;
 

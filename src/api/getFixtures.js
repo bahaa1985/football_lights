@@ -52,7 +52,7 @@ async function getPromisedFixtures(dateString) {
     let dayArray = [];
     let promises = leagues.map(async (league,index) =>{
       // if the league is still running get its fixtures, if not delete it from cookie:
-      if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){ 
+      // if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){ 
         await getDateFixtures(league.id, league.season, dateString).then(result => {
           dayArray.push(...result.data.response);
           dayArray.sort((a,b)=>{
@@ -61,12 +61,12 @@ async function getPromisedFixtures(dateString) {
             return 0;
           })
         })
-      }
-      else
-      {
-        let remainedLeagues=leagues.splice(index,1); //remove the finished league
-        setCookie(remainedLeagues,"prefered_leagues");
-      }
+      // }
+      // else
+      // {
+      //   let remainedLeagues=leagues.splice(index,1); //remove the finished league
+      //   setCookie(remainedLeagues,"prefered_leagues");
+      // }
     });
     await Promise.all(promises);
     return dayArray;

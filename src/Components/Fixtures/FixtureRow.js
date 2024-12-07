@@ -9,13 +9,11 @@ function FixtureRow(props) {
 
     const fixtures =props.fixturesSource;
     
-    console.log("fixtures row: ",fixtures);
-    
     const preferedLeagues = getCookie("prefered_leagues");;
 
     return Object.keys(fixtures).map((elem, index) => {
         return (
-        <div key={index} className="block w-[90%] sm:w-[60%] mx-auto my-4">
+        <div key={index} className="block w-[90%] sm:w-[96] my-4">
             {               
                 <>
                 <div className="text-left">
@@ -26,13 +24,13 @@ function FixtureRow(props) {
 
                 </div>
 
-                <button onClick={setCookie("prefered_leagues",preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
-                </button>
+                {/* <button onClick={setCookie("prefered_leagues",preferedLeagues.map(item=>item !== fixtures[elem][0].league.id))}>
+                </button> */}
 
                 {
                     fixtures[elem].map((elem, i) => {
                     return (
-                        <div className="m-4 border-b border-b-black border-solid">
+                        <div className="my-4 border-b border-b-black border-solid">
                            
                         <div className="flex justify-start">
                             <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>
@@ -76,9 +74,13 @@ function FixtureRow(props) {
                                     <span>{elem.teams.home.name}</span>
                                 </NavLink>
                                 
-                                <span className="w-[10%]">{elem.goals.home === null ? '-' : elem.goals.home}</span>
+                                <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm">{elem.goals.home === null ? '-' : elem.goals.home}</span>
                             </div>
                             
+                            {/* <div className="py-auto"> */}
+                                <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100">{elem.fixture.status.short}</span>
+                            {/* </div> */}
+
                             <div className="flex justify-between items-center w-full sm:w-[50%] sm:flex-row-reverse p-2">
                                 
                                 <img src={elem.teams.away.logo} loading="lazy" className="w-15 sm:w-20 h-14"  alt={elem.teams.away.name} />
@@ -87,12 +89,12 @@ function FixtureRow(props) {
                                     <span>{elem.teams.away.name}</span>
                                 </NavLink> 
 
-                                <span className="w-[10%]">{elem.goals.away === null ? '-' : elem.goals.away } </span>
+                                <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm">{elem.goals.away === null ? '-' : elem.goals.away } </span>
 
                             </div>
                             
                         </div>
-
+                        
                         <div className="">
                             <div className="">
                                 <FontAwesomeIcon className="w-10 mx-2" icon={faLocationDot}></FontAwesomeIcon>

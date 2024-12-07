@@ -21,7 +21,7 @@ export function getCookie(name){
     const jsonData =  Cookies.get(name);
     if(jsonData){
        const data=JSON.parse(jsonData);
-             
+    console.log("cookies",data);
        return data;
     }
     else{
