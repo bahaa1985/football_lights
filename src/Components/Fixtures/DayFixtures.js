@@ -1,10 +1,12 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../../Api/getFixtures.js";
+import { Calendar } from 'primereact/calendar/calendar.esm.js';
 import FixtureRow from "./FixtureRow.js";
 
 export default function DayFixtures(){
 
     const [groupFixtures,setGroupFixtures]=useState([]);
+    const [fixturesDate,setFixturesDate]=useState('');
     //
     // let dates=[];
     // for(let i=-1;i<7 ;i++){
@@ -15,25 +17,25 @@ export default function DayFixtures(){
     //     const year=date.getFullYear();
     //     dates.push({'date':day,'month':month,'year':year});
     // }
-    const nowValue=Date.now();
-    const date = new Date(nowValue);
-    const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
-    const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-    const year=date.getFullYear();
-    const dateString=year.toString()+'-'+month.toString()+'-'+day.toString()
+    // const nowValue=Date.now();
+    // const date = new Date(nowValue);
+    // const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
+    // const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
+    // const year=date.getFullYear();
+    // const dateString=year.toString()+'-'+month.toString()+'-'+day.toString()
     
     useEffect(()=>{
-        groupDateFixtures(dateString).then(result=>{
+        groupDateFixtures(fixturesDate).then(result=>{
             setGroupFixtures(result);
 
         })        
-    },[dateString])
+    },[fixturesDate])
 
     
     // console.log("date fixtures",dates);
    
     return(
-        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[80%]">
+        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] flex justify-between">
             {/* <div className="flex justify-center mx-auto">
                 {
                     dates.map((date,index)=>{
@@ -45,13 +47,12 @@ export default function DayFixtures(){
                     })
                 }
             </div> */}
+            <div>
+                <input type="date"/>
+                {/* <Calendar value={fixturesDate} onChange={(e) => setFixturesDate(e.value)} inline showWeek /> */}
+            </div>
             {/* selected date fixtures */}
-            <div className="w-[90%] sm:w-[80%]  mx-auto">
-                {/* <div className="m-2">
-                    <span className="text-lg">
-                        Fixtures of {dateString}
-                    </span>
-                </div> */}
+            <div className="sm:w-[80%]  mx-auto">
                 {
                     groupFixtures?
                     <FixtureRow fixturesSource={groupFixtures}/>
