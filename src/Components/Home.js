@@ -7,10 +7,11 @@ export default function Home(){
     
 
     return(
-        <div>
+        <div className='bg-zinc-300'>
             <div>
                 <DayFixtures />
             </div>
+            <a href="https://www.flaticon.com/free-icons/stadium" title="stadium icons">Stadium icons created by apien - Flaticon</a>
         </div>
     )
 }

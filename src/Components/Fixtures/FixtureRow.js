@@ -5,6 +5,7 @@ import stadium from '../../images/stadium.png'
 import { faLocationDot, faCalendar, faClock} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 function FixtureRow(props) {
 
     const fixtures =props.fixturesSource;
@@ -30,16 +31,11 @@ function FixtureRow(props) {
                 {
                     fixtures[elem].map((elem, i) => {
                     return (
-                        <div className="my-4 border-b border-b-black border-solid">
+                        <div className="flex justify-center my-4 border-b border-b-black border-solid">
                            
-                        <div className="flex justify-start">
-                            <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>
-                            <span>
-                            {
-                                new Date(elem.fixture.date).toDateString() 
-                            }
-                            </span>
-                            <span className="mx-2">|</span>
+                       {/* Match details */}
+                        <div className="block w-[15%]"> 
+                            <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>                           
                             <FontAwesomeIcon className="h-4" icon={faClock}></FontAwesomeIcon>
                             <span className="mx-2">
                                 {
@@ -61,31 +57,33 @@ function FixtureRow(props) {
                                 </div>
                                 : null
                             }
+                            <div className="py-auto">
+                                <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100">{elem.fixture.status.short}</span>
+                            </div>
                         </div>
+                           
+                        <div className="w-[75%] block p-auto my-2 mx-auto " key={i}>
                             
-                        <div className="block w-full sm:flex justify-around p-auto my-2 mx-auto " key={i}>
-                            
-
-                            <div className="flex justify-between items-center w-full sm:w-[50%] p-2">
+                            {/* Home team */}
+                            <div className="flex justify-between items-center w-full p-2">
                                 
-                                <img src={elem.teams.home.logo} loading="lazy" className="ml w-15 sm:w-20 h-14" alt={elem.teams.home.name}/>
+                                <img src={elem.teams.home.logo} loading="lazy" className="ml w-10 h-10" alt={elem.teams.home.name}/>
                                 
-                                <NavLink  to={`/teams/${elem.teams.home.id}`}>
+                                <NavLink className="w-[50%]"  to={`/teams/${elem.teams.home.id}`}>
                                     <span>{elem.teams.home.name}</span>
                                 </NavLink>
                                 
                                 <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm">{elem.goals.home === null ? '-' : elem.goals.home}</span>
                             </div>
                             
-                            {/* <div className="py-auto"> */}
-                                <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100">{elem.fixture.status.short}</span>
-                            {/* </div> */}
+                            
 
-                            <div className="flex justify-between items-center w-full sm:w-[50%] sm:flex-row-reverse p-2">
+                            {/* Away team */}
+                            <div className="flex justify-between items-center w-full p-2">
                                 
-                                <img src={elem.teams.away.logo} loading="lazy" className="w-15 sm:w-20 h-14"  alt={elem.teams.away.name} />
+                                <img src={elem.teams.away.logo} loading="lazy" className="w-10 h-10"  alt={elem.teams.away.name} />
                                 
-                                <NavLink to={`/teams/${elem.teams.away.id}`}>
+                                <NavLink className="w-[50%]" to={`/teams/${elem.teams.away.id}`}>
                                     <span>{elem.teams.away.name}</span>
                                 </NavLink> 
 
@@ -95,21 +93,17 @@ function FixtureRow(props) {
                             
                         </div>
                         
-                        <div className="">
+                        {/* <div className="flex flex-center w-full">
                             <div className="">
                                 <FontAwesomeIcon className="w-10 mx-2" icon={faLocationDot}></FontAwesomeIcon>
                                 <span>{elem.fixture.venue.city}</span>
                             </div>
 
-                            <div className="flex">
-                                <img className="w-10 h-10 mx-2" src={stadium} alt="" />
-                                
+                            <div className=" flex-col">
+                                <img className="w-10 h-10 mx-2" src={stadium} alt="" />                                                               
                                 <span>{elem.fixture.venue.name}</span>
-                            </div>
-                                  
-                            
-                                    {/* <a href="https://www.flaticon.com/free-icons/stadium" title="stadium icons">Stadium icons created by monkik - Flaticon</a> */}
-                        </div>
+                            </div>                                                                                                  
+                        </div> */}
                         </div>
                     )})
                 }
