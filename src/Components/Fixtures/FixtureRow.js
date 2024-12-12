@@ -31,7 +31,7 @@ function FixtureRow(props) {
                 {
                     fixtures[elem].map((elem, i) => {
                     return (
-                        <div className="flex justify-center my-4 border-b border-b-black border-solid">
+                        <div key={i} className="flex justify-center my-4 border-b border-b-black border-solid">
                            
                        {/* Match details */}
                         <div className="block w-[15%]"> 

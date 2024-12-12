@@ -1,48 +1,30 @@
 import React ,{useState, useEffect} from "react";
 import { groupDateFixtures } from "../../Api/getFixtures.js";
+// import  Calendar  from 'primereact/calendar/calendar.js';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import FixtureRow from "./FixtureRow.js";
 
 export default function DayFixtures(){
 
     const [groupFixtures,setGroupFixtures]=useState([]);
     const [fixturesDate,setFixturesDate]=useState('');
-    //
-    // let dates=[];
-    // for(let i=-1;i<7 ;i++){
-    //     const nowValue=Date.now();
-    //     const date =new  Date((nowValue+ i*24*60*60*1000));
-    //     const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
-    //     const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-    //     const year=date.getFullYear();
-    //     dates.push({'date':day,'month':month,'year':year});
-    // }
-    // const nowValue=Date.now();
-    // const date = new Date(nowValue);
-    // const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
-    // const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-    // const year=date.getFullYear();
-    // const dateString=year.toString()+'-'+month.toString()+'-'+day.toString()
     
-    function handleSelectedDate(s_date){
-        setFixturesDate(s_date);
-        const date = new Date(s_date);
-        const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
-        const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-        const year=date.getFullYear();
-        const dd =year.toString()+'-'+month.toString()+'-'+day.toString()    
-        console.log(dd)
-        setFixturesDate(dd);
-    }
-
     useEffect(()=>{
         groupDateFixtures(fixturesDate).then(result=>{
             setGroupFixtures(result);
         })        
     },[fixturesDate])
 
-    
-    // console.log("date fixtures",dates);
+    // 
+    const handleDateChange = (date) => {
+        const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
+        const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
+        const year=date.getFullYear();
+        const dateString=year.toString()+'-'+month.toString()+'-'+day.toString();
+        setFixturesDate(dateString);
+        console.log("Selected date:", dateString);
+    };
    
     return(
         <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] flex justify-between">
@@ -57,13 +39,13 @@ export default function DayFixtures(){
                     })
                 }
             </div> */}
-            <div className="w-[20%] max-h-fit bg-slate-50">
-                <Calendar onChange={handleSelectedDate} value={fixturesDate}></Calendar>
+            <div className="sm:w-[30%]">
+            <Calendar onChange={handleDateChange}  />
                 {/* <input type="date"/> */}
-                {/* <Calendar value={fixturesDate} onChange={(e) => setFixturesDate(e.value)} inline showWeek /> */}
+                {/* <Calendar value={fixturesDate} onChange={(e) => console.log("calenadar:",e.value)} inline  /> */}
             </div>
             {/* selected date fixtures */}
-            <div className="w-[40%] mx-auto bg-slate-50">
+            <div className="sm:w-[60%]  mx-auto">
                 {
                     groupFixtures?
                     <FixtureRow fixturesSource={groupFixtures}/>
