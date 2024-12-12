@@ -39,13 +39,13 @@ export default function DayFixtures(){
                     })
                 }
             </div> */}
-            <div className="sm:w-[30%]">
-            <Calendar onChange={handleDateChange}  />
+            <div className="w-[30%] ">
+            <Calendar onChange={handleDateChange} className="rounded-md bg-slate-50" />
                 {/* <input type="date"/> */}
                 {/* <Calendar value={fixturesDate} onChange={(e) => console.log("calenadar:",e.value)} inline  /> */}
             </div>
             {/* selected date fixtures */}
-            <div className="sm:w-[60%]  mx-auto">
+            <div className="sm:w-[40%]  mx-auto rounded-md bg-slate-50 p-2">
                 {
                     groupFixtures?
                     <FixtureRow fixturesSource={groupFixtures}/>

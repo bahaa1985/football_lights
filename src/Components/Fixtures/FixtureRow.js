@@ -14,7 +14,7 @@ function FixtureRow(props) {
 
     return Object.keys(fixtures).map((elem, index) => {
         return (
-        <div key={index} className="block w-[90%] sm:w-[96] my-4">
+        <div key={index} className="block w-full mx-auto sm:w-[96] ">
             {               
                 <>
                 <div className="text-left">
@@ -31,11 +31,11 @@ function FixtureRow(props) {
                 {
                     fixtures[elem].map((elem, i) => {
                     return (
-                        <div key={i} className="flex justify-center my-4 border-b border-b-black border-solid">
+                        <div key={i} className="flex justify-center my-2 border-b border-b-black border-solid">
                            
                        {/* Match details */}
-                        <div className="block w-[15%]"> 
-                            <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>                           
+                        <div className="block w-[25%]"> 
+                            {/* <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>                            */}
                             <FontAwesomeIcon className="h-4" icon={faClock}></FontAwesomeIcon>
                             <span className="mx-2">
                                 {
@@ -65,7 +65,7 @@ function FixtureRow(props) {
                         <div className="w-[75%] block p-auto my-2 mx-auto " key={i}>
                             
                             {/* Home team */}
-                            <div className="flex justify-between items-center w-full p-2">
+                            <div className="flex justify-between items-center w-full m-2">
                                 
                                 <img src={elem.teams.home.logo} loading="lazy" className="ml w-10 h-10" alt={elem.teams.home.name}/>
                                 
@@ -79,7 +79,7 @@ function FixtureRow(props) {
                             
 
                             {/* Away team */}
-                            <div className="flex justify-between items-center w-full p-2">
+                            <div className="flex justify-between items-center w-full">
                                 
                                 <img src={elem.teams.away.logo} loading="lazy" className="w-10 h-10"  alt={elem.teams.away.name} />
                                 
