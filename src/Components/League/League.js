@@ -16,19 +16,21 @@ export default function League(){
     return(
         <div>
             <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">
-                <button onClick={()=>setTab("Fixtures")}>Fixtures</button>
-                <button onClick={()=>setTab("Standing")}>Standing</button> 
-                <button onClick={()=>setTab("TopScorer")}>Top Scorers</button>
-                <button onClick={()=>setTab("TopAssists")}>Top Assists</button>
+                <div className="flex justify-start space-x-8 w-96 my-2">
+                    <button className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500" onClick={()=>setTab("Standing")}>Standing</button> 
+                    <button className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500" onClick={()=>setTab("Fixtures")}>Fixtures</button>
+                    <button className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500" onClick={()=>setTab("TopScorer")}>Scorers</button>
+                    <button className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500" onClick={()=>setTab("TopAssists")}>Assisters</button>
+                </div>                
                 {
                     tab === "Fixtures" ?
                     <LeagueFixtures league={leagueId} season ={season} />
                     :
                     tab === "Standing" ?
                     <Standings league={leagueId} season={season}/>
-                    : tab==="TopScorer" ?
+                    : tab==="Scorers" ?
                     <TopPlayers league={leagueId} season={season} type={'goals'} />
-                    : tab === "TopAssists" ?
+                    : tab === "Assisters" ?
                     <TopPlayers league={leagueId} season={season} type={'assists'} />
                     :null
                 }

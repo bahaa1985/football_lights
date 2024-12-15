@@ -75,7 +75,6 @@ export async function groupDateFixtures(dateString) {
     result?.reduce((group, elem) => {
       const title = elem.league.name + '  ' + elem.league.round;
       if (!group[title]) {
-        // console.log(title,group[title]);
         group[title] = [];
       }
       group[title].push(elem);
@@ -95,7 +94,6 @@ async function getPromisedLiveFixtures() {
   if (ids.length > 0) {
     let liveArray = [];
     
-    // Directly await the promise returned by getLiveFixtures
     try {
       const result = await getLiveFixtures(ids);
       liveArray.push(...result.data.response);
@@ -146,18 +144,17 @@ async function getPromisedLeagueFixtures(leagueId,season){
 
 export async function groupLeagueFixtures(leagueId,season){
   let grouped =[];
-  await getPromisedLeagueFixtures(leagueId,season).then(result => {
-    result?.reduce((group, elem) => {
-      const gw = elem.league.round;
-      if (!group[gw]) {
-        group[gw] = [];
-      }
-      group[gw].push(elem);
-      console.log("grouped fixtures", group);
-      grouped=group;
-      return group;
-    }, [])
-  })
+  const result= await getPromisedLeagueFixtures(leagueId,season);
+  result?.reduce((group, elem) => {
+    const gw = elem.league.round;
+    if (!group[gw]) {
+      group[gw] = [];
+    }
+    group[gw].push(elem);
+    console.log("grouped fixtures", group);
+    grouped=group;
+    return group;
+  }, [])
   return grouped
 }
 
