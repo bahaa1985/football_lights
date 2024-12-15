@@ -1,71 +1,31 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
 import Standings from './Standing.js';
 import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
-import { getCookie } from "../../Api/cookie.js";
-import { getLeagues } from "../../Api/getLeaguesTeams.js";
+import { useParams } from "react-router-dom";
 
 
-export default function League(props){
+export default function League(){
     
-    // const season=props.season;
-    let leaguesCookie=getCookie("prefered_leagues");
-        let [tab,setTab]=useState(true)
-    const [leagueId,setLeagueId]=useState(0);
-    const[search,setSearch]=useState('')
-    const [season,setSeason]=useState(0);
-    const [leagues,setLeagues]=useState([]);
-
-    useEffect(()=>{
-        let leaguesArr=[];
-        for(let i=0;i < leaguesCookie.length ; i++){
-            setLeagueId(leaguesCookie[i].id);
-            getLeagues(null,leaguesCookie[i].id)
-            .then(result=>{
-                leaguesArr.push(result.data.response[0]);
-                setLeagues(leaguesArr);
-            })
-        }
-       
-    },[])
-
-    console.log("leagues",leagues)
+    const leagueId=parseInt(useParams().leagueId);
+    const season = parseInt(useParams().season);
+    console.log("league:",leagueId);console.log("season:",season);
+    
+    let [tab,setTab]=useState('Fixtures')
 
     return(
         <div>
-            <div>
-                <select>
-                {
-                    leagues?.map((elem,index)=>{
-                        return(
-                            // <option key={index} value={elem?.league.id}>
-                                <div key={index}>
-                                    <span>{elem?.league.name}</span>
-                                    <img src={elem?.league.logo} alt={elem?.league.name} />
-                                </div>
-                            // </option>
-                        )
-                    })
-                }
-                </select>
-                <input type="text" onChange={(e)=>setSearch(e.target.value)} />
-                {/* div for display search leagues result */}
-                <div> 
-
-                </div>
-            </div>
-            <div>
-                <button onClick={()=>setTab("Standing")}>Standing</button> 
+            <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">
                 <button onClick={()=>setTab("Fixtures")}>Fixtures</button>
+                <button onClick={()=>setTab("Standing")}>Standing</button> 
                 <button onClick={()=>setTab("TopScorer")}>Top Scorers</button>
                 <button onClick={()=>setTab("TopAssists")}>Top Assists</button>
                 {
-                    tab === "Standing" ?
-                    <Standings league={leagueId} season ={season} />
-                    :
                     tab === "Fixtures" ?
-                    <LeagueFixtures league={leagueId} season={season}/>
+                    <LeagueFixtures league={leagueId} season ={season} />
+                    :
+                    tab === "Standing" ?
+                    <Standings league={leagueId} season={season}/>
                     : tab==="TopScorer" ?
                     <TopPlayers league={leagueId} season={season} type={'goals'} />
                     : tab === "TopAssists" ?
@@ -73,8 +33,6 @@ export default function League(props){
                     :null
                 }
             </div>
-           
-          
         </div>
     )
 }

@@ -77,8 +77,7 @@ function App() {
       <Route path='/' element={<Home/>}>
       </Route>
       {/* <Route path='/fixtures' element={<DateFixtures />}/> */}
-      <Route path="/leagues" element={<League season={season}/>}>
-        <Route path=":leagueId"/>          
+      <Route path="/leagues/:leagueId/:season" element={<League />}>       
       </Route>
       <Route path="/fixtures" element={<Game/>} >
         <Route path=":fixtureId"/>

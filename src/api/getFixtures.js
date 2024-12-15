@@ -2,14 +2,13 @@ import axios from 'axios'
 import { getCookie, setCookie } from './cookie.js';
 import { getLeagues } from './getLeaguesTeams.js';
 
-export function getAllFixtures(league, season) {
+export function getLeagueFixtures(league, season) {
   let config = {
     method: 'GET',
     url: `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`,
     headers: {
       'x-rapidapi-host': 'v3.football.api-sports.io',
-      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY,
-      'Access-Control-Allow-Origin': 'localhost:3000'
+      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
     }
   };
 
@@ -45,9 +44,9 @@ function getDateFixtures(league, season, date) {
 
 }
 
-async function getPromisedFixtures(dateString) {
+async function getPromisedDateFixtures(dateString) {
   let leagues = getCookie("prefered_leagues");
-  console.log("getFixtures-leagues",leagues);
+  // console.log("getFixtures-leagues",leagues);
   if (leagues.length > 0) {
     let dayArray = [];
     let promises = leagues.map(async (league,index) =>{
@@ -61,12 +60,6 @@ async function getPromisedFixtures(dateString) {
             return 0;
           })
         })
-      // }
-      // else
-      // {
-      //   let remainedLeagues=leagues.splice(index,1); //remove the finished league
-      //   setCookie(remainedLeagues,"prefered_leagues");
-      // }
     });
     await Promise.all(promises);
     return dayArray;
@@ -78,7 +71,7 @@ async function getPromisedFixtures(dateString) {
 
 export async function groupDateFixtures(dateString) {
   let grouped =[];
-  await getPromisedFixtures(dateString).then(result => {
+  await getPromisedDateFixtures(dateString).then(result => {
     result?.reduce((group, elem) => {
       const title = elem.league.name + '  ' + elem.league.round;
       if (!group[title]) {
@@ -122,8 +115,6 @@ export async function groupLiveFixtures() {
   
   try {
     const result = await getPromisedLiveFixtures();
-    console.log("live", result);
-
     result?.reduce((group, elem) => {
       const title = `${elem.league.name}  ${elem.league.round}`;
       if (!group[title]) {
@@ -141,23 +132,34 @@ export async function groupLiveFixtures() {
   return grouped;
 }
 
-
-
-export function groupAllFixtures(leagueId,season){
-  let grouped =[]; 
-  getAllFixtures(leagueId,season).then(result=>{
-      grouped = result.reduce((group, elem) => {
-        const gw = elem.league.round;
-        if (group[gw] == null) {
-          group[gw] = [];
-        }
-        group[gw].push(elem);
-        return group
-      }, {});
-    })
-    return grouped;
+async function getPromisedLeagueFixtures(leagueId,season){
+  let leagueFixtures=[];
+  try{
+    const result=await getLeagueFixtures(leagueId,season);
+    leagueFixtures=result?.data.response;
+  }
+  catch(error){
+    console.error("Error promised league fixtures:",error);    
+  }
+  return leagueFixtures;
 }
 
-export default getAllFixtures
+export async function groupLeagueFixtures(leagueId,season){
+  let grouped =[];
+  await getPromisedLeagueFixtures(leagueId,season).then(result => {
+    result?.reduce((group, elem) => {
+      const gw = elem.league.round;
+      if (!group[gw]) {
+        group[gw] = [];
+      }
+      group[gw].push(elem);
+      console.log("grouped fixtures", group);
+      grouped=group;
+      return group;
+    }, [])
+  })
+  return grouped
+}
+
 
 
