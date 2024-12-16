@@ -10,25 +10,26 @@ function Standings(props){
     const [standings,setStandings]=useState([])
 
     useEffect(()=>{              
-        getStandings(league,season).then((result)=>{        
+        getStandings(league,season).then((result)=>{
+            console.log("standings: ",result);         
             setStandings(result.data.response[0].league.standings)                                       
     })            
     },[league,season])
     
     return(
-        <div>
-            <table className='table table-hover'>
+        <div className='w-full sm:w-[70%] mx-auto'>
+            <table className='w-full table-auto border-collapse border border-slate-400 text-center'>
                 <thead>
                     <tr>
-                        <td>Rank</td>
-                        <td>Team</td>
-                        <td>Games</td>
-                        <td>Win</td>
-                        <td>Draw</td>
-                        <td>Lose</td>
-                        <td>GF</td>
-                        <td>GA</td>
-                        <td>Points</td>                      
+                        <td className='border border-slate-400'>Rank</td>
+                        <td className='border border-slate-400'>Team</td>
+                        <td className='border border-slate-400'>Games</td>
+                        <td className='border border-slate-400'>Win</td>
+                        <td className='border border-slate-400'>Draw</td>
+                        <td className='border border-slate-400'>Lose</td>
+                        <td className='border border-slate-400'>GF</td>
+                        <td className='border border-slate-400'>GA</td>
+                        <td className='border border-slate-400'>Points</td>                      
                     </tr>
                 </thead>
                 <tbody>
@@ -38,16 +39,18 @@ function Standings(props){
                                 group.map((elem,index)=>{
                                     return(
                                         <tr key={index}>
-                                            <td>{elem.rank}</td>
-                                            <td><img src={elem.team.logo} style={{width:'30px',height:'30px'}} alt={elem.team.name}/></td>
-                                            <td>{elem.team.name}</td>
-                                            <td>{elem.all.played}</td>
-                                            <td>{elem.all.win}</td>
-                                            <td>{elem.all.draw}</td>
-                                            <td>{elem.all.lose}</td>
-                                            <td>{elem.all.goals.for}</td>
-                                            <td>{elem.all.goals.against}</td>
-                                            <td>{elem.points}</td>
+                                            <td className='border border-slate-400'>{elem.rank}</td>
+                                            {/* <td className='border border-slate-400'><img src={elem.team.logo} className="w-10 h-10" alt={elem.team.name}/></td> */}
+                                            <td className='flex items-center border border-slate-400'>
+                                                <img src={elem.team.logo} className="w-10 h-10" alt={elem.team.name}/>{elem.team.name}
+                                            </td>
+                                            <td className='border border-slate-400'>{elem.all.played}</td>
+                                            <td className='border border-slate-400'>{elem.all.win}</td>
+                                            <td className='border border-slate-400'>{elem.all.draw}</td>
+                                            <td className='border border-slate-400'>{elem.all.lose}</td>
+                                            <td className='border border-slate-400'>{elem.all.goals.for}</td>
+                                            <td className='border border-slate-400'>{elem.all.goals.against}</td>
+                                            <td className='border border-slate-400'>{elem.points}</td>
                                         </tr> 
                                     )
                                 }
