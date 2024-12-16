@@ -44,6 +44,20 @@ function getDateFixtures(league, season, date) {
 
 }
 
+function getTeamFixtures(teamId) {
+  let config = {
+    method: 'GET',
+    url: `https://v3.football.api-sports.io/fixtures?team=${teamId}`,
+    headers: {
+      'x-rapidapi-host': 'v3.football.api-sports.io',
+      'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+    }
+  };
+
+  return axios(config)
+
+}
+
 async function getPromisedDateFixtures(dateString) {
   let leagues = getCookie("prefered_leagues");
   // console.log("getFixtures-leagues",leagues);
@@ -156,6 +170,19 @@ export async function groupLeagueFixtures(leagueId,season){
     return group;
   }, [])
   return grouped
+}
+
+export async function getPromisedTeamFixtures(teamId){
+  let teamFixtures=[];
+  let uniqueFixtures=[];
+  try {
+    const result=await getTeamFixtures(teamId)  ;
+    teamFixtures=result.data.response[0];
+    uniqueFixtures = [...new Set(teamFixtures)];
+  } catch (error) {
+    
+  }
+  return uniqueFixtures;
 }
 
 

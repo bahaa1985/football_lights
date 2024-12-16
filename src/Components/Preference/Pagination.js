@@ -128,7 +128,7 @@ function Pagination(props) {
                                                 elem.league?         
                                                     handlePreferedLeagues(elem.league.id,seasonYear,endDate)
                                                     :
-                                                    (handlePreferedTeams(elem.team))
+                                                    (handlePreferedTeams(elem.team.id))
                                             }}/>
                                     </div>
                                         )
