@@ -22,7 +22,7 @@ export default function LeagueFixtures(props) {
 
   return (
     <div className="">       
-        <FixtureRow type={"league"} fixturesSource={fixtures} />
+        <FixtureRow type={"all_fixtures"} fixturesSource={fixtures} />
     </div>
   );
 }

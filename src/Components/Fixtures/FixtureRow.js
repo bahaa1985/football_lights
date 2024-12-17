@@ -20,7 +20,7 @@ function FixtureRow(props) {
                 <>
                     {
                      // checking if this component is rendered within leagueFixtures or todayFixtures as some designs will be changed
-                    type !== "league"?  
+                    type === "day_matches"?  
                     <div className="text-left bg-slate-500 p-2 flex justify-start">
                     
                         <img alt="" loading="lazy" src={fixtures[elem][0].league.logo} className="ml xs:w-15 sm:w-16 h-12 object-contain"/>
@@ -30,10 +30,11 @@ function FixtureRow(props) {
                         </NavLink>
                         
                         </div> 
-                        : 
+                        : type === "all_fixtures"?
                         <div  className="bg-slate-500 text-slate-50">
-                            { parseInt(fixtures[elem][0].league.id)!==2 ? 'Game Week ' + parseInt(index + 1) : 'Round ' + Object.keys(fixtures)[index]}
+                            { parseInt(fixtures[elem][0]?.league.id)!==2 ? 'Game Week ' + parseInt(index + 1) : 'Round ' + Object.keys(fixtures)[index]}
                         </div>
+                        :null
                     }
 
                     {
@@ -45,7 +46,7 @@ function FixtureRow(props) {
                         
                             <div className="block w-[25%]"> 
                                 {
-                                    type === "league" ?
+                                    type === "all_matches" ?
                                     <>
                                         <FontAwesomeIcon className="mx-2 h-4" icon={faCalendar}></FontAwesomeIcon>
                                         <span>{new Date(elem.fixture.date).toDateString()}</span>

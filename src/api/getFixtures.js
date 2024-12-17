@@ -176,9 +176,14 @@ export async function getPromisedTeamFixtures(teamId){
   let teamFixtures=[];
   let uniqueFixtures=[];
   try {
-    const result=await getTeamFixtures(teamId)  ;
-    teamFixtures=result.data.response[0];
+    let teams=getCookie("prefered_teams");
+    for(let i=0;i<teams.length-1;i++){
+      const result=await getTeamFixtures(parseInt(teams[i].id))  ;
+      console.log("team fixtures: ",result);    
+      teamFixtures.push(result.data.response[0]);
+    }    
     uniqueFixtures = [...new Set(teamFixtures)];
+    
   } catch (error) {
     
   }

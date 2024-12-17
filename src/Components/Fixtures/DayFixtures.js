@@ -11,9 +11,9 @@ export default function DayFixtures(){
     const [teamsFixtures,setTeamsFixtures]=useState([]);
     
     useEffect(()=>{
-        groupDateFixtures(selectedDate).then(result=>{
-            setDateFixtures(result);
-        });
+        // groupDateFixtures(selectedDate).then(result=>{
+        //     setDateFixtures(result);
+        // });
         
         getPromisedTeamFixtures().then(result=>{
             setTeamsFixtures(result)
@@ -30,6 +30,9 @@ export default function DayFixtures(){
         console.log("Selected date:", dateString);
     };
    
+    console.log("team fix:",teamsFixtures);
+    
+
     return(
         <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] flex justify-between">           
             
@@ -42,7 +45,7 @@ export default function DayFixtures(){
                 <div>
                 {
                     dateFixtures?
-                    <FixtureRow fixturesSource={dateFixtures}/>
+                    <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
                     :
                     <p>No current games</p>
                 }
@@ -50,8 +53,8 @@ export default function DayFixtures(){
                 {/* favourite teams games */}
                 <div>
                 {
-                    dateFixtures?
-                    <FixtureRow fixturesSource={teamsFixtures}/>
+                    teamsFixtures.length>0?
+                    <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
                     :
                     <p>No current games</p>
                 }

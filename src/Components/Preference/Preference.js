@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { getLeagues } from "../../Api/getLeaguesTeams.js";
 import { getTeam } from "../../Api/getLeaguesTeams.js";
 import Pagination from "./Pagination.js";
+import LeaguesPagination from "./LeaguesPagination.js";
+import TeamsPagination from "./TeamsPagination.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
@@ -41,7 +43,7 @@ export default function Preferences(params) {
           </div>
           {
             leagues?
-            <Pagination source={leagues}/>
+            <LeaguesPagination source={leagues}/>
             :<p>No leagues available</p>
           }
       </div>
@@ -57,7 +59,7 @@ export default function Preferences(params) {
             </div>
             {
               teams?
-              <Pagination source={teams} />
+              <TeamsPagination source={teams} />
               :<p>No teams available</p>
             }
       </div>                      
