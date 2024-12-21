@@ -11,11 +11,11 @@ export default function DayFixtures(){
     const [teamsFixtures,setTeamsFixtures]=useState([]);
     
     useEffect(()=>{
-        // groupDateFixtures(selectedDate).then(result=>{
-        //     setDateFixtures(result);
-        // });
+        groupDateFixtures(selectedDate).then(result=>{
+            setDateFixtures(result);
+        });
         
-        getPromisedTeamFixtures().then(result=>{
+        getPromisedTeamFixtures(selectedDate).then(result=>{
             setTeamsFixtures(result)
         })
     },[selectedDate])
@@ -30,19 +30,18 @@ export default function DayFixtures(){
         console.log("Selected date:", dateString);
     };
    
-    console.log("team fix:",teamsFixtures);
-    
+    console.log("team fix:",teamsFixtures);   
 
     return(
         <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] flex justify-between">           
             
             {/* selected date fixtures */}
-            <div className="xs: sm:w-[90%] sm:flex justify-around  mx-auto rounded-md bg-slate-50 p-2">
-                <div className="relative top-2 z-10">
+            <div className="sm:w-full sm:flex justify-around mx-auto rounded-md bg-slate-50 p-2">
+                <div className="w-64">
                     <Calendar onChange={handleDateChange} className="rounded-md bg-slate-50" />              
                 </div>
                 {/* favourite champions games */}
-                <div>
+                <div className="w-4/12">
                 {
                     dateFixtures?
                     <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
@@ -51,9 +50,9 @@ export default function DayFixtures(){
                 }
                 </div>
                 {/* favourite teams games */}
-                <div>
+                <div className="w-4/12">
                 {
-                    teamsFixtures.length>0?
+                    teamsFixtures?
                     <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
                     :
                     <p>No current games</p>

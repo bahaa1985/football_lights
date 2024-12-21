@@ -23,8 +23,8 @@ function LinePosition(props) {
       (playerA, playerB) =>
         parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2])
     );
-  console.log("sp", sp_lineup);
-  console.log("colors", colors);
+  // console.log("sp", sp_lineup);
+  // console.log("colors", colors);
   let playerNameArr = [],
     playerName = "";
   return (
@@ -74,7 +74,7 @@ function LineUp(props) {
   const homeId = props.teams[0];
   const awayId = props.teams[1];
   const fixtureId = props.fixture;
-  console.log("line up props:", props);
+  // console.log("line up props:", props);
   ///Home team details:
   const [homeTeam, setHomeTeam] = useState("");
   const [awayTeam, setAwayTeam] = useState("");
@@ -99,7 +99,7 @@ function LineUp(props) {
   useEffect(() => {
     // call formation and line up players:
     getLineUps(fixtureId).then((result) => {
-      console.log("line up:", result);
+      // console.log("line up:", result);
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))

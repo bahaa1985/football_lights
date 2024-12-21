@@ -86,8 +86,7 @@ function TeamsPagination(props) {
                                             {
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
-                                                senderElement.classList.toggle("text-blue-100");
-                                                // console.log("seasons",elem.seasons);                                                
+                                                senderElement.classList.toggle("text-blue-100");                                               
                                                 (handlePreferedTeams(elem.team.id))
                                             }}/>
                                     </div>

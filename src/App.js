@@ -7,13 +7,12 @@ import Player from './Components/Player.js';
 import Team from './Components/Team/Team.js';
 import Home from './Components/Home.js';
 import Preferences from './Components/Preference/Preference.js';
-import DayFixtures from './Components/Fixtures/DayFixtures.js';
+import Events from './Components/Game/Events.js';
 import logo from './images/logo.jpg';
 
 function App() {
 
   const season=2024;
-  const [viewCurrent,setViewCurrent]=useState(false);
   
   return (
      <Router>
@@ -89,6 +88,9 @@ function App() {
         <Route path=":playerId"/>
       </Route>
       <Route path="/preference" element={<Preferences />}>
+      </Route>
+      <Route path="/events" element={<Events />}>
+        <Route path=":fixtureId"/>
       </Route>
     </Routes>
 

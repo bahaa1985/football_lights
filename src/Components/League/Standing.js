@@ -17,7 +17,7 @@ function Standings(props){
     },[league,season])
     
     return(
-        <div className='w-full sm:w-[70%] mx-auto'>
+        <div className='w-70% md:w-[50%] mx-auto'>
             <table className='w-full table-auto border-collapse border border-slate-400 text-center'>
                 <thead>
                     <tr>
