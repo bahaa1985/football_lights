@@ -11,13 +11,13 @@ export default function DayFixtures(){
     const [teamsFixtures,setTeamsFixtures]=useState([]);
     
     useEffect(()=>{
-        groupDateFixtures(selectedDate).then(result=>{
-            setDateFixtures(result);
-        });
+        // groupDateFixtures(selectedDate).then(result=>{
+        //     setDateFixtures(result);
+        // });
         
-        getPromisedTeamFixtures(selectedDate).then(result=>{
-            setTeamsFixtures(result)
-        })
+        // getPromisedTeamFixtures(selectedDate).then(result=>{
+        //     setTeamsFixtures(result)
+        // })
     },[selectedDate])
 
     // 

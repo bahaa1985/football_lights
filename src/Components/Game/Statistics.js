@@ -5,42 +5,69 @@ import { useEffect,useState } from "react";
 
 function Statistics(props){
 
-    const fixture=props.fixture
-    const [homeStatistics,setHomeStatistics]=useState([])
-    const [awayStatistics,setAwayStatistics]=useState([])
+    const fixtureId=props.fixtureId
+    const [homeStatistics,setHomeStatistics]=useState([]);    
+    const [awayStatistics,setAwayStatistics]=useState([]);
+    const [statistics_arr,setStatisticsArr]=useState([]);
     const progress_div_ref=useRef();
     
+
+    // let statistics_arr=[];
+    // for(let i=0;i<17;i++){
+    //     statistics_arr.push({home:0,away:0,type:''})
+    // } 
+
     useEffect(()=>{
-        getStatistics(fixture).then((result)=>{
-            console.log("re",result);
+        getStatistics(fixtureId).then((result)=>{ 
+            
+            console.log(result);                      
             setHomeStatistics(result.data.response[0].statistics);
             setAwayStatistics(result.data.response[1].statistics);
+            //
+            for(let i=0;i<17;i++){
+                statistics_arr.push()
+            }
+
+            homeStatistics?.map((item,index)=>{
+                statistics_arr[index].type=item.type;
+                item.value===null? statistics_arr[index].home=0 : statistics_arr[index].home=item.value;
+            })
+            awayStatistics?.map((item,index)=>{ 
+                statistics_arr[index].type=item.type;             
+                item.value===null? statistics_arr[index].away=0 : statistics_arr[index].away=item.value; 
+            })
+            
         });                                      
-    },[fixture])
+    },[fixtureId])
  
 
-    let statistics_arr=[];
-    for(let i=0;i<17;i++){
-        statistics_arr.push({
-            'home':0,'away':0,'type':''
-        })
-    } 
+   
     
+    console.log("re",homeStatistics);
+
+    // const allStatistics =()=>{
+    //     let statistics_arr=[];
+    //     for(let i=0;i<17;i++){
+    //         statistics_arr.push({home:0,away:0,type:''})
+    //     } 
+    //     //
+    //     homeStatistics?.map((item,index)=>{
+    //         statistics_arr[index].type=item.type;
+    //         item.value===null? statistics_arr[index].home=0 : statistics_arr[index].home=item.value;
+    //     })
+    //     awayStatistics?.map((item,index)=>{              
+    //         item.value===null? statistics_arr[index].away=0 : statistics_arr[index].away=item.value; 
+    //     })
+    //     return statistics_arr;
+    // }
+
     let total=0;
 
     return(
         <section style={{width:'90%',height: 'auto',margin:'auto',textAlign: 'center'}}>                              
-            {homeStatistics.map((item,index)=>{
-                statistics_arr[index].type=item.type;
-                item.value===null? statistics_arr[index].home=0 :                
-                statistics_arr[index].home=item.value;                
-            })}
-            {awayStatistics.map((item,index)=>{              
-                item.value===null? statistics_arr[index].away=0 :
-                statistics_arr[index].away=item.value; 
-            })}
             
-            {statistics_arr.map((item,index)=>{                                
+            
+            {statistics_arr?.map((item,index)=>{                                
                 total=Number.parseInt(item.home)+Number.parseInt(item.away);             
                 return(
                     <div key={index} style={{width:'100%',textAlign:'center'}}>

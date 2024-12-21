@@ -11,29 +11,30 @@ import red_card from '../../images/red.png'
 import VAR from '../../images/var.png'
 import substitute from '../../images/substitute.png'
 
-function Events(){
+function Events(props){
     
-    const fixture = useParams().fixtureId; 
-    const location = useLocation();
-    const teams = location.state.teams;
-    const round=location.state.round;
-    const goals=location.state.goals;
+    const fixtureId = props.fixtureId; 
+    const teams= props.teams;
+    // const location = useLocation();
+    // const teams = location.state.teams;
+    // const round=location.state.round;
+    // const goals=location.state.goals;
     const [events,setEvents] = useState([])  
 
     useEffect(()=>{
-        getEvents(fixture).then((result)=>{
+        getEvents(fixtureId).then((result)=>{
            setEvents( result.data.response )
         })        
-    },[fixture])
+    },[fixtureId])
 
-    const GROUPED_EVENTS=events.reduce((group,elem)=>{
-        const TIME=elem.time.elapsed;
-        if(group[TIME]==null) group[TIME]=[];
-        group[TIME].push(elem);
-        return group;
-    },[])   
+    // const GROUPED_EVENTS=events.reduce((group,elem)=>{
+    //     const TIME=elem.time.elapsed;
+    //     if(group[TIME]==null) group[TIME]=[];
+    //     group[TIME].push(elem);
+    //     return group;
+    // },[])   
 
-    console.log("events teams:", location);
+    // console.log("events teams:", location);
     
     console.log("grouped events",events);
     const events_div=(player,assist,type,detail,index,comments)=>{
@@ -76,7 +77,7 @@ function Events(){
     let i=0;
     return(        
         <div className='events relative top-20 left-[50%] -translate-x-[50%] w-[90%]' > 
-        <div>
+        {/* <div>
             
         </div>         
             <div className="flex justify-around">
@@ -99,7 +100,7 @@ function Events(){
                         <span>{teams.away.name}</span>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {    
                 
                 events.map((elem,index)=>{

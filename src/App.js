@@ -89,9 +89,12 @@ function App() {
       </Route>
       <Route path="/preference" element={<Preferences />}>
       </Route>
-      <Route path="/events" element={<Events />}>
+      <Route path="/game" element={<Game />}> 
         <Route path=":fixtureId"/>
       </Route>
+      {/* <Route path="/events" element={<Events />}>
+        <Route path=":fixtureId"/>
+      </Route> */}
     </Routes>
 
      </Router>

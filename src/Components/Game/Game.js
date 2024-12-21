@@ -22,7 +22,7 @@ console.log("gd",gameData);
 
     return(
         <div>                            
-            <div key={gameData?.fixture?.id} className="fixture-teams">
+            <div key={gameData?.fixture?.id} className="flex justify-around">
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span className="team">{gameData?.teams?.home?.name}</span></NavLink>
               <span className="result">{gameData?.goals?.home}</span>
@@ -61,11 +61,11 @@ console.log("gd",gameData);
             //to display events, statistics and lineup panes below the fixture,
             //depending on what user click:
             tab === "Events" ? (
-              <Events fixture={gameData?.fixture?.id} teams={gameData?.teams} />
+              <Events fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : tab === "Statistics" ? (
-              <Statistics fixture={gameData?.fixture?.id} teams={gameData?.teams} />
+              <Statistics fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : tab === "Line Up" ? (
-              <LineUp fixture={gameData?.fixture?.id} teams={gameData?.teams} />
+              <LineUp fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : null
           }
         </Fragment>
