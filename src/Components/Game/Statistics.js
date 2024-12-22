@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import getStatistics from "../../Api/getStatistics.js";
-// import '../styles/statistics.css'
 import { useEffect,useState } from "react";
 
 function Statistics(props){
@@ -9,41 +8,43 @@ function Statistics(props){
     const [homeStatistics,setHomeStatistics]=useState([]);    
     const [awayStatistics,setAwayStatistics]=useState([]);
     const [statistics_arr,setStatisticsArr]=useState([]);
-    const progress_div_ref=useRef();
-    
-
     // let statistics_arr=[];
-    // for(let i=0;i<17;i++){
-    //     statistics_arr.push({home:0,away:0,type:''})
-    // } 
+    const progress_div_ref=useRef();
 
     useEffect(()=>{
         getStatistics(fixtureId).then((result)=>{ 
             
-            console.log(result);                      
+            console.log("result",result);                      
             setHomeStatistics(result.data.response[0].statistics);
-            setAwayStatistics(result.data.response[1].statistics);
-            //
-            for(let i=0;i<17;i++){
-                statistics_arr.push()
+            setAwayStatistics(result.data.response[1].statistics);                              
+           
+            let ss_arr=[]
+            for(let i=0;i<18;i++){
+                ss_arr.push({type:'',home:0,away:0});
+                ss_arr[i].type=homeStatistics[i]?.type;
+                homeStatistics[i]?.value===null? ss_arr[i].home=0 : ss_arr[i].home=homeStatistics[i]?.value;
+                //
+                ss_arr[i].type=awayStatistics[i]?.type;             
+                awayStatistics[i]?.value===null? ss_arr[i].away=0 : ss_arr[i].away=awayStatistics[i]?.value;
             }
 
-            homeStatistics?.map((item,index)=>{
-                statistics_arr[index].type=item.type;
-                item.value===null? statistics_arr[index].home=0 : statistics_arr[index].home=item.value;
-            })
-            awayStatistics?.map((item,index)=>{ 
-                statistics_arr[index].type=item.type;             
-                item.value===null? statistics_arr[index].away=0 : statistics_arr[index].away=item.value; 
-            })
+            setStatisticsArr(ss_arr);
+            // homeStatistics?.map((item,index)=>{                
+            //     statistics_arr.push({type:'',home:0,away:0});
+            //     statistics_arr[index].type=item.type;
+            //     item.value===null? statistics_arr[index].home=0 : statistics_arr[index].home=item.value;
+            // })
+            // awayStatistics?.map((item,index)=>{ 
+            //     statistics_arr[index].type=item.type;             
+            //     item.value===null? statistics_arr[index].away=0 : statistics_arr[index].away=item.value; 
+            // })
             
         });                                      
     },[fixtureId])
- 
 
    
     
-    console.log("re",homeStatistics);
+    console.log("re",statistics_arr);
 
     // const allStatistics =()=>{
     //     let statistics_arr=[];
