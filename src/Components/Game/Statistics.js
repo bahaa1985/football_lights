@@ -68,20 +68,24 @@ function Statistics(props){
         <section style={{width:'90%',height: 'auto',margin:'auto',textAlign: 'center'}}>                              
             
             
-            {statistics_arr?.map((item,index)=>{                                
-                total=Number.parseInt(item.home)+Number.parseInt(item.away);             
+            {homeStatistics?.map((item,index)=>{                                
+                total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} style={{width:'100%',textAlign:'center'}}>
-                        <div>{item.type}</div>
-                        <div ref={progress_div_ref} style={{display: 'flex',justifyContent:'center',width:'100%'}}>
-                            <span>{item.home}</span>
-                            <div style={{width:'45%'}}>
-                                <progress className="progress-home" max={total} value={Number.parseInt(item.home)}></progress>
+                    <div key={index} style={{width:'100%',textAlign:'center'}}>                       
+                        <div ref={progress_div_ref} className="flex justify-center">
+                           
+                            <div className="flex justify-between">
+                                <span>{item.value}</span>
+                                <progress className="rounded-md h-2 bg-slate-400 after:bg-blue-400" max={total} value={Number.parseInt(item.value)}></progress>
                             </div>
-                            <div style={{width:'45%'}}>
-                                <progress className="progress-away" max={total} value={Number.parseInt(item.away)}></progress>
+
+                            <div>{item.type}</div>
+
+                            <div className="flex justify-between">                                
+                                <progress className="rounded-md h-2 rotate-180 bg-slate-400 after:bg-blue-400" max={total} value={Number.parseInt(awayStatistics[index].value)}></progress>
+                                <span>{awayStatistics[index].value}</span>
                             </div>
-                            <span>{item.away}</span>
+                            
                         </div>
                     </div>
                 )
