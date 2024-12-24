@@ -32,30 +32,30 @@ console.log("gd",gameData);
             </div>
 
             <div className="fixture-details">
-        <span
+        <button
           onClick={(e) => {
             e.stopPropagation();
             setTab("Events");
           }}
         >
           Events
-        </span>
-        <span
+        </button>
+        <button
           onClick={(e) => {
             e.stopPropagation();
             setTab("Statistics");
           }}
         >
           Statistics
-        </span>
-        <span
+        </button>
+        <button
           onClick={(e) => {
             e.stopPropagation();
             setTab("Line Up");
           }}
         >
           Line Up
-        </span>
+        </button>
         <Fragment>
           {
             //to display events, statistics and lineup panes below the fixture,

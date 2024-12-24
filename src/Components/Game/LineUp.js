@@ -1,80 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import LinePosition from '../Game/LinePosition.js';
 import getLineUps from "../../Api/getLineUp.js";
 import getPlayers from "../../Api/getPlayers.js";
-import getEvents from "../../Api/getEvents.js";
-// import Player from './Player';
 import "../../styles/lineup.css";
-import goal from "../../images/goal.png";
-import red from "../../images/red.png";
-import yellow from "../../images/yellow.png";
-
-function LinePosition(props) {
-  //create squad lines
-
-  const lineup = props.lineup;
-  const grid = props.grid.toString(); //position of the palyers
-  const colors = props.colors; //kit colors
-
-  const sp_lineup = lineup
-    .filter((player) => player.player.grid[0] === grid)
-    .sort(
-      (playerA, playerB) =>
-        parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2])
-    );
-  // console.log("sp", sp_lineup);
-  // console.log("colors", colors);
-  let playerNameArr = [],
-    playerName = "";
-  return (
-    <>
-      {sp_lineup.map((player, index) => {
-        //iterate each player in the line to get his details
-        playerNameArr = player.player.name.split(" ");
-        playerNameArr.length > 1
-          ? (playerName = playerNameArr.slice(1))
-          : (playerName = playerNameArr[0]);
-        return (
-          <NavLink
-            to={`/player/${player.player.id}`}
-            key={index}
-            style={{ textAlign: "center", maxWidth: "18%" }}
-          >
-            <div
-              className="player-mark"
-              style={{ backgroundColor: "#" + colors.primary }}
-            >
-              <span
-                className="player-rating"
-                style={{
-                  backgroundColor: player.statistics[0].games.ratingColor,
-                }}
-              >
-                {player.statistics[0].games.rating}
-              </span>
-            </div>
-            <span className="player-number" style={{ color: colors.number }}>
-              {player.player.number}
-            </span>
-            <span className="player-name">
-              {playerNameArr.length > 1
-                ? playerNameArr.slice(1)
-                : playerNameArr[0]}
-            </span>
-          </NavLink>
-        );
-      })}
-    </>
-  );
-}
 
 //main function
 function LineUp(props) {
   const homeId = props.teams[0];
   const awayId = props.teams[1];
-  const fixtureId = props.fixture;
-  // console.log("line up props:", props);
+  const fixtureId = props.fixtureId;
   ///Home team details:
   const [homeTeam, setHomeTeam] = useState("");
   const [awayTeam, setAwayTeam] = useState("");
@@ -99,7 +34,7 @@ function LineUp(props) {
   useEffect(() => {
     // call formation and line up players:
     getLineUps(fixtureId).then((result) => {
-      // console.log("line up:", result);
+      console.log("line up:", result);
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
