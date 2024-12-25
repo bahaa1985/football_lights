@@ -59,6 +59,8 @@ function LineUp(props) {
     getPlayers(fixtureId).then((result) => {
       setHomePlayers(result.data.response[0].players);
       setAwayPlayers(result.data.response[1].players);
+      console.log("player statistics:",result.data.response);
+      
     });
   }, [homeId, awayId, fixtureId]);
 

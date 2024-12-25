@@ -10,16 +10,16 @@ export default function LinePosition(props) {
     const sp_lineup = lineup.filter((player) => player.player.grid[0] === grid)
       .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
     
+      // console.log("sp_lineup:",sp_lineup);
+      
     let playerNameArr = [],playerName = "";
     
     return (
       <>
-        {sp_lineup.map((player, index) => {
+        {sp_lineup?.map((player, index) => {
           //iterate each player in the line to get his details
           playerNameArr = player.player.name.split(" ");
-          playerNameArr.length > 1
-            ? (playerName = playerNameArr.slice(1))
-            : (playerName = playerNameArr[0]);
+          playerNameArr.length > 1  ? (playerName = playerNameArr.slice(1)) : (playerName = playerNameArr[0]);
           return (
             <NavLink
               to={`/player/${player.player.id}`}
