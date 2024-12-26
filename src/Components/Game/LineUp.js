@@ -34,7 +34,7 @@ function LineUp(props) {
   useEffect(() => {
     // call formation and line up players:
     getLineUps(fixtureId).then((result) => {
-      console.log("line up:", result);
+      // console.log("line up:", result);
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
@@ -59,66 +59,66 @@ function LineUp(props) {
     getPlayers(fixtureId).then((result) => {
       setHomePlayers(result.data.response[0].players);
       setAwayPlayers(result.data.response[1].players);
-      console.log("player statistics:",result.data.response);
+      // console.log("player statistics:",result.data.response);
       
     });
   }, [homeId, awayId, fixtureId]);
 
   //to color the rating numbers of the home players:
-  homeLineUp.forEach((player, index) => {
-    homePlayers.forEach((home_player, index) => {
-      if (player.player.id === home_player.player.id) {
-        player.player.photo = home_player.player.photo;
-        player.statistics = home_player.statistics;
-        if (
-          player.statistics[0].games.rating >= 0 &&
-          player.statistics[0].games.rating < 5
-        ) {
-          player.statistics[0].games.ratingColor = "red";
-        } else if (
-          player.statistics[0].games.rating >= 5 &&
-          player.statistics[0].games.rating < 7
-        ) {
-          player.statistics[0].games.ratingColor = "orange";
-        } else if (
-          player.statistics[0].games.rating >= 7 &&
-          player.statistics[0].games.rating < 9
-        ) {
-          player.statistics[0].games.ratingColor = "green";
-        } else if (player.statistics[0].games.rating >= 9) {
-          player.statistics[0].games.ratingColor = "blue";
-        }
-      }
-    });
-  });
+  // homeLineUp.forEach((player, index) => {
+  //   homePlayers.forEach((home_player, index) => {
+  //     if (player.player.id === home_player.player.id) {
+  //       player.player.photo = home_player.player.photo;
+  //       player.statistics = home_player.statistics;
+  //       if (
+  //         player.statistics[0].games.rating >= 0 &&
+  //         player.statistics[0].games.rating < 5
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "red";
+  //       } else if (
+  //         player.statistics[0].games.rating >= 5 &&
+  //         player.statistics[0].games.rating < 7
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "orange";
+  //       } else if (
+  //         player.statistics[0].games.rating >= 7 &&
+  //         player.statistics[0].games.rating < 9
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "green";
+  //       } else if (player.statistics[0].games.rating >= 9) {
+  //         player.statistics[0].games.ratingColor = "blue";
+  //       }
+  //     }
+  //   });
+  // });
 
   //to color the rating numbers of the away players:
-  awayLineUp.forEach((player, index) => {
-    awayPlayers.forEach((away_player, index) => {
-      if (player.player.id === away_player.player.id) {
-        player.player.photo = away_player.player.photo;
-        player.statistics = away_player.statistics;
-        if (
-          player.statistics[0].games.rating >= 0 &&
-          player.statistics[0].games.rating < 5
-        ) {
-          player.statistics[0].games.ratingColor = "red";
-        } else if (
-          player.statistics[0].games.rating >= 5 &&
-          player.statistics[0].games.rating < 7
-        ) {
-          player.statistics[0].games.ratingColor = "orange";
-        } else if (
-          player.statistics[0].games.rating >= 7 &&
-          player.statistics[0].games.rating < 9
-        ) {
-          player.statistics[0].games.ratingColor = "green";
-        } else if (player.statistics[0].games.rating >= 9) {
-          player.statistics[0].games.ratingColor = "blue";
-        }
-      }
-    });
-  });
+  // awayLineUp.forEach((player, index) => {
+  //   awayPlayers.forEach((away_player, index) => {
+  //     if (player.player.id === away_player.player.id) {
+  //       player.player.photo = away_player.player.photo;
+  //       player.statistics = away_player.statistics;
+  //       if (
+  //         player.statistics[0].games.rating >= 0 &&
+  //         player.statistics[0].games.rating < 5
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "red";
+  //       } else if (
+  //         player.statistics[0].games.rating >= 5 &&
+  //         player.statistics[0].games.rating < 7
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "orange";
+  //       } else if (
+  //         player.statistics[0].games.rating >= 7 &&
+  //         player.statistics[0].games.rating < 9
+  //       ) {
+  //         player.statistics[0].games.ratingColor = "green";
+  //       } else if (player.statistics[0].games.rating >= 9) {
+  //         player.statistics[0].games.ratingColor = "blue";
+  //       }
+  //     }
+  //   });
+  // });
 
   let playerNameArr = [],
     playerName = "";
@@ -128,22 +128,14 @@ function LineUp(props) {
         {/* home scoresheet */}
         <div className="home-scoresheet">
           <div className="line" key={1}>
-            <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} />
+            <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
           </div>
           <div className="line" key={2}>
-            <LinePosition
-              lineup={homeLineUp}
-              grid={"2"}
-              colors={homePlayerColor}
-            />
+            <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>
           </div>
 
           <div className="line" key={3}>
-            <LinePosition
-              lineup={homeLineUp}
-              grid={"3"}
-              colors={homePlayerColor}
-            />
+            <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>
           </div>
 
           <div className="line" key={4}>
@@ -151,6 +143,7 @@ function LineUp(props) {
               lineup={homeLineUp}
               grid={"4"}
               colors={homePlayerColor}
+              statistics={homePlayers}
             />
           </div>
           {homeFormation.length > 3 ? (
@@ -159,6 +152,7 @@ function LineUp(props) {
                 lineup={homeLineUp}
                 grid={"5"}
                 colors={homePlayerColor}
+                statistics={homePlayers}
               />
             </div>
           ) : null}
@@ -172,6 +166,7 @@ function LineUp(props) {
                 lineup={awayLineUp}
                 grid={"5"}
                 colors={awayPlayerColor}
+                statistics={awayPlayers}
               />
             </div>
           ) : null}
@@ -180,6 +175,7 @@ function LineUp(props) {
               lineup={awayLineUp}
               grid={"4"}
               colors={awayPlayerColor}
+              statistics={awayPlayers}
             />
           </div>
           <div className="line" key={3}>
@@ -187,6 +183,7 @@ function LineUp(props) {
               lineup={awayLineUp}
               grid={"3"}
               colors={awayPlayerColor}
+              statistics={awayPlayers}
             />
           </div>
           <div className="line" key={2}>
@@ -194,10 +191,11 @@ function LineUp(props) {
               lineup={awayLineUp}
               grid={"2"}
               colors={awayPlayerColor}
+              statistics={awayPlayers}
             />
           </div>
           <div className="line" key={1}>
-            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} />
+            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />
           </div>
         </div>
       </div>
