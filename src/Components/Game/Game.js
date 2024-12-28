@@ -32,28 +32,15 @@ console.log("gd",gameData);
         </div>
 
         <div className="fixture-details">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Events");
-          }}
-        >
+        <button  onClick={(e) => {e.stopPropagation();setTab("Events");}}>
           Events
         </button>
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Statistics");
-          }}
-        >
+          onClick={(e) => {e.stopPropagation(); setTab("Statistics");}}>
           Statistics
         </button>
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setTab("Line Up");
-          }}
-        >
+          onClick={(e) => {e.stopPropagation();setTab("Line Up");}}>
           Line Up
         </button>
         <>
