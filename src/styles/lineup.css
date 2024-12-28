@@ -27,15 +27,6 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    min-width:400px; 
-    max-width: 450px;
-    min-height: 660px; 
-    /* max-height: 900px;      */
-    margin:auto; 
-    padding:10px;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-evenly
 }
 .home-scoresheet .away-scoreshhet{
     width:auto;
@@ -49,6 +40,7 @@
 a{
     text-decoration-line: none;
     text-decoration-color: none;
+    padding: auto;
 }
 .player-mark{
     /* position: relative;
@@ -56,7 +48,7 @@ a{
     text-align: center;
     width:40px;
     height: 40px;
-    margiN:auto;
+    margin:auto;
     border-radius: 50%;
 }
 .player-rating{

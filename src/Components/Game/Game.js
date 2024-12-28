@@ -21,17 +21,17 @@ function Game(){
 console.log("gd",gameData);
 
     return(
-        <div>                            
-            <div key={gameData?.fixture?.id} className="flex justify-around">
-              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
-              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span className="team">{gameData?.teams?.home?.name}</span></NavLink>
-              <span className="result">{gameData?.goals?.home}</span>
-              <span className="result">{gameData?.goals?.away}</span>
-              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><span className="team">{gameData?.teams?.away?.name}</span></NavLink>
-              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><img alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
-            </div>
+        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
+            <div key={gameData?.fixture?.id} className="flex justify-around w-[90%] sm:w-[60%] items-center mx-auto">
+              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.home?.name}</span></NavLink>
+              <span className="">{gameData?.goals?.home}</span>
+              <span className="">{gameData?.goals?.away}</span>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.away?.name}</span></NavLink>
+              <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
+        </div>
 
-            <div className="fixture-details">
+        <div className="fixture-details">
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -56,7 +56,7 @@ console.log("gd",gameData);
         >
           Line Up
         </button>
-        <Fragment>
+        <>
           {
             //to display events, statistics and lineup panes below the fixture,
             //depending on what user click:
@@ -68,7 +68,7 @@ console.log("gd",gameData);
               <LineUp fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : null
           }
-        </Fragment>
+        </>
       </div>
         </div>
     )
