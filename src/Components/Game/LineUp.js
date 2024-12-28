@@ -12,7 +12,6 @@ function LineUp(props) {
   const fixtureId = props.fixtureId;
   ///Home team details:
   const [homeTeam, setHomeTeam] = useState("");
-  const [homeLogo,setHomeLogo]= useState("");
   const [homeLineUp, setHomeLineUp] = useState([]);
   const [homeFormation, setHomeFormation] = useState([]);
   const [homePlayers, setHomePlayers] = useState([]);
@@ -22,7 +21,6 @@ function LineUp(props) {
   const [homeSub, setHomeSub] = useState([]);
   /// Away team details:
   const [awayTeam, setAwayTeam] = useState("");
-  const [awayLogo,setAwayLogo]= useState("");
   const [awayLineUp, setAwayLineUp] = useState([]);
   const [awayFormation, setAwayFormation] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
@@ -31,7 +29,7 @@ function LineUp(props) {
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
 
-  const [clickedTeam, setClickedTeam] = useState(awayId);
+  let [clickedTeam, setClickedTeam] = useState(homeId);
 
   const [isLoaded,setLoaded]=useState(false);
 
@@ -46,7 +44,6 @@ function LineUp(props) {
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
       );
       setHomeTeam(result.data.response[0].team.name);
-      setHomeLogo(result.data.response[0].team.logo);
       setHomeGkColor(result.data.response[0].team.colors.goalkeeper);
       setHomePlayrColor(result.data.response[0].team.colors.player);
       setHomeCoash(result.data.response[0].coach);
@@ -57,7 +54,6 @@ function LineUp(props) {
         Array.from(result.data.response[1].formation.replaceAll("-", ""))
       );
       setAwayTeam(result.data.response[1].team.name);
-      setAwayLogo(result.data.response[1].team.logo);
       setAwayCoash(result.data.response[1].coach);
       setAwaySub(result.data.response[1].substitutes);
       setAwayGkColor(result.data.response[1].team.colors.goalkeeper);
@@ -129,25 +125,17 @@ function LineUp(props) {
           </div>
         </div>
       </div>
-
-
         {/* Coaches and subs section */}
       <div className="coachSubs-div">
       {
         <>
-          <div className="flex w-full sm:w-1/2">
-            <div className="flex justify-center items-center bg-blue-700">
-                <img alt={homeTeam} src={homeLogo} className="w-8 h-8"/>
-                <button className="w-1/2 text-slate-50" onClick={(e) =>{e.stopPropagation();setClickedTeam(homeId)}}>            
-                  {homeTeam}
-                </button>
-            </div>
-            <div className="flex justify-center items-center bg-blue-700">
-                <img alt={awayTeam} src={awayLogo} className="w-8 h-8"/>
-                <button className="w-1/2 text-slate-50" onClick={(e) =>{e.stopPropagation();setClickedTeam(awayId)}}>
-                  {awayTeam}
-                </button>
-            </div>
+          <div className="flex sm:w-1/2 justify-between">
+            <button className="w-1/2" onClick={() => setClickedTeam(homeId)}>
+              {homeTeam}
+            </button>
+            <button className="w-1/2" onClick={() => setClickedTeam(awayId)}>
+              {awayTeam}
+            </button>
           </div>
           {clickedTeam === homeId ? (
             <>
@@ -159,21 +147,22 @@ function LineUp(props) {
               <div>Formation: {homeFormation.join("-")}</div>
               <div className="substitues">
                 {homeSub.map((sub) => {
+                  // eslint-disable-next-line no-lone-blocks
+                  {
                     playerNameArr = sub.player.name.split(" ");
                     playerNameArr.length > 1
                       ? (playerName = playerNameArr.slice(1))
                       : (playerName = playerNameArr[0]);
+                  }
                   return (
                     <div>
                       <span className="player-number">
                         {sub.player.number}
                       </span>
                       <span className="player-name">
-                        {
-                          playerNameArr.length > 1
+                        {playerNameArr.length > 1
                           ? playerNameArr.slice(1)
-                          : playerNameArr[0]
-                        }
+                          : playerNameArr[0]}
                       </span>
                       <span>{sub.player.pos}</span>
                       <span>{}</span>
@@ -181,9 +170,9 @@ function LineUp(props) {
                   );
                 })}
               </div>
-            </> ) 
-            : clickedTeam === awayId ?
-            (<>
+            </>
+          ) : (
+            <>
               {/* away coach and subs */}
               <div className="coach">
                 <img alt="" src={awayCoach.photo} />
@@ -204,11 +193,11 @@ function LineUp(props) {
                       </span>
                       <span className="player-name">
                         {
-                        
-                          playerNameArr.length > 1
-                          ? playerNameArr.slice(1)
-                          : playerNameArr[0]
-                        
+                          // playerNameArr.length> 1 ?
+                          // playerNameArr.slice(1) :
+                          // playerNameArr[0]
+                          playerName
+                          // sub.player.id
                         }
                       </span>
                       <span>{sub.player.pos}</span>
@@ -221,15 +210,19 @@ function LineUp(props) {
                   );
                 })}
               </div>
-            </> 
-          ) : null}
+            </>
+          )}
         </>
       }
     </div>
       </>
         :
         null
-      }                
+      }
+      
+
+    
+      
     </div>
   );
 }
