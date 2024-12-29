@@ -7,11 +7,13 @@ import "../../styles/lineup.css";
 
 //main function
 function LineUp(props) {
-  const homeId = props.teams[0];
-  const awayId = props.teams[1];
+  // const homeId = props.teams[0];
+  // const awayId = props.teams[1];
   const fixtureId = props.fixtureId;
   ///Home team details:
+  const [homeId,setHomeId] = useState(0);
   const [homeTeam, setHomeTeam] = useState("");
+  const [homeLogo,setHomeLogo] = useState("");
   const [homeLineUp, setHomeLineUp] = useState([]);
   const [homeFormation, setHomeFormation] = useState([]);
   const [homePlayers, setHomePlayers] = useState([]);
@@ -20,7 +22,9 @@ function LineUp(props) {
   const [homeCoach, setHomeCoash] = useState({});
   const [homeSub, setHomeSub] = useState([]);
   /// Away team details:
+  const [awayId,setAwayId] = useState(0);
   const [awayTeam, setAwayTeam] = useState("");
+  const [awayLogo,setAwayLogo] = useState("");
   const [awayLineUp, setAwayLineUp] = useState([]);
   const [awayFormation, setAwayFormation] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
@@ -29,21 +33,20 @@ function LineUp(props) {
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
 
-  let [clickedTeam, setClickedTeam] = useState(homeId);
-
-  const [isLoaded,setLoaded]=useState(false);
+  const [clickedSub, setClickedSub] = useState(homeId);
+  const [isLoaded,setLoaded]=useState(false); //for preventing rendering before complete fetching data
 
   useEffect(() => {
     // call formation and line up players:
     getLineUps(fixtureId).then((result) => {
-      console.log("line up fixture id:", fixtureId);
-      console.log("line up:",result);
-      
+      // console.log("line up:",result);
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
       );
+      setHomeId(result.data.response[0].team.id); setHomeSub(result.data.response[0].team.id);
       setHomeTeam(result.data.response[0].team.name);
+      setHomeLogo(result.data.response[0].team.logo);
       setHomeGkColor(result.data.response[0].team.colors.goalkeeper);
       setHomePlayrColor(result.data.response[0].team.colors.player);
       setHomeCoash(result.data.response[0].coach);
@@ -53,7 +56,9 @@ function LineUp(props) {
       setAwayFormation(
         Array.from(result.data.response[1].formation.replaceAll("-", ""))
       );
+      setAwayId(result.data.response[1].team.id);
       setAwayTeam(result.data.response[1].team.name);
+      setAwayLogo(result.data.response[1].team.logo);
       setAwayCoash(result.data.response[1].coach);
       setAwaySub(result.data.response[1].substitutes);
       setAwayGkColor(result.data.response[1].team.colors.goalkeeper);
@@ -67,9 +72,9 @@ function LineUp(props) {
       
     })
     .then(()=>{
-      setLoaded(true);
+      setLoaded(true); //for preventing rendering before complete fetching data
     });
-  }, [homeId, awayId, fixtureId]);
+  }, [fixtureId]);
 
   let playerNameArr = [],
     playerName = "";
@@ -78,7 +83,7 @@ function LineUp(props) {
       {
         isLoaded ?
         <>
-        <div className="pitch w-[90%] sm:w-[70%] min-h-[700px] m-auto p-3 flex flex-col justify-evenly">
+        <div className="pitch w-[90%] sm:w-[70%] min-h-[750px]  m-auto p-3 flex flex-col justify-evenly ">
         {/* home scoresheet */}
         <div className="w-[90%] h-[45%] m-auto flex flex-col items-center text-center">
           <div className="w-full max-h-[25%] m-auto text-center" key={1}>
@@ -126,18 +131,24 @@ function LineUp(props) {
         </div>
       </div>
         {/* Coaches and subs section */}
-      <div className="coachSubs-div">
+      <div className="w-[90%] sm:w-[70%] m-auto p-3">
       {
         <>
-          <div className="flex sm:w-1/2 justify-between">
-            <button className="w-1/2" onClick={() => setClickedTeam(homeId)}>
-              {homeTeam}
-            </button>
-            <button className="w-1/2" onClick={() => setClickedTeam(awayId)}>
-              {awayTeam}
-            </button>
+          <div className="flex w-full justify-between">
+            <div className="flex justify-around w-1/2 bg-slate-800 cursor-pointer" onClick={()=>[setClickedSub(homeId),console.log("clickedSub",clickedSub)]}>
+              <img alt={homeTeam} src={homeLogo} className="w-8 h-8"/>
+              <span className="w-1/2 text-slate-50 border-none" >
+                {homeTeam}
+              </span>
+            </div>
+            <div className="flex justify-around w-1/2 bg-slate-800 cursor-pointer"  onClick={()=>[setClickedSub(awayId),console.log("clickedSub",clickedSub)]}>
+              <img alt={awayTeam} src={awayLogo} className="w-8 h-8"/>
+              <span className="w-1/2 text-slate-50 border-none">
+                {awayTeam}
+              </span>
+            </div>
           </div>
-          {clickedTeam === homeId ? (
+          {clickedSub === homeId ? (
             <>
               {/* home coach and subs */}
               <div className="coach">
@@ -219,10 +230,6 @@ function LineUp(props) {
         :
         null
       }
-      
-
-    
-      
     </div>
   );
 }

@@ -52,7 +52,7 @@ console.log("gd",gameData);
             ) : tab === "Statistics" ? (
               <Statistics fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : tab === "Line Up" ? (
-              <LineUp fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
+              <LineUp fixtureId={gameData?.fixture?.id} />
             ) : null
           }
         </>

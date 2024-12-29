@@ -12,43 +12,7 @@ export default function LinePosition(props) {
       // console.log("sp_lineup:",sp_lineup);
     function getPlayerStats(playerId){
       const stats= statistics.filter(elem=>elem.player.id === playerId)
-      console.log("stats",stats); 
-      // if(stats[0].statistics[0].games.rating > 0 && stats[0].statistics[0].games.rating <= 4.9){
-      //   return(
-      //     <span  className="text-slate-50 bg-red-800 border-none">
-      //       {stats[0].statistics[0].games.rating}
-      //     </span>
-      //   )
-      // }
-      // else if(stats[0].statistics[0].games.rating >= 5 && stats[0].statistics[0].games.rating <= 6.4){
-      //   return(
-      //     <span  className="text-slate-50 bg-orange-700 border-none">
-      //       {stats[0].statistics[0].games.rating}
-      //     </span>
-      //   )
-      // }
-      // else if(stats[0].statistics[0].games.rating >= 6.5 && stats[0].statistics[0].games.rating <= 6.9){
-      //   return(
-      //     <span  className="text-slate-50 bg-orange-400 border-none">
-      //       {stats[0].statistics[0].games.rating}
-      //     </span>
-      //   )
-      // }
-      // else if(stats[0].statistics[0].games.rating >= 7 && stats[0].statistics[0].games.rating <= 7.9){
-      //   return(
-      //     <span  className="text-slate-50 bg-green-600 border-none">
-      //       {stats[0].statistics[0].games.rating}
-      //     </span>
-      //   )
-      // }
-      // else if(stats[0].statistics[0].games.rating >= 8 && stats[0].statistics[0].games.rating <= 10){
-      //   return(
-      //     <span  className="text-slate-50 bg-blue-600 border-none">
-      //       {stats[0].statistics[0].games.rating}
-      //     </span>
-      //   )
-      // }
-       
+      // console.log("stats",stats); 
       return stats;
     } 
 
