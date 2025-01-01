@@ -1,5 +1,4 @@
-import { useState,useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useState,useEffect,useMemo,memo } from "react";
 import getEvents from '../../Api/getEvents.js'
 import '../../styles/events.css'
 import goal from '../../images/goal.png'
@@ -15,28 +14,16 @@ function Events(props){
     
     const fixtureId = props.fixtureId; 
     const teams= props.teams;
-    // const location = useLocation();
-    // const teams = location.state.teams;
-    // const round=location.state.round;
-    // const goals=location.state.goals;
     const [events,setEvents] = useState([])  
 
     useEffect(()=>{
         getEvents(fixtureId).then((result)=>{
+            console.log("events are rendered");
            setEvents( result.data.response )
         })        
-    },[fixtureId])
-
-    // const GROUPED_EVENTS=events.reduce((group,elem)=>{
-    //     const TIME=elem.time.elapsed;
-    //     if(group[TIME]==null) group[TIME]=[];
-    //     group[TIME].push(elem);
-    //     return group;
-    // },[])   
-
-    // console.log("events teams:", location);
+    },[])
     
-    console.log("grouped events",events);
+    // console.log("grouped events",events);
     const events_div=(player,assist,type,detail,index,comments)=>{
         
     return(
@@ -56,11 +43,8 @@ function Events(props){
                     <img alt='' src={red_card}></img>:
                     type==='subst'?
                     <img alt='' src={substitute}></img>:                    
-                    type==='Var'?
-                        // <div>
-                            <img alt='' src={VAR}></img>
-                            // <div>{detail}</div>
-                        // </div>
+                    type==='Var'?                        
+                    <img alt='' src={VAR}></img>                         
                     :null
                 }
                 </div>
@@ -77,32 +61,7 @@ function Events(props){
     let i=0;
     return(        
         <div className='events relative top-20 left-[50%] -translate-x-[50%] w-[90%]' > 
-        {/* <div>
-            
-        </div>         
-            <div className="flex justify-around">
-                <div className="flex justify-around">
-                    <div className="flex flex-col justify-center">
-                        <img src={teams.home.logo} alt={teams.home.name}/>
-                        <span>{teams.home.name}</span>
-                    </div>
-                    <div>
-                        <span>{goals.home}</span>
-                    </div>
-                </div>
-                    
-                <div className="flex justify-around">
-                    <div>
-                        <span>{goals.away}</span>
-                    </div>
-                    <div className="flex flex-col justify-center">
-                        <img src={teams.away.logo} alt={teams.home.name}/>
-                        <span>{teams.away.name}</span>
-                    </div>
-                </div>
-            </div> */}
-            {    
-                
+            {                    
                 events.map((elem,index)=>{
                     return(
                         <div className={`flex space-x-3 ${elem.team.id === teams.home.id ? "justify-start"  :"flex-row-reverse" } my-4 `} key={index}>
@@ -114,27 +73,7 @@ function Events(props){
                             </div>
                         </div>
                     )
-                })
-               
-                // GROUPED_EVENTS.map((events,index)=>{                    
-                //     return(                        
-                //         <div>
-                //             <span>{index}</span>
-                //             {
-                //             events.map((elem,index)=>{
-                //                 return(
-                //                     elem.home.id !== null ?                   
-                //                     <div key={index} style={{width:'60%',margin:'auto'}}>
-                //                         {                                        
-                //                             events_div( elem.player.name,elem.assist.name,elem.type,elem.detail,i++,elem.team)                                            
-                //                         }                                      
-                //                     </div>           
-                //                     :null                
-                //                 )
-                //             })
-                //             }                                                   
-                //         </div>
-                //     )})     
+                })                   
             }
         </div>
     )}

@@ -1,5 +1,5 @@
 import {React,memo} from "react";
-import { useState, useEffect,useMemo } from "react";
+import { useState,useMemo,useEffect} from "react";
 import LinePosition from '../Game/LinePosition.js';
 import getLineUps from "../../Api/getLineUp.js";
 import getPlayers from "../../Api/getPlayers.js";
@@ -38,10 +38,13 @@ function LineUp(props) {
   const [isLoaded,setLoaded]=useState(false); //for preventing rendering before complete fetching data
 
   // let i=0;
-  useMemo(() => {
+  useEffect(() => {
     // call formation and line up players:
+   
+    
     getLineUps(fixtureId).then((result) => {
       // console.log("line up:",result);
+      console.log("line up is rendered");
 
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
@@ -81,30 +84,30 @@ function LineUp(props) {
   let playerNameArr = [],
     playerName = "";
   return (
-    <div>
+    <div className="xs:block sm:flex sm:justify-between">
       {
         isLoaded  ?
         <>
-        <div className="pitch w-full h-full  object-contain m-auto p-3 flex xs:flex-col sm:justify-center">
+        <div className="pitch w-full h-[660px] m-auto p-3">
         {/* <img src={pitch} alt="pitch" className="w-full h-full relative t-0 l-0"/> */}
         {/* home scoresheet */}
-        <div className="w-[90%] h-[45%] flex flex-col items-center text-center">
+        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center">
           <div className="w-full max-h-[25%] m-auto text-center" key={1}>
             <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
           </div>
-          <div className="w-full max-h-[25%] m-auto text-center" key={2}>
+          <div className="w-full h-[25%] m-auto text-center" key={2}>
             <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>
           </div>
 
-          <div className="w-full max-h-[25%] m-auto text-center" key={3}>
+          <div className="w-full h-[25%] m-auto text-center" key={3}>
             <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>
           </div>
 
-          <div className="w-full max-h-[25%] m-auto text-center" key={4}>
+          <div className="w-full h-[25%] m-auto text-center" key={4}>
             <LinePosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor} statistics={homePlayers} />
           </div>
           {homeFormation.length > 3 ? (
-            <div className="w-full max-h-[25%] m-auto text-center" key={5}>
+            <div className="w-full h-[25%] m-auto text-center" key={5}>
               <LinePosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} statistics={homePlayers} />
             </div>
           ) : null}
@@ -113,22 +116,22 @@ function LineUp(props) {
         {/* away scoresheet */}
         <div className="w-[90%] h-[45%] flex flex-col items-center text-center">
           {awayFormation.length > 3 ? (
-            <div className="w-full max-h-[25%] m-auto text-center" key={5}>
+            <div className="w-full h-[25%] m-auto text-center" key={5}>
               <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
             </div>
           ) : null}
-          <div className="w-full max-h-[25%] m-auto text-center" key={4}>
+          <div className="w-full h-[25%] m-auto text-center" key={4}>
             <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />
           </div>
-          <div className="w-full max-h-[25%] m-auto text-center" key={3}>
+          <div className="w-full h-[25%] m-auto text-center" key={3}>
             <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}
             />
           </div>
-          <div className="w-full max-h-[25%] m-auto text-center" key={2}>
+          <div className="w-full h-[25%] m-auto text-center" key={2}>
             <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}
             />
           </div>
-          <div className="w-full  max-h-[25%] m-auto text-center" key={1}>
+          <div className="w-full  h-[25%] m-auto text-center" key={1}>
             <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />
           </div>
         </div>
@@ -160,7 +163,7 @@ function LineUp(props) {
               </div>
               <div>Formation: {homeFormation.join("-")}</div>
               <div className="substitues">
-                {homeSub.map((sub) => {
+                {homeSub.map((sub,index) => {
                   // eslint-disable-next-line no-lone-blocks
                   {
                     playerNameArr = sub.player.name.split(" ");
@@ -169,7 +172,7 @@ function LineUp(props) {
                       : (playerName = playerNameArr[0]);
                   }
                   return (
-                    <div>
+                    <div key={index}>
                       <span className="player-number">
                         {sub.player.number}
                       </span>
@@ -194,14 +197,14 @@ function LineUp(props) {
               </div>
               <div>Formation: {awayFormation.join("-")}</div>
               <div className="substitues">
-                {awaySub.map((sub) => {
+                {awaySub.map((sub,index) => {
                   playerNameArr = sub.player.name.split(" ");
                   playerNameArr.length > 1
                     ? (playerName = playerNameArr.slice(1))
                     : (playerName = playerNameArr[0]);
 
                   return (
-                    <div>
+                    <div key={index}>
                       <span className="player-number">
                         {sub.player.number}
                       </span>
@@ -237,4 +240,4 @@ function LineUp(props) {
   );
 }
 
-export default memo(LineUp);
+export default LineUp;

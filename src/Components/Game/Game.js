@@ -18,7 +18,7 @@ function Game(){
     },
     [params.fixtureId]
 )
-console.log("gd",gameData);
+// console.log("gd",gameData);
 
     return(
         <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            

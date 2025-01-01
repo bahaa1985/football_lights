@@ -12,12 +12,13 @@ export default function TopPlayers(props) {
       getTopScorers(leagueId, season).then((result) => {
         setTopPlayers(result.data.response);
       });
-    } else {
+    } 
+    else {
       getTopAssists(leagueId, season).then((result) => {
         setTopPlayers(result.data.response);
       });
     }
-  }, [leagueId, season, stats_type]);
+  }, []);
 
   // console.log("top", topPlayers);
 
@@ -49,7 +50,6 @@ export default function TopPlayers(props) {
             </div>
           );
         })
-        // :null
       }
     </div>
   );

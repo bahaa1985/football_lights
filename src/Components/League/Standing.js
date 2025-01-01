@@ -14,10 +14,10 @@ function Standings(props){
             console.log("standings: ",result);         
             setStandings(result.data.response[0].league.standings)                                       
     })            
-    },[league,season])
+    },[])
     
     return(
-        <div className='w-70% md:w-[50%] mx-auto'>
+        <div className='w-[90%] md:w-[70%] mx-auto'>
             <table className='w-full table-auto border-collapse border border-slate-400 text-center'>
                 <thead>
                     <tr>

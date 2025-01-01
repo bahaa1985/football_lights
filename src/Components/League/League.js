@@ -29,13 +29,13 @@ export default function League() {
           </button>
           <button
             className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("TopScorer")}
+            onClick={() => setTab("Scorers")}
           >
             Scorers
           </button>
           <button
             className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("TopAssists")}
+            onClick={() => setTab("Assisters")}
           >
             Assisters
           </button>

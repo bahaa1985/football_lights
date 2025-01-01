@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { memo } from "react";
 import getStatistics from "../../Api/getStatistics.js";
-import { useEffect,useState } from "react";
+import { useState,useMemo,useEffect } from "react";
 
 function Statistics(props){
 
@@ -10,15 +10,11 @@ function Statistics(props){
 
     useEffect(()=>{
         getStatistics(fixtureId).then((result)=>{ 
-            console.log("result",result);                      
+            console.log("statistics is rendered");                      
             setHomeStatistics(result.data.response[0].statistics);
-            setAwayStatistics(result.data.response[1].statistics); 
-            //
-                                        
+            setAwayStatistics(result.data.response[1].statistics);                           
         });                                      
-    },[fixtureId])
-
-    console.log("re",homeStatistics);
+    },[])
 
     let total=0;
 
@@ -30,8 +26,7 @@ function Statistics(props){
             }),
             awayStatistics?.map((item,index)=>{
                 return (item.value === null ? item.value = 0 : null)
-            }), 
-            console.log("re",homeStatistics),
+            }),
             
             homeStatistics?.map((item,index)=>{
                                
@@ -80,4 +75,4 @@ function Statistics(props){
     )
 }
 
-export default Statistics
+export default memo(Statistics)

@@ -17,7 +17,7 @@ export default function LeagueFixtures(props) {
     })
     .then(()=>{
       setLoaded(true);
-    })}, [league, season]);
+    })}, []);
 
   // console.log("fixtures", fixtures);
 
