@@ -1,9 +1,10 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import {React,memo} from "react";
+import { useState, useEffect,useMemo } from "react";
 import LinePosition from '../Game/LinePosition.js';
 import getLineUps from "../../Api/getLineUp.js";
 import getPlayers from "../../Api/getPlayers.js";
 import "../../styles/lineup.css";
+import pitch from "../../images/pitch.png";
 
 //main function
 function LineUp(props) {
@@ -36,15 +37,17 @@ function LineUp(props) {
   const [clickedSub, setClickedSub] = useState(homeId);
   const [isLoaded,setLoaded]=useState(false); //for preventing rendering before complete fetching data
 
-  useEffect(() => {
+  // let i=0;
+  useMemo(() => {
     // call formation and line up players:
     getLineUps(fixtureId).then((result) => {
       // console.log("line up:",result);
+
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
       );
-      setHomeId(result.data.response[0].team.id); setHomeSub(result.data.response[0].team.id);
+      setHomeId(result.data.response[0].team.id); 
       setHomeTeam(result.data.response[0].team.name);
       setHomeLogo(result.data.response[0].team.logo);
       setHomeGkColor(result.data.response[0].team.colors.goalkeeper);
@@ -64,7 +67,6 @@ function LineUp(props) {
       setAwayGkColor(result.data.response[1].team.colors.goalkeeper);
       setAwayPlayrColor(result.data.response[1].team.colors.player);
     });
-
     getPlayers(fixtureId).then((result) => {
       setHomePlayers(result.data.response[0].players);
       setAwayPlayers(result.data.response[1].players);
@@ -74,18 +76,19 @@ function LineUp(props) {
     .then(()=>{
       setLoaded(true); //for preventing rendering before complete fetching data
     });
-  }, [fixtureId]);
+  }, []);
 
   let playerNameArr = [],
     playerName = "";
   return (
     <div>
       {
-        isLoaded ?
+        isLoaded  ?
         <>
-        <div className="pitch w-[90%] sm:w-[70%] min-h-[750px]  m-auto p-3 flex flex-col justify-evenly ">
+        <div className="pitch w-full h-full  object-contain m-auto p-3 flex xs:flex-col sm:justify-center">
+        {/* <img src={pitch} alt="pitch" className="w-full h-full relative t-0 l-0"/> */}
         {/* home scoresheet */}
-        <div className="w-[90%] h-[45%] m-auto flex flex-col items-center text-center">
+        <div className="w-[90%] h-[45%] flex flex-col items-center text-center">
           <div className="w-full max-h-[25%] m-auto text-center" key={1}>
             <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
           </div>
@@ -108,7 +111,7 @@ function LineUp(props) {
         </div>
 
         {/* away scoresheet */}
-        <div className="w-[90%] h-[45%] m-auto flex flex-col items-center text-center">
+        <div className="w-[90%] h-[45%] flex flex-col items-center text-center">
           {awayFormation.length > 3 ? (
             <div className="w-full max-h-[25%] m-auto text-center" key={5}>
               <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
@@ -234,4 +237,4 @@ function LineUp(props) {
   );
 }
 
-export default LineUp;
+export default memo(LineUp);
