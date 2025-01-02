@@ -64,7 +64,7 @@ function Player(props) {
                                 <img src={playerStats.statistics[leagueId].team.logo} alt={playerStats.statistics[leagueId].team.name}/>
                             </p>                      
                         </div>
-                        <div> {/** leaguw div */}
+                        <div> {/** league div */}
                             <p>
                                 <img src={playerStats.statistics[leagueId].league.logo} alt={playerStats.statistics[leagueId].league.name} />
                                 <span>Name</span><span> {playerStats.statistics[leagueId].league.name}</span>

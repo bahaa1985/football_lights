@@ -28,12 +28,10 @@ function TeamsPagination(props) {
         console.log("page",page);   
         pages.push(page);
     }
-    
-
-    let preferedTeamsArr=getCookie("prefered_teams"); 
-    console.log("prefered teams",preferedTeamsArr);
-    
+           
     function handlePreferedTeams(elemTeam){  //set prefered teams cookie  
+        let preferedTeamsArr=getCookie("prefered_teams"); 
+        console.log("prefered teams",preferedTeamsArr);
         if(preferedTeamsArr !== null){
             if(preferedTeamsArr.filter(obj=>obj.id === elemTeam.team.id)[0] === undefined){
                 preferedTeamsArr.push({'id':elemTeam.team.id,'name':elemTeam.team.name,'logo':elemTeam.team.logo});
@@ -49,6 +47,7 @@ function TeamsPagination(props) {
     }
    
     function setPreferedTeamsColor(teamId){ // to mark prefered team
+        let preferedTeamsArr=getCookie("prefered_teams"); 
         let strokeClass="text-blue-100"; 
         preferedTeamsArr.map((elem)=>{
             if(elem.id===teamId){

@@ -32,34 +32,35 @@ export default function Preferences(params) {
   
   // console.log("prefered leagues",preferedLeagues);
   return (
-    <div className="relative top-20 left-0 px-auto flex justify-around">
-      <div className="w-[40%] sm:w-[45%]">
-        <div className="text-left w-full bg-red-700  p-2">
+    <div className="relative top-20 left-0 h-full sm:h-auto px-auto sm:flex sm:justify-around">
+      {/* search teams */}
+      <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%]">
+        <div className="w-full text-left flex justify-between p-2">
           <input type="text" ref={searchLeagueInput} className="outline-none rounded-md pl-1" placeholder="type country or league name" />
-          <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]"
+          <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50"
             onClick={() =>setSearchLeague(searchLeagueInput.current.value)}>
-            Search League
+            Search
           </button>
           </div>
           {
             leagues?
-            <LeaguesPagination source={leagues}/>
+            <Pagination source={leagues}/>
             :<p>No leagues available</p>
           }
       </div>
-     
+     <br className="border-b border-black"/>
       {/* search teams */}
-      <div className="w-[40%] sm:w-[45%] ">
-            <div className="text-left bg-red-700 p-2">
+      <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%] ">
+            <div className="w-full flex justify-between text-left p-2">
               <input type="text" ref={searchTeamInput} className="outline-none rounded-md pl-1" placeholder="type country or team name" />
-              <button className="w-26 text-lg mx-2 p-2  rounded-md bg-slate-900 text-[#fff]" 
+              <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50" 
               onClick={() => setSearchTeam(searchTeamInput.current.value)}>
-                Search Team
+                Search
               </button>
             </div>
             {
               teams?
-              <TeamsPagination source={teams} />
+              <Pagination source={teams} />
               :<p>No teams available</p>
             }
       </div>                      

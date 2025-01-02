@@ -38,7 +38,7 @@ export default function TopPlayers(props) {
 
               <td>
                 <div className="flex justify-start">
-                <img className="w-14 h-14 rounded-full" src={elem.player.photo} alt={elem.player.name} />
+                <img className="w-12 h-12 rounded-full" src={elem.player.photo} alt={elem.player.name} />
                 <span className="my-auto border-none">{elem.player.name}</span>
                 </div>
                    
@@ -46,7 +46,7 @@ export default function TopPlayers(props) {
 
               <td>
                 <div className="flex justify-start">
-                <img className="w-14 h-14 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
+                <img className="w-12 h-12 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
                 <span className="my-auto border-none">{elem.statistics[0].team.name}</span>
                 </div>
                 

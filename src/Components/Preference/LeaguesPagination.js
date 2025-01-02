@@ -29,9 +29,9 @@ function LeaguesPagination(props) {
         console.log("page",page);   
         pages.push(page);
     }
-
-    let preferedLeaguesArr=getCookie('prefered_leagues'); 
+  
     function handlePreferedLeagues(elemLeague){ //set prefered leagues cookie  
+        let preferedLeaguesArr=getCookie('prefered_leagues'); 
         if(preferedLeaguesArr !== null){
             if(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0] === undefined){
                 const filteredSeason=elemLeague.seasons.filter((season)=>{
@@ -52,11 +52,11 @@ function LeaguesPagination(props) {
     }
 
     function setPreferedLeaguesColor(leagueId){ //to mark prefered league
+        let preferedLeaguesArr=getCookie('prefered_leagues'); 
         let strokeClass="text-blue-100"; 
         preferedLeaguesArr.map((elem)=>{
         if(elem.id===leagueId){
-        console.log("mark:",elem.id)
-        strokeClass= "text-blue-600";
+            strokeClass= "text-blue-600";
         }
         })
         return strokeClass;

@@ -26,36 +26,54 @@ function Pagination(props) {
                 break;
             }       
         }
-        console.log("page",page);   
+        // console.log("page",page);   
         pages.push(page);
     }
 
-    let preferedLeaguesArr=getCookie('prefered_leagues'); 
-    function handlePreferedLeagues(leagueId,season,endDate){ //set prefered leagues cookie  
+    
+    function handlePreferedLeagues(elemLeague){ //set prefered leagues cookie 
+        let preferedLeaguesArr=getCookie('prefered_leagues');  
         if(preferedLeaguesArr !== null){
-            if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
-                preferedLeaguesArr.push({'id':leagueId,'season':season,'endDate':endDate});
+            if(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0] === undefined){
+                const filteredSeason=elemLeague.seasons.filter((season)=>{
+                    return Date.parse(season.end) > Date.now()
+                })[0];
+                console.log("filtered season",filteredSeason);
+                const seasonYear=filteredSeason.year;
+                const endDate=filteredSeason.end;
+                preferedLeaguesArr.push({
+                    'id':elemLeague.league.id,
+                    'name': elemLeague.league.name,
+                    'logo':elemLeague.league.logo,
+                    'season':seasonYear,
+                    'endDate':endDate
+                });
             }
             else
             {
-                const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
+                const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0])
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
-                console.log("selected leagues: ",preferedLeaguesArr);    
+                // console.log("selected leagues: ",preferedLeaguesArr);    
             }
             setCookie(preferedLeaguesArr,"prefered_leagues");
         }     
     }
 
-    let preferedTeamsArr=getCookie("prefered_teams"); 
-    console.log("prefered teams",preferedTeamsArr);
+   
+    // console.log("prefered teams",preferedTeamsArr);
     
-    function handlePreferedTeams(team){  //set prefered teams cookie  
+    function handlePreferedTeams(elem){  //set prefered teams cookie 
+        let preferedTeamsArr=getCookie("prefered_teams");  
         if(typeof(preferedTeamsArr) !== "undefined"){
-            if(preferedTeamsArr.filter(obj=>obj.id === team.id)[0] === undefined){
-                preferedTeamsArr.push({'id':team.id});
+            if(preferedTeamsArr.filter(obj=>obj.id === elem.team.id)[0] === undefined){
+                preferedTeamsArr.push({
+                    'id':elem.team.id,
+                    'name':elem.team.name,
+                    'logo':elem.team.logo
+                });
             }
             else{
-            const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===team.id)[0])
+            const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===elem.team.id)[0])
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
             console.log("selected teams: ",preferedTeamsArr);    
             }
@@ -65,6 +83,7 @@ function Pagination(props) {
     }
 
     function setPreferedLeaguesColor(leagueId){ //to mark prefered league
+        let preferedLeaguesArr=getCookie('prefered_leagues'); 
         let strokeClass="text-blue-100"; 
         preferedLeaguesArr.map((elem)=>{
         if(elem.id===leagueId){
@@ -77,6 +96,7 @@ function Pagination(props) {
 
     
     function setPreferedTeamsColor(teamId){ // to mark prefered team
+        let preferedTeamsArr=getCookie("prefered_teams"); 
         let strokeClass="text-blue-100"; 
         preferedTeamsArr.map((elem)=>{
             if(elem.id===teamId){
@@ -86,8 +106,6 @@ function Pagination(props) {
         })
         return strokeClass;
     }
-
-    console.log("pagintation",pages);
     
     return ( 
             <div>
@@ -105,30 +123,22 @@ function Pagination(props) {
                                         className="w-10 h-10"
                                         alt={elem.league?.name || elem.team?.name}/> 
                                         {/* element name */}
-                                        <p className="w-[70%]">{elem.league?.name || elem.team?.name} {elem.league?.id || elem.team?.id}</p>         
+                                        <p className="w-[70%]">{elem.league?.name || elem.team?.name}</p>         
                                         {/* button to save prefered league or team in a cookie */}
                                         <FontAwesomeIcon 
                                             icon={faStar}
-                                            className={`stroke-[4px]  w-10 h-10 cursor-pointer hover:stroke-blue-900
+                                            className={`stroke-[4px]  w-10 h-10 cursor-pointer hover:stroke-blue-600
                                                         ${elem.league? setPreferedLeaguesColor(elem.league.id) : setPreferedTeamsColor(elem.team?.id)}`}                             
                                             onClick={(event)=>
                                             {
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
                                                 senderElement.classList.toggle("text-blue-100");
-                                                // console.log("seasons",elem.seasons);
-                                                
-                                                const filteredSeason=elem.seasons.filter((season)=>{
-                                                    return Date.parse(season.end) > Date.now()
-                                                })[0];
-                                                console.log("filtered season",filteredSeason);
-                                                const seasonYear=filteredSeason.year;
-                                                const endDate=filteredSeason.end;
-
-                                                elem.league?         
-                                                    handlePreferedLeagues(elem.league.id,seasonYear,endDate)
+                                                                                  
+                                                elem.league?  //if there is leagues source data display leagues pages, if not, it will be teams       
+                                                    handlePreferedLeagues(elem) 
                                                     :
-                                                    (handlePreferedTeams(elem.team.id))
+                                                    handlePreferedTeams(elem)
                                             }}/>
                                     </div>
                                         )
