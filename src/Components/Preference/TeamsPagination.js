@@ -33,13 +33,13 @@ function TeamsPagination(props) {
     let preferedTeamsArr=getCookie("prefered_teams"); 
     console.log("prefered teams",preferedTeamsArr);
     
-    function handlePreferedTeams(teamId){  //set prefered teams cookie  
+    function handlePreferedTeams(elemTeam){  //set prefered teams cookie  
         if(preferedTeamsArr !== null){
-            if(preferedTeamsArr.filter(obj=>obj.id === teamId)[0] === undefined){
-                preferedTeamsArr.push({'id':teamId});
+            if(preferedTeamsArr.filter(obj=>obj.id === elemTeam.team.id)[0] === undefined){
+                preferedTeamsArr.push({'id':elemTeam.team.id,'name':elemTeam.team.name,'logo':elemTeam.team.logo});
             }
             else{
-            const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===teamId)[0])
+            const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===elemTeam.team.id)[0])
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
             console.log("selected teams: ",preferedTeamsArr);    
             }
@@ -84,10 +84,12 @@ function TeamsPagination(props) {
                                             className={`stroke-[4px] text-blue-100 w-10 h-10 cursor-pointer hover:stroke-blue-900 ${setPreferedTeamsColor(elem.team?.id)}`}                             
                                             onClick={(event)=>
                                             {
+                                                //toggle star button color:
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
-                                                senderElement.classList.toggle("text-blue-100");                                               
-                                                (handlePreferedTeams(elem.team.id))
+                                                senderElement.classList.toggle("text-blue-100");
+                                                //set prefered team or remove it:                                               
+                                                (handlePreferedTeams(elem))
                                             }}/>
                                     </div>
                                         )

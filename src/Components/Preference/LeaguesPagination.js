@@ -31,14 +31,19 @@ function LeaguesPagination(props) {
     }
 
     let preferedLeaguesArr=getCookie('prefered_leagues'); 
-    function handlePreferedLeagues(leagueId,season,endDate){ //set prefered leagues cookie  
+    function handlePreferedLeagues(elemLeague){ //set prefered leagues cookie  
         if(preferedLeaguesArr !== null){
-            if(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0] === undefined){
-                preferedLeaguesArr.push({'id':leagueId,'season':season,'endDate':endDate});
+            if(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0] === undefined){
+                const filteredSeason=elemLeague.seasons.filter((season)=>{
+                    return Date.parse(season.end) > Date.now()
+                })[0];
+                const seasonYear=filteredSeason.year;
+                const endDate=filteredSeason.end; 
+                preferedLeaguesArr.push({'id':elemLeague.league.id,'name':elemLeague.league.name,'logo':elemLeague.league.logo,'season':seasonYear,'endDate':endDate});
             }
             else
             {
-                const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===leagueId)[0])
+                const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0])
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
                 console.log("selected leagues: ",preferedLeaguesArr);    
             }
@@ -79,19 +84,13 @@ function LeaguesPagination(props) {
                                             icon={faStar}
                                             className={`stroke-[4px]  w-10 h-10 cursor-pointer hover:stroke-blue-900 ${setPreferedLeaguesColor(elem.league.id)}`}                             
                                             onClick={(event)=>
-                                            {
+                                            {     
+                                                // toggle star button color:   
                                                 const senderElement = event.currentTarget; 
                                                 senderElement.classList.toggle("text-blue-600");
                                                 senderElement.classList.toggle("text-blue-100");
-                                                // console.log("seasons",elem.seasons);
-                                                
-                                                const filteredSeason=elem.seasons.filter((season)=>{
-                                                    return Date.parse(season.end) > Date.now()
-                                                })[0];
-                                                console.log("filtered season",filteredSeason);
-                                                const seasonYear=filteredSeason.year;
-                                                const endDate=filteredSeason.end;                                        
-                                                handlePreferedLeagues(elem.league.id,seasonYear,endDate)                                                  
+                                                // set prefered league or remove it:                               
+                                                handlePreferedLeagues(elem)                                                  
                                             }}/>
                                     </div>
                                         )

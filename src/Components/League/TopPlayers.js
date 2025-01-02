@@ -8,7 +8,7 @@ export default function TopPlayers(props) {
   const [topPlayers, setTopPlayers] = useState([]);
 
   useEffect(() => {
-    if (stats_type === "goals") {
+    if (stats_type === "Goals") {
       getTopScorers(leagueId, season).then((result) => {
         setTopPlayers(result.data.response);
       });
@@ -18,39 +18,59 @@ export default function TopPlayers(props) {
         setTopPlayers(result.data.response);
       });
     }
-  }, []);
-
-  // console.log("top", topPlayers);
+  }, [leagueId,season,stats_type]);
 
   return (
-    <div>
-      {
-        // topPlayers?
-        topPlayers?.map((elem, index) => {
+    <div className='w-[90%] md:w-[70%] mx-auto'>
+        <table className='w-full table-auto'>
+        <thead className="bg-blue-300 text-left">
+            <tr className="h-10 text-xl">
+                <td>player</td>
+                <td>Team</td>
+                <td>{stats_type}</td>                    
+            </tr>
+        </thead>
+        <tbody>
+        {
+          topPlayers?.map((elem, index) => {
           return (
-            <div key={index}>
-              <div>
-                <span>Name</span>
-                <span>{elem.player.name}</span>
-                <img src={elem.player.photo} alt={elem.player.name} />
-                <span>Team</span>
-                <span>{elem.statistics[0].name}</span>
-                <img
-                  src={elem.statistics[0].team.logo}
-                  alt={elem.statistics[0].name}
-                />
-              </div>
-              <div>
-                {stats_type === "goals" ? (
-                  <span>{elem.statistics[0].goals.total}</span>
-                ) : (
-                  <span>{elem.statistics[0].goals.assists}</span>
-                )}
-              </div>
-            </div>
-          );
-        })
-      }
+            <tr key={index} className="even:bg-blue-300 :bg-slate-100 h-8">
+
+              <td>
+                <div className="flex justify-start">
+                <img className="w-14 h-14 rounded-full" src={elem.player.photo} alt={elem.player.name} />
+                <span className="my-auto border-none">{elem.player.name}</span>
+                </div>
+                   
+              </td>
+
+              <td>
+                <div className="flex justify-start">
+                <img className="w-14 h-14 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
+                <span className="my-auto border-none">{elem.statistics[0].team.name}</span>
+                </div>
+                
+              </td>
+
+              <td>
+                <div>
+                {
+                  stats_type === 'Goals' ?
+                  <span className="my-auto border-none">{elem.statistics[0].goals.total}</span>
+                  :
+                  <span className="my-auto border-none">{elem.statistics[0].goals.assists}</span>
+                  
+                }
+                </div>
+                
+              </td>
+
+            </tr>
+            )
+          })
+        }
+        </tbody>
+        </table>
     </div>
   );
 }

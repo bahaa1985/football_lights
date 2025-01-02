@@ -35,7 +35,7 @@ export default function League() {
           </button>
           <button
             className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("Assisters")}
+            onClick={() => setTab("Assists")}
           >
             Assisters
           </button>
@@ -45,9 +45,9 @@ export default function League() {
         ) : tab === "Standing" ? (
           <Standings league={leagueId} season={season} />
         ) : tab === "Scorers" ? (
-          <TopPlayers league={leagueId} season={season} type={"goals"} />
-        ) : tab === "Assisters" ? (
-          <TopPlayers league={leagueId} season={season} type={"assists"} />
+          <TopPlayers league={leagueId} season={season} type={"Goals"} />
+        ) : tab === "Assists" ? (
+          <TopPlayers league={leagueId} season={season} type={"Assists"} />
         ) : null}
       </div>
     </div>
