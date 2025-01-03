@@ -29,7 +29,7 @@ function FixtureRow(props) {
                     className="my-auto ml-2"
                     to={`/leagues/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}
                   >
-                    <span className="text-left text-slate-100 ">{elem}</span>
+                    <span className="text-left text-slate-100 border-none">{elem}</span>
                   </NavLink>
                 </div>
               ) : type === "all_fixtures" ? (
@@ -56,7 +56,7 @@ function FixtureRow(props) {
                           className="mx-2 h-4"
                           icon={faCalendar}
                         ></FontAwesomeIcon>
-                        <span>
+                        <span className="border-none">
                           {new Date(elem.fixture.date).toDateString().substring(4)}
                         </span>
                         <br />
@@ -68,7 +68,7 @@ function FixtureRow(props) {
                         className="mx-2 h-4"
                         icon={faClock}
                       ></FontAwesomeIcon>
-                      <span>
+                      <span className="border-none">
                         {new Date(elem.fixture.date).getHours() +
                           ":" +
                           (new Date(elem.fixture.date).getMinutes().toString()
@@ -90,11 +90,11 @@ function FixtureRow(props) {
                         elem.fixture.short === "SUSB" ||
                         elem.fixture.short === "INT" ? (
                           <div className="flex ml-auto">
-                            <span class="relative flex h-3 w-3">
-                              <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                              <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700"></span>
+                            <span class="relative flex h-3 w-3 border-none">
+                              <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
+                              <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
                             </span>
-                            <span className="text-red-800">{"  Live"}</span>
+                            <span className="text-red-800 border-none">{"  Live"}</span>
                           </div>
                         ) : null
                         //
@@ -102,7 +102,7 @@ function FixtureRow(props) {
                       </div>
                       
                       <div className="py-auto">
-                        <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100">
+                        <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none">
                           {elem.fixture.status.short}
                         </span>
                       </div>
@@ -127,10 +127,10 @@ function FixtureRow(props) {
                         className="w-[50%] text-center"
                         to={`/teams/${elem.teams.home.id}`}
                       >
-                        <span>{elem.teams.home.name}</span>
+                        <span className="border-none">{elem.teams.home.name}</span>
                       </NavLink>
 
-                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm">
+                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
                         {elem.goals.home === null ? "-" : elem.goals.home}
                       </span>
                     </div>
@@ -150,10 +150,10 @@ function FixtureRow(props) {
                         className="w-[50%] text-center"
                         to={`/teams/${elem.teams.away.id}`}
                       >
-                        <span>{elem.teams.away.name}</span>
+                        <span className="border-none">{elem.teams.away.name}</span>
                       </NavLink>
 
-                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm">
+                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
                         {elem.goals.away === null ? "-" : elem.goals.away}{" "}
                       </span>
                     </div>

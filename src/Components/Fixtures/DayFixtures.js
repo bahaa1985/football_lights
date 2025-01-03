@@ -4,10 +4,11 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import FixtureRow from "./FixtureRow.js";
 import { getCookie } from "../../Api/cookie.js";
+import { NavLink } from "react-router-dom";
 
 export default function DayFixtures(){
 
-    const [selectedDate,setSelectedDate]=useState('');
+    const [selectedDate,setSelectedDate]=useState(getCurrentDate());
     const [dateFixtures,setDateFixtures]=useState([]);
     const [teamsFixtures,setTeamsFixtures]=useState([]);
     const [isLoaded,setLoaded]=useState(false);
@@ -16,76 +17,122 @@ export default function DayFixtures(){
     const teams=getCookie("prefered_teams");
 
     useEffect(()=>{
-        
-        // groupDateFixtures(selectedDate).then(result=>{
-        //     setDateFixtures(result);
-        // });
-        
-        // getPromisedTeamFixtures(selectedDate).then(result=>{
-        //     setTeamsFixtures(result)
+
+        groupDateFixtures(selectedDate).then(result=>{
+            setDateFixtures(result);
+            console.log(dateFixtures);
+            
+        })
+        // .then(()=>{
+        //     getPromisedTeamFixtures(selectedDate).then(result=>{
+        //         setTeamsFixtures(result)
+        //     })
         // })
+        .then(()=>{
+            setLoaded(true);
+        })
+            
     },[selectedDate])
 
+    function getCurrentDate(){
+        const day=new Date().getDate()<10 ? '0'+ new Date().getDate(): new Date().getDate();
+        const month=new Date().getMonth()+1 <10 ? '0'+(new Date().getMonth()+1) : new Date().getMonth()+1;
+        const year=new Date().getFullYear();
+        const currentDate=year.toString()+'-'+month.toString()+'-'+day.toString();
+        return currentDate;
+    }
     // 
-    const handleDateChange = (date) => {
-        // const day=date.getDate()<10 ? '0'+ date.getDate(): date.getDate();
-        // const month=date.getMonth()+1 <10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-        // const year=date.getFullYear();
-        // const dateString=year.toString()+'-'+month.toString()+'-'+day.toString();
+    function handleDateChange (date) {
         setSelectedDate(date);
-        console.log("Selected date:", date);
     };
    
-    // console.log("team fix:",teamsFixtures);   
+    console.log("selected date:",selectedDate);   
 
     return(
-        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] flex flex-col-reverse sm:flex sm:justify-between">           
 
-            {/* selected date fixtures */}
-            <div className="sm:w-full sm:flex justify-around mx-auto rounded-md bg-slate-50 p-2">
-                <div className="w-64">
-                    <input type="date" onChange={(e)=>handleDateChange(e.target.value)} />
-                    {/* <Calendar onChange={handleDateChange} className="rounded-md bg-slate-50" />               */}
-                </div>
-                {/* favourite champions games */}
-                <div className="w-4/12">
-                {
-                    dateFixtures?
-                    <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
-                    :
-                    <p>No current games</p>
-                }
-                </div>
-                {/* favourite teams games */}
-                <div className="w-4/12">
-                {
-                    teamsFixtures?
-                    <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
-                    :
-                    <p>No current games</p>
-                }
-                </div>
-                
-            </div>
+            <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%] 
+            flex flex-col sm:flex sm:flex-row sm:justify-between sm:gap-6">           
 
-            {/* Prefered leagues and teams */}
-            <div className="xs:w-full sm:w-[30%]">
-                <div className="w-full">
+                {/* selected date fixtures */}
+                <div className="w-full sm:w-[70%] mx-auto rounded-md bg-slate-50 p-2">
+                    <div>
+                        <input type="date" onChange={(e)=>handleDateChange(e.target.value)} value={selectedDate} />
+                    </div>
+                    {/* favourite champions games */}
+                    <div className="w-full">
                     {
-                        leagues.map((league,index)=>{
-
-                        })
+                        <>
+                        <div className="p-2 bg-slate-800 text-slate-50">Favourite Leagues</div>
+                        {
+                            dateFixtures?
+                                <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
+                            :
+                            <div className="flex justify-center items-center">
+                                No current games
+                            </div>
+                        }
+                        </>
                     }
-                </div>
-                <div className="w-full">
+                    </div>
+                    {/* favourite teams games */}
+                    <div className="w-full">
                     {
-                        teams.map((team,index)=>{
-                            
-                        })
+                        
+                        <>
+                            <div className="p-2 bg-slate-800 text-slate-50">Favourite Teams</div>
+                            {
+                                teamsFixtures?
+                                <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
+                                :
+                                <div className="flex justify-center items-center">
+                                    No current fixtures
+                                </div>
+                            }    
+                        </>
                     }
+                    </div>
+                    
+                </div>
+
+                {/* Prefered leagues and teams */}
+                <div className="xs:w-full sm:w-[30%]  flex flex-col gap-6">
+                    <div className="w-full">
+                    <div className="bg-slate-800 text-slate-50">Your leaguess</div>
+                        {
+                            leagues.length>0?
+                            leagues.map((league,index)=>{
+                                return(
+                                <div className=" even:bg-slate-50 odd:bg-slate-300" key={index}> 
+                                    <NavLink to={`/leagues/${league.id}/${league.season}`} className="flex justify-between">
+                                    <img src={league.logo} alt={league.name} className="w-10 h-10 rounded-full"/>
+                                    <span className="w-[50%] border-none my-auto">{league.name}</span>
+                                    </NavLink>
+                                </div>
+                                )
+                            })
+                            :
+                            null
+                        }
+                    </div>
+                    <div className="w-full">
+                        <div className="bg-slate-800 text-slate-50">Your teams</div>
+                        {
+                            teams.length>0?
+                            teams.map((team,index)=>{
+                                return(
+                                    <div className="even:bg-slate-50 odd:bg-slate-300" key={index}>
+                                        <NavLink to={`/teams/${team.id}`} className="flex justify-between">
+                                        <img src={team.logo} alt={team.name} className="w-10 h-10 rounded-full" />
+                                        <span className="w-[50%] border-none my-auto">{team.name}</span>
+                                        </NavLink>
+                                    </div>
+                                    )
+                            })
+                            :null
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
         
     )
 }

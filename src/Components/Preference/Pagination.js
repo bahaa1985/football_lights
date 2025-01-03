@@ -151,7 +151,7 @@ function Pagination(props) {
                             pages.map((page,index)=>{
                                 return(
                                     <button key={index}
-                                            className={`rounded-full w-8 h-8 mx-2 ${index===pageIndex ? "bg-red-700 text-white" : "bg-red-200 text-black"}`} 
+                                            className={`rounded-full w-8 h-8 mx-2 ${index===pageIndex ? "bg-blue-600 text-white" : "bg-blue-200 text-black"}`} 
                                             onClick={()=>setPageIndex(index)}>
                                         {index+1}
                                     </button>

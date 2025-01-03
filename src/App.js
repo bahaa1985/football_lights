@@ -1,13 +1,12 @@
 
 import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import DayFixtures from './Components/Fixtures/DayFixtures.js';
 import League from './Components/League/League.js';
 import Game from './Components/Game/Game.js';
 import Player from './Components/Player.js';
 import Team from './Components/Team/Team.js';
 import Home from './Components/Home.js';
 import Preferences from './Components/Preference/Preference.js';
-import Events from './Components/Game/Events.js';
 import logo from './images/logo.jpg';
 
 function App() {
@@ -73,7 +72,7 @@ function App() {
       </ul>
     </div>
     <Routes>
-      <Route path='/' element={<Home/>}>
+      <Route path='/' element={<DayFixtures/>}>
       </Route>
       {/* <Route path='/fixtures' element={<DateFixtures />}/> */}
       <Route path="/leagues/:leagueId/:season" element={<League />}>       
