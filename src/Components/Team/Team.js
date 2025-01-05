@@ -16,7 +16,10 @@ export default function Team(){
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
     const [selectedSeason,setSelectedSeason]=useState(0);
+    const [statsLoaded,setStatsLoaded]=useState(false);
     const [leagueId,setLeagueId]=useState(0);
+    /////
+    const [teamFixtures,setTeamFixtures] = useState([]);
     const leaguesOption=useRef();
 
     const fetchTeamData = useCallback(() => {
@@ -54,11 +57,17 @@ export default function Team(){
     },[teamId,selectedSeason])
 
     useEffect(()=>{
-        getTeamStatistics(teamId, selectedSeason, leagueId)
-            .then(result =>{
-                console.log("stats triggered");
-                setTeamStatistics(result.data.response);
-            });
+        async function fetchData(){
+            const result=await getTeamStatistics(teamId, selectedSeason, leagueId)
+            console.log("stats triggered");            
+            setTeamStatistics(result.data.response);
+            // console.log("fixtues:",teamStatistics.fixtures);   
+            // setStatsLoaded(true);
+        }        
+        fetchData() 
+            .then(()=>{
+                setStatsLoaded(true)
+            })
     },[teamId,selectedSeason,leagueId])
 
     return(
@@ -96,7 +105,7 @@ export default function Team(){
                     </p>
                 </div>
                 <div>
-                    <img src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
+                    <img className="h-24 w-32" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
                 </div>
             </div>
             {/** Season and leagues dropdowns */}
@@ -141,23 +150,35 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics? 
+                    teamStatistics?.length > 0 ?                  
                     <>
                         <table className='w-full table-auto'>
                             <thead>
-                                <tr>
+                                {/* <tr>
                                     <td>Fixtures</td>
-                                </tr>
+                                </tr> */}
                                 <tr>
                                     <td></td>
-                                    <td>Played</td>
-                                    <td>Wins</td>
-                                    <td>Draws</td>
-                                    <td>Loses</td>
+                                    <td>Home</td>
+                                    <td>Away</td>
+                                    <td>total</td>                                   
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                            {    
+                                statsLoaded ?                            
+                                teamStatistics.fixtures.map((fixture,index)=>{
+                                    return(
+                                    <tr key={index} className="even:bg-slate-200 odd:bg-slate-50">
+                                        {/* <td>{Object.keys(index)}</td> */}
+                                        <td>{fixture[index].home}</td>
+                                        <td>{fixture[index].away}</td>
+                                        <td>{fixture[index].total}</td>
+                                    </tr>
+                                    )
+                                })        
+                                :null                    
+                            }
                             </tbody>
                         </table>
                     </>
