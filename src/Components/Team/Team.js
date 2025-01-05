@@ -10,7 +10,8 @@ export default function Team(){
     // const seasonQuery=parseInt(new URLSearchParams(search).get("season"));
 
     const teamId =parseInt(useParams().teamId);
-    const [teamSeasons,setTeamSeasons]=useState([]);   
+    const [teamSeasons,setTeamSeasons]=useState([]); 
+    const [seasonsLoaded,setSeasonsLoaded]= useState(false);  
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState([]);
@@ -25,75 +26,40 @@ export default function Team(){
     useEffect(()=>{
         getTeamInformation(teamId)
             .then(result => {
-                setTeamInformation(result.data.response[0])
-                // console.log("info triggered");
+                setTeamInformation(result.data.response[0]);
+                console.log("info triggered");
             }
             );
-
-        getTeamSeasons(teamId)
-            .then(result =>{
-                setTeamSeasons(result.data.response);
-                // console.log("seasons triggered");
-            });
-
-        getTeamLeagues(teamId, selectedSeason)
-            .then((result)=>{
-                setTeamLeagues(result.data.response)
-                // console.log("leagues triggered");
-                // setLeagueId(result.data.response[0].league.id)
-            });
-
-        // getTeamStatistics(teamId, selectedSeason, leagueId)
-        //     .then(result =>{
-        //         // console.log("stats triggered");
-        //         setTeamStatistics(result.data.response);
-        //     });
     },
     [teamId,selectedSeason,leagueId])
 
-    console.log("leagues",teamLeagues);
-    // console.log("selected season:",selectedSeason);
-    // Memoize the options rendering to avoid unnecessary re-renders
-    // const renderedSeasons = useMemo(() => {
-    //     getTeamSeasons(teamId)
-    //         .then(result =>{
-    //             result.data.response.map((season, index) => {
-    //             return( 
-    //             <option key={index} value={season}>
-    //                 {season}
-    //             </option>)   
-    //         })})
-                // setTeamSeasons(result.data.response);
-                // console.log("seasons triggered");
+    useEffect(()=>{
+        getTeamSeasons(teamId)
+            .then(result =>{
+                setTeamSeasons(result.data.response);
+                console.log("seasons triggered");
+            })
+            .then(()=>{
+                setSeasonsLoaded(true);
+            })
+    },[])
 
-        // return teamSeasons?.map((season, index) => (
-        // <option key={index} value={season}>
-        //     {season}
-        // </option>
-        // ));
-    // }, [teamId]);
-
-    // const renderedLeagues=useMemo(()=>{
-    //     getTeamLeagues(teamId, selectedSeason)
-    //         .then((result)=>{
-    //             result.data.response.map((item,index)=>{
-    //                 return(
-    //                     <option key={index} value={item.league.id}>
-    //                         {item.league.name}
-    //                     </option>
-    //                 )
-    //             })
-               
-                // setTeamLeagues(result.data.response)
-                // console.log("leagues triggered");
+    useEffect(()=>{
+        getTeamLeagues(teamId, selectedSeason)
+            .then((result)=>{
+                setTeamLeagues(result.data.response)
+                console.log("leagues triggered");
                 // setLeagueId(result.data.response[0].league.id)
-        // });
-        // return teamLeagues?.map((item,index)=>(
-        //     <option key={index} value={item.league.id}>
-        //         {item.league.name}
-        //     </option>
-        // ))
-    // },[teamId,selectedSeason])
+            });
+    },[teamId,selectedSeason])
+
+    useEffect(()=>{
+        getTeamStatistics(teamId, selectedSeason, leagueId)
+            .then(result =>{
+                console.log("stats triggered");
+                setTeamStatistics(result.data.response);
+            });
+    },[teamId,selectedSeason,leagueId])
 
     return(
         <div>
@@ -136,22 +102,29 @@ export default function Team(){
             {/** Season and leagues dropdowns */}
             <div>
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={''} > 
-                    {                        
-                        teamSeasons?.map((item,index)=>{
-                            return(
-                                // <option key={index} value={item}>{item}</option>
-                                <button onClick={()=>setSelectedSeason(parseInt(item))}>{item}</button>
-                            )
-                        })
-                        // renderedSeasons           
+                    {
+                        seasonsLoaded ? 
+                            <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={''} > 
+                            <option>Select season</option>
+                            {                        
+                                teamSeasons?.map((item,index)=>{
+                                    return(
+                                        <option key={index} value={item}>{item}</option>
+                                        // <button onClick={()=>setSelectedSeason(parseInt(item))}>{item}</button>
+                                    )
+                                })
+                                // renderedSeasons           
+                            }
+                            </select>
+                        :
+                        null
                     }
-                    </select>
+                    
                     {/* leagues dropdownbox */}
-                    <select ref={leaguesOption} defaultValue={''} >  
+                    <select ref={leaguesOption} onChange={(e)=>setLeagueId(e.target.value)} defaultValue={''} >  
                     {
                         <>
-                            <option>Select a league</option>
+                            {/* <option>Select a league</option> */}
                             {
                                 teamLeagues?.map((item,index)=>{                  
                                 return(                                
@@ -162,14 +135,33 @@ export default function Team(){
                         // renderedLeagues
                     }
                     </select>
-                    <button onClick={()=>[setLeagueId(leaguesOption.current.value),console.log("ref league",leaguesOption.current.value)
-                    ]}>Display</button>
+                    {/* <button onClick={()=>[setLeagueId(leaguesOption.current.value),console.log("ref league",leaguesOption.current.value)
+                    ]}>Display</button> */}
             </div>    
             {/** Team statistics specified to a league */}
             <div>
                 {
                     teamStatistics? 
-                    <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
+                    <>
+                        <table className='w-full table-auto'>
+                            <thead>
+                                <tr>
+                                    <td>Fixtures</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Played</td>
+                                    <td>Wins</td>
+                                    <td>Draws</td>
+                                    <td>Loses</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </>
+                    // <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
                     :"No data"
                 }
             </div>

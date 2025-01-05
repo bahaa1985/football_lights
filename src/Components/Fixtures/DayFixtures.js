@@ -18,19 +18,19 @@ export default function DayFixtures(){
 
     useEffect(()=>{
 
-        groupDateFixtures(selectedDate).then(result=>{
-            setDateFixtures(result);
-            console.log(dateFixtures);
+        // groupDateFixtures(selectedDate).then(result=>{
+        //     setDateFixtures(result);
+        //     console.log(dateFixtures);
             
-        })
+        // })
         // .then(()=>{
         //     getPromisedTeamFixtures(selectedDate).then(result=>{
         //         setTeamsFixtures(result)
         //     })
         // })
-        .then(()=>{
-            setLoaded(true);
-        })
+        // .then(()=>{
+        //     setLoaded(true);
+        // })
             
     },[selectedDate])
 
