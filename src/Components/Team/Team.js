@@ -14,7 +14,7 @@ export default function Team(){
     const [seasonsLoaded,setSeasonsLoaded]= useState(false);  
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
-    const [teamStatistics,setTeamStatistics]=useState([]);
+    const [teamStatistics,setTeamStatistics]=useState({});
     const [selectedSeason,setSelectedSeason]=useState(0);
     const [statsLoaded,setStatsLoaded]=useState(false);
     const [leagueId,setLeagueId]=useState(0);
@@ -43,6 +43,8 @@ export default function Team(){
                 console.log("seasons triggered");
             })
             .then(()=>{
+               
+                
                 setSeasonsLoaded(true);
             })
     },[])
@@ -57,17 +59,28 @@ export default function Team(){
     },[teamId,selectedSeason])
 
     useEffect(()=>{
-        async function fetchData(){
-            const result=await getTeamStatistics(teamId, selectedSeason, leagueId)
-            console.log("stats triggered");            
+        getTeamStatistics(teamId, selectedSeason, leagueId)
+        .then(result=>{
             setTeamStatistics(result.data.response);
-            // console.log("fixtues:",teamStatistics.fixtures);   
-            // setStatsLoaded(true);
-        }        
-        fetchData() 
-            .then(()=>{
-                setStatsLoaded(true)
-            })
+            console.log("tt",Object.entries(result.data.response.fixtures));
+        })
+        .then(()=>{
+            // if(teamStatistics.length > 0)
+           
+            setStatsLoaded(true);
+        })
+        // async function fetchData(){
+        //     const result=await getTeamStatistics(teamId, selectedSeason, leagueId)
+        //     console.log("stats triggered");            
+        //     setTeamStatistics(result.data.response);
+        //     // setTeamFixtures(teamStatistics?.fixtures);
+        //     // console.log("fixtues:",teamStatistics.fixtures);   
+        //     // setStatsLoaded(true);
+        // }        
+        // fetchData() 
+            // .then(()=>{
+            //     setStatsLoaded(true)
+            // })
     },[teamId,selectedSeason,leagueId])
 
     return(
@@ -105,7 +118,7 @@ export default function Team(){
                     </p>
                 </div>
                 <div>
-                    <img className="h-24 w-32" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
+                    <img className="h-48 w-56" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
                 </div>
             </div>
             {/** Season and leagues dropdowns */}
@@ -113,7 +126,7 @@ export default function Team(){
                     {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
                     {
                         seasonsLoaded ? 
-                            <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={''} > 
+                            <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={selectedSeason} > 
                             <option>Select season</option>
                             {                        
                                 teamSeasons?.map((item,index)=>{
@@ -130,19 +143,14 @@ export default function Team(){
                     }
                     
                     {/* leagues dropdownbox */}
-                    <select ref={leaguesOption} onChange={(e)=>setLeagueId(e.target.value)} defaultValue={''} >  
-                    {
-                        <>
-                            {/* <option>Select a league</option> */}
-                            {
-                                teamLeagues?.map((item,index)=>{                  
+                    <select ref={leaguesOption} onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId} >  
+                        <option>Select a league</option>
+                        {
+                            teamLeagues?.map((item,index)=>{                  
                                 return(                                
                                     <option key={index} value={item.league.id}>{item.league.name}</option>
                                 )})
-                            }
-                        </>                        
-                        // renderedLeagues
-                    }
+                        }
                     </select>
                     {/* <button onClick={()=>[setLeagueId(leaguesOption.current.value),console.log("ref league",leaguesOption.current.value)
                     ]}>Display</button> */}
@@ -150,7 +158,7 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics?.length > 0 ?                  
+                    // teamStatistics.length > 0 ?                  
                     <>
                         <table className='w-full table-auto'>
                             <thead>
@@ -167,13 +175,13 @@ export default function Team(){
                             <tbody>
                             {    
                                 statsLoaded ?                            
-                                teamStatistics.fixtures.map((fixture,index)=>{
+                                Object.entries(teamStatistics?.fixtures).map((elem,index)=>{
                                     return(
                                     <tr key={index} className="even:bg-slate-200 odd:bg-slate-50">
-                                        {/* <td>{Object.keys(index)}</td> */}
-                                        <td>{fixture[index].home}</td>
-                                        <td>{fixture[index].away}</td>
-                                        <td>{fixture[index].total}</td>
+                                        <td>{elem[0]}</td>
+                                        <td>{elem[1].home}</td>
+                                        <td>{elem[1].away}</td>
+                                        <td>{elem[1].total}</td>
                                     </tr>
                                     )
                                 })        
@@ -183,7 +191,7 @@ export default function Team(){
                         </table>
                     </>
                     // <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
-                    :"No data"
+                    // :"No data"
                 }
             </div>
         </div>
