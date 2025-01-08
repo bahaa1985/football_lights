@@ -141,44 +141,50 @@ export default function Team(){
                     <img className="h-48 w-56" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
                 </div>
             </div>
+            
             {/** Season and leagues dropdowns */}
-            <div>
-                    {/*seasons dropdown box. when select a season then leagues dropdown box will be manipulated*/}
-                    {
-                        <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={selectedSeason} > 
-                        <option>Select season</option>
-                        {                        
-                            teamSeasons?.map((item,index)=>{
-                                return(
-                                    <option key={index} value={item}>{item}</option>
-                                    // <button onClick={()=>setSelectedSeason(parseInt(item))}>{item}</button>
-                                )
-                            })
-                            // renderedSeasons           
-                        }
-                        </select>                       
+            {
+                // statsLoaded ? // if all data is loaded fill drop boxes:
+                <div>                                       
+                {
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={selectedSeason} > 
+                    <option>Select season</option>
+                    {                        
+                        teamSeasons?.map((item,index)=>{
+                            return(
+                                <option key={index} value={item}>{item}</option>
+                                // <button onClick={()=>setSelectedSeason(parseInt(item))}>{item}</button>
+                            )
+                        })
+                        // renderedSeasons           
                     }
-                    
-                    {/* leagues dropdownbox */}
-                    <select ref={leaguesOption} onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId} >  
-                        <option>Select a league</option>
-                        {
-                            teamLeagues?.map((item,index)=>{                  
-                                return(                                
-                                    <option key={index} value={item.league.id}>{item.league.name}</option>
-                                )})
-                        }
+                    </select>                       
+                }
+                
+                {/* leagues dropdownbox */}
+                <select ref={leaguesOption} onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId} >  
+                    <option>Select a league</option>
+                    {
+                        teamLeagues?.map((item,index)=>{                  
+                            return(                                
+                                <option key={index} value={item.league.id}>{item.league.name}</option>
+                            )})
+                    }
                     </select>
-                    {/* <button onClick={()=>[setLeagueId(leaguesOption.current.value),console.log("ref league",leaguesOption.current.value)
-                    ]}>Display</button> */}
-            </div>    
+                </div> 
+                // :null
+            }
+
+              
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics.length > 0 ?                  
+                    statsLoaded ?   // if statistics are ready, display it:               
                     <>
                     <div>
+                        {/* fixtures */}
                         <div>Fixtures</div>
+
                         <table className='w-full table-auto'>
                             <thead>                                
                                 <tr>
@@ -190,23 +196,31 @@ export default function Team(){
                             </thead>
                             <tbody>
                             {                                                         
-                                Object.entries(teamStatistics?.fixtures).map(([key, value]) => (                                    
+                                Object.entries(teamStatistics?.fixtures).map(([key, value]) => (                                                       
                                     <React.Fragment key={key}>
-                                      {Object.entries(value).map(([subKey, subValue]) => (                                    
-                                        <tr key={subKey}>
-                                          <td>{subKey}</td>
-                                          <td>{subValue}</td>
-                                          {/* {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
-                                            <td key={nestedKey}>
-                                              {nestedKey === "total" ? (
-                                                <strong>{nestedValue}</strong>
-                                              ) : (
-                                                nestedValue
-                                              )}
-                                            </td>
-                                          ))} */}
-                                        </tr>
-                                      ))}
+                                    {/* <tr>{key}</tr> */}
+                                    <tr key={key}>
+                                        <td>{key}</td>
+                                        {Object.entries(value).map(([subKey, subValue]) => (                                    
+                                            //<tr key={subKey}>
+                                            // <React.Fragment key={key}>
+                                            //<td>{subKey}</td>
+                                            <td>{subValue}</td>
+                                            // </React.Fragment>
+                                            
+                                            /* {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
+                                                <td key={nestedKey}>
+                                                {nestedKey === "total" ? (
+                                                    <strong>{nestedValue}</strong>
+                                                ) : (
+                                                    nestedValue
+                                                )}
+                                                </td>
+                                            ))} */
+                                            //</tr>
+                                        ))}
+                                    </tr>
+                                      
                                     </React.Fragment>
                                   ))                    
                             }
@@ -216,68 +230,73 @@ export default function Team(){
                     {/*  */}
                     <div>
                     <div>Goals</div>
-                        <table className='w-full table-auto'>
-                            {/* <thead>                                
-                                <tr>
-                                    <td></td>
-                                    <td>Home</td>
-                                    <td>Away</td>
-                                    <td>total</td>                                   
-                                </tr>
-                            </thead> */}
-                            <tbody>
-                            {    
-                                // statsLoaded ?  
-                                // Iterate over the "goals" object using map
-                                Object.entries(teamStatistics?.goals).map(([key, value]) => (                                    
-                                    <React.Fragment key={key}>
-                                      {Object.entries(value).map(([subKey, subValue]) => (
-                                        key === 'total' || key === 'average' ?
-                                        <tr key={subKey}>
-                                          <td>{subKey}</td>
-                                          {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
-                                            <td key={nestedKey}>
-                                              {nestedKey === "total" ? (
-                                                <strong>{nestedValue}</strong>
-                                              ) : (
-                                                nestedValue
-                                              )}
-                                            </td>
-                                          ))}
-                                        </tr>
-                                        :null
-                                      ))}
-                                    </React.Fragment>
-                                  ))                         
-                                // Object.entries(teamStatistics?.goals).map((elem,index)=>{
-                                //     return(
-                                //         <>
-                                //         {/* for/agianst */}
-                                //         <tr key={index}>{elem[0]}</tr> 
-                                //         {/* <tr>
-                                //             <td></td>
-                                //             <td>Home</td>
-                                //             <td>Away</td>
-                                //             <td>total</td>                                   
-                                //         </tr> */}
-                                //         {
-                                //         Object.entries(elem)[1].map((ele,index)=>{
-                                //             return(
-                                //             <tr key={index} className="even:bg-slate-200 odd:bg-slate-50">
-                                //                 <td>{ele[1]}</td>
-                                //                 {/* <td>{ele[1].home}</td>
-                                //                 <td>{ele[1].away}</td>
-                                //                 <td>{ele[1].total}</td> */}
-                                //             </tr>)
-                                //             })
-                                //         }
-                                //         </>                                                                                                                        
-                                //     )
-                                // })        
-                                // :null                    
-                            }
-                            </tbody>
-                        </table>
+                    <table className='w-full table-auto'>
+                        {/* <thead>                                
+                            <tr>
+                                <td></td>
+                                <td>Home</td>
+                                <td>Away</td>
+                                <td>total</td>                                   
+                            </tr>
+                        </thead> */}
+                        <tbody>
+                        {    
+                            // statsLoaded ?  
+                            // Iterate over the "goals" object using map
+                            Object.entries(teamStatistics?.goals).map(([key, value]) => (                                    
+                                <React.Fragment key={key}>
+                                    <tr key={key}>
+                                        <td>{key}</td>
+                                        {Object.entries(value).map(([subKey, subValue]) => (
+                                            key === 'total' || key === 'average' ?
+                                            <tr key={subKey}>
+                                                <td>{subKey}</td>
+                                                {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
+                                                    <td>{nestedValue}</td>
+                                                // <td key={nestedKey}>
+                                                //     {nestedKey === "total" ? (
+                                                //     <strong>{nestedValue}</strong>
+                                                //     ) : (
+                                                //     nestedValue
+                                                //     )}
+                                                // </td>
+                                                ))}
+                                            </tr>
+                                    :null
+                                    ))}
+                                    </tr>
+                                    
+                                </React.Fragment>
+                                ))                         
+                            // Object.entries(teamStatistics?.goals).map((elem,index)=>{
+                            //     return(
+                            //         <>
+                            //         {/* for/agianst */}
+                            //         <tr key={index}>{elem[0]}</tr> 
+                            //         {/* <tr>
+                            //             <td></td>
+                            //             <td>Home</td>
+                            //             <td>Away</td>
+                            //             <td>total</td>                                   
+                            //         </tr> */}
+                            //         {
+                            //         Object.entries(elem)[1].map((ele,index)=>{
+                            //             return(
+                            //             <tr key={index} className="even:bg-slate-200 odd:bg-slate-50">
+                            //                 <td>{ele[1]}</td>
+                            //                 {/* <td>{ele[1].home}</td>
+                            //                 <td>{ele[1].away}</td>
+                            //                 <td>{ele[1].total}</td> */}
+                            //             </tr>)
+                            //             })
+                            //         }
+                            //         </>                                                                                                                        
+                            //     )
+                            // })        
+                            // :null                    
+                        }
+                        </tbody>
+                    </table>
                     </div>
                     </>
                     // <NestedTeamStatistics data={teamStatistics} isParent={false}/>                                                                         
