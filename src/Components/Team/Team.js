@@ -22,86 +22,44 @@ export default function Team(){
     const [teamFixtures,setTeamFixtures] = useState([]);
     const leaguesOption=useRef();  
 
-    useEffect(()=>{
+    useMemo(()=>{
         getTeamInformation(teamId)
-            .then(result => {
-                setTeamInformation(result.data.response[0]);
-                console.log("info triggered");
+        .then(result => {
+            setTeamInformation(result.data.response[0]);
+            console.log("info triggered");
+        })
+
+        getTeamSeasons(teamId)
+        .then(result =>{
+            setTeamSeasons(result.data.response);
+            console.log("seasons triggered");
+        })  
+
+    },[teamId])
+
+    useEffect(()=>{
+                  
+                                
+            getTeamLeagues(teamId, selectedSeason)
+            .then((result)=>{
+                setTeamLeagues(result.data.response)
+                console.log("leagues triggered");
+                // setLeagueId(result.data.response[0].league.id)
             })
-            .then(()=>{
-                getTeamSeasons(teamId)
-                .then(result =>{
-                    setTeamSeasons(result.data.response);
-                    console.log("seasons triggered");
-                })
-            })
-            .then(()=>{
-                getTeamLeagues(teamId, selectedSeason)
-                .then((result)=>{
-                    setTeamLeagues(result.data.response)
-                    console.log("leagues triggered");
-                    // setLeagueId(result.data.response[0].league.id)
-                });
-            })
-            .then(()=>{
+            
                 getTeamStatistics(teamId, selectedSeason, leagueId)
                 .then(result=>{
                     setTeamStatistics(result.data.response);
                     console.log("stats triggered");
                 })
-            })
-            .then(()=>{
-                setStatsLoaded(true);
-            })
+            
+            // .then(()=>{
+            //     setStatsLoaded(true);
+            //     console.log("stats loaded is true");
+                
+            // })
     },
     [teamId,selectedSeason,leagueId])
-
-    // useEffect(()=>{
-    //     getTeamSeasons(teamId)
-    //         .then(result =>{
-    //             setTeamSeasons(result.data.response);
-    //             console.log("seasons triggered");
-    //         })
-    //         .then(()=>{
-               
-                
-    //             setSeasonsLoaded(true);
-    //         })
-    // },[])
-
-    // useEffect(()=>{
-    //     getTeamLeagues(teamId, selectedSeason)
-    //         .then((result)=>{
-    //             setTeamLeagues(result.data.response)
-    //             console.log("leagues triggered");
-    //             // setLeagueId(result.data.response[0].league.id)
-    //         });
-    // },[teamId,selectedSeason])
-
-    // useEffect(()=>{
-        // getTeamStatistics(teamId, selectedSeason, leagueId)
-        // .then(result=>{
-        //     setTeamStatistics(result.data.response);
-        //     // console.log("tt",Object.entries(result.data.response.goals));
-        // })
-        // .then(()=>{
-        //     // if(teamStatistics.length > 0)
-           
-        //     setStatsLoaded(true);
-        // })
-        // async function fetchData(){
-        //     const result=await getTeamStatistics(teamId, selectedSeason, leagueId)
-        //     console.log("stats triggered");            
-        //     setTeamStatistics(result.data.response);
-        //     // setTeamFixtures(teamStatistics?.fixtures);
-        //     // console.log("fixtues:",teamStatistics.fixtures);   
-        //     // setStatsLoaded(true);
-        // }        
-        // fetchData() 
-            // .then(()=>{
-            //     setStatsLoaded(true)
-            // })
-    // },[teamId,selectedSeason,leagueId])
 
     return(
         <div>
@@ -148,7 +106,7 @@ export default function Team(){
                 <div>                                       
                 {
                     <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={selectedSeason} > 
-                    <option>Select season</option>
+                    {/* <option>Select season</option> */}
                     {                        
                         teamSeasons?.map((item,index)=>{
                             return(
@@ -163,7 +121,7 @@ export default function Team(){
                 
                 {/* leagues dropdownbox */}
                 <select ref={leaguesOption} onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId} >  
-                    <option>Select a league</option>
+                    {/* <option>Select a league</option> */}
                     {
                         teamLeagues?.map((item,index)=>{                  
                             return(                                
@@ -179,7 +137,7 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    statsLoaded ?   // if statistics are ready, display it:               
+                    teamStatistics?   // if statistics are ready, display it:               
                     <>
                     <div>
                         {/* fixtures */}
@@ -231,40 +189,63 @@ export default function Team(){
                     <div>
                     <div>Goals</div>
                     <table className='w-full table-auto'>
-                        {/* <thead>                                
+                        <thead>                                
                             <tr>
                                 <td></td>
                                 <td>Home</td>
                                 <td>Away</td>
                                 <td>total</td>                                   
                             </tr>
-                        </thead> */}
+                        </thead>
                         <tbody>
                         {    
                             // statsLoaded ?  
                             // Iterate over the "goals" object using map
                             Object.entries(teamStatistics?.goals).map(([key, value]) => (                                    
                                 <React.Fragment key={key}>
-                                    <tr key={key}>
-                                        <td>{key}</td>
+                                    <tr key={key}>{key}</tr>
+                                    
+                                        {/* <td>{key}</td> */}
                                         {Object.entries(value).map(([subKey, subValue]) => (
-                                            key === 'total' || key === 'average' ?
-                                            <tr key={subKey}>
-                                                <td>{subKey}</td>
-                                                {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
-                                                    <td>{nestedValue}</td>
-                                                // <td key={nestedKey}>
-                                                //     {nestedKey === "total" ? (
-                                                //     <strong>{nestedValue}</strong>
-                                                //     ) : (
-                                                //     nestedValue
-                                                //     )}
-                                                // </td>
-                                                ))}
-                                            </tr>
-                                    :null
+                                            subKey === "total" || subKey === "average" ? 
+                                                // [
+                                                <tr>
+                                                    
+                                                    <td key={subKey}>{subKey}</td>
+                                                    {
+                                                        Object.entries(subValue).map(([nestedKey, nestedValue]) => (
+                                                        <td>{nestedValue}</td>
+                                                    ))  
+                                                    }
+                                                </tr>
+                                                //     (<td></td>),
+                                                //     (<td key={subKey}></td>),
+                                                // Object.entries(subValue).map(([nestedKey, nestedValue]) => (
+                                                //     <td>{nestedValue}</td>
+                                                // ))]                                                    
+                                               
+                                            :null
                                     ))}
-                                    </tr>
+                                     
+                                        {/* <td>{key}</td>
+                                        {Object.entries(value).map(([subKey, subValue]) => (
+                                            subKey === "total" || subKey === "average" ?
+                                                <tr key={subKey}>
+                                                     <td>{subKey}</td>
+                                                    {Object.entries(subValue).map(([nestedKey, nestedValue]) => (
+                                                        <td>{nestedValue}</td>
+                                                    // <td key={nestedKey}>
+                                                    //     {nestedKey === "total" ? (
+                                                    //     <strong>{nestedValue}</strong>
+                                                    //     ) : (
+                                                    //     nestedValue
+                                                    //     )}
+                                                    // </td>
+                                                    ))}
+                                                </tr>
+                                            :null
+                                    ))} */}
+                                    
                                     
                                 </React.Fragment>
                                 ))                         
