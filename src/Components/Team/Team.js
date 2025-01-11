@@ -35,7 +35,7 @@ export default function Team(){
             console.log("seasons triggered");
         })  
 
-    },[teamId])
+    },[leagueId,selectedSeason])
 
     useEffect(()=>{
                   
@@ -47,11 +47,11 @@ export default function Team(){
                 // setLeagueId(result.data.response[0].league.id)
             })
             
-                getTeamStatistics(teamId, selectedSeason, leagueId)
-                .then(result=>{
-                    setTeamStatistics(result.data.response);
-                    console.log("stats triggered");
-                })
+            getTeamStatistics(teamId, selectedSeason, leagueId)
+            .then(result=>{
+                setTeamStatistics(result.data.response);
+                console.log("stats triggered");
+            })
             
             // .then(()=>{
             //     setStatsLoaded(true);
@@ -59,7 +59,7 @@ export default function Team(){
                 
             // })
     },
-    [teamId,selectedSeason,leagueId])
+    [selectedSeason,leagueId])
 
     return(
         <div>
@@ -137,12 +137,11 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics?   // if statistics are ready, display it:               
+                    teamStatistics !== null ?   // if statistics are ready, display it:               
                     <>
                     <div>
                         {/* fixtures */}
                         <div>Fixtures</div>
-
                         <table className='w-full table-auto'>
                             <thead>                                
                                 <tr>

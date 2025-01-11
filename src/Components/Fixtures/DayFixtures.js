@@ -1,4 +1,5 @@
 import React ,{useState, useEffect} from "react";
+import axios from "axios";
 import { groupDateFixtures, getPromisedTeamFixtures } from "../../Api/getFixtures.js";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -18,6 +19,17 @@ export default function DayFixtures(){
 
     useEffect(()=>{
 
+        const response=axios.get('http://localhost:5000/default');
+        response.then((result)=>{
+            console.log("result:",result.data);
+        });
+        // const response=fetch('http://localhost:5000/default',{method:'GET'});
+        // response.then((result)=>{
+        //     result.json().then(data=>console.log("data",data));
+            
+        //     // result.today.json().then(data=>console.log("today",data));    
+        // });
+        // return response.json();
         // groupDateFixtures(selectedDate).then(result=>{
         //     setDateFixtures(result);
         //     console.log(dateFixtures);
