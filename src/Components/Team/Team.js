@@ -6,9 +6,6 @@ import NestedTeamStatistics from './NestedTeamStatistics.js';
 export default function Team(){
 
     const {search}=useLocation();
-    // const leagueQuery=parseInt(new URLSearchParams(search).get("league"));
-    // const seasonQuery=parseInt(new URLSearchParams(search).get("season"));
-
     const teamId =parseInt(useParams().teamId);
     const [teamSeasons,setTeamSeasons]=useState([]); 
     const [seasonsLoaded,setSeasonsLoaded]= useState(false);  

@@ -16,7 +16,7 @@ function Pagination(props) {
     
 
     for(let i=0;i<pagesCount;i++){ //for loop to create items pages, every page has 10 items
-        console.log("loop!");        
+        // console.log("loop!");        
         let page=[];
         for(let k=i*10;k<(i*10)+10;k++){ // to create single page of 10 items
             if(k<items.length){
@@ -30,17 +30,19 @@ function Pagination(props) {
         pages.push(page);
     }
 
-    
+    let ss=[];
     function handlePreferedLeagues(elemLeague){ //set prefered leagues cookie 
         let preferedLeaguesArr=getCookie('prefered_leagues');  
         if(preferedLeaguesArr !== null){
-            if(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0] === undefined){
-                const filteredSeason=elemLeague.seasons.filter((season)=>{
-                    return Date.parse(season.end) > Date.now()
-                })[0];
-                console.log("filtered season",filteredSeason);
-                const seasonYear=filteredSeason.year;
-                const endDate=filteredSeason.end;
+            if( preferedLeaguesArr.find(league=>league.id === elemLeague.league.id) === undefined ){
+            const seasonsLength=elemLeague.seasons.length;
+                console.log("selected league",elemLeague);            
+                // const filteredSeason=elemLeague.seasons.filter((season)=>{
+                //     return Date.parse(season.end) >= Date.now()
+                // })[0];
+                // console.log("filtered season",filteredSeason);
+                const seasonYear= elemLeague.seasons[seasonsLength-1].year;
+                const endDate=elemLeague.seasons[seasonsLength-1].end;
                 preferedLeaguesArr.push({
                     'id':elemLeague.league.id,
                     'name': elemLeague.league.name,

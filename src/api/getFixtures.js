@@ -58,23 +58,32 @@ async function getPromisedDateFixtures(dateString) {
     let leagues = getCookie("prefered_leagues");
     if (leagues.length > 0) {
       let dayArray = [];
-      let promises = leagues.map(async (league, index) => {
-        // if the league is still running get its fixtures, if not delete it from cookie:
-        // if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){
-        await getDateFixtures(league.id, league.season, dateString).then(
-          (result) => {
-            dayArray.push(...result.data.response);
-            dayArray.sort((a, b) => {
-              if (a.fixture.status !== "FT" && b.fixture.status === "FT")
-                return -1;
-              else if (a.fixture.status === "FT" && b.fixture.status !== "FT")
-                return 1;
-              return 0;
-            });
-          }
-        );
-      });
-      await Promise.all(promises);
+      // for(let i=0;i<leagues.length;i++){
+        let result = await getDateFixtures(2,2024,dateString)       
+        dayArray.push(...result.data.response);
+        dayArray.sort((a, b) => {
+          if (a.fixture.status !== "FT" && b.fixture.status === "FT") return -1;
+          else if (a.fixture.status === "FT" && b.fixture.status !== "FT")  return 1;
+          return 0;
+        });
+      // }
+      // let promises = leagues.map(async (league, index) => {
+      //   // if the league is still running get its fixtures, if not delete it from cookie:
+      //   // if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){
+      //   await getDateFixtures(league.id, league.season, dateString).then(
+      //     (result) => {
+      //       dayArray.push(...result.data.response);
+      //       dayArray.sort((a, b) => {
+      //         if (a.fixture.status !== "FT" && b.fixture.status === "FT")
+      //           return -1;
+      //         else if (a.fixture.status === "FT" && b.fixture.status !== "FT")
+      //           return 1;
+      //         return 0;
+      //       });
+      //     }
+      //   );
+      // });
+      // await Promise.all(promises);
       return dayArray;
     } else {
       return [];
@@ -91,7 +100,6 @@ export async function groupDateFixtures(dateString) {
         group[title] = [];
       }
       group[title].push(elem);
-      // console.log("grouped fixtures", group);
       grouped = group;
       return group;
     }, []);
@@ -102,8 +110,6 @@ export async function groupDateFixtures(dateString) {
 async function getPromisedLiveFixtures() {
   let leagues = getCookie("prefered_leagues");
   let ids = leagues.map((league) => league.id).join("-");
-  // console.log("ids", ids);
-
   if (ids.length > 0) {
     let liveArray = [];
 

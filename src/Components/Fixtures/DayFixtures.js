@@ -28,9 +28,15 @@ export default function DayFixtures(){
     useEffect(()=>{
 
         async function fetchFixtures(){
-            const response=await axios.get(`http://localhost:5000/default?date=${selectedDate}`);
-            setDateFixtures(response.allFixtures);
-            setTeamsFixtures(response.teams);
+            // const response=await axios.get(`http://localhost:5000/default?date=${selectedDate}`);
+            const date_response = await groupDateFixtures(selectedDate);
+            const teams_response = await getPromisedTeamFixtures(selectedDate);
+            setDateFixtures(date_response);
+            setTeamsFixtures(teams_response);
+            // console.log("fixtures",date_response);
+            setLoaded(true);            
+            // setDateFixtures(response.allFixtures);
+            // setTeamsFixtures(response.teams);
         }
         fetchFixtures();
         // const response=fetch('http://localhost:5000/default',{method:'GET'});
@@ -57,7 +63,7 @@ export default function DayFixtures(){
     },[selectedDate])
     // 
    
-    console.log("selected date:",selectedDate);   
+    // console.log("selected date:",selectedDate);   
 
     return(
 
@@ -75,7 +81,7 @@ export default function DayFixtures(){
                         <>
                         <div className="p-2 bg-slate-800 text-slate-50">Favourite Leagues</div>
                         {
-                            dateFixtures?
+                            isLoaded ?
                                 <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
                             :
                             <div className="flex justify-center items-center">
@@ -92,7 +98,7 @@ export default function DayFixtures(){
                         <>
                             <div className="p-2 bg-slate-800 text-slate-50">Favourite Teams</div>
                             {
-                                teamsFixtures?
+                               isLoaded ?
                                 <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
                                 :
                                 <div className="flex justify-center items-center">

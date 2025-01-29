@@ -17,7 +17,7 @@ function FixtureRow(props) {
             {
               // checking if this component is rendered within leagueFixtures or todayFixtures as some designs will be changed
               type === "day_matches" ? (
-                <div className="text-left bg-slate-500 p-2 flex justify-start">
+                <div className="text-left bg-slate-400 p-2 flex justify-start">
                   <img
                     alt=""
                     loading="lazy"
@@ -43,131 +43,148 @@ function FixtureRow(props) {
 
             {fixtures[elem].map((elem, i) => {
               return (
-                <div
-                  key={i}
-                  className="flex justify-center mx-auto my-2 border-b border-b-black border-solid"
-                >
-                  {/* Match calendar */}
+                <div>
+                  {
+                    type === "fav_teams_matches" ?
+                      <div className="flex justify-center border-none rounded-md bg-slate-400">
+                        <img loading="lazy" className="ml w-10 h-10" src={elem.league.logo} alt={elem.league.name}/>
+                        <span className="border-none">{elem.league.name}</span>
+                        <span className="border-none">{elem.league.round}</span>
+                      </div>
+                      :null
+                  }
+                  
+                  <div
+                    key={i}
+                    className="flex justify-center mx-auto my-2 border-b border-b-black border-solid"
+                  >
+                    {/* Match calendar */}
 
-                  <div className="flex flex-col justify-center w-[35%]">
-                    {type === "all_fixtures" ? (
+                    <div className="flex flex-col justify-center w-[35%]">
+                      {type === "all_fixtures" ? (
+                        <div>
+                          <FontAwesomeIcon
+                            className="mx-2 h-4"
+                            icon={faCalendar}
+                          ></FontAwesomeIcon>
+                          <span className="border-none">
+                            {new Date(elem.fixture.date).toDateString().substring(4)}
+                          </span>
+                          <br />
+                        </div>
+                      ) : null}
+
                       <div>
+                        <div className="flex ml-auto">
                         <FontAwesomeIcon
                           className="mx-2 h-4"
-                          icon={faCalendar}
+                          icon={faClock}
                         ></FontAwesomeIcon>
                         <span className="border-none">
-                          {new Date(elem.fixture.date).toDateString().substring(4)}
+                          {new Date(elem.fixture.date).getHours() +
+                            ":" +
+                            (new Date(elem.fixture.date).getMinutes().toString()
+                              .length < 2
+                              ? "0" +
+                                new Date(elem.fixture.date).getMinutes().toString()
+                              : new Date(elem.fixture.date)
+                                  .getMinutes()
+                                  .toString())}
                         </span>
-                        <br />
-                      </div>
-                    ) : null}
+                        </div>                                                
+                        </div>
+                        <div>
+                        {
+                          // live indicator:
+                          elem.fixture.status.short === "1H" ||
+                          elem.fixture.status.short === "2H" ||
+                          elem.fixture.status.short === "HT" ||
+                          elem.fixture.short === "ET" ||
+                          elem.fixture.short === "BT" ||
+                          elem.fixture.short === "P" ||
+                          elem.fixture.short === "SUSB" ||
+                          elem.fixture.short === "INT" ? (
+                            <div className="flex ml-2">
+                              <span class="relative flex h-3 w-3 border-none">
+                                <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
+                                <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
+                              </span>
+                              <span className="text-red-800 border-none">{"  Live"}</span>
+                            </div>
+                          ) : null
+                          //
+                        }
+                        </div>
+                        
+                        <div className="py-auto">
+                          <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none">
+                            {elem.fixture.status.short}
+                          </span>
+                        </div>
 
-                    <div>
-                      <FontAwesomeIcon
-                        className="mx-2 h-4"
-                        icon={faClock}
-                      ></FontAwesomeIcon>
-                      <span className="border-none">
-                        {new Date(elem.fixture.date).getHours() +
-                          ":" +
-                          (new Date(elem.fixture.date).getMinutes().toString()
-                            .length < 2
-                            ? "0" +
-                              new Date(elem.fixture.date).getMinutes().toString()
-                            : new Date(elem.fixture.date)
-                                .getMinutes()
-                                .toString())}
-                      </span>
-                      {
-                        // live indicator:
-                        elem.fixture.status.short === "1H" ||
-                        elem.fixture.status.short === "2H" ||
-                        elem.fixture.status.short === "HT" ||
-                        elem.fixture.short === "ET" ||
-                        elem.fixture.short === "BT" ||
-                        elem.fixture.short === "P" ||
-                        elem.fixture.short === "SUSB" ||
-                        elem.fixture.short === "INT" ? (
-                          <div className="flex ml-auto">
-                            <span class="relative flex h-3 w-3 border-none">
-                              <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
-                              <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
-                            </span>
-                            <span className="text-red-800 border-none">{"  Live"}</span>
-                          </div>
-                        ) : null
-                        //
-                      }
-                      </div>
-                      
-                      <div className="py-auto">
-                        <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none">
-                          {elem.fixture.status.short}
-                        </span>
                       </div>
 
-                    </div>
-
-                  {/* Fixture Teams */}
-                  <div
-                    className={`p-auto my-2 ${type === "league" ? "w-[55%] flex justify-between" : "w-[75%] block"} `}
-                    key={i}
-                  >
-                    {/* Home team */}
-                    <div className="flex justify-center items-center w-full my-1">
-                      <img
-                        src={elem.teams.home.logo}
-                        loading="lazy"
-                        className="ml w-10 h-10"
-                        alt={elem.teams.home.name}
-                      />
-
-                      <NavLink
-                        className="w-[50%] text-center"
-                        to={`/teams/${elem.teams.home.id}`}
-                      >
-                        <span className="border-none">{elem.teams.home.name}</span>
-                      </NavLink>
-
-                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
-                        {elem.goals.home === null ? "-" : elem.goals.home}
-                      </span>
-                    </div>
-
-                    {/* Away team */}
+                    {/* Fixture Teams */}
                     <div
-                      className={`flex justify-center items-center w-full my-1 ${type === "league" ? "flex-row-reverse" : "justify-start"}`}
+                      className={`p-auto my-2 ${type === "league" ? "w-[55%] flex justify-between" : "w-[75%] block"} `}
+                      key={i}
                     >
-                      <img
-                        src={elem.teams.away.logo}
-                        loading="lazy"
-                        className="w-10 h-10"
-                        alt={elem.teams.away.name}
-                      />
+                      {/* Home team */}
+                      <div className="flex justify-center items-center w-full my-1">
+                        <img
+                          src={elem.teams.home.logo}
+                          loading="lazy"
+                          className="ml w-10 h-10"
+                          alt={elem.teams.home.name}
+                        />
 
-                      <NavLink
-                        className="w-[50%] text-center"
-                        to={`/teams/${elem.teams.away.id}`}
+                        <NavLink
+                          className="w-[50%] text-center"
+                          to={`/teams/${elem.teams.home.id}`}
+                        >
+                          <span className="border-none">{elem.teams.home.name}</span>
+                        </NavLink>
+
+                        <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
+                          {elem.goals.home === null ? "-" : elem.goals.home}
+                        </span>
+                      </div>
+
+                      {/* Away team */}
+                      <div
+                        className={`flex justify-center items-center w-full my-1 ${type === "league" ? "flex-row-reverse" : "justify-start"}`}
                       >
-                        <span className="border-none">{elem.teams.away.name}</span>
-                      </NavLink>
+                        <img
+                          src={elem.teams.away.logo}
+                          loading="lazy"
+                          className="w-10 h-10"
+                          alt={elem.teams.away.name}
+                        />
 
-                      <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
-                        {elem.goals.away === null ? "-" : elem.goals.away}{" "}
-                      </span>
+                        <NavLink
+                          className="w-[50%] text-center"
+                          to={`/teams/${elem.teams.away.id}`}
+                        >
+                          <span className="border-none">{elem.teams.away.name}</span>
+                        </NavLink>
+
+                        <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
+                          {elem.goals.away === null ? "-" : elem.goals.away}{" "}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Details button */}
-                  <div className="flex items-center w-16">
-                    <NavLink to={`/game/${elem.fixture.id}`}  className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500">
-                      {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
-                        Deatils
-                      {/* </button> */}
-                    </NavLink>  
+                    {/* Details button */}
+                    <div className="flex items-center w-16">
+                      <NavLink to={`/game/${elem.fixture.id}`}  className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500">
+                        {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
+                          Deatils
+                        {/* </button> */}
+                      </NavLink>  
+                    </div>
                   </div>
                 </div>
+                
               );
             })}
           </>
