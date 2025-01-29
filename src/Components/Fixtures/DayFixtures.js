@@ -9,6 +9,14 @@ import { NavLink } from "react-router-dom";
 
 export default function DayFixtures(){
 
+    function getCurrentDate(){
+        const day=new Date().getDate()<10 ? '0'+ new Date().getDate(): new Date().getDate();
+        const month=new Date().getMonth()+1 <10 ? '0'+(new Date().getMonth()+1) : new Date().getMonth()+1;
+        const year=new Date().getFullYear();
+        const currentDate=year.toString()+'-'+month.toString()+'-'+day.toString();
+        return currentDate;
+    }
+
     const [selectedDate,setSelectedDate]=useState(getCurrentDate());
     const [dateFixtures,setDateFixtures]=useState([]);
     const [teamsFixtures,setTeamsFixtures]=useState([]);
@@ -19,10 +27,12 @@ export default function DayFixtures(){
 
     useEffect(()=>{
 
-        const response=axios.get('http://localhost:5000/default');
-        response.then((result)=>{
-            console.log("result:",result.data);
-        });
+        async function fetchFixtures(){
+            const response=await axios.get(`http://localhost:5000/default?date=${selectedDate}`);
+            setDateFixtures(response.allFixtures);
+            setTeamsFixtures(response.teams);
+        }
+        fetchFixtures();
         // const response=fetch('http://localhost:5000/default',{method:'GET'});
         // response.then((result)=>{
         //     result.json().then(data=>console.log("data",data));
@@ -45,18 +55,7 @@ export default function DayFixtures(){
         // })
             
     },[selectedDate])
-
-    function getCurrentDate(){
-        const day=new Date().getDate()<10 ? '0'+ new Date().getDate(): new Date().getDate();
-        const month=new Date().getMonth()+1 <10 ? '0'+(new Date().getMonth()+1) : new Date().getMonth()+1;
-        const year=new Date().getFullYear();
-        const currentDate=year.toString()+'-'+month.toString()+'-'+day.toString();
-        return currentDate;
-    }
     // 
-    function handleDateChange (date) {
-        setSelectedDate(date);
-    };
    
     console.log("selected date:",selectedDate);   
 
@@ -68,7 +67,7 @@ export default function DayFixtures(){
                 {/* selected date fixtures */}
                 <div className="w-full sm:w-[70%] mx-auto rounded-md bg-slate-50 p-2">
                     <div>
-                        <input type="date" onChange={(e)=>handleDateChange(e.target.value)} value={selectedDate} />
+                        <input type="date" onChange={(e)=>setSelectedDate(e.target.value)} value={selectedDate} />
                     </div>
                     {/* favourite champions games */}
                     <div className="w-full">
