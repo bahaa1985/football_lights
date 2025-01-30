@@ -8,6 +8,8 @@ import Team from './Components/Team/Team.js';
 import Home from './Components/Home.js';
 import Preferences from './Components/Preference/Preference.js';
 import logo from './images/logo.jpg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 
@@ -40,11 +42,16 @@ function App() {
       <div className="px-3 my-0 hidden md:visible text-center md:flex md:basis-6/12">
         <ul className="w-[90%] flex sm:space-x-2 text-slate-100 font-semibold">
           <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/fixtures">Fixtures</NavLink></li>
-          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/preference">Preference</NavLink></li>
+          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/leagues">Leagues</NavLink></li>
+          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/teams">Teams</NavLink></li>         
         </ul>
       </div>
 
       <div className="px-3 flex justify-end no-wrap basis-1/3 sm:basis-5/12">
+        <div className='my-auto text-slate-100 font-semibold'>
+        <NavLink className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer" to="/preference">Preference         
+          </NavLink>
+        </div>
         {/* Search bar */}
         <div className="px-3 md:flex justify-between hidden my-auto">
           <svg id="search" viewBox="0 0 512 512" class="h-6 w-6 cursor-pointer p-0.5 rounded-l-md fill-gray-800 bg-[#fff]" title="search">
@@ -59,6 +66,8 @@ function App() {
     <div id="hamburger_items" className="fixed w-full h-0 overflow-y-hidden my-auto top-16 left-0 text-center z-10 ">
       <ul className="myul w-full flex flex-col items-center px-2 bg-slate-900 z-10 text-slate-100">
         <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"><NavLink to='/fixtures'>Fixtures</NavLink></li>
+        <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"><NavLink to='/leagues'>Leagues</NavLink></li>
+        <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"><NavLink to='/teams'>Teams</NavLink></li>
         <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"><NavLink to="/preference">Preference</NavLink></li>
         {/* search bar */}
         <li className="liclass mx-5 py-2">
@@ -75,7 +84,8 @@ function App() {
       <Route path='/' element={<DayFixtures/>}>
       </Route>
       {/* <Route path='/fixtures' element={<DateFixtures />}/> */}
-      <Route path="/leagues/:leagueId/:season" element={<League />}>       
+      <Route path="/leagues" element={<League />}>  
+        <Route path="/leagues/:leagueId/:season"/> 
       </Route>
       <Route path="/fixtures" element={<Game/>} >
         <Route path=":fixtureId"/>

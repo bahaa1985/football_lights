@@ -29,12 +29,12 @@ export default function DayFixtures(){
 
         async function fetchFixtures(){
             // const response=await axios.get(`http://localhost:5000/default?date=${selectedDate}`);
-            const date_response = await groupDateFixtures(selectedDate);
-            const teams_response = await getPromisedTeamFixtures(selectedDate);
-            setDateFixtures(date_response);
-            setTeamsFixtures(teams_response);
-            // console.log("fixtures",date_response);
-            setLoaded(true);            
+            // const date_response = await groupDateFixtures(selectedDate);
+            // const teams_response = await getPromisedTeamFixtures(selectedDate);
+            // setDateFixtures(date_response);
+            // setTeamsFixtures(teams_response);
+            // // console.log("fixtures",date_response);
+            // setLoaded(true);            
             // setDateFixtures(response.allFixtures);
             // setTeamsFixtures(response.teams);
         }
