@@ -10,11 +10,11 @@ function Statistics(props){
 
     useEffect(()=>{
         getStatistics(fixtureId).then((result)=>{ 
-            console.log("statistics is rendered");                      
+            console.log("statistics is rendered",result.data.response);                      
             setHomeStatistics(result.data.response[0].statistics);
             setAwayStatistics(result.data.response[1].statistics);                           
         });                                      
-    },[])
+    },[fixtureId])
 
     let total=0;
 

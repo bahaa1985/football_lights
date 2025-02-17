@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -60,7 +60,7 @@ function FixtureRow(props) {
                   >
                     {/* Match calendar */}
 
-                    <div className="flex flex-col justify-center w-[35%]">
+                    <div className="flex flex-col justify-center w-[15%]">
                       {type === "all_fixtures" ? (
                         <div>
                           <FontAwesomeIcon
@@ -140,7 +140,7 @@ function FixtureRow(props) {
 
                         <NavLink
                           className="w-[50%] text-center"
-                          to={`/teams/${elem.teams.home.id}`}
+                          to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none">{elem.teams.home.name}</span>
                         </NavLink>
@@ -163,7 +163,7 @@ function FixtureRow(props) {
 
                         <NavLink
                           className="w-[50%] text-center"
-                          to={`/teams/${elem.teams.away.id}`}
+                          to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none">{elem.teams.away.name}</span>
                         </NavLink>

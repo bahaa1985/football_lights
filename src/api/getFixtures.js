@@ -59,7 +59,7 @@ async function getPromisedDateFixtures(dateString) {
     if (leagues.length > 0) {
       let dayArray = [];
       // for(let i=0;i<leagues.length;i++){
-        let result = await getDateFixtures(2,2024,dateString)       
+        let result = await getDateFixtures(39,2024,dateString)       
         dayArray.push(...result.data.response);
         dayArray.sort((a, b) => {
           if (a.fixture.status !== "FT" && b.fixture.status === "FT") return -1;
@@ -67,23 +67,6 @@ async function getPromisedDateFixtures(dateString) {
           return 0;
         });
       // }
-      // let promises = leagues.map(async (league, index) => {
-      //   // if the league is still running get its fixtures, if not delete it from cookie:
-      //   // if(Date.parse(league.endDate) >= (Date.now()-1000*60*60*24) ){
-      //   await getDateFixtures(league.id, league.season, dateString).then(
-      //     (result) => {
-      //       dayArray.push(...result.data.response);
-      //       dayArray.sort((a, b) => {
-      //         if (a.fixture.status !== "FT" && b.fixture.status === "FT")
-      //           return -1;
-      //         else if (a.fixture.status === "FT" && b.fixture.status !== "FT")
-      //           return 1;
-      //         return 0;
-      //       });
-      //     }
-      //   );
-      // });
-      // await Promise.all(promises);
       return dayArray;
     } else {
       return [];
@@ -93,17 +76,23 @@ async function getPromisedDateFixtures(dateString) {
 
 export async function groupDateFixtures(dateString) {
   let grouped = [];
-  await getPromisedDateFixtures(dateString).then((result) => {
-    result?.reduce((group, elem) => {
-      const title = elem.league.name + "  " + elem.league.round;
-      if (!group[title]) {
-        group[title] = [];
-      }
-      group[title].push(elem);
-      grouped = group;
-      return group;
-    }, []);
-  });
+  try{
+    await getPromisedDateFixtures(dateString).then((result) => {
+      result?.reduce((group, elem) => {
+        const title = elem.league.name + " - " + elem.league.round;
+        if (!group[title]) {
+          group[title] = [];
+        }
+        group[title].push(elem);
+        grouped = group;
+        return group;
+      },grouped);
+    });
+  }
+  catch(error){
+    console.log("Error grouping date fixtures:",error);
+  }
+  console.log("fixtures",grouped);
   return grouped;
 }
 

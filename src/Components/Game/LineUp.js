@@ -79,7 +79,7 @@ function LineUp(props) {
     .then(()=>{
       setLoaded(true); //for preventing rendering before complete fetching data
     });
-  }, []);
+  }, [fixtureId]);
 
   let playerNameArr = [],
     playerName = "";
@@ -91,7 +91,7 @@ function LineUp(props) {
         <div className="pitch w-full h-[660px] m-auto p-3">
         {/* <img src={pitch} alt="pitch" className="w-full h-full relative t-0 l-0"/> */}
         {/* home scoresheet */}
-        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center">
+        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center my-2">
           <div className="w-full max-h-[25%] m-auto text-center" key={1}>
             <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
           </div>
@@ -114,7 +114,7 @@ function LineUp(props) {
         </div>
 
         {/* away scoresheet */}
-        <div className="w-[90%] h-[45%] flex flex-col items-center text-center">
+        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center my-2">
           {awayFormation.length > 3 ? (
             <div className="w-full h-[25%] m-auto text-center" key={5}>
               <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>

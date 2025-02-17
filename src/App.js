@@ -81,9 +81,8 @@ function App() {
       </ul>
     </div>
     <Routes>
-      <Route path='/' element={<DayFixtures/>}>
+      <Route path='/' element={<Home/>}>
       </Route>
-      {/* <Route path='/fixtures' element={<DateFixtures />}/> */}
       <Route path="/leagues" element={<League />}>  
         <Route path="/leagues/:leagueId/:season"/> 
       </Route>
@@ -101,9 +100,6 @@ function App() {
       <Route path="/game" element={<Game />}> 
         <Route path=":fixtureId"/>
       </Route>
-      {/* <Route path="/events" element={<Events />}>
-        <Route path=":fixtureId"/>
-      </Route> */}
     </Routes>
 
      </Router>

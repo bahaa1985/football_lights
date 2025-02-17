@@ -1,62 +1,57 @@
-import React, { useState, useEffect,useCallback,useMemo,useRef } from 'react';
-import { useParams, useSearchParams, useLocation } from 'react-router-dom';
+import React, { useState, useEffect,useMemo,useRef } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../../Api/getTeamDetails.js';
-import NestedTeamStatistics from './NestedTeamStatistics.js';
 
 export default function Team(){
 
-    const {search}=useLocation();
     const teamId =parseInt(useParams().teamId);
+    const [searchParams] = useSearchParams();
+    const leagueId= searchParams.get('league');
+    const season = searchParams.get('season');
+    
     const [teamSeasons,setTeamSeasons]=useState([]); 
-    const [seasonsLoaded,setSeasonsLoaded]= useState(false);  
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState({});
-    const [selectedSeason,setSelectedSeason]=useState(0);
+    const [selectedSeason,setSelectedSeason]=useState(season ? season  : new Date().getFullYear());
     const [statsLoaded,setStatsLoaded]=useState(false);
-    const [leagueId,setLeagueId]=useState(0);
-    /////
-    const [teamFixtures,setTeamFixtures] = useState([]);
+    const [selectedLeague,setSelectedLeague]=useState(leagueId);
+
     const leaguesOption=useRef();  
 
     useMemo(()=>{
-        getTeamInformation(teamId)
-        .then(result => {
-            setTeamInformation(result.data.response[0]);
+        async function fetchData(){
+            const fetchedInfo = await getTeamInformation(teamId);
+            const fetchedSeasons= await getTeamSeasons(teamId);
+
+            setTeamInformation(fetchedInfo.data.response[0]);
             console.log("info triggered");
-        })
-
-        getTeamSeasons(teamId)
-        .then(result =>{
-            setTeamSeasons(result.data.response);
+            setTeamSeasons(fetchedSeasons.data.response);
             console.log("seasons triggered");
-        })  
-
-    },[leagueId,selectedSeason])
+        }  
+        fetchData();
+    },[])
 
     useEffect(()=>{
-                  
-                                
-            getTeamLeagues(teamId, selectedSeason)
-            .then((result)=>{
-                setTeamLeagues(result.data.response)
-                console.log("leagues triggered");
-                // setLeagueId(result.data.response[0].league.id)
-            })
-            
-            getTeamStatistics(teamId, selectedSeason, leagueId)
-            .then(result=>{
-                setTeamStatistics(result.data.response);
-                console.log("stats triggered");
-            })
-            
-            // .then(()=>{
-            //     setStatsLoaded(true);
-            //     console.log("stats loaded is true");
-                
-            // })
+              
+        async function fetchData(){
+            const fetchedLeagues = await getTeamLeagues(teamId, selectedSeason);
+            setTeamLeagues(fetchedLeagues.data.response);
+            if(!leagueId){
+                setSelectedLeague(teamLeagues[teamLeagues.length-1])
+            }
+            console.log("leagues triggered");
+
+            const fetchedStats= await  getTeamStatistics(teamId, selectedSeason, selectedLeague);
+            setTeamStatistics(fetchedStats.data.response);
+            if(teamStatistics){
+                setStatsLoaded(true);
+            }
+            console.log("stats triggered");
+        }
+        fetchData();
     },
-    [selectedSeason,leagueId])
+    [selectedSeason,selectedLeague])
 
     return(
         <div>
@@ -102,7 +97,7 @@ export default function Team(){
                 // statsLoaded ? // if all data is loaded fill drop boxes:
                 <div>                                       
                 {
-                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} defaultValue={selectedSeason} > 
+                    <select onChange={(e)=>setSelectedSeason(parseInt(e.target.value))} value={selectedSeason} > 
                     {/* <option>Select season</option> */}
                     {                        
                         teamSeasons?.map((item,index)=>{
@@ -117,7 +112,7 @@ export default function Team(){
                 }
                 
                 {/* leagues dropdownbox */}
-                <select ref={leaguesOption} onChange={(e)=>setLeagueId(parseInt(e.target.value))} defaultValue={leagueId} >  
+                <select ref={leaguesOption} onChange={(e)=>setSelectedLeague(parseInt(e.target.value))} value={selectedLeague} >  
                     {/* <option>Select a league</option> */}
                     {
                         teamLeagues?.map((item,index)=>{                  
@@ -134,7 +129,7 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    teamStatistics !== null ?   // if statistics are ready, display it:               
+                    statsLoaded ?   // if statistics are ready, display it:               
                     <>
                     <div>
                         {/* fixtures */}

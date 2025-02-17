@@ -25,7 +25,7 @@ export default function LinePosition(props) {
           playerNameArr = elem.player.name.split(" ");
           // playerNameArr.length > 1  ? (playerName = playerNameArr.slice(1)) : (playerName = playerNameArr[0]);
           return (
-            <NavLink to={`/player/${elem.player.id}`} key={index} className="text-center max-w-[18%]">
+            <NavLink to={`/player/${elem.player.id}`} key={index} className="text-center text-[10px] max-w-[18%]">
               <div className="flex justify-center items-center w-8 h-8 mx-auto rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
                 <span className="border-none">{getPlayerStats(elem.player.id)[0].statistics[0].games.number}</span>
               </div>
