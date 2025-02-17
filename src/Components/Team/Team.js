@@ -1,60 +1,83 @@
 import React, { useState, useEffect,useMemo,useRef } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics , getTeamLeagues} from '../../Api/getTeamDetails.js';
+import { getCookie } from '../../Api/cookie.js';
 
 export default function Team(){
 
-    const teamId =parseInt(useParams().teamId);
+    const teamIdParam =parseInt(useParams().selectedTeam);
+    const teams = getCookie("prefered_teams");
     const [searchParams] = useSearchParams();
-    const leagueId= searchParams.get('league');
+    const leagueParam= searchParams.get('league');
     const season = searchParams.get('season');
     
+    const [selectedTeam,setSelectedTeam] = useState(teamIdParam ? teamIdParam : teams[0].id);
     const [teamSeasons,setTeamSeasons]=useState([]); 
     const [teamLeagues,setTeamLeagues]=useState([]);
     const [teamInformation,setTeamInformation]=useState([]);
     const [teamStatistics,setTeamStatistics]=useState({});
-    const [selectedSeason,setSelectedSeason]=useState(season ? season  : new Date().getFullYear());
+    const [selectedSeason,setSelectedSeason]=useState(season ? season  : new Date().getFullYear()-1);
     const [statsLoaded,setStatsLoaded]=useState(false);
-    const [selectedLeague,setSelectedLeague]=useState(leagueId);
+    const [selectedLeague,setSelectedLeague]=useState(leagueParam);
 
     const leaguesOption=useRef();  
 
-    useMemo(()=>{
+    // useMemo(()=>{
+    //     async function fetchData(){
+    //         const fetchedInfo = await getTeamInformation(selectedTeam);
+    //         const fetchedSeasons= await getTeamSeasons(selectedTeam);
+
+    //         setTeamInformation(fetchedInfo.data.response[0]);
+    //         console.log("info triggered");
+    //         setTeamSeasons(fetchedSeasons.data.response);
+    //         console.log("seasons triggered");
+    //     }  
+    //     fetchData();
+    // },[])
+
+    useEffect(()=>{
+              
         async function fetchData(){
-            const fetchedInfo = await getTeamInformation(teamId);
-            const fetchedSeasons= await getTeamSeasons(teamId);
+
+            const fetchedInfo = await getTeamInformation(selectedTeam);
+            const fetchedSeasons= await getTeamSeasons(selectedTeam);
 
             setTeamInformation(fetchedInfo.data.response[0]);
             console.log("info triggered");
             setTeamSeasons(fetchedSeasons.data.response);
             console.log("seasons triggered");
-        }  
-        fetchData();
-    },[])
 
-    useEffect(()=>{
-              
-        async function fetchData(){
-            const fetchedLeagues = await getTeamLeagues(teamId, selectedSeason);
+            const fetchedLeagues = await getTeamLeagues(selectedTeam, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
-            if(!leagueId){
+            if(!selectedLeague){
                 setSelectedLeague(teamLeagues[teamLeagues.length-1])
             }
             console.log("leagues triggered");
 
-            const fetchedStats= await  getTeamStatistics(teamId, selectedSeason, selectedLeague);
+            const fetchedStats= await  getTeamStatistics(selectedTeam, selectedSeason, selectedLeague);
             setTeamStatistics(fetchedStats.data.response);
-            if(teamStatistics){
-                setStatsLoaded(true);
-            }
-            console.log("stats triggered");
+            setStatsLoaded(true);
+            console.log("stats triggered",teamStatistics);
         }
         fetchData();
     },
-    [selectedSeason,selectedLeague])
+    [selectedSeason,selectedLeague,selectedTeam,selectedLeague])
 
     return(
         <div>
+            {/* Teams dropdown */}
+            <div className='flex justify-start space-x-2'>
+                <span className='border-none'>Select team</span>
+                <select onChange={(e)=>setSelectedTeam(parseInt(e.target.value))} value={selectedTeam}>
+                    {
+                        teams.map((team,index)=>{
+                            return(
+                                <option key={index} value={team.id}>{team.name}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
             {/** Team's basic information */}
             <div className='team-basic'>
                 <div className='team'>

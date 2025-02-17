@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
 
 export default function League() {
-  const league = parseInt(useParams().leagueId);
+  const leagueParam = parseInt(useParams().leagueId);
   const season = parseInt(useParams().season);
 
   const leagues=getCookie("prefered_leagues");
@@ -23,7 +23,7 @@ export default function League() {
   }
 
   const [tab, setTab] = useState("Fixtures");
-  const [selectedleague,setSelectedLeague] = useState(league ? league : leagues[0].id);
+  const [selectedleague,setSelectedLeague] = useState(leagueParam ? leagueParam : leagues[0].id);
   const [selectedSeason,setSelectedSeason] = useState(season ? season : lastSeason);
   const [leagueInfo,setLeagueInfo]=useState();
   const [isLoaded,setLoaded]=useState(false);
@@ -86,11 +86,11 @@ export default function League() {
       {
         isLoaded ?
         <div className="flex justify-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md p-4 my-4">
-          <div className="w-[30%] mx-2">
+          <div className="w-[15%] mx-2">
             <img className="w-24 h-full rounded" src={leagueInfo.league.logo} alt={leagueInfo.league.name} />
           </div>
-          <div className="w-[70%] mx-2"> 
-              <span className="text-[50px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
+          <div className="w-[85%] mx-2"> 
+              <span className="text-[40px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
               <div className="flex justify-start align-middle">
                   <img className="w-16 h-16 rounded" src={leagueInfo.country.flag} alt={leagueInfo.country.name} />
                   <span className="text-[20px] border-none">{leagueInfo.country.name}</span>

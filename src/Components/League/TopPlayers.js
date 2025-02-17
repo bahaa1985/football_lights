@@ -23,7 +23,7 @@ export default function TopPlayers(props) {
   return (
     <div className='w-[90%] md:w-[70%] mx-auto'>
         <table className='w-full table-auto'>
-        <thead className="bg-blue-300 text-left">
+        <thead className="bg-slate-800 text-left">
             <tr className="h-10 text-xl">
                 <td>player</td>
                 <td>Team</td>
@@ -34,7 +34,7 @@ export default function TopPlayers(props) {
         {
           topPlayers?.map((elem, index) => {
           return (
-            <tr key={index} className="even:bg-blue-300 :bg-slate-100 h-8">
+            <tr key={index} className="even:bg-slate-200 :bg-slate-50 h-8">
 
               <td>
                 <div className="flex justify-start">

@@ -11,7 +11,6 @@ export default function Home(){
                 <Favourites/>
                 <DayFixtures />
             </div>
-            <a href="https://www.flaticon.com/free-icons/stadium" title="stadium icons">Stadium icons created by apien - Flaticon</a>
         </div>
     )
 }
