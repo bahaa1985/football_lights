@@ -6,8 +6,8 @@ function Favourites() {
     const teams=getCookie("prefered_teams");
     
     return (  
-        <div className='w-full flex justify-between bg-slate-50'>
-            <div className='flex flex-wrap justify-around'>
+        <div className='w-full bg-slate-50'>
+            <div className='w-full flex flex-wrap justify-start'>
                 <div className='w-full bg-slate-800 text-slate-50 rounded-md'>Favourite Leagues</div>
                 {
                     leagues.map((league,index)=>{
@@ -22,7 +22,7 @@ function Favourites() {
                     })
                 }
             </div>
-            <div className='flex flex-wrap justify-around'>
+            <div className='w-full flex flex-wrap justify-start'>
                 <div className='w-full bg-slate-800 text-slate-50 rounded-md'>Favourite Teams</div>
                 {
                     teams.map((team,index)=>{

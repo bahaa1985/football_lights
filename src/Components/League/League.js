@@ -1,11 +1,11 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState , useEffect } from "react";
 import Standings from "./Standing.js";
 import LeagueFixtures from "./LeagueFixtures.js";
 import { getLeagues } from "../../Api/getLeaguesTeams.js";
-
 import TopPlayers from "./TopPlayers.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);
@@ -22,7 +22,7 @@ export default function League() {
     return seasonsArr;
   }
 
-  const [tab, setTab] = useState("Fixtures");
+  const [tab, setTab] = useState(0);
   const [selectedleague,setSelectedLeague] = useState(leagueParam ? leagueParam : leagues[0].id);
   const [selectedSeason,setSelectedSeason] = useState(season ? season : lastSeason);
   const [leagueInfo,setLeagueInfo]=useState();
@@ -101,7 +101,7 @@ export default function League() {
       }
       
       {/*  */}
-      <div className="flex justify-start space-x-8 w-96 my-2">
+      {/* <div className="flex justify-start space-x-8 w-96 my-2">
           <button
             className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
             onClick={() => setTab("Fixtures")}
@@ -126,14 +126,22 @@ export default function League() {
           >
             Assisters
           </button>
-      </div>
-      {tab === "Fixtures" ? (
+      </div> */}
+      <TabGroup defaultIndex={1} onChange={(index) => setTab(index)}>
+        <TabList>
+          <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Fixtures</Tab>
+          <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Standing</Tab>
+          <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Scorers</Tab>
+          <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Assists</Tab>
+        </TabList>
+      </TabGroup>
+      {tab === 0 ? (
         <LeagueFixtures league={selectedleague} season={selectedSeason} />
-      ) : tab === "Standing" ? (
+      ) : tab === 1 ? (
         <Standings league={selectedleague} season={selectedSeason} />
-      ) : tab === "Scorers" ? (
+      ) : tab === 2 ? (
         <TopPlayers league={selectedleague} season={selectedSeason} type={"Goals"} />
-      ) : tab === "Assists" ? (
+      ) : tab === 3 ? (
         <TopPlayers league={selectedleague} season={selectedSeason} type={"Assists"} />
       ) : null}
       </div>

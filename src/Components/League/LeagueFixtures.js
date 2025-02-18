@@ -2,7 +2,7 @@ import { Fragment, React } from "react";
 import { useState, useEffect } from "react";
 import { groupLeagueFixtures } from "../../Api/getFixtures.js";
 
-import FixtureRow from "../Fixtures/FixtureRow.js";
+import FixtureRow from "../Fixtures/FixtureRow.jsx";
 
 export default function LeagueFixtures(props) {
   const league = props.league;

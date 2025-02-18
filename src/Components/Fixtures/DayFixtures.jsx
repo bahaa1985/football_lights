@@ -1,9 +1,7 @@
 import React ,{useState, useEffect} from "react";
-import axios from "axios";
 import { groupDateFixtures, getPromisedTeamFixtures } from "../../Api/getFixtures.js";
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import FixtureRow from "./FixtureRow.js";
+import FixtureRow from "./FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
 
 export default function DayFixtures(){
@@ -25,7 +23,6 @@ export default function DayFixtures(){
     const teams=getCookie("prefered_teams");
 
     useEffect(()=>{
-
         async function fetchFixtures(){
             const date_response = await groupDateFixtures(selectedDate);
             const teams_response = await getPromisedTeamFixtures(selectedDate);
@@ -55,7 +52,7 @@ export default function DayFixtures(){
                         <>
                         <div className="p-2 bg-slate-800 text-slate-50">Favourite Leagues</div>
                         {
-                            dateFixtures ?
+                            dateFixtures.length > 0 ?
                             <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
                             : 
                             <div className="flex justify-center items-center">
@@ -73,7 +70,7 @@ export default function DayFixtures(){
                         <>
                             <div className="p-2 bg-slate-800 text-slate-50">Favourite Teams</div>
                             {
-                                teamsFixtures ?
+                                teamsFixtures.length > 0 ?
                                 <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
                                 :
                                 <div className="flex justify-center items-center">

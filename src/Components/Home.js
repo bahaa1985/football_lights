@@ -1,6 +1,6 @@
 import React from 'react'
 import Favourites from "./Favourites.js";
-import DayFixtures from './Fixtures/DayFixtures.js';
+import DayFixtures from './Fixtures/DayFixtures.jsx';
 
 export default function Home(){
     

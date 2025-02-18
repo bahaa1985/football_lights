@@ -2,7 +2,7 @@ import { React } from "react";
 import { useState, useEffect } from "react";
 import { groupDateFixtures,groupLiveFixtures } from "../../Api/getFixtures.js";
 import { getCookie, setCookie } from "../../Api/cookie.js";
-import FixtureRow from "./FixtureRow.js";
+import FixtureRow from "./FixtureRow.jsx";
 
 export default function LiveFixtures(props) {
 
