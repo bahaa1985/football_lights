@@ -2,7 +2,6 @@
   "name": "football_lights",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
   "type": "module",
   "dependencies": {
     "@babel/preset-react": "^7.24.1",

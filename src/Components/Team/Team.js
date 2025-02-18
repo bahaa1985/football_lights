@@ -5,10 +5,12 @@ import { getCookie } from '../../Api/cookie.js';
 
 export default function Team(){
 
-    const teamIdParam =parseInt(useParams().selectedTeam);
+    const teamIdParam =parseInt(useParams().teamId);
     const teams = getCookie("prefered_teams");
     const [searchParams] = useSearchParams();
     const leagueParam= searchParams.get('league');
+    console.log("leagueParam",leagueParam);
+    
     const season = searchParams.get('season');
     
     const [selectedTeam,setSelectedTeam] = useState(teamIdParam ? teamIdParam : teams[0].id);
@@ -49,11 +51,13 @@ export default function Team(){
 
             const fetchedLeagues = await getTeamLeagues(selectedTeam, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
-            if(!selectedLeague){
-                setSelectedLeague(teamLeagues[teamLeagues.length-1])
-            }
+            // if(!isNaN(leagueParam)){
+            //     setSelectedLeague(teamLeagues[teamLeagues.length-1])
+            // }
             console.log("leagues triggered");
 
+            console.log("team-league-season",selectedTeam,selectedLeague,selectedSeason);
+            
             const fetchedStats= await  getTeamStatistics(selectedTeam, selectedSeason, selectedLeague);
             setTeamStatistics(fetchedStats.data.response);
             setStatsLoaded(true);
@@ -152,7 +156,7 @@ export default function Team(){
             {/** Team statistics specified to a league */}
             <div>
                 {
-                    statsLoaded ?   // if statistics are ready, display it:               
+                    statsLoaded && Object.keys(teamStatistics).length > 0 ?   // if statistics are ready, display it:               
                     <>
                     <div>
                         {/* fixtures */}
