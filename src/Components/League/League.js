@@ -27,50 +27,73 @@ export default function League() {
   const [selectedSeason,setSelectedSeason] = useState(season ? season : lastSeason);
   const [leagueInfo,setLeagueInfo]=useState();
   const [isLoaded,setLoaded]=useState(false);
+  const [isClicked,setIsClicked]=useState(false);
 
   useEffect(()=>{
-    async function fetchData(){
-      const leagueData = await getLeagues(null, selectedleague);
-      setLeagueInfo(leagueData.data.response[0]);
-      setLoaded(true);
-      console.log(leagueData);
+    if(isClicked === true){
+      async function fetchData(){ 
+        const leagueData = await getLeagues(null, selectedleague);
+        setLeagueInfo(leagueData.data.response[0]);
+        setIsClicked(false);
+        setLoaded(true);
+      }
+      fetchData();    
     }
-    fetchData();
-  },[selectedleague,selectedSeason])
+  },[])
 
-  function handleSelectedLeague(e){
-    setSelectedLeague(parseInt(e.target.value));
-    setTab(null);
+  function handleSelectedLeague(leagueId){
+    setSelectedLeague(leagueId);
+    setIsClicked(true);
   }
 
+  function handleSelectedSeason(e){
+    setSelectedSeason(e.target.value);
+    setIsClicked(true);
+  }
   return (
     <div>
       
       {/* Leagues dropdown */}
       <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">
 
-      <div className="flex justify-start">
-          <span className="bg-slate-800 text-slate-50">Leagues</span>
-          <div className="">
-          {
-            leagues.length>0?
-            <select onChange={(e)=>handleSelectedLeague(e)} value={selectedleague}>
-              {
-                leagues.map((league,index)=>{
-                  return(
-                    <option key={index} value={league.id}>{league.name}</option>
-                  )
-                })
-              }
-            </select>            
-            :
-            null
-          }
-      </div>
+      <div>
+        <div>
+          <span className="text-slate-900">Leagues</span>
+            <div className="">
+            {
+              leagues.length>0?
+              <TabGroup className="bg-slate-800" onChange={(index) => handleSelectedLeague(leagues[index].id)}>
+                <TabList className={`flex flex-row justify-start gap-2`}>
+                  {
+                    leagues.map((league,index)=>{
+                      return(
+                        <Tab key={index} className="rounded-lg bg-transparent text-slate-50 data-[selected]:bg-slate-600 hover:bg-slate-600">
+                          <img className="w-10 h-10 rounded" src={league.logo} alt={league.name} />
+                          <span className="text-[1em] border-none">{league.name}</span>
+                        </Tab>
+                      )
+                    })
+                  }
+                </TabList>
+              </TabGroup>
+              // <select onChange={(e)=>handleSelectedLeague(e)} value={selectedleague}>
+              //   {
+              //     leagues.map((league,index)=>{
+              //       return(
+              //         <option key={index} value={league.id}>{league.name}</option>
+              //       )
+              //     })
+              //   }
+              // </select>            
+              :
+              null
+            }
+        </div>
+      </div>    
       {/* seasons dropdown  */}
       <div className="">
           <span className="bg-slate-800 text-slate-50">Seasons</span>
-          <select onChange={(e)=>parseInt(setSelectedSeason(e.target.value))} defaultValue={lastSeason} value={selectedSeason}>
+          <select onChange={(e)=>handleSelectedSeason(e)} defaultValue={lastSeason} value={selectedSeason}>
             {
               seasons().map((season,index)=>{
                 return(
@@ -80,6 +103,11 @@ export default function League() {
             }
           </select>
       </div>
+      {/*  */}
+      <button className={`rounded-lg bg-slate-800 w-20 p-2 mx-auto ${isClicked ? 'cursor-pointer' : 'cursor-default'}`} onClick={()=>setIsClicked(true)} 
+      disabled={isClicked ? true : false}>
+        OK
+      </button>
       {/*  */}
       </div>
       {/* league info */}
@@ -99,35 +127,7 @@ export default function League() {
         </div>
         :null
       }
-      
-      {/*  */}
-      {/* <div className="flex justify-start space-x-8 w-96 my-2">
-          <button
-            className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("Fixtures")}
-          >
-            Fixtures
-          </button>
-          <button
-            className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("Standing")}
-          >
-            Standing
-          </button>
-          <button
-            className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("Scorers")}
-          >
-            Scorers
-          </button>
-          <button
-            className="p-2 w-20 h-10 bg-blue-600 text-slate-50 rounded-md hover:bg-blue-500"
-            onClick={() => setTab("Assists")}
-          >
-            Assisters
-          </button>
-      </div> */}
-      <TabGroup defaultIndex={1} onChange={(index) => setTab(index)}>
+      <TabGroup onChange={(index) => setTab(index)}>
         <TabList>
           <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Fixtures</Tab>
           <Tab className="bg-slate-500 text-slate-900 rounded-md mx-2 p-4 data-[selected]:bg-slate-900 data-[selected]:text-white">Standing</Tab>
