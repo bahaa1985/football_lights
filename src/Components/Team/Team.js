@@ -143,9 +143,9 @@ export default function Team(){
                     {/* <option>Select a league</option> */}
                     {
                         teamLeagues?.map((item,index)=>{                  
-                            return(                                
-                                <option key={index} value={item.league.id}>{item.league.name}</option>
-                            )})
+                        return(                                
+                            <option key={index} value={item.league.id}>{item.league.name}</option>
+                        )})
                     }
                     </select>
                 </div> 
