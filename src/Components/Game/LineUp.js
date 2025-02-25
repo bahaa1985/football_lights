@@ -1,5 +1,6 @@
 import {React,memo} from "react";
 import { useState,useMemo,useEffect} from "react";
+import SoccerPlayground from "./SoccerPlayground.js";
 import LinePosition from '../Game/LinePosition.js';
 import getLineUps from "../../Api/getLineUp.js";
 import getPlayers from "../../Api/getPlayers.js";
@@ -8,11 +9,11 @@ import pitch from "../../images/pitch.png";
 
 //main function
 function LineUp(props) {
-  // const homeId = props.teams[0];
-  // const awayId = props.teams[1];
+  const homeParam = props.teams.home.id;
+  const awayParam = props.teams.away.id;
   const fixtureId = props.fixtureId;
   ///Home team details:
-  const [homeId,setHomeId] = useState(0);
+  const [homeId,setHomeId] = useState(homeParam);
   const [homeTeam, setHomeTeam] = useState("");
   const [homeLogo,setHomeLogo] = useState("");
   const [homeLineUp, setHomeLineUp] = useState([]);
@@ -23,7 +24,7 @@ function LineUp(props) {
   const [homeCoach, setHomeCoash] = useState({});
   const [homeSub, setHomeSub] = useState([]);
   /// Away team details:
-  const [awayId,setAwayId] = useState(0);
+  const [awayId,setAwayId] = useState(awayParam);
   const [awayTeam, setAwayTeam] = useState("");
   const [awayLogo,setAwayLogo] = useState("");
   const [awayLineUp, setAwayLineUp] = useState([]);
@@ -34,6 +35,7 @@ function LineUp(props) {
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
 
+  const homeLines=[],awayLines = [];
   const [clickedSub, setClickedSub] = useState(homeId);
   const [isLoaded,setLoaded]=useState(false); //for preventing rendering before complete fetching data
 
@@ -43,9 +45,6 @@ function LineUp(props) {
    
     
     getLineUps(fixtureId).then((result) => {
-      // console.log("line up:",result);
-      console.log("line up is rendered");
-
       setHomeLineUp(result.data.response[0].startXI);
       setHomeFormation(
         Array.from(result.data.response[0].formation.replaceAll("-", ""))
@@ -73,85 +72,86 @@ function LineUp(props) {
     getPlayers(fixtureId).then((result) => {
       setHomePlayers(result.data.response[0].players);
       setAwayPlayers(result.data.response[1].players);
-      // console.log("player statistics:",result.data.response);
-      
     })
     .then(()=>{
       setLoaded(true); //for preventing rendering before complete fetching data
     });
   }, [fixtureId]);
 
-  let playerNameArr = [],
-    playerName = "";
+  let playerNameArr = [], playerName = "";
   return (
-    <div className="xs:block sm:flex sm:justify-between">
+    <div className="block mt-40 mx-auto">
       {
         isLoaded  ?
         <>
-        <div className="pitch w-full h-[660px] m-auto p-3">
-        {/* <img src={pitch} alt="pitch" className="w-full h-full relative t-0 l-0"/> */}
-        {/* home scoresheet */}
-        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center my-2">
-          <div className="w-full max-h-[25%] m-auto text-center" key={1}>
+        {
+          homeLines.push(
             <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
-          </div>
-          <div className="w-full h-[25%] m-auto text-center" key={2}>
+          )
+        }
+        {
+          homeLines.push(
             <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>
-          </div>
-
-          <div className="w-full h-[25%] m-auto text-center" key={3}>
+          )
+        }
+        {
+          homeLines.push(
             <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>
-          </div>
-
-          <div className="w-full h-[25%] m-auto text-center" key={4}>
+          )
+        }
+        {
+          homeLines.push(
             <LinePosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor} statistics={homePlayers} />
-          </div>
-          {homeFormation.length > 3 ? (
-            <div className="w-full h-[25%] m-auto text-center" key={5}>
+          )
+        }
+        {
+          homeFormation.length > 3 ? homeLines.push(
               <LinePosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} statistics={homePlayers} />
-            </div>
-          ) : null}
-        </div>
-
-        {/* away scoresheet */}
-        <div className="w-full h-[45%] mx-auto flex flex-col items-center text-center my-2">
-          {awayFormation.length > 3 ? (
-            <div className="w-full h-[25%] m-auto text-center" key={5}>
+          ) : null
+        }
+        {/* Away lines */}
+        {
+          awayFormation.length > 3 ? awayLines.push(  
               <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
-            </div>
-          ) : null}
-          <div className="w-full h-[25%] m-auto text-center" key={4}>
-            <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />
-          </div>
-          <div className="w-full h-[25%] m-auto text-center" key={3}>
-            <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}
-            />
-          </div>
-          <div className="w-full h-[25%] m-auto text-center" key={2}>
-            <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}
-            />
-          </div>
-          <div className="w-full  h-[25%] m-auto text-center" key={1}>
-            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />
-          </div>
-        </div>
-      </div>
-        {/* Coaches and subs section */}
-      <div className="w-[90%] sm:w-[70%] m-auto p-3">
+          
+          ) : null
+        }
+        {
+          awayLines.push(
+            <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />)
+        }
+        {
+          awayLines.push(
+            <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}/>)
+        }
+        {
+          awayLines.push(
+            <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}/>)
+        }
+        {
+          awayLines.push(
+            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />)
+        }
+
+      {/* Playground */}
+      <SoccerPlayground homeLines={homeLines} awayLines={awayLines} />
+        
+      {/* Coaches and subs section */}
+      <div className="w-full md:w-1/2 m-auto p-3">
       {
         <>
           <div className="flex w-full justify-between">
-            <div className="flex justify-around w-1/2 bg-slate-800 cursor-pointer" onClick={()=>[setClickedSub(homeId),console.log("clickedSub",clickedSub)]}>
+            <div className={`flex justify-start py-2 w-1/2 ${clickedSub === homeId ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`} onClick={()=>setClickedSub(homeId)}>
               <img alt={homeTeam} src={homeLogo} className="w-8 h-8"/>
-              <span className="w-1/2 text-slate-50 border-none" >
+              <span className="w-1/2 text-center text-slate-50 border-none align-middle" >
                 {homeTeam}
               </span>
             </div>
-            <div className="flex justify-around w-1/2 bg-slate-800 cursor-pointer"  onClick={()=>[setClickedSub(awayId),console.log("clickedSub",clickedSub)]}>
-              <img alt={awayTeam} src={awayLogo} className="w-8 h-8"/>
-              <span className="w-1/2 text-slate-50 border-none">
+            <div className={`flex justify-end py-2 w-1/2 ${clickedSub === awayId ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}  onClick={()=>setClickedSub(awayId)}>
+              <span className="w-1/2 text-center text-slate-50 border-none align-middle">
                 {awayTeam}
               </span>
+              <img alt={awayTeam} src={awayLogo} className="w-8 h-8"/> 
             </div>
           </div>
           {clickedSub === homeId ? (

@@ -10,18 +10,19 @@ function Game(){
     const [gameData,setGameData]=useState([]);
     const [tab, setTab] = useState("");
     const params=useParams();
+    const fixtureId=params.fixtureId;
    
     useEffect(()=>{               
-         getGame(params.fixtureId).then((result)=>{
+         getGame(fixtureId).then((result)=>{
             setGameData(result.data.response[0])
         })
     },
-    [params.fixtureId]
+    [fixtureId]
 )
 // console.log("gd",gameData);
 
     return(
-        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
+        <div className="relative left-[50%] -translate-x-[50%] w-[90%]">                            
             <div key={gameData?.fixture?.id} className="flex justify-around w-[90%] sm:w-[60%] items-center mx-auto">
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.home?.name}</span></NavLink>
@@ -52,7 +53,7 @@ function Game(){
             ) : tab === "Statistics" ? (
               <Statistics fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : tab === "Line Up" ? (
-              <LineUp fixtureId={gameData?.fixture?.id} />
+              <LineUp fixtureId={gameData?.fixture?.id} teams={gameData?.teams} />
             ) : null
           }
         </>

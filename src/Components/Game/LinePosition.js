@@ -8,24 +8,23 @@ export default function LinePosition(props) {
   
     const sp_lineup = lineup.filter((player) => player.player.grid[0] === grid)
       .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
-    
-      // console.log("sp_lineup:",sp_lineup);
+
+
     function getPlayerStats(playerId){
       const stats= statistics.filter(elem=>elem.player.id === playerId)
-      // console.log("stats",stats); 
       return stats;
     } 
 
     let playerNameArr = [];
     
     return (
-      <div className="flex justify-around w-full">
+      <div className="flex flex-col h-full my-auto">
         {sp_lineup?.map((elem, index) => {
           //iterate each player in the line to get his details
           playerNameArr = elem.player.name.split(" ");
-          // playerNameArr.length > 1  ? (playerName = playerNameArr.slice(1)) : (playerName = playerNameArr[0]);
           return (
-            <NavLink to={`/player/${elem.player.id}`} key={index} className="text-center text-[10px] max-w-[18%]">
+            <NavLink to={`/player/${elem.player.id}`} key={index} 
+              className="text-center text-[12px] w-full m-auto">
               <div className="flex justify-center items-center w-8 h-8 mx-auto rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
                 <span className="border-none">{getPlayerStats(elem.player.id)[0].statistics[0].games.number}</span>
               </div>

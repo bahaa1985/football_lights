@@ -32,11 +32,11 @@ function FixtureRow(props) {
                     <span className="text-left text-slate-100 border-none">{elem}</span>
                   </NavLink>
                 </div>
-              ) : type === "all_fixtures" ? (
+              ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove emoty gameweeks after filtering by round number
                 <div className="bg-slate-500 text-slate-50">
-                  {parseInt(fixtures[elem][0]?.league.id) !== 2
+                  {fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? "Game Week " + parseInt(index + 1)
-                    : "Round " + Object.keys(fixtures)[index]}
+                    : fixtures[elem][0]?.league.round}
                 </div>
               ) : null
             }
