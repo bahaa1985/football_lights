@@ -9,47 +9,54 @@ const SoccerPlayground = (props) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        
+
+        canvas.width = 800;
+        canvas.height = 500;
+
         function drawField() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.strokeStyle = "white";
             ctx.lineWidth = 3;
             
+            const fieldWidth = canvas.width;
+            const fieldHeight = canvas.height;
+            
             // Outer border
-            ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+            ctx.strokeRect(5, 5, fieldWidth - 10, fieldHeight - 10);
             
             // Center line
             ctx.beginPath();
-            ctx.moveTo(canvas.width / 2, 5);
-            ctx.lineTo(canvas.width / 2, canvas.height - 5);
+            ctx.moveTo(fieldWidth / 2, 5);
+            ctx.lineTo(fieldWidth / 2, fieldHeight - 5);
             ctx.stroke();
             
             // Center circle
+            const centerCircleRadius = 50;
             ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2);
+            ctx.arc(fieldWidth / 2, fieldHeight / 2, centerCircleRadius, 0, Math.PI * 2);
             ctx.stroke();
             
             // Penalty areas
-            ctx.strokeRect(5, (canvas.height / 2) - 80, 70, 160);
-            ctx.strokeRect(canvas.width - 75, (canvas.height / 2) - 80, 70, 160);
+            ctx.strokeRect(5, (fieldHeight / 2) - 80, 100, 160);
+            ctx.strokeRect(fieldWidth - 105, (fieldHeight / 2) - 80, 100, 160);
             
             // Goal areas
-            ctx.strokeRect(5, (canvas.height / 2) - 30, 20, 60);
-            ctx.strokeRect(canvas.width - 25, (canvas.height / 2) - 30, 20, 60);
+            ctx.strokeRect(5, (fieldHeight / 2) - 30, 40, 60);
+            ctx.strokeRect(fieldWidth - 45, (fieldHeight / 2) - 30, 40, 60);
             
             // Center spot
             ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, 3, 0, Math.PI * 2);
+            ctx.arc(fieldWidth / 2, fieldHeight / 2, 3, 0, Math.PI * 2);
             ctx.fillStyle = "white";
             ctx.fill();
         }
-        
+
         drawField();
-    }, []);
+        }, []);
 
     return (
-        <div className="relative w-[810px] h-[410x] m-auto bg-[#27ae60] border-5 border-white
-         xs:-rotate-[90deg] sm:rotate-[90deg]">
+        <div className="relative w-[810px] h-[410x] m-auto bg-[#27ae60] border-5 border-solid border-white
+         z-10">
             <div className="absolute w-[50%] h-full left-0 flex justify-around">
                 {/* Left half field */}
                 {
@@ -71,7 +78,7 @@ const SoccerPlayground = (props) => {
                     })
                 }
             </div>
-            <canvas ref={canvasRef} width={800} height={400} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }} />
+            <canvas ref={canvasRef}  />
         </div>
     );
 };

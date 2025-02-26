@@ -195,8 +195,8 @@ function LineUp(props) {
                 <img alt="" src={awayCoach.photo} />
                 <span>Coach: {awayCoach.name}</span>
               </div>
-              <div>Formation: {awayFormation.join("-")}</div>
-              <div className="substitues">
+                <div>Formation: {awayFormation.join("-")}</div>
+                <div className="substitues">
                 {awaySub.map((sub,index) => {
                   playerNameArr = sub.player.name.split(" ");
                   playerNameArr.length > 1

@@ -31,6 +31,9 @@ export default function DayFixtures(){
             setLoaded(true);
         }
         fetchFixtures();
+
+        console.log("ty",dateFixtures);
+        
     },[selectedDate])  
 
     return(
@@ -52,7 +55,7 @@ export default function DayFixtures(){
                         <>
                         <div className="p-2 bg-slate-800 text-slate-50">Favourite Leagues</div>
                         {
-                            dateFixtures.length > 0 ?
+                            dateFixtures?
                             <FixtureRow type={"day_matches"} fixturesSource={dateFixtures}/>
                             : 
                             <div className="flex justify-center items-center">
@@ -70,7 +73,7 @@ export default function DayFixtures(){
                         <>
                             <div className="p-2 bg-slate-800 text-slate-50">Favourite Teams</div>
                             {
-                                teamsFixtures.length > 0 ?
+                                teamsFixtures?.length > 0 ?
                                 <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}/>
                                 :
                                 <div className="flex justify-center items-center">
