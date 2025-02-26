@@ -3,6 +3,13 @@ import React, { useEffect, useRef } from "react";
 const SoccerPlayground = (props) => {
     const homeLines = props.homeLines;
     const awayLines = props.awayLines;
+    const homeTeam = props.teams[0].home;
+    const awayTeam = props.teams[1].away;
+    const homeLogo = props.teams[0].homeLogo;
+    const awayLogo = props.teams[1].awayLogo;
+    console.log("homeLogo",homeLogo);
+    console.log("awayLogo",awayLogo);
+    
 
     const canvasRef = useRef(null);
 
@@ -55,10 +62,20 @@ const SoccerPlayground = (props) => {
         }, []);
 
     return (
-        <div className="relative w-[810px] h-[410x] m-auto bg-[#27ae60] border-5 border-solid border-white
-         z-10">
-            <div className="absolute w-[50%] h-full left-0 flex justify-around">
-                {/* Left half field */}
+        <div>
+            {/* <div className={`w-full flex flex-row`}>
+                <div className="w-1/2 flex justify-start">
+                    <img className="w-8 h-8 rounded" src={homeLogo} alt={homeTeam} />
+                    <span className={`border-none`}>{homeTeam}</span>                    
+                </div>
+                <div className="w-1/2 flex justify-end">
+                    <span className={`border-none`}>{awayTeam}</span> 
+                    <img className="w-8 h-8 rounded" src={awayLogo} alt={awayTeam} />                                   
+                </div> 
+            </div>          */}
+        <div className="relative w-[810px] h-[410x] m-auto bg-[#27ae60] border-5 border-solid border-white">            
+             {/* Left half field */}
+            <div className="absolute w-[50%] h-full left-0 flex justify-around">               
                 {
                     homeLines.map((line,index)=>{
                         return(
@@ -66,7 +83,7 @@ const SoccerPlayground = (props) => {
                         )
                     })
                 }
-             
+                {/* <img className={`absolute w-[60%] h-[60%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  opacity-50`} src={homeLogo} alt=""  /> */}
             </div>
             <div className="absolute w-[50%] h-full right-0 flex justify-around">
                 {/* Right half field */}
@@ -77,9 +94,12 @@ const SoccerPlayground = (props) => {
                         )
                     })
                 }
+                 {/* <img className={`absolute w-[60%] h-[60%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  opacity-50`} src={awayLogo} alt=""  /> */}
             </div>
-            <canvas ref={canvasRef}  />
+            <canvas width={800} height={400} ref={canvasRef}  />
         </div>
+        </div>
+        
     );
 };
 

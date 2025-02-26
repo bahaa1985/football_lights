@@ -80,61 +80,36 @@ function LineUp(props) {
 
   let playerNameArr = [], playerName = "";
   return (
-    <div className="block mt-40 mx-auto">
+    <div className="block mx-auto">
       {
         isLoaded  ?
         <>
+        {/* Home Lines */}
         {
           homeLines.push(
-            <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />
-          )
-        }
-        {
-          homeLines.push(
-            <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>
-          )
-        }
-        {
-          homeLines.push(
-            <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>
-          )
-        }
-        {
-          homeLines.push(
-            <LinePosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor} statistics={homePlayers} />
-          )
-        }
-        {
-          homeFormation.length > 3 ? homeLines.push(
-              <LinePosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} statistics={homePlayers} />
-          ) : null
+            <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />,
+            <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>,
+            <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>,
+            <LinePosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor} statistics={homePlayers} />,
+            homeFormation.length > 3 ? 
+                <LinePosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} statistics={homePlayers} />
+                : null
+              ) 
         }
         {/* Away lines */}
         {
-          awayFormation.length > 3 ? awayLines.push(  
-              <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
-          
-          ) : null
-        }
-        {
-          awayLines.push(
-            <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />)
-        }
-        {
-          awayLines.push(
-            <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}/>)
-        }
-        {
-          awayLines.push(
-            <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}/>)
-        }
-        {
-          awayLines.push(
-            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />)
+          awayLines.push( awayFormation.length > 3 ?  
+            <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
+              : null,
+            <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />,
+            <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}/>,
+            <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}/>,
+            <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />
+          )
         }
 
       {/* Playground */}
-      <SoccerPlayground homeLines={homeLines} awayLines={awayLines} />
+      <SoccerPlayground homeLines={homeLines} awayLines={awayLines} teams={[{'home':homeTeam,'homeLogo':homeLogo},{'away':awayTeam,'awayLogo':awayLogo}]} />
         
       {/* Coaches and subs section */}
       <div className="w-full md:w-1/2 m-auto p-3">

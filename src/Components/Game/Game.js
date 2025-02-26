@@ -22,7 +22,7 @@ function Game(){
 // console.log("gd",gameData);
 
     return(
-        <div className="relative left-[50%] -translate-x-[50%] w-[90%]">                            
+        <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
             <div key={gameData?.fixture?.id} className="flex justify-around w-[90%] sm:w-[60%] items-center mx-auto">
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.home?.name}</span></NavLink>
