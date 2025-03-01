@@ -16,12 +16,12 @@ function Events(props){
     const teams= props.teams;
     const [events,setEvents] = useState([])  
 
-    useEffect(()=>{
+    useMemo(()=>{
         getEvents(fixtureId).then((result)=>{
             console.log("events are rendered");
            setEvents( result.data.response )
         })        
-    },[])
+    },[fixtureId])
     
     // console.log("grouped events",events);
     const events_div=(player,assist,type,detail,index,comments)=>{
@@ -79,4 +79,4 @@ function Events(props){
     )}
                         
 
-export default Events
+export default memo(Events)

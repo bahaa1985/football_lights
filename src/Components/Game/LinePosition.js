@@ -1,12 +1,16 @@
+import {memo} from 'react';
 import { NavLink } from "react-router-dom";
-export default function LinePosition(props) {
+ 
+function LinePosition(props) {
     //create squad lines
     const lineup = props.lineup;
+    console.log("lineup",lineup);
+    
     const grid = props.grid.toString(); //position of the palyers
     const colors = props.colors; //kit colors
     const statistics=props.statistics;
   
-    const sp_lineup = lineup.filter((player) => player.player.grid[0] === grid)
+    const sp_lineup = lineup.filter((elem) => elem.player.grid[0] === grid)
       .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
 
 
@@ -18,7 +22,7 @@ export default function LinePosition(props) {
     let playerNameArr = [];
     
     return (
-      <div className="flex flex-col h-full my-auto">
+      <div className="flex flex-row h-auto my-auto">
         {sp_lineup?.map((elem, index) => {
           //iterate each player in the line to get his details
           playerNameArr = elem.player.name.split(" ");
@@ -60,3 +64,5 @@ export default function LinePosition(props) {
       </div>
     );
   }
+
+  export default memo(LinePosition);
