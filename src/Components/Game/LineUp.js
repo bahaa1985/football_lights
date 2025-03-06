@@ -33,6 +33,7 @@ function LineUp(props) {
   const [awayPlayerColor, setAwayPlayrColor] = useState([]); //kit colors
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
+  ///
   const [clickedSub, setClickedSub] = useState(homeId);
   const [isLoaded,setLoaded]=useState(false); //for preventing rendering before complete fetching data
 
@@ -112,6 +113,10 @@ function LineUp(props) {
       {setLinesPositions()}
 
       {/* Playground */}
+      <div>
+        <button></button>
+        <button></button>
+      </div>
       <SoccerPlayground homeLines={homeLines} awayLines={awayLines} teams={[{'home':homeTeam,'homeLogo':homeLogo},{'away':awayTeam,'awayLogo':awayLogo}]} />
         
       {/* Coaches and subs section */}

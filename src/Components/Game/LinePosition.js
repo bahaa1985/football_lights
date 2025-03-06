@@ -4,11 +4,14 @@ import { NavLink } from "react-router-dom";
 function LinePosition(props) {
     //create squad lines
     const lineup = props.lineup;
-    console.log("lineup",lineup);
+    // console.log("lineup",lineup);
     
     const grid = props.grid.toString(); //position of the palyers
     const colors = props.colors; //kit colors
     const statistics=props.statistics;
+
+    console.log("statistics",statistics);
+    
   
     const sp_lineup = lineup.filter((elem) => elem.player.grid[0] === grid)
       .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
@@ -29,10 +32,18 @@ function LinePosition(props) {
           return (
             <NavLink to={`/player/${elem.player.id}`} key={index} 
               className="text-center text-[12px] w-full m-auto">
-              <div className="flex justify-center items-center w-8 h-8 mx-auto rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
-                <span className="border-none">{getPlayerStats(elem.player.id)[0].statistics[0].games.number}</span>
+              <div className="flex justify-center items-center w-10 h-10 mx-auto my-1 rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
+                <img className='w-10 h-10 rounded-full' src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
               </div>
-              <div className="flex justify-center items-center">
+              <div className='flex justify-center items-center'>
+                <span className="p-1 font-bold text-slate-200 border-none">{elem.player.number}</span>
+                <span className="p-1 font-bold text-slate-50 border-none">
+                  {playerNameArr.length > 1
+                    ? playerNameArr.slice(1)
+                    : playerNameArr[0]}
+                </span>
+              </div>
+              {/* <div className="flex justify-center items-center">
                 <span className={`p-1
                   ${
                     getPlayerStats(elem.player.id)[0].statistics[0].games.rating >= 0 && getPlayerStats(elem.player.id)[0].statistics[0].games.rating <= 4.9 ?
@@ -56,7 +67,7 @@ function LinePosition(props) {
                     ? playerNameArr.slice(1)
                     : playerNameArr[0]}
                 </span>
-              </div>
+              </div> */}
               
             </NavLink>
           );
