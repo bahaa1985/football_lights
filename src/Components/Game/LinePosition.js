@@ -10,7 +10,7 @@ function LinePosition(props) {
     const colors = props.colors; //kit colors
     const statistics=props.statistics;
 
-    console.log("statistics",statistics);
+    // console.log("statistics",statistics);
     
   
     const sp_lineup = lineup.filter((elem) => elem.player.grid[0] === grid)
@@ -31,8 +31,8 @@ function LinePosition(props) {
           playerNameArr = elem.player.name.split(" ");
           return (
             <NavLink to={`/player/${elem.player.id}`} key={index} 
-              className="text-center text-[12px] w-full m-auto">
-              <div className="flex justify-center items-center w-10 h-10 mx-auto my-1 rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
+              className="text-center text-[12px] w-full m-auto z-10">
+              <div className="flex justify-center items-center w-10 h-10 mx-auto my rounded-full" style={{backgroundColor:'#'+ colors.primary}}>
                 <img className='w-10 h-10 rounded-full' src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
               </div>
               <div className='flex justify-center items-center'>

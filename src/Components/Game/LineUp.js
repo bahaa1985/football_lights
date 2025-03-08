@@ -2,6 +2,7 @@ import {React,memo} from "react";
 import { useState,useMemo,useEffect} from "react";
 import SoccerPlayground from "./SoccerPlayground.js";
 import LinePosition from '../Game/LinePosition.js';
+import Ratings from "./Ratings.js";
 import getLineUps from "../../Api/getLineUp.js";
 import getPlayers from "../../Api/getPlayers.js";
 import "../../styles/lineup.css";
@@ -73,51 +74,66 @@ function LineUp(props) {
       setAwayPlayers(players_response.data.response[1].players);
       //
       setLoaded(true);
-      //
-      console.log("home",homeLineUp);
-      
     }
     fetchLineUp();
   }, [fixtureId]);
 
-  function setLinesPositions(){
-    // {/* Home Lines: */}
-      homeLines.push(
-      <LinePosition lineup={homeLineUp} grid={"1"} colors={homeGkColor} statistics={homePlayers} />,
-      <LinePosition lineup={homeLineUp} grid={"2"} colors={homePlayerColor} statistics={homePlayers}/>,
-      <LinePosition lineup={homeLineUp} grid={"3"} colors={homePlayerColor} statistics={homePlayers}/>,
-      <LinePosition lineup={homeLineUp} grid={"4"} colors={homePlayerColor} statistics={homePlayers} />,
-      homeFormation.length > 3 ? 
-          <LinePosition lineup={homeLineUp} grid={"5"} colors={homePlayerColor} statistics={homePlayers} />
-      : null
-      ) ;
-    // {/* Away Lines: */}
-    awayLines.push(
-      awayFormation.length > 3 ?  
-      <LinePosition lineup={awayLineUp} grid={"5"} colors={awayPlayerColor} statistics={awayPlayers}/>
-      : null,
-      <LinePosition lineup={awayLineUp} grid={"4"} colors={awayPlayerColor} statistics={awayPlayers} />,
-      <LinePosition lineup={awayLineUp} grid={"3"} colors={awayPlayerColor} statistics={awayPlayers}/>,
-      <LinePosition lineup={awayLineUp} grid={"2"} colors={awayPlayerColor} statistics={awayPlayers}/>,
-      <LinePosition lineup={awayLineUp} grid={"1"} colors={awayGkColor} statistics={awayPlayers} />
-      )
+  function linesPositions(){
+    // Home Lines:
+      for(let i=0 ; i <homeFormation.length+1 ; i++){
+        homeLines.push(
+          <LinePosition lineup={homeLineUp} grid={(i+1).toString()} colors={homeGkColor} statistics={homePlayers} />)
+      }
+    // Away Lines:
+    for(let i=awayFormation.length+1 ; i > -1 ; i--){
+      awayLines.push(
+        <LinePosition lineup={awayLineUp} grid={(i+1).toString()} colors={awayGkColor} statistics={awayPlayers} />)
+    }
+  }
+
+  function teamRating(players){
+    let totalAvg=0.1;
+    players.map((player,index)=>{
+      if(!isNaN(parseFloat(player.statistics[0].games.rating)))
+      {
+        totalAvg+=parseInt(player.statistics[0].games.rating);
+      }
+    })
+    const playersCount=players.filter((player)=>player.statistics[0].games.minutes > 0).length;
+    totalAvg /= playersCount;
+    totalAvg = totalAvg.toFixed(1);
+    return totalAvg;
   }
   
   let homeLines=[],awayLines = [];
   let playerNameArr = [], playerName = "";
   return (
-    <div className="block mx-auto md:flex md:justify-between">
+    <div>
+      <div className="block mx-auto md:flex md:justify-between">
       {
         isLoaded  ?
         <>
-      {setLinesPositions()}
+      {linesPositions()}
 
       {/* Playground */}
-      <div>
-        <button></button>
-        <button></button>
+      <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
+          <div className={`flex justify-start p-2 w-full rounded-md bg-slate-800`}>
+            <img alt={homeTeam} src={homeLogo} className="w-8 h-8"/>
+            <span className="w-1/2 text-center text-slate-50 border-none align-middle" >
+              {homeTeam}
+            </span>
+            <span className="text-center text-slate-50 border-none align-middle">{teamRating(homePlayers)}</span>
+          </div>
+        <SoccerPlayground homeLines={homeLines} awayLines={awayLines} teams={[{'home':homeTeam,'homeLogo':homeLogo},{'away':awayTeam,'awayLogo':awayLogo}]} />   
+          <div className={`flex justify-start p-2 w-full rounded-md bg-slate-800`}>
+            <img alt={awayTeam} src={awayLogo} className="w-8 h-8"/>
+            <span className="w-1/2 text-center text-slate-50 border-none align-middle" >
+              {awayTeam}
+            </span>
+            <span className="text-center text-slate-50 border-none align-middle">{teamRating(awayPlayers)}</span>
+          </div>
       </div>
-      <SoccerPlayground homeLines={homeLines} awayLines={awayLines} teams={[{'home':homeTeam,'homeLogo':homeLogo},{'away':awayTeam,'awayLogo':awayLogo}]} />
+     
         
       {/* Coaches and subs section */}
       <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
@@ -215,11 +231,16 @@ function LineUp(props) {
         </>
       }
     </div>
+
+    {/* Ratings */}
+    <Ratings teams={[homeTeam,awayTeam]} statistics={[homePlayers,awayPlayers]} />
       </>
         :
         null
       }
     </div>
+  </div>
+    
   );
 }
 

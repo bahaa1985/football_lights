@@ -8,11 +8,11 @@ const SoccerPlayground = (props) => {
     const homeLogo = props.teams[0].homeLogo;
     const awayLogo = props.teams[1].awayLogo;
 
-    console.log("home",homeLines);
-    console.log("awayLogo",awayLogo);
+    // console.log("home",homeLines);
+    // console.log("awayLogo",awayLogo);
 
     return (
-    <div className="relative w-[350px] sm:w-[400] h-[600px] mx-auto border-2 bg-slate-500 border-slate-50">
+    <div className="relative w-[350px] sm:w-[400] h-[680px] mx-auto border-2 bg-slate-500 border-slate-50">
       {/* Outer Borders */}
       <div className="absolute top-0 left-0 w-full h-full"></div>
 
@@ -33,7 +33,7 @@ const SoccerPlayground = (props) => {
         {
             homeLines.map((line, index) => {
                 return (
-                    <div key={index} className='z-10'>
+                    <div key={index} className={`${homeLines.length===4 ? 'h-[22%]' : 'h-[19%]'}`}>
                         {line}
                     </div>
                 );
@@ -54,7 +54,7 @@ const SoccerPlayground = (props) => {
         {
             awayLines.map((line, index) => {
                 return (
-                    <div key={index} className='z-10'>
+                    <div key={index} className={`${awayLines.length===4 ? 'h-[23%]' : 'h-[18%]'}`}>
                         {line}
                     </div>
                 );
