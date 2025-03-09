@@ -2,14 +2,15 @@ import {React,useState,useMemo} from "react";
 
 export default function Ratings(props){
 
-    const homeStatistics = props.statistics[0].sort((a,b)=>parseFloat(a.statistics[0].games.rating)-parseFloat(b.statistics[0].games.rating));
-    const awayStatistics = props.statistics[1].sort((a,b)=>parseFloat(a.statistics[0].games.rating)-parseFloat(b.statistics[0].games.rating));
+    const homeStatistics = props.statistics[0].sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+    const awayStatistics = props.statistics[1].sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
     //
     const teams = props.teams;
     //
-    console.log("home",homeStatistics);
-    console.log("away",awayStatistics);
-    
+    // console.log("home",homeStatistics);
+    // console.log("away",awayStatistics);
+    const statsLength= homeStatistics.lenght >= awayStatistics.length ? homeStatistics.length : awayStatistics.length;
+
     function manOfTheMatch(){
         const topHomePlayer = homeStatistics[0];
         const topAwayPlayer = awayStatistics[0];
@@ -20,6 +21,18 @@ export default function Ratings(props){
             console.log(topAwayPlayer); return topAwayPlayer;
         }
     }
+
+    // function combineAllStats(){
+    //     let allStats=[];
+    //     for(let i = 0 ; i<statsLength; i++){
+    //         allStats.push({
+    //             homeStatistics[i] !== undefined ?
+    //             home: homeStatistics[i],
+    //             away: awayStatistics[i]
+    //         });
+    //     }
+    // }
+
     return(
         <div>
             <div>
@@ -43,7 +56,30 @@ export default function Ratings(props){
                         </tr>
                     </thead>
                     <tbody>
-                    
+                        {
+                            homeStatistics.map((elem,index)=>{
+                              return(
+                                <tr>
+                                    <td>
+                                        {
+                                            elem.statistics[0].games.rating !== null ?
+                                                [<span>{elem.player.name}</span>,
+                                                <span>{elem.statistics[0].games.rating}</span>]
+                                            :null
+                                        }
+                                    </td>
+                                    <td>
+                                        {
+                                            awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ?
+                                                [<span>{awayStatistics[index].player.name}</span>,
+                                                <span>{awayStatistics[index].statistics[0].games.rating}</span>]
+                                            : null
+                                        }
+                                    </td>
+                                </tr>
+                              )  
+                            })
+                        }
                     </tbody>
                 </table>
             </div>
