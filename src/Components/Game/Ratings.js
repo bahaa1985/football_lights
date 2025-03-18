@@ -2,8 +2,12 @@ import {React,useState,useMemo, useEffect} from "react";
 
 export default function Ratings(props){
 
-    const homeStatistics = props.statistics.homePlayers.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
-    const awayStatistics = props.statistics.awayPlayers.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+    const homeStatistics = props.statistics.home.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+    const awayStatistics = props.statistics.away.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+
+    console.log(homeStatistics);
+    console.log(awayStatistics);
+    
     //
     const homeTeam = props.teams.home;
     const awayTeam = props.teams.away;

@@ -5,7 +5,7 @@ import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
 
-// export const TeamsContext= createContext();
+export const TeamsContext= createContext();
 
 function Game(){
 
@@ -22,8 +22,8 @@ function Game(){
 
 
     return(
-      // <TeamsContext.Provider value={gameData?.teams}>
-         <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
+      <TeamsContext.Provider value={gameData?.teams}>
+      <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
             <div key={gameData?.fixture?.id} className="flex justify-around w-[90%] sm:w-[60%] items-center mx-auto">
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.home?.name}</span></NavLink>
@@ -59,8 +59,8 @@ function Game(){
             }
           </>
         </div>
-        </div>
-      {/* </TeamsContext.Provider>   */}
+      </div>
+    </TeamsContext.Provider>
     )
 }
 

@@ -1,11 +1,11 @@
 import React, { useState,useEffect,useContext } from 'react';
-// import { TeamsContext } from './Game.js';
+import { TeamsContext } from './Game.js';
 
 function PlayerStats(props) {
 
     const homePlayers=props.statistics.home;
     const awayPlayers=props.statistics.away;
-    // const teams=useContext(TeamsContext);
+    const teams=useContext(TeamsContext);
 
     let homeShots=[],homeGoals=[],homePasses=[],homeTackles=[],homeDuels=[],homeDribbles=[],
     homeDrawnFouls=[],homeCommittedFouls=[],homeYellowCards=[],homeRedCards=[];
@@ -13,8 +13,8 @@ function PlayerStats(props) {
     let awayShots=[],awayGoals=[],awayPasses=[],awayTackles=[],awayDuels=[],awayDribbles=[],
     awayDrawnFouls=[],awayCommittedFouls=[],awayYellowCards=[],awayRedCards=[];
 
-    console.log(homePlayers);
-    // console.log('teams',teams);
+    // console.log(homePlayers);
+    console.log('teams',teams);
     
 
     homePlayers?.map((elem)=>{
@@ -71,37 +71,43 @@ function PlayerStats(props) {
     return ( 
         <div>
             <div>
-            <div>
-                {/* <div>
-                    <img src={teams.home.logo} alt={teams.home.name} />
-                    <span>{teams.home.name}</span>
+            <div className='flex flex-row justify-around  bg-slate-800'>
+                <div className='flex flex-row space-x-2  items-center'>
+                    <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
+                    <span className='border-none text-slate-50 font-bold'>{teams.home.name}</span>
                 </div>
-                <div>
-                    <img src={teams.away.logo} alt={teams.away.name} />
-                    <span>{teams.away.name}</span>
-                </div> */}
+                <div className='flex flex-row-reverse  space-x-2 items-center'>
+                    <img className='w-14 h-14 rounded-full' src={teams.away.logo} alt={teams.away.name} />
+                    <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>                                        
+                </div>
             </div>
-            <h3>Shots</h3>
-            <div>
+            <h3>Shots (On Goal)</h3>
+            <div className='flex justify-around'>
                 <div>
-                    <div>
-                        {
-                         homeShots?.map((elem)=>{
-                            if(elem.shots.total !== null)
-                             return <p>{elem.player.name} - {elem.shots.total}</p>
-                         })   
-                        }
-                    </div>
+                    {
+                        homeShots?.map((elem)=>{
+                        if(elem.shots.total !== null)
+                            return (
+                                <div className='flex flex-row space-x-2 items-center'>
+                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on })</span>
+                                </div>
+                            )
+                        })   
+                    }
                 </div>
                 <div>
-                    <div>
-                        {
-                            awayShots?.map((elem)=>{
-                                if(elem.shots.total !== null)
-                                return <p>{elem.player.name} - {elem.shots.total}</p>
-                            })   
-                        }
-                    </div>
+                    {
+                        awayShots?.map((elem)=>{
+                            if(elem.shots.total !== null)
+                            return (
+                                <div className='flex flex-row-reverse space-x-2 items-center'>
+                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />                                    
+                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on})</span>
+                                </div>
+                            )
+                        })   
+                    }
                 </div>
             </div>
             
