@@ -13,8 +13,8 @@ function LinePosition(props) {
     // console.log("statistics",statistics);
     
   
-    const sp_lineup = lineup.filter((elem) => elem.player.grid[0] === grid)
-      .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
+    // const sp_lineup = lineup.filter((elem) => elem.player.grid[0] === grid)
+    //   .sort((playerA, playerB) =>parseInt(playerB.player.grid[2]) - parseInt(playerA.player.grid[2]));
 
 
     function getPlayerStats(playerId){
@@ -26,7 +26,7 @@ function LinePosition(props) {
     
     return (
       <div className="flex flex-row h-auto my-auto">
-        {sp_lineup?.map((elem, index) => {
+        {lineup?.map((elem, index) => {
           //iterate each player in the line to get his details
           playerNameArr = elem.player.name.split(" ");
           return (

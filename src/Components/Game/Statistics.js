@@ -1,27 +1,44 @@
 import React, { memo } from "react";
 import getStatistics from "../../Api/getStatistics.js";
-import { useState,useMemo,useEffect } from "react";
+import getPlayers from "../../Api/getPlayers.js";
+import PlayerStats from "./PlayerStats.js";
+import { useState,useMemo } from "react";
 
 function Statistics(props){
 
     const fixtureId=props.fixtureId
-    const [homeStatistics,setHomeStatistics]=useState([]);    
+
+    const [homeStatistics,setHomeStatistics]=useState([]); 
+    const [homePlayers, setHomePlayers] = useState([]);
+    const [awayPlayers, setAwayPlayers] = useState([]);   
     const [awayStatistics,setAwayStatistics]=useState([]);
+    const [isLoaded,setLoaded] = useState(false);
 
     useMemo(()=>{
-        getStatistics(fixtureId).then((result)=>{ 
-            console.log("statistics is rendered",result.data.response);                      
-            setHomeStatistics(result.data.response[0].statistics);
-            setAwayStatistics(result.data.response[1].statistics);                           
-        });                                      
+        async function fetchStatistics() {
+            const stats_response = await getStatistics(fixtureId);
+            const players_response = await getPlayers(fixtureId);
+            //
+            setHomeStatistics(stats_response.data.response[0].statistics);
+            setAwayStatistics(stats_response.data.response[1].statistics);
+            //
+            setHomePlayers(players_response.data.response[0].players);
+            setAwayPlayers(players_response.data.response[1].players);
+            //
+            setLoaded(true);
+        }
+        fetchStatistics();                 
     },[fixtureId])
 
     let total=0;
 
     return(
-        <section style={{width:'90%',height: 'auto',margin:'auto',textAlign: 'center'}}>                                                      
+         
+        <div style={{width:'90%',height: 'auto',margin:'auto',textAlign: 'center'}}>                                                      
         {
-            [homeStatistics?.map((item,index)=>{
+            isLoaded ?
+            [
+            homeStatistics?.map((item,index)=>{
                 return (item.value === null ? item.value = 0 : null)
             }),
             awayStatistics?.map((item,index)=>{
@@ -37,9 +54,8 @@ function Statistics(props){
                         <div>{item.type}</div>
                             
                             <div className="flex justify-center">
-                            <div className="flex justify-between">
-                               
-                               <span>{`${item.value === null ? 0 : item.value}`}</span>
+                            <div className="flex justify-between">  
+                               <span className="border-none">{`${item.value === null ? 0 : item.value}`}</span>
                                <div className="w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
                                    {
                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
@@ -47,10 +63,8 @@ function Statistics(props){
                                        item.value.toString().includes('%') ? 
                                        <div style={{width:`${item.value}`}} className={`bg-green-600 rounded-r-full  h-2`}></div>
                                        :null
-                                   }
-                                   
-                               </div>
-                              
+                                   }   
+                               </div>                            
                            </div>
 
                            <div className="flex justify-between"> 
@@ -63,15 +77,19 @@ function Statistics(props){
                                        :null
                                    }
                                </div>                              
-                               <span>{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</span> 
+                               <span className="border-none">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</span> 
                            </div>
-                            </div>
-                           
+                        </div>
                     </div>
                 )
-            })]
-        }                                      
-        </section>
+            }),
+            <PlayerStats statistics={{home:homePlayers,away:awayPlayers}}  />
+            ]
+            :null
+        }      
+                                    
+        </div>
+        
     )
 }
 
