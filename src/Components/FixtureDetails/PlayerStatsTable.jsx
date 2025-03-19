@@ -62,9 +62,9 @@ export default function PlayerStatsTable({columnsProp,statisticsProp,TeamsProp})
                       elem.statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{elem.player.name}</span>
-                            <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            {/* <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                 {elem.statistics[0].games.rating}
-                            </span>
+                            </span> */}
                         </td>
                         : null
                     }
@@ -72,9 +72,9 @@ export default function PlayerStatsTable({columnsProp,statisticsProp,TeamsProp})
                     {awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{awayStatistics[index].player.name}</span>
-                            <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            {/* <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                               {awayStatistics[index].statistics[0].games.rating}
-                            </span>
+                            </span> */}
                         </td>
                         : null
                     }
@@ -90,9 +90,9 @@ export default function PlayerStatsTable({columnsProp,statisticsProp,TeamsProp})
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between w-full px-3 border-b border-solid border-slate-800">
                                 <span className="border-none">{elem.player.name}</span>
-                                <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                                {/* <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
-                                </span>
+                                </span> */}
                             </td>
                             :null
                             )
@@ -103,9 +103,9 @@ export default function PlayerStatsTable({columnsProp,statisticsProp,TeamsProp})
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between w-full px-3 border-b border-solid border-slate-800">
                                 <span className="border-none">{elem.player.name}</span>
-                                <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                                {/* <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
-                                </span>
+                                </span> */}
                             </td>
                             :null
                         )

@@ -14,42 +14,68 @@ function PlayerStats(props) {
     let awayShots=[],awayGoals=[],awayConceded=[],awayAssists=[],awaySaves=[],awayPasses=[],awayTackles=[],awayDuels=[],awayDribbles=[],
     awayDrawnFouls=[],awayCommittedFouls=[],awayYellowCards=[],awayRedCards=[];
 
-    // console.log(homePlayers);
     console.log('teams',teams);
     
 
     homePlayers?.map((elem)=>{
-        homeShots.push({player:elem.player,shots:elem.statistics[0].shots})
-        homeGoals.push({player:elem.player,goals:elem.statistics[0].goals.total});
-        homeConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
-        homeAssists.push({player:elem.player,assists:elem.statistics[0].goals.assists});
-        homeSaves.push({player:elem.player,saves:elem.statistics[0].goals.saves});
-        homePasses.push({player:elem.player,passes:elem.statistics[0].passes});
+        if(elem.statistics[0].shots.total != null)
+            homeShots.push({player:elem.player,shots:elem.statistics[0].shots})
+        if(elem.statistics[0].goals.total != null)
+            homeGoals.push({player:elem.player,goals:elem.statistics[0].goals.total});
+        if(elem.statistics[0].goals.conceded != null)
+            homeConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
+        if(elem.statistics[0].goals.assists != null)
+            homeAssists.push({player:elem.player,assists:elem.statistics[0].goals.assists});
+        if(elem.statistics[0].goals.saves !=  null)
+            homeSaves.push({player:elem.player,saves:elem.statistics[0].goals.saves});
+        if(elem.statistics[0].passes.total != null)
+            homePasses.push({player:elem.player,passes:elem.statistics[0].passes});
         homeTackles.push({player:elem.player,tackles:elem.statistics[0].tackles});
-        homeDuels.push({player:elem.player,duels:elem.statistics[0].duels});
-        homeDribbles.push({player:elem.player,dribbles:elem.statistics[0].dribbles});
-        homeDrawnFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.drawn});
-        homeCommittedFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.committed});
-        homeYellowCards.push({player:elem.player,cards:elem.statistics[0].cards.yellow});
-        homeRedCards.push({player:elem.player,cards:elem.statistics[0].cards.red});
+        if(elem.statistics[0].duels.total != null)
+            homeDuels.push({player:elem.player,duels:elem.statistics[0].duels});
+        if(elem.statistics[0].dribbles.attempts != null)
+            homeDribbles.push({player:elem.player,dribbles:elem.statistics[0].dribbles});
+        if(elem.statistics[0].fouls.drawn != null)
+            homeDrawnFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.drawn});
+        if(elem.statistics[0].fouls.committed != null)
+            homeCommittedFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.committed});
+        if(elem.statistics[0].cards.yellow != null)
+            homeYellowCards.push({player:elem.player,cards:elem.statistics[0].cards.yellow});
+        if(elem.statistics[0].cards.red != null)
+            homeRedCards.push({player:elem.player,cards:elem.statistics[0].cards.red});
     })
     //
-    awayPlayers?.map((elem)=>{
-        awayShots.push({player:elem.player,shots:elem.statistics[0].shots})
-        awayGoals.push({player:elem.player,goals:elem.statistics[0].goals});
-        awayConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
-        awayAssists.push({player:elem.player,goals:elem.statistics[0].goals.assists});
-        awaySaves.push({player:elem.player,goals:elem.statistics[0].goals.saves});
-        awayPasses.push({player:elem.player,passes:elem.statistics[0].passes});
-        awayTackles.push({player:elem.player,tackles:elem.statistics[0].tackles});
-        awayDuels.push({player:elem.player,duels:elem.statistics[0].duels});
-        awayDribbles.push({player:elem.player,dribbles:elem.statistics[0].dribbles});
-        awayDrawnFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.drawn});
-        awayCommittedFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.committed});
-        awayYellowCards.push({player:elem.player,cards:elem.statistics[0].cards.yellow});
-        awayRedCards.push({player:elem.player,cards:elem.statistics[0].cards.red});
+    awayPlayers?.map((elem)=>{ 
+        if(elem.statistics[0].shots.total != null)       
+            awayShots.push({player:elem.player,shots:elem.statistics[0].shots})
+        if(elem.statistics[0].goals.total != null)
+            awayGoals.push({player:elem.player,goals:elem.statistics[0].goals});
+        if(elem.statistics[0].goals.conceded != null)
+            awayConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
+        if(elem.statistics[0].goals.assists != null)
+            awayAssists.push({player:elem.player,goals:elem.statistics[0].goals.assists});
+        if(elem.statistics[0].goals.saves != null)
+            awaySaves.push({player:elem.player,goals:elem.statistics[0].goals.saves});
+        if(elem.statistics[0].passes.total != null)
+            awayPasses.push({player:elem.player,passes:elem.statistics[0].passes});
+        if(elem.statistics[0].tackles.total != null)
+            awayTackles.push({player:elem.player,tackles:elem.statistics[0].tackles});
+        if(elem.statistics[0].duels.total != null)
+            awayDuels.push({player:elem.player,duels:elem.statistics[0].duels});
+        if(elem.statistics[0].dribbles.attempts != null)
+            awayDribbles.push({player:elem.player,dribbles:elem.statistics[0].dribbles});
+        if(elem.statistics[0].fouls.drawn != null)
+            awayDrawnFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.drawn});
+        if(elem.statistics[0].fouls.committed != null)
+            awayCommittedFouls.push({player:elem.player,fouls:elem.statistics[0].fouls.committed});
+        if(elem.statistics[0].cards.yellow !=null)
+            awayYellowCards.push({player:elem.player,cards:elem.statistics[0].cards.yellow});
+        if(elem.statistics[0].cards.red != null)
+            awayRedCards.push({player:elem.player,cards:elem.statistics[0].cards.red});
     })
 
+    console.log("home goals",homeGoals);    
+    debugger;
     homeShots.sort((a,b)=>{return b.shots.total-a.shots.total})
     homeGoals.sort((a,b)=>{return b.goals.total-a.goals.total})
     homeConceded.sort((a,b)=>{return b.conceded-a.conceded})
@@ -79,91 +105,62 @@ function PlayerStats(props) {
     awayRedCards.sort((a,b)=>{return b.cards-a.cards})
 
    
-    console.log('home drawn:',awayDrawnFouls);
+    // console.log('home drawn:',awayDrawnFouls);
     
-    return ( 
-        <div>
+    const renderPlayerStats = (title, homeStats, awayStats, statKey, statSubKey) => {
+        return (
             <div>
-            <div className='flex flex-row justify-around  bg-slate-800'>
-                <div className='flex flex-row space-x-2  items-center'>
+                <h3>{title}</h3>
+                <div className='flex justify-around'>
+                    <div>
+                        {
+                            homeStats?.map((elem) => {
+                                if (elem[statKey][statSubKey] !== null)
+                                    return (
+                                        <div className='flex flex-row space-x-2 items-center'>
+                                            <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                            <span className='border-none font-bold'>{elem.player.name} - {elem[statKey][statSubKey]}</span>
+                                        </div>
+                                    )
+                            })
+                        }
+                    </div>
+                    <div>
+                        {
+                            awayStats?.map((elem) => {
+                                if (elem[statKey][statSubKey] !== null)
+                                    return (
+                                        <div className='flex flex-row-reverse space-x-2 items-center'>
+                                            <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                            <span className='border-none font-bold'>{elem.player.name} - {elem[statKey][statSubKey]}</span>
+                                        </div>
+                                    )
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    return (
+        <div>
+            <div className='flex flex-row justify-around bg-slate-800'>
+                <div className='flex flex-row space-x-2 items-center'>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
                     <span className='border-none text-slate-50 font-bold'>{teams.home.name}</span>
                 </div>
-                <div className='flex flex-row-reverse  space-x-2 items-center'>
+                <div className='flex flex-row-reverse space-x-2 items-center'>
                     <img className='w-14 h-14 rounded-full' src={teams.away.logo} alt={teams.away.name} />
-                    <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>                                        
+                    <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>
                 </div>
             </div>
-            <h3>Shots (On Goal)</h3>
-            <div className='flex justify-around'>
-                <div>
-                    {
-                        homeShots?.map((elem)=>{
-                        if(elem.shots.total !== null)
-                            return (
-                                <div className='flex flex-row space-x-2 items-center'>
-                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
-                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on })</span>
-                                </div>
-                            )
-                        })   
-                    }
-                </div>
-                <div>
-                    {
-                        awayShots?.map((elem)=>{
-                            if(elem.shots.total !== null)
-                            return (
-                                <div className='flex flex-row-reverse space-x-2 items-center'>
-                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />                                    
-                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on})</span>
-                                </div>
-                            )
-                        })   
-                    }
-                </div>
-            </div>
-            {/* Goals */}
-            <h3>Goals Scored</h3>
-            <PlayerStats columns={['Goals']} statistics={{home:homeGoals,away:awayGoals}} />
-            <div>
-                <table className='table-fixed'>
-                    <thead>
-                        <th></th>
-                    </thead>
-                </table>
-            </div>
-            <div className='flex justify-around'>
-                <div>
-                    {
-                        homeShots?.map((elem)=>{
-                        if(elem.shots.total !== null)
-                            return (
-                                <div className='flex flex-row space-x-2 items-center'>
-                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
-                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on })</span>
-                                </div>
-                            )
-                        })   
-                    }
-                </div>
-                <div>
-                    {
-                        awayShots?.map((elem)=>{
-                            if(elem.shots.total !== null)
-                            return (
-                                <div className='flex flex-row-reverse space-x-2 items-center'>
-                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />                                    
-                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on})</span>
-                                </div>
-                            )
-                        })   
-                    }
-                </div>
-            </div>
-            </div>
+            {renderPlayerStats('Shots (On Goal)', homeShots, awayShots, 'shots', 'total')}
+            {renderPlayerStats('Goals Scored', homeGoals, awayGoals, 'goals', 'total')}
+            {renderPlayerStats('Goals Conceded', homeGoals, awayGoals, 'goals', 'conceded')}
+            {/* Add more calls to renderPlayerStats for other statistics as needed */}
         </div>
-     );
+    );
 }
 
 export default PlayerStats;
