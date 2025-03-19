@@ -1,13 +1,13 @@
 import {React, useState, useEffect, createContext} from 'react'
 import { useParams,NavLink  } from 'react-router-dom'
-import  getGame from '../../Api/getGame.js' 
+import getFixture from '../../Api/getFixture.js' 
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
 
 export const TeamsContext= createContext();
 
-function Game(){
+function Fixture(){
 
     const [gameData,setGameData]=useState([]);
     const [tab, setTab] = useState("");
@@ -15,20 +15,20 @@ function Game(){
     const fixtureId=params.fixtureId;
    
     useEffect(()=>{               
-         getGame(fixtureId).then((result)=>{
+         getFixture(fixtureId).then((result)=>{
             setGameData(result.data.response[0])
         })
     },[fixtureId])
 
 
     return(
-      <TeamsContext.Provider value={gameData?.teams}>
+      <TeamsContext.Provider value={gameData?.teams} className="w-full">
       <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">                            
             <div key={gameData?.fixture?.id} className="flex justify-around w-[90%] sm:w-[60%] items-center mx-auto">
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.home?.name} src={gameData?.teams?.home?.logo}></img></NavLink>
               <NavLink to={`/team/${gameData?.teams?.home?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.home?.name}</span></NavLink>
-              <span className="">{gameData?.goals?.home}</span>
-              <span className="">{gameData?.goals?.away}</span>
+              <span className="border-none text-bold">{gameData?.goals?.home}</span>
+              <span className="border-none text-bold">{gameData?.goals?.away}</span>
               <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><span>{gameData?.teams?.away?.name}</span></NavLink>
               <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
         </div>
@@ -64,4 +64,4 @@ function Game(){
     )
 }
 
-export default Game
+export default Fixture

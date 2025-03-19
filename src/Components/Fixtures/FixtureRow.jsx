@@ -176,7 +176,7 @@ function FixtureRow(props) {
 
                     {/* Details button */}
                     <div className="flex items-center w-16">
-                      <NavLink to={`/game/${elem.fixture.id}`}  className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500">
+                      <NavLink to={`/fixture/${elem.fixture.id}`}  className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500">
                         {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
                           Deatils
                         {/* </button> */}

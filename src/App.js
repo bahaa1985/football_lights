@@ -2,7 +2,7 @@
 import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
 import Navbar from './Navbar.js';
 import League from './Components/League/League.js';
-import Game from './Components/Game/Game.js';
+import Fixture from './Components/FixtureDetails/Fixture.js';
 import Player from './Components/Player.js';
 import Team from './Components/Team/Team.js';
 import Home from './Components/Home.js';
@@ -24,7 +24,7 @@ function App() {
       <Route path="/leagues" element={<League />}>  
         <Route path="/leagues/:leagueId/:season"/> 
       </Route>
-      <Route path="/fixtures" element={<Game/>} >
+      <Route path="/fixtures" element={<Fixture/>} >
         <Route path=":fixtureId"/>
       </Route>
       <Route path="/teams" element={<Team />}>
@@ -35,7 +35,7 @@ function App() {
       </Route>
       <Route path="/preference" element={<Preferences />}>
       </Route>
-      <Route path="/game" element={<Game />}> 
+      <Route path="/fixture" element={<Fixture />}> 
         <Route path=":fixtureId"/>
       </Route>
     </Routes>

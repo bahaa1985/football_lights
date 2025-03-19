@@ -1,5 +1,6 @@
 import React, { useState,useEffect,useContext } from 'react';
-import { TeamsContext } from './Game.js';
+import { TeamsContext } from './Fixture.js';
+import PlayerStatsTable from './PlayerStatsTable.jsx';
 
 function PlayerStats(props) {
 
@@ -7,10 +8,10 @@ function PlayerStats(props) {
     const awayPlayers=props.statistics.away;
     const teams=useContext(TeamsContext);
 
-    let homeShots=[],homeGoals=[],homePasses=[],homeTackles=[],homeDuels=[],homeDribbles=[],
+    let homeShots=[],homeGoals=[],homeConceded=[],homeAssists=[],homeSaves=[],homePasses=[],homeTackles=[],homeDuels=[],homeDribbles=[],
     homeDrawnFouls=[],homeCommittedFouls=[],homeYellowCards=[],homeRedCards=[];
     //
-    let awayShots=[],awayGoals=[],awayPasses=[],awayTackles=[],awayDuels=[],awayDribbles=[],
+    let awayShots=[],awayGoals=[],awayConceded=[],awayAssists=[],awaySaves=[],awayPasses=[],awayTackles=[],awayDuels=[],awayDribbles=[],
     awayDrawnFouls=[],awayCommittedFouls=[],awayYellowCards=[],awayRedCards=[];
 
     // console.log(homePlayers);
@@ -19,7 +20,10 @@ function PlayerStats(props) {
 
     homePlayers?.map((elem)=>{
         homeShots.push({player:elem.player,shots:elem.statistics[0].shots})
-        homeGoals.push({player:elem.player,goals:elem.statistics[0].goals});
+        homeGoals.push({player:elem.player,goals:elem.statistics[0].goals.total});
+        homeConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
+        homeAssists.push({player:elem.player,assists:elem.statistics[0].goals.assists});
+        homeSaves.push({player:elem.player,saves:elem.statistics[0].goals.saves});
         homePasses.push({player:elem.player,passes:elem.statistics[0].passes});
         homeTackles.push({player:elem.player,tackles:elem.statistics[0].tackles});
         homeDuels.push({player:elem.player,duels:elem.statistics[0].duels});
@@ -33,6 +37,9 @@ function PlayerStats(props) {
     awayPlayers?.map((elem)=>{
         awayShots.push({player:elem.player,shots:elem.statistics[0].shots})
         awayGoals.push({player:elem.player,goals:elem.statistics[0].goals});
+        awayConceded.push({player:elem.player,goals:elem.statistics[0].goals.conceded});
+        awayAssists.push({player:elem.player,goals:elem.statistics[0].goals.assists});
+        awaySaves.push({player:elem.player,goals:elem.statistics[0].goals.saves});
         awayPasses.push({player:elem.player,passes:elem.statistics[0].passes});
         awayTackles.push({player:elem.player,tackles:elem.statistics[0].tackles});
         awayDuels.push({player:elem.player,duels:elem.statistics[0].duels});
@@ -45,6 +52,9 @@ function PlayerStats(props) {
 
     homeShots.sort((a,b)=>{return b.shots.total-a.shots.total})
     homeGoals.sort((a,b)=>{return b.goals.total-a.goals.total})
+    homeConceded.sort((a,b)=>{return b.conceded-a.conceded})
+    homeAssists.sort((a,b)=>{return b.assists-a.assists})
+    homeSaves.sort((a,b)=>{return b.saves-a.saves})
     homePasses.sort((a,b)=>{return b.passes.total-a.passes.total})
     homeTackles.sort((a,b)=>{return b.tackles.total-a.tackles.total})
     homeDuels.sort((a,b)=>{return b.duels.total-a.duels.total})
@@ -56,6 +66,9 @@ function PlayerStats(props) {
     //
     awayShots.sort((a,b)=>{return b.shots.total-a.shots.total})
     awayGoals.sort((a,b)=>{return b.goals.total-a.goals.total})
+    awayConceded.sort((a,b)=>{return b.conceded-a.conceded})
+    awayAssists.sort((a,b)=>{return b.assists-a.assists})
+    awaySaves.sort((a,b)=>{return b.saves-a.saves})
     awayPasses.sort((a,b)=>{return b.passes.total-a.passes.total})
     awayTackles.sort((a,b)=>{return b.tackles.total-a.tackles.total})
     awayDuels.sort((a,b)=>{return b.duels.total-a.duels.total})
@@ -110,8 +123,44 @@ function PlayerStats(props) {
                     }
                 </div>
             </div>
-            
-                <div></div>
+            {/* Goals */}
+            <h3>Goals Scored</h3>
+            <PlayerStats columns={['Goals']} statistics={{home:homeGoals,away:awayGoals}} />
+            <div>
+                <table className='table-fixed'>
+                    <thead>
+                        <th></th>
+                    </thead>
+                </table>
+            </div>
+            <div className='flex justify-around'>
+                <div>
+                    {
+                        homeShots?.map((elem)=>{
+                        if(elem.shots.total !== null)
+                            return (
+                                <div className='flex flex-row space-x-2 items-center'>
+                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on })</span>
+                                </div>
+                            )
+                        })   
+                    }
+                </div>
+                <div>
+                    {
+                        awayShots?.map((elem)=>{
+                            if(elem.shots.total !== null)
+                            return (
+                                <div className='flex flex-row-reverse space-x-2 items-center'>
+                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />                                    
+                                    <span className='border-none font-bold'>{elem.player.name} - {elem.shots.total}({elem.shots.on === null ? 0 : elem.shots.on})</span>
+                                </div>
+                            )
+                        })   
+                    }
+                </div>
+            </div>
             </div>
         </div>
      );
