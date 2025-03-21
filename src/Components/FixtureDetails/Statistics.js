@@ -34,17 +34,10 @@ function Statistics(props){
 
     return(
          
-        <div style={{width:'90%',height: 'auto',margin:'auto',textAlign: 'center'}}>                                                      
+        <div className="w-[90%] sm:w-auto mx-auto text-center">                                                      
         {
             isLoaded ?
             [
-            homeStatistics?.map((item,index)=>{
-                return (item.value === null ? item.value = 0 : null)
-            }),
-            awayStatistics?.map((item,index)=>{
-                return (item.value === null ? item.value = 0 : null)
-            }),
-            
             homeStatistics?.map((item,index)=>{
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
@@ -56,11 +49,11 @@ function Statistics(props){
                             <div className="flex justify-center">
                             <div className="flex justify-between">  
                                <span className="border-none">{`${item.value === null ? 0 : item.value}`}</span>
-                               <div className="w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
+                               <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
                                    {
                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
                                        <div style={{width:`${Number.parseInt(item.value) *100 / total}%`}} className={`bg-green-600 rounded-r-full  h-2`}></div>:
-                                       item.value.toString().includes('%') ? 
+                                       item.value?.toString().includes('%') ? 
                                        <div style={{width:`${item.value}`}} className={`bg-green-600 rounded-r-full  h-2`}></div>
                                        :null
                                    }   
@@ -68,11 +61,11 @@ function Statistics(props){
                            </div>
 
                            <div className="flex justify-between"> 
-                               <div className="w-56 bg-gray-200 rounded-r-full h-2">
+                               <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2">
                                    {
                                        awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
                                        <div style={{width:`${Number.parseInt(awayStatistics[index].value) *100 / total}%`}} className={` bg-blue-600 rounded-r-full h-2`}></div>:
-                                       awayStatistics[index].value.toString().includes('%') ?
+                                       awayStatistics[index].value?.toString().includes('%') ?
                                        <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 rounded-r-full h-2`}></div>
                                        :null
                                    }

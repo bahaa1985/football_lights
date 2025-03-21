@@ -12,6 +12,7 @@ export default function Ratings(props){
     const homeTeam = props.teams.home;
     const awayTeam = props.teams.away;
     //
+    //set division of the clicked team ( in small screens)
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(null);
 
@@ -37,11 +38,9 @@ export default function Ratings(props){
         const topHomePlayer = homeStatistics[0];
         const topAwayPlayer = awayStatistics[0];
         if(parseFloat(topHomePlayer.statistics[0].games.rating) >= parseFloat(topAwayPlayer.statistics[0].games.rating)){
-            // console.log(topHomePlayer);
             return topHomePlayer;
         }
         else{
-            // console.log(topAwayPlayer); 
             return topAwayPlayer;
         }
     }
@@ -95,7 +94,7 @@ export default function Ratings(props){
             </thead>
             <tbody>
             {
-                screenWidth >= 425 ? //if screen size is more than 425 display both of teams all ratings,
+                screenWidth >= 425 ? //if screen size is more than 425 display both of teams ratings,
                 // otherwise displaying depends on user's selection  
                 homeStatistics.map((elem, index) => {
                 return (

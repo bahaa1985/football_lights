@@ -33,7 +33,7 @@ function Fixture(){
               <NavLink to={`/team/${gameData?.teams?.away?.id}?league=${gameData?.league?.id}`}><img className="w-14" alt={gameData?.teams?.away?.name} src={gameData?.teams?.away?.logo}></img></NavLink>
         </div>
 
-        <div className="fixture-details">
+        <div>
           <button  onClick={(e) => {e.stopPropagation();setTab("Events");}}>
             Events
           </button>
