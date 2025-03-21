@@ -44,11 +44,11 @@ function Statistics(props){
                 return(
                     <div key={index} className="w-[90%] text-center">                       
                         
-                        <div>{item.type}</div>
+                        <div>{item.type.replace('_',' ')}</div>
                             
-                            <div className="flex justify-center">
-                            <div className="flex justify-between">  
-                               <span className="border-none">{`${item.value === null ? 0 : item.value}`}</span>
+                        <div className="flex justify-center">
+                            <div>  
+                               <div className="w-full text-left px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
                                <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
                                    {
                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
@@ -60,7 +60,8 @@ function Statistics(props){
                                </div>                            
                            </div>
 
-                           <div className="flex justify-between"> 
+                           <div> 
+                                <div className="w-full text-right px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div> 
                                <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2">
                                    {
                                        awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
@@ -69,8 +70,7 @@ function Statistics(props){
                                        <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 rounded-r-full h-2`}></div>
                                        :null
                                    }
-                               </div>                              
-                               <span className="border-none">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</span> 
+                               </div>                                                            
                            </div>
                         </div>
                     </div>

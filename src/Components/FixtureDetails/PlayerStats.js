@@ -12,23 +12,26 @@ function PlayerStats(props) {
     //set division of the clicked team ( in small screens)
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(null);
+    const [isFixed, setIsFixed] = useState(false);
+    const [elementTop, setElementTop] = useState(0);
 
     useEffect(()=>{
             const handleResize = () => {
-                setScreenWidth(window.innerWidth)
-                if(screenWidth >=425){
-                    setClickedTeam(null);
-                }
-                else{
-                    setClickedTeam(homeTeam.id);
-                }
-            };
-        
-            window.addEventListener("resize", handleResize);
-            
-            // Cleanup function to remove event listener when component unmounts
-            return () => window.removeEventListener("resize", handleResize);
-        })
+            setScreenWidth(window.innerWidth)
+            if(screenWidth >=425){
+                setClickedTeam(null);
+            }
+            else{
+                setClickedTeam(homeTeam.id);
+            }
+        };
+    
+        window.addEventListener("resize", handleResize);                  
+        // Cleanup function to remove event listener when component unmounts
+        return (
+            window.removeEventListener("resize", handleResize)
+        )
+    })
 
     let homeShots=[],homeGoals=[],homeConceded=[],homeAssists=[],homeSaves=[],homePasses=[],homeTackles=[],homeDuels=[],homeDribbles=[],
     homeDrawnFouls=[],homeCommittedFouls=[],homeYellowCards=[],homeRedCards=[];
@@ -93,7 +96,8 @@ function PlayerStats(props) {
         if(elem.statistics[0].cards.red != null && elem.statistics[0].cards.red > 0)
             awayRedCards.push({player:elem.player,cards:elem.statistics[0].cards.red});
     })  
-    // debugger;
+
+    //#region sorting
     homeShots.sort((a,b)=>{return b.shots.total-a.shots.total})
     homeGoals.sort((a,b)=>{return b.goals.total-a.goals.total})
     homeConceded.sort((a,b)=>{return b.conceded-a.conceded})
@@ -121,41 +125,42 @@ function PlayerStats(props) {
     awayCommittedFouls.sort((a,b)=>{return b.fouls-a.fouls})
     awayYellowCards.sort((a,b)=>{return b.cards-a.cards})
     awayRedCards.sort((a,b)=>{return b.cards-a.cards})
+    //#endregion
 
-   
-    // console.log('home drawn:',awayDrawnFouls);
     function renderStats(source, statKey, statSubKey=null){
         return(
         <div className={`${clickedTeam !== null ? 'w-full': 'w-[45%]'}`}>
             {
+                 source.length > 0 ?
                 source?.map((elem) => {
                     // if (elem[statKey][statSubKey] !== null)
-                        return (
-                            <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'flex-row  items-center'} 
-                                            mx-auto px-2 justify-between space-x-2 w-[80%] 
-                                            ${source.length > 1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
-                                {/* Player's name and photo */}
-                                <div className = "flex flex-row space-x-2 items-center">
-                                    <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
-                                    <span className='border-none font-semibold'>{elem.player.name}</span>
-                                </div>
-                                {/* player's statistics */}
-                                <div>
-                                    <span className='border-none'>
-                                    {
-                                        statKey !== 'passes' && statKey !== 'shots' ?
-                                            (statSubKey !== null ? elem[statKey][statSubKey] : elem[statKey])
-                                        : statKey === 'passes' ?
-                                            `Total: ${elem.passes.total} - Key: ${elem.passes.key === null ? 0 : elem.passes.key} - Accuracy: ${elem.passes.accuracy}`
-                                        : statKey === 'shots' ?
-                                            `${elem.shots.total} (${elem.shots.on === null ? 0 : elem.shots.on})`
-                                        : null
-                                    }
-                                    </span>
-                                </div>                                                                                        
+                    return (                       
+                        <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'flex-row  items-center'} 
+                                        mx-auto px-2 justify-between space-x-2 w-[80%] 
+                                        ${source.length > 1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
+                            {/* Player's name and photo */}
+                            <div className = "flex flex-row space-x-2 items-center">
+                                <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                <span className='border-none font-semibold'>{elem.player.name}</span>
                             </div>
-                        )
+                            {/* player's statistics */}
+                            <div>
+                                <span className='border-none'>
+                                {
+                                    statKey !== 'passes' && statKey !== 'shots' ?
+                                        (statSubKey !== null ? elem[statKey][statSubKey] : elem[statKey])
+                                    : statKey === 'passes' ?
+                                        `Total: ${elem.passes.total} - Key: ${elem.passes.key === null ? 0 : elem.passes.key} - Accuracy: ${elem.passes.accuracy}`
+                                    : statKey === 'shots' ?
+                                        `${elem.shots.total} (${elem.shots.on === null ? 0 : elem.shots.on})`
+                                    : null
+                                }
+                                </span>
+                            </div>                                                                                        
+                        </div>                        
+                    )
                 })
+                : <p>No Data</p>
             }
         </div>)
     }
@@ -165,29 +170,30 @@ function PlayerStats(props) {
             <div className='w-full mx-auto text-center'>
                 <h3 className='w-full bg-slate-900 text-slate-50 font-bold'>{title}</h3>
                 {
-                    clickedTeam === null ?
-                    <div className='flex justify-between'>
-                        {/* Home Team division */}
-                        {renderStats(homeStats, statKey, statSubKey=null)}
-                        {/* Away team division */}
-                        {renderStats(awayStats, statKey, statSubKey=null)}                    
+                    clickedTeam === null ? //that means the screen is wide enough to show both teams
+                    <div className='flex justify-between py-2'>
+                        
+                        {[renderStats(homeStats, statKey, statSubKey)
+                        ,
+                        renderStats(awayStats, statKey, statSubKey)]}                    
                     </div>
-                    :clickedTeam === homeTeam.id ?
-                        renderStats(homeStats, statKey, statSubKey=null)
-                    :renderStats(awayStats, statKey, statSubKey=null)
+                    :clickedTeam === homeTeam.id ? //at small screens, only the clicked team is shown
+                        renderStats(homeStats, statKey, statSubKey)
+                    :renderStats(awayStats, statKey, statSubKey)
                 }
             </div>
         );
     };
+    
 
     return (
         <div className='w-full mx-auto'>
-            <div className='w-full flex flex-row justify-around bg-slate-800'>
-                <div className='flex flex-row space-x-2 items-center w-1/2'>
+            <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800`}>
+                <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': ''} `} onClick={()=>setClickedTeam(homeTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
                     <span className='border-none text-slate-50 font-bold'>{teams.home.name}</span>
                 </div>
-                <div className='flex flex-row-reverse space-x-2 items-center w-1/2'>
+                <div className={`flex flex-row-reverse space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': '' }`} onClick={()=>setClickedTeam(awayTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.away.logo} alt={teams.away.name} />
                     <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>
                 </div>
