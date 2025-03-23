@@ -109,7 +109,7 @@ function FixtureRow(props) {
                                 <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
                                 <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
                               </span>
-                              <span className="text-red-800 border-none">{"  Live"}</span>
+                              <span className="text-red-800 border-none">{elem.fixture.short}</span>
                             </div>
                           ) : null
                           //
@@ -176,7 +176,8 @@ function FixtureRow(props) {
 
                     {/* Details button */}
                     <div className="flex items-center w-16">
-                      <NavLink to={`/fixture/${elem.fixture.id}`}  className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500">
+                      <NavLink className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"
+                      to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
                         {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
                           Deatils
                         {/* </button> */}

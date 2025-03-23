@@ -42,13 +42,13 @@ function Statistics(props){
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} className="w-[90%] text-center">                       
+                    <div key={index} className="w-[90%] text-center my-2">                       
                         
                         <div>{item.type.replace('_',' ')}</div>
                             
                         <div className="flex justify-center">
                             <div>  
-                               <div className="w-full text-left px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
+                               <div className="w-full text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
                                <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
                                    {
                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
@@ -61,7 +61,7 @@ function Statistics(props){
                            </div>
 
                            <div> 
-                                <div className="w-full text-right px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div> 
+                                <div className="w-full text-right font-bold px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div> 
                                <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2">
                                    {
                                        awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
