@@ -5,7 +5,7 @@ const SoccerPlayground = (props) => {
     const awayLines = props.awayLines;
 
     return (
-    <div className="relative w-90% sm:w-[350px] md:w-[450px] h-[680px] md:h-[800px] mx-auto border-2 bg-slate-500 border-slate-50">
+    <div className="relative w-90% h-[680px] md:h-[800px] mx-auto border-2 bg-slate-500 border-slate-50">
       {/* Outer Borders */}
       <div className="absolute top-0 left-0 w-full h-full"></div>
 

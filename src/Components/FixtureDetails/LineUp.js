@@ -156,161 +156,152 @@ function LineUp(props) {
     playerName = "";
   return (
     <div>
-      <div className="block mx-auto md:flex md:justify-between">
+      <div className="block mx-auto">
         {isLoaded ? (
           <>
-            {/* Playground */}
-            <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
-              <div
-                className={`flex justify-start p-2 w-full rounded-md bg-slate-800`}
-              >
-                <img
-                  alt={homeTeamProfile.name}
-                  src={homeTeamProfile.logo}
-                  className="w-8 h-8"
-                />
-                <span className="w-1/2 text-center text-slate-50 border-none align-middle">
-                  {homeTeamProfile.name}
-                </span>
-                <span className="text-center text-slate-50 border-none align-middle">
-                  {teamRating(homePlayers)}
-                </span>
-              </div>
-              <SoccerPlayground
-                homeLines={linesPositions()[0]}
-                awayLines={linesPositions()[1]}
-              />
-              <div
-                className={`flex justify-start p-2 w-full rounded-md bg-slate-800`}
-              >
-                <img
-                  alt={awayTeamProfile.name}
-                  src={awayTeamProfile.logo}
-                  className="w-8 h-8"
-                />
-                <span className="w-1/2 text-center text-slate-50 border-none align-middle">
-                  {awayTeamProfile.name}
-                </span>
-                <span className="text-center text-slate-50 border-none align-middle">
-                  {teamRating(awayPlayers)}
-                </span>
-              </div>
-            </div>
-
-            {/* Coaches and subs section */}
-            <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
-              {
-                <>
-                  <div className="flex w-full justify-between">
-                    <div
-                      className={`flex justify-start py-2 w-1/2 ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}
-                      onClick={() => setClickedSub(homeTeamProfile.id)}
-                    >
-                      <img
-                        alt={homeTeamProfile.name}
-                        src={homeTeamProfile.logo}
-                        className="w-8 h-8"
-                      />
-                      <span className="w-1/2 text-center text-slate-50 border-none align-middle">
-                        {homeTeamProfile.name}
-                      </span>
-                    </div>
-                    <div
-                      className={`flex justify-end py-2 w-1/2 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}
-                      onClick={() => setClickedSub(awayTeamProfile.id)}
-                    >
-                      <span className="w-1/2 text-center text-slate-50 border-none align-middle">
-                        {awayTeamProfile.name}
-                      </span>
-                      <img
-                        alt={awayTeamProfile.name}
-                        src={awayTeamProfile.logo}
-                        className="w-8 h-8"
-                      />
-                    </div>
+            <div className="block md:flex flex-row justify-around">
+                {/* Playground */}
+                <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
+                  <div className={`flex justify-start p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                    <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
+                    <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                      {homeTeamProfile.name}
+                    </span>
+                    <span className="text-center text-slate-50 border-none align-middle">
+                      {teamRating(homePlayers)}
+                    </span>
                   </div>
-                  {clickedSub === homeTeamProfile.id ? (
-                    <>
-                      {/* home coach and subs */}
-                      <div className="coach">
-                        <img alt="" src={homeCoach.photo} />
-                        <span>Coach: {homeCoach.name}</span>
-                      </div>
-                      <div>
-                        Formation: {homeTeamProfile?.formation?.join("-")}
-                      </div>
-                      <div className="substitues">
-                        {homeSub.map((sub, index) => {
-                          // eslint-disable-next-line no-lone-blocks
-                          {
-                            playerNameArr = sub.player.name.split(" ");
-                            playerNameArr.length > 1
-                              ? (playerName = playerNameArr.slice(1))
-                              : (playerName = playerNameArr[0]);
-                          }
-                          return (
-                            <div key={index}>
-                              <span className="player-number">
-                                {sub.player.number}
-                              </span>
-                              <span className="player-name">
-                                {playerNameArr.length > 1
-                                  ? playerNameArr.slice(1)
-                                  : playerNameArr[0]}
-                              </span>
-                              <span>{sub.player.pos}</span>
-                              <span>{}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* away coach and subs */}
-                      <div className="coach">
-                        <img alt="" src={awayCoach.photo} />
-                        <span>Coach: {awayCoach.name}</span>
-                      </div>
-                      <div>
-                        Formation: {awayTeamProfile?.formation?.join("-")}
-                      </div>
-                      <div className="substitues">
-                        {awaySub.map((sub, index) => {
-                          playerNameArr = sub.player.name.split(" ");
-                          playerNameArr.length > 1
-                            ? (playerName = playerNameArr.slice(1))
-                            : (playerName = playerNameArr[0]);
+                  <SoccerPlayground
+                    homeLines={linesPositions()[0]}
+                    awayLines={linesPositions()[1]}
+                  />
+                  <div className={`flex justify-start p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                    <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
+                    <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                      {awayTeamProfile.name}
+                    </span>
+                    <span className="text-center text-slate-50 border-none align-middle">
+                      {teamRating(awayPlayers)}
+                    </span>
+                  </div>
+                </div>
 
-                          return (
-                            <div key={index}>
-                              <span className="player-number">
-                                {sub.player.number}
-                              </span>
-                              <span className="player-name">
-                                {
-                                  // playerNameArr.length> 1 ?
-                                  // playerNameArr.slice(1) :
-                                  // playerNameArr[0]
-                                  playerName
-                                  // sub.player.id
-                                }
-                              </span>
-                              <span>{sub.player.pos}</span>
-                              <span>
-                                {
-                                  //event:
-                                }
-                              </span>
-                            </div>
-                          );
-                        })}
+                {/* Coaches and subs section */}
+                <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-4/12 mx-auto p-3">
+                  {
+                    <>
+                      <div className="flex w-full justify-between">
+                        <div
+                          className={`flex justify-start py-2 w-1/2 ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}
+                          onClick={() => setClickedSub(homeTeamProfile.id)}
+                        >
+                          <img
+                            alt={homeTeamProfile.name}
+                            src={homeTeamProfile.logo}
+                            className="w-8 h-8"
+                          />
+                          <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                            {homeTeamProfile.name}
+                          </span>
+                        </div>
+                        <div
+                          className={`flex justify-end py-2 w-1/2 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}
+                          onClick={() => setClickedSub(awayTeamProfile.id)}
+                        >
+                          <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                            {awayTeamProfile.name}
+                          </span>
+                          <img
+                            alt={awayTeamProfile.name}
+                            src={awayTeamProfile.logo}
+                            className="w-8 h-8"
+                          />
+                        </div>
                       </div>
+                      {clickedSub === homeTeamProfile.id ? (
+                        <>
+                          {/* home coach and subs */}
+                          <div className="coach">
+                            <img alt="" src={homeCoach.photo} />
+                            <span>Coach: {homeCoach.name}</span>
+                          </div>
+                          <div>
+                            Formation: {homeTeamProfile?.formation?.join("-")}
+                          </div>
+                          <div className="substitues">
+                            {homeSub.map((sub, index) => {
+                              // eslint-disable-next-line no-lone-blocks
+                              {
+                                playerNameArr = sub.player.name.split(" ");
+                                playerNameArr.length > 1
+                                  ? (playerName = playerNameArr.slice(1))
+                                  : (playerName = playerNameArr[0]);
+                              }
+                              return (
+                                <div key={index}>
+                                  <span className="player-number">
+                                    {sub.player.number}
+                                  </span>
+                                  <span className="player-name">
+                                    {playerNameArr.length > 1
+                                      ? playerNameArr.slice(1)
+                                      : playerNameArr[0]}
+                                  </span>
+                                  <span>{sub.player.pos}</span>
+                                  <span>{}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* away coach and subs */}
+                          <div className="coach">
+                            <img alt="" src={awayCoach.photo} />
+                            <span>Coach: {awayCoach.name}</span>
+                          </div>
+                          <div>
+                            Formation: {awayTeamProfile?.formation?.join("-")}
+                          </div>
+                          <div className="substitues">
+                            {awaySub.map((sub, index) => {
+                              playerNameArr = sub.player.name.split(" ");
+                              playerNameArr.length > 1
+                                ? (playerName = playerNameArr.slice(1))
+                                : (playerName = playerNameArr[0]);
+
+                              return (
+                                <div key={index}>
+                                  <span className="player-number">
+                                    {sub.player.number}
+                                  </span>
+                                  <span className="player-name">
+                                    {
+                                      // playerNameArr.length> 1 ?
+                                      // playerNameArr.slice(1) :
+                                      // playerNameArr[0]
+                                      playerName
+                                      // sub.player.id
+                                    }
+                                  </span>
+                                  <span>{sub.player.pos}</span>
+                                  <span>
+                                    {
+                                      //event:
+                                    }
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
                     </>
-                  )}
-                </>
-              }
+                  }
+                </div>
             </div>
+            
             {/* Ratings */}
             <Ratings
               teams={{ home: homeTeamProfile, away: awayTeamProfile }}

@@ -24,19 +24,19 @@ function Fixture(){
       <div className="relative top-12 left-[50%] -translate-x-[50%] font-bold">
         {/*  */}
         <div className='bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
-        p-2 my-4 mx-auto w-full sm:w-[90%]'>
-          {/*  */}
-          <div className='flex flex-row justify-between sm:justify-start space-x-1 items-center
+        p-2 my-2 mx-auto w-full sm:w-[90%]'>
+          {/* league info */}
+          <div className='flex flex-col justify-center  space-y-1 items-center
            py-2 border-b sm:border-none text-md sm:text-xl border-solid border-slate-400'>
             <div className='flex flex-row justify-start items-center space-x-2'>
               <img className='w-8 h-8 sm:w-10 sm:h-10' src={fixture_data.league.logo} alt={fixture_data.league.name} />
-              <span className='border-none text-sm sm:text-xl'>{fixture_data.league.name} {fixture_data.league.season}/{new Date().getFullYear()}</span>
+              <span className='border-none text-xs sm:text-xl'>{fixture_data.league.name} {fixture_data.league.season}/{new Date().getFullYear()}</span>
             </div>
             <div className='flex flex-row justify-start items-center space-x-2'>
-              <span className='border-none text-sm sm:text-xl'>{fixture_data.league.round}</span>
+              <span className='border-none text-xs sm:text-xl'>{fixture_data.league.round}</span>
             </div>  
           </div>  
-           {/*  */}
+           {/* score table */}
           <div key={fixture_data.fixture?.id} className="flex justify-around space-x-3 w-[90%] lg:w-[60%] items-center mx-auto py-2 
            text-sm sm:text-xl border-b sm:border-none border-solid border-slate-400">
             <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
@@ -44,8 +44,8 @@ function Fixture(){
               <span className='border-none ml-0'>{fixture_data.teams?.home?.name}</span>
             </NavLink>
             <div className='flex flex-row justify-between space-x-2 sm:space-x-4 mx-auto  w-[20%]'>
-              <span className="w-8 h-8 border-none bg-slate-900 text-slate-50 text-center">{fixture_data.goals?.home}</span>
-              <span className="w-8 h-8 border-none bg-slate-900 text-slate-50 text-center">{fixture_data.goals?.away}</span>
+              <span className="w-6 h-6 sm:w-8 sm:h-8 border-none bg-slate-900 text-slate-50 text-center text-sm sm:text-lg">{fixture_data.goals?.home}</span>
+              <span className="w-6 h-6 sm:w-8 sm:h-8 border-none bg-slate-900 text-slate-50 text-center text-sm sm:text-lg">{fixture_data.goals?.away}</span>
             </div>
             
             <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
@@ -53,7 +53,7 @@ function Fixture(){
               <img className="w-10 h-10 sm:w-12 sm:h-12" alt={fixture_data.teams?.away?.name} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
           </div>
-          {/*  */}
+          {/* fixture info */}
           <div className='flex flex-row flex-wrap justify-start space-x-2 sm:space-x-4 py-2'>
             {/* fixture status */}
             <div className='py-auto'>
@@ -75,7 +75,7 @@ function Fixture(){
                   </div>
                 ) : 
                 <div className="py-auto">
-                  <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none">
+                  <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none text-xs sm:text-lg">
                     {fixture_data.fixture.status.short}
                   </span>
                 </div>
@@ -84,7 +84,7 @@ function Fixture(){
             {/* fixture time */}
             <div className="flex flex-row justify-between items-center space-x-2">
               <FontAwesomeIcon icon={faClock} size='' />
-              <span className='border-none'>{new Date(fixture_data.fixture.date).getHours() +
+              <span className='border-none text-xs sm:text-lg'>{new Date(fixture_data.fixture.date).getHours() +
                       ":" + (new Date(fixture_data.fixture.date).getMinutes().toString().length < 2 ? 
                       "0" +  new Date(fixture_data.fixture.date).getMinutes().toString() 
                       : new Date(fixture_data.fixture.date).getMinutes().toString())}
@@ -93,12 +93,12 @@ function Fixture(){
             {/* fixture date */}
             <div className="flex flex-row justify-between items-center space-x-2">
               <FontAwesomeIcon icon={faCalendar} size='' />
-              <span className='border-none'>{new Date(fixture_data.fixture.date).toDateString()}</span>              
+              <span className='border-none text-xs sm:text-lg'>{new Date(fixture_data.fixture.date).toDateString()}</span>              
             </div>
             {/* fixture arena */}
             <div className="flex flex-row justify-between items-center space-x-2">
               <img className='w-8 h-8' src={arena} alt='Arena' />
-              <span className='border-none'>{fixture_data.fixture.venue.name}, {fixture_data.fixture.venue.city}</span>
+              <span className='border-none text-xs sm:text-lg'>{fixture_data.fixture.venue.name}, {fixture_data.fixture.venue.city}</span>
             </div>
           </div>
             

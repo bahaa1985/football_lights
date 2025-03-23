@@ -2,8 +2,8 @@ import {React,useState,useMemo, useEffect} from "react";
 
 export default function Ratings(props){
 
-    const homeStatistics = props.statistics.home.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
-    const awayStatistics = props.statistics.away.sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+    const homeStatistics = props.statistics.home.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
+    const awayStatistics = props.statistics.away.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
 
     console.log(homeStatistics);
     console.log(awayStatistics);
@@ -14,7 +14,7 @@ export default function Ratings(props){
     //
     //set division of the clicked team ( in small screens)
     const [screenWidth,setScreenWidth] = useState(0);
-    const [clickedTeam,setClickedTeam] = useState(null);
+    const [clickedTeam,setClickedTeam] = useState(homeTeam.id);
 
     useEffect(()=>{
         const handleResize = () => {
@@ -58,6 +58,7 @@ export default function Ratings(props){
     
     return (
       <div className="mx-auto">
+        {/* man of the match */}
         <div className="w-full p-2 mx-auto">
           <span className="border-none">Man of the match</span>
           <div className="flex flex-row justify-center items-center space-x-2 mx-auto">
@@ -74,30 +75,33 @@ export default function Ratings(props){
             </span>
           </div>
         </div>
-        {/*  */}
+        
         <div className="w-full p-2">
-          <table className="w-full table-auto p-1 border border-b-[0px] rounded-t-md border-slate-800 border-solid">
+          <table className="w-full table-auto p-1  rounded-t-md ">
+            {/* teams header */}
             <thead className="w-full">
               <tr className="flex flex-row w-full">
                 <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md">
                     <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(homeTeam.id)}/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1">
+                    <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
                         {homeTeam.name}
                     </span>
                 </th>
                 <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md">
                     <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(awayTeam.id)}/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                    <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
                         {awayTeam.name}
                     </span></th>
               </tr>
             </thead>
-            <tbody>
+            {/* players ratings */}
+            <tbody className="border-b-[0px] border-slate-800 border-solid">
             {
-                screenWidth >= 425 ? //if screen size is more than 425 display both of teams ratings,
+                screenWidth >= 425 ? //if screen size is more than 425, display both of teams ratings,
                 // otherwise displaying depends on user's selection  
                 homeStatistics.map((elem, index) => {
                 return (
+                  
                   <tr key={index} className="sm:flex flex-row w-full border-b-2 border-slate-500 border-solid">
                     {
                       elem.statistics[0].games.rating !== null ? 
@@ -110,7 +114,8 @@ export default function Ratings(props){
                         : null
                     }
                     
-                    {awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
+                    {
+                      awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{awayStatistics[index].player.name}</span>
                             <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
@@ -122,7 +127,7 @@ export default function Ratings(props){
                   </tr>
                 );
                 })
-            :
+                :
                 <tr className="flex flex-col w-full">
                 {
                     clickedTeam === homeTeam.id ?

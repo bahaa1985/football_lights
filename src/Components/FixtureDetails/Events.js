@@ -28,7 +28,7 @@ function Events(props){
                     type==='Goal'&& detail==='Normal Goal' ? 
                     <FontAwesomeIcon icon={faSoccerBall} size='2x' className="text-xl sm:text-3xl" color="green"/>:
                     type==='Goal'&& detail==='Penalty' ?
-                    <img alt='' src={penalty} className="sm:w-8 sm:h-8"/>:
+                    <img alt='' src={penalty} className="w-8 h-8 sm:w-10 sm:h-10"/>:
                     type==='Goal'&& detail=== 'Own Goal' ?
                     <FontAwesomeIcon icon={faSoccerBall} size="2x" className="text-xl sm:text-3xl" color="red"/>:
                     type==='Goal'&& detail==='Missed penalty' ?
