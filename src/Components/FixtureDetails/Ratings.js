@@ -49,10 +49,10 @@ export default function Ratings(props){
     function ratingBGColor(value){
         let rating = parseFloat(value);
         let bgColor ='';
-        if(rating >= 0 && rating <=4.9 ) bgColor = 'bg-red-700'
-        else if (rating >= 5 && rating <=6) bgColor = 'bg-red-500'
-        else if(rating >=6.1 && rating <=6.5) bgColor = 'bg-orange-500'
-        else if(rating >=6.6 && rating <=7.9) bgColor = 'bg-green-500'
+        if(rating >= 0 && rating <5 ) bgColor = 'bg-red-700'
+        else if (rating >= 5 && rating <6) bgColor = 'bg-orange-500'
+        else if(rating >=6 && rating <6.5) bgColor = 'bg-yellow-500'
+        else if(rating >=6.5 && rating <8) bgColor = 'bg-green-500'
         else if(rating >=8 &rating <=10) bgColor = 'bg-blue-500'
         return bgColor;
     }
@@ -81,15 +81,17 @@ export default function Ratings(props){
             {/* teams header */}
             <thead className="w-full">
               <tr className="flex flex-row w-full">
-                <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer">
-                    <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(homeTeam.id)}/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
+                <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer"
+                   onClick={()=>setClickedTeam(homeTeam.id)} >
+                    <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8"/>
+                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
                         {homeTeam.name}
                     </span>
                 </th>
-                <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer">
-                    <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(awayTeam.id)}/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
+                <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer"
+                   onClick={()=>setClickedTeam(awayTeam.id)} >
+                    <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8"/>
+                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
                         {awayTeam.name}
                     </span></th>
               </tr>
@@ -107,7 +109,7 @@ export default function Ratings(props){
                       elem.statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{elem.player.name}</span>
-                            <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            <span className={`flex justify-center items-center border-none w-8 h-8 font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                 {elem.statistics[0].games.rating}
                             </span>
                         </td>
@@ -118,7 +120,7 @@ export default function Ratings(props){
                       awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{awayStatistics[index].player.name}</span>
-                            <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            <span className={`flex justify-center items-center border-none w-8 h-8 font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                               {awayStatistics[index].statistics[0].games.rating}
                             </span>
                         </td>

@@ -151,6 +151,17 @@ function LineUp(props) {
     return totalAvg;
   }
 
+  function ratingBGColor(value){
+    let rating = parseFloat(value);
+    let bgColor ='';
+    if(rating >= 0 && rating <5 ) bgColor = 'bg-red-700'
+    else if (rating >= 5 && rating <6) bgColor = 'bg-red-500'
+    else if(rating >=6 && rating <6.5) bgColor = 'bg-orange-500'
+    else if(rating >=6.5 && rating <8) bgColor = 'bg-green-500'
+    else if(rating >=8.1 &rating <=10) bgColor = 'bg-blue-500'
+    return bgColor;
+  }
+
   let playerNameArr = [],
     playerName = "";
   return (
@@ -159,39 +170,44 @@ function LineUp(props) {
         {isLoaded ? (
           <>
             <div className="block md:flex md:flex-row md:justify-around lg:justify-center my-2">
-                {/* Playground */}
-                <div className="relative xs:top-[90%] md:top-[45%] w-full sm:w-8/12 lg:w-4/12 m-auto p-1">
+                
+                <div className="relative xs:top-[90%] md:top-[45%] w-full sm:w-8/12 lg:w-6/12 m-auto p-1">
+                  {/*  team's logo, name and rating*/}
                   <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
-                    <div className="flex justify-start space-x-2">
+                    <div className="flex justify-start sm:justify-center space-x-2 px-auto">
                     <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
-                    <span className="w-1/2 text-left flex items-center text-slate-50 border-none">
+                    <span className="text-left flex items-center text-slate-50 border-none">
                       {homeTeamProfile.name}
                     </span>
-                    <span className="text-center text-slate-50 border-none flex justify-center items-center">
+                    <span className={`flex justify-center items-center w-8 h-8 mx-2 text-center ${ratingBGColor(teamRating(homePlayers))} text-slate-50 border-none`}>
                       {teamRating(homePlayers)}
                     </span>
                     </div>
-                    <div className="text-slate-50 text-sm sm:text-lg">
+                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
                       {
                         homeTeamProfile.formation?.join('-')
                       }
                     </div>
                   </div>
+                  {/* Playground */}
                   <SoccerPlayground
                     homeLines={linesPositions()[0]}
                     awayLines={linesPositions()[1]}
                   />
+                  {/* Away team's logo, name and rating*/}
                   <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
-                    <div className="flex justify-start space-x-2">
-<img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
-                    <span className="w-1/2 text-left flex items-center text-slate-50 border-none">
-                      {awayTeamProfile.name}
-                    </span>
-                    <span className="text-center text-slate-50 border-none flex justify-center items-center">
-                      {teamRating(awayPlayers)}
-                    </span>
+                    <div className="flex justify-start sm:justify-center space-x-2 px-auto">
+                      <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
+                      <span className="text-left flex items-center text-slate-50 border-none">
+                        {awayTeamProfile.name}
+                      </span>
+                      <span className={`flex justify-center items-center w-8 h-8 mx-2 text-center text-slate-50 ${ratingBGColor(teamRating(awayPlayers))} border-none`}>
+                        {
+                          teamRating(awayPlayers)
+                        }
+                      </span>
                     </div>
-                    <div className="text-slate-50 text-sm sm:text-lg">
+                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
                       {
                         awayTeamProfile.formation?.join('-')
                       }
@@ -208,11 +224,7 @@ function LineUp(props) {
                           className={`flex justify-start py-2 w-1/2 ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-600"} cursor-pointer`}
                           onClick={() => setClickedSub(homeTeamProfile.id)}
                         >
-                          <img
-                            alt={homeTeamProfile.name}
-                            src={homeTeamProfile.logo}
-                            className="w-8 h-8"
-                          />
+                          <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
                           <span className="w-1/2 text-center text-slate-50 border-none">
                             {homeTeamProfile.name}
                           </span>
@@ -224,11 +236,7 @@ function LineUp(props) {
                           <span className="w-1/2 text-center text-slate-50 border-none align-middle">
                             {awayTeamProfile.name}
                           </span>
-                          <img
-                            alt={awayTeamProfile.name}
-                            src={awayTeamProfile.logo}
-                            className="w-8 h-8"
-                          />
+                          <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
                         </div>
                       </div>
                       {clickedSub === homeTeamProfile.id ? (

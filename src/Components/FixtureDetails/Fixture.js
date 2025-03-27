@@ -21,7 +21,7 @@ function Fixture(){
     return(
       <TeamsContext.Provider value={fixture_data.teams} className="w-full">
       
-      <div className="relative top-12 left-[50%] -translate-x-[50%] font-bold">
+      <div className="relative top-16 left-[50%] -translate-x-[50%] font-bold">
         {/*  */}
         <div className='bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
         p-2 my-2 mx-auto w-full sm:w-[90%]'>
