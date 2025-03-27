@@ -1,5 +1,6 @@
 import {React,useState,useMemo, useEffect} from "react";
-
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Ratings(props){
 
     const homeStatistics = props.statistics.home.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
@@ -19,7 +20,7 @@ export default function Ratings(props){
     useEffect(()=>{
         const handleResize = () => {
             setScreenWidth(window.innerWidth)
-            if(screenWidth >=425){
+            if(screenWidth >=500){
                 setClickedTeam(null);
             }
             else{
@@ -57,37 +58,36 @@ export default function Ratings(props){
     }
     
     return (
-      <div className="mx-auto">
+      <div className="mx-auto my-2">
         {/* man of the match */}
-        <div className="w-full p-2 mx-auto">
-          <span className="border-none">Man of the match</span>
+        <div className="flex flex-row justify-center items-center 
+              w-full sm:w-[70%] p-2 mx-auto rounded-md bg-slate-800 text-slate-50">
+          <span className="border-none text-sm sm:text-md">Man of the match</span>
           <div className="flex flex-row justify-center items-center space-x-2 mx-auto">
-            <img
-              className="w-12 h-12 rounded-full"
-              src={manOfTheMatch().player.photo}
-              alt={manOfTheMatch().player.name}
-            />
-            <span className="border-none font-bold mx-2 text-slate-900">
+            <FontAwesomeIcon icon={faStar} size="1x" color="gold" />
+            <img className="w-12 h-12 rounded-full" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
+            <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-md">
               {manOfTheMatch().player.name}
             </span>
-            <span className={`border-none w-8 h-8 font-bold text-center  mx-2 text-slate-900 ${ratingBGColor(manOfTheMatch().statistics[0].games.rating)}`}>
+            <span className={`border-none w-8 h-8 sm:w-10 sm:h-10 font-bold text-center 
+              flex items-center justify-center mx-2 text-slate-50 ${ratingBGColor(manOfTheMatch().statistics[0].games.rating)}`}>
               {manOfTheMatch().statistics[0].games.rating}
             </span>
           </div>
         </div>
         
-        <div className="w-full p-2">
-          <table className="w-full table-auto p-1  rounded-t-md ">
+        <div className="p-2">
+          <table className="w-full mx-auto sm:w-[70%] table-auto p-1  rounded-t-md ">
             {/* teams header */}
             <thead className="w-full">
               <tr className="flex flex-row w-full">
-                <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md">
+                <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer">
                     <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(homeTeam.id)}/>
                     <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
                         {homeTeam.name}
                     </span>
                 </th>
-                <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md">
+                <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer">
                     <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8" onClick={()=>setClickedTeam(awayTeam.id)}/>
                     <span className="w-1/2 text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-xl">
                         {awayTeam.name}
@@ -97,17 +97,17 @@ export default function Ratings(props){
             {/* players ratings */}
             <tbody className="border-b-[0px] border-slate-800 border-solid">
             {
-                screenWidth >= 425 ? //if screen size is more than 425, display both of teams ratings,
+                screenWidth >= 500 ? //if screen size is more than 425, display both of teams ratings,
                 // otherwise displaying depends on user's selection  
                 homeStatistics.map((elem, index) => {
                 return (
                   
-                  <tr key={index} className="sm:flex flex-row w-full border-b-2 border-slate-500 border-solid">
+                  <tr key={index} className="sm:flex flex-row w-full border-b border-slate-500 border-solid">
                     {
                       elem.statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{elem.player.name}</span>
-                            <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                 {elem.statistics[0].games.rating}
                             </span>
                         </td>
@@ -118,7 +118,7 @@ export default function Ratings(props){
                       awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
                         <td className="flex justify-between sm:w-[50%] sm:px-3">
                             <span className="border-none">{awayStatistics[index].player.name}</span>
-                            <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                            <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                               {awayStatistics[index].statistics[0].games.rating}
                             </span>
                         </td>
@@ -136,7 +136,7 @@ export default function Ratings(props){
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between w-full px-3 border-b border-solid border-slate-800">
                                 <span className="border-none">{elem.player.name}</span>
-                                <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                                <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>
                             </td>

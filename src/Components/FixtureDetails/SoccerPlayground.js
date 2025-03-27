@@ -5,7 +5,7 @@ const SoccerPlayground = (props) => {
     const awayLines = props.awayLines;
 
     return (
-    <div className="relative w-90% h-[680px] md:h-[800px] mx-auto border-2 bg-slate-500 border-slate-50">
+    <div className="relative w-full h-[680px] md:h-[850px] mx-auto border-2 bg-slate-500 border-slate-50">
       {/* Outer Borders */}
       <div className="absolute top-0 left-0 w-full h-full"></div>
 
@@ -22,7 +22,7 @@ const SoccerPlayground = (props) => {
 
         {/* 18 Yard Area */}
         <div className="absolute top-0 left-1/2 w-[200px] h-24 border-2 border-slate-50 transform -translate-x-1/2"></div>
-        <div className='w-full h-full flex flex-col justify-around'>
+        <div className='w-full h-full flex flex-col justify-center'>
         {
             homeLines.map((line, index) => {
                 return (
@@ -43,7 +43,7 @@ const SoccerPlayground = (props) => {
 
         {/* 18 Yard Area */}
         <div className="absolute bottom-0 left-1/2 w-[200px] h-24 border-2 border-slate-50 transform -translate-x-1/2"></div>
-        <div className='w-full h-full flex flex-col justify-around'>
+        <div className='w-full h-full flex flex-col justify-center'>
         {
             awayLines.map((line, index) => {
                 return (

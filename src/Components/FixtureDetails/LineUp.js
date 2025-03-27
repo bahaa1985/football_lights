@@ -46,7 +46,6 @@ function LineUp(props) {
   useMemo(() => {
     let isMounted = true; // flag to track if the component is mounted
     // call formation and line up players:
-
     async function fetchLineUp() {
       const lineup_response = await getLineUps(fixtureId);
       const players_response = await getPlayers(fixtureId);
@@ -156,33 +155,47 @@ function LineUp(props) {
     playerName = "";
   return (
     <div>
-      <div className="block mx-auto">
+      <div className="block mx-auto my-2">
         {isLoaded ? (
           <>
-            <div className="block md:flex flex-row justify-around">
+            <div className="block md:flex md:flex-row md:justify-around lg:justify-center my-2">
                 {/* Playground */}
-                <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-1/2 m-auto p-3">
-                  <div className={`flex justify-start p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                <div className="relative xs:top-[90%] md:top-[45%] w-full sm:w-8/12 lg:w-4/12 m-auto p-1">
+                  <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                    <div className="flex justify-start space-x-2">
                     <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                    <span className="w-1/2 text-left flex items-center text-slate-50 border-none">
                       {homeTeamProfile.name}
                     </span>
-                    <span className="text-center text-slate-50 border-none align-middle">
+                    <span className="text-center text-slate-50 border-none flex justify-center items-center">
                       {teamRating(homePlayers)}
                     </span>
+                    </div>
+                    <div className="text-slate-50 text-sm sm:text-lg">
+                      {
+                        homeTeamProfile.formation?.join('-')
+                      }
+                    </div>
                   </div>
                   <SoccerPlayground
                     homeLines={linesPositions()[0]}
                     awayLines={linesPositions()[1]}
                   />
-                  <div className={`flex justify-start p-2 w-full mx-auto rounded-md bg-slate-800`}>
-                    <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
-                    <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                  <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                    <div className="flex justify-start space-x-2">
+<img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
+                    <span className="w-1/2 text-left flex items-center text-slate-50 border-none">
                       {awayTeamProfile.name}
                     </span>
-                    <span className="text-center text-slate-50 border-none align-middle">
+                    <span className="text-center text-slate-50 border-none flex justify-center items-center">
                       {teamRating(awayPlayers)}
                     </span>
+                    </div>
+                    <div className="text-slate-50 text-sm sm:text-lg">
+                      {
+                        awayTeamProfile.formation?.join('-')
+                      }
+                    </div>
                   </div>
                 </div>
 
@@ -200,7 +213,7 @@ function LineUp(props) {
                             src={homeTeamProfile.logo}
                             className="w-8 h-8"
                           />
-                          <span className="w-1/2 text-center text-slate-50 border-none align-middle">
+                          <span className="w-1/2 text-center text-slate-50 border-none">
                             {homeTeamProfile.name}
                           </span>
                         </div>
@@ -221,14 +234,11 @@ function LineUp(props) {
                       {clickedSub === homeTeamProfile.id ? (
                         <>
                           {/* home coach and subs */}
-                          <div className="coach">
-                            <img alt="" src={homeCoach.photo} />
-                            <span>Coach: {homeCoach.name}</span>
+                          <div className="flex flex-row justify-start space-x-2">
+                            <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={homeCoach.photo} />
+                            <span className="border-none flex justify-center items-center text-sm">Coach: {homeCoach.name}</span>
                           </div>
                           <div>
-                            Formation: {homeTeamProfile?.formation?.join("-")}
-                          </div>
-                          <div className="substitues">
                             {homeSub.map((sub, index) => {
                               // eslint-disable-next-line no-lone-blocks
                               {
@@ -238,45 +248,11 @@ function LineUp(props) {
                                   : (playerName = playerNameArr[0]);
                               }
                               return (
-                                <div key={index}>
-                                  <span className="player-number">
+                                <div key={index} className="flex flex-row jsutify start space-x-2 border-b border-solid border-slate-400">
+                                  <span className="border-none flex justify-center items-center ">
                                     {sub.player.number}
                                   </span>
-                                  <span className="player-name">
-                                    {playerNameArr.length > 1
-                                      ? playerNameArr.slice(1)
-                                      : playerNameArr[0]}
-                                  </span>
-                                  <span>{sub.player.pos}</span>
-                                  <span>{}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {/* away coach and subs */}
-                          <div className="coach">
-                            <img alt="" src={awayCoach.photo} />
-                            <span>Coach: {awayCoach.name}</span>
-                          </div>
-                          <div>
-                            Formation: {awayTeamProfile?.formation?.join("-")}
-                          </div>
-                          <div className="substitues">
-                            {awaySub.map((sub, index) => {
-                              playerNameArr = sub.player.name.split(" ");
-                              playerNameArr.length > 1
-                                ? (playerName = playerNameArr.slice(1))
-                                : (playerName = playerNameArr[0]);
-
-                              return (
-                                <div key={index}>
-                                  <span className="player-number">
-                                    {sub.player.number}
-                                  </span>
-                                  <span className="player-name">
+                                  <span className="border-none text-sm">
                                     {
                                       // playerNameArr.length> 1 ?
                                       // playerNameArr.slice(1) :
@@ -285,12 +261,53 @@ function LineUp(props) {
                                       // sub.player.id
                                     }
                                   </span>
-                                  <span>{sub.player.pos}</span>
-                                  <span>
+                                  <span className="border-none text-sm flex justify-center items-center">{
+                                    sub.player.pos === 'D' ? 'Defender'
+                                    : sub.player.pos === 'M' ? 'Midfielder'
+                                    : sub.player.pos === 'F' ? 'Forward'
+                                    : sub.player.pos === 'G' ? 'GoalKeeper'
+                                    :null
+                                    }</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* away coach and subs */}
+                          <div className="flex flex-row justify-start space-x-2">
+                            <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={awayCoach.photo} />
+                            <span className="border-none flex justify-center items-center text-sm">Coach: {awayCoach.name}</span>
+                          </div>
+                          <div className="">
+                            {awaySub.map((sub, index) => {
+                              playerNameArr = sub.player.name.split(" ");
+                              playerNameArr.length > 1
+                                ? (playerName = playerNameArr.slice(1))
+                                : (playerName = playerNameArr[0]);
+
+                              return (
+                                <div key={index} className="flex flex-row jsutify start space-x-2 border-b border-solid border-slate-400">
+                                  <span className="border-none flex justify-center items-center ">
+                                    {sub.player.number}
+                                  </span>
+                                  <span className="border-none text-sm">
                                     {
-                                      //event:
+                                      // playerNameArr.length> 1 ?
+                                      // playerNameArr.slice(1) :
+                                      // playerNameArr[0]
+                                      playerName
+                                      // sub.player.id
                                     }
                                   </span>
+                                  <span className="border-none text-sm flex justify-center items-center">{
+                                    sub.player.pos === 'D' ? 'Defender'
+                                    : sub.player.pos === 'M' ? 'Midfielder'
+                                    : sub.player.pos === 'F' ? 'Forward'
+                                    : sub.player.pos === 'G' ? 'GoalKeeper'
+                                    :null
+                                    }</span>
                                 </div>
                               );
                             })}

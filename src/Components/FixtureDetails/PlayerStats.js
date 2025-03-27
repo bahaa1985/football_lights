@@ -1,6 +1,5 @@
 import React, { useState,useEffect,useContext } from 'react';
 import { TeamsContext } from './Fixture.js';
-import PlayerStatsTable from './PlayerStatsTable.jsx';
 
 function PlayerStats(props) {
 
@@ -12,13 +11,13 @@ function PlayerStats(props) {
     //set division of the clicked team ( in small screens)
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(null);
-    const [isFixed, setIsFixed] = useState(false);
-    const [elementTop, setElementTop] = useState(0);
 
     useEffect(()=>{
-            const handleResize = () => {
+        const handleResize = () => {
             setScreenWidth(window.innerWidth)
-            if(screenWidth >=425){
+            console.log(screenWidth);
+            
+            if(screenWidth >=600){
                 setClickedTeam(null);
             }
             else{
@@ -26,11 +25,9 @@ function PlayerStats(props) {
             }
         };
     
-        window.addEventListener("resize", handleResize);                  
+        window.addEventListener("resize", handleResize);   
         // Cleanup function to remove event listener when component unmounts
-        return (
-            window.removeEventListener("resize", handleResize)
-        )
+        return () => window.removeEventListener("resize", handleResize);
     })
 
     let homeShots=[],homeGoals=[],homeConceded=[],homeAssists=[],homeSaves=[],homePasses=[],homeTackles=[],homeDuels=[],homeDribbles=[],
@@ -136,7 +133,7 @@ function PlayerStats(props) {
                     // if (elem[statKey][statSubKey] !== null)
                     return (                       
                         <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'flex-row  items-center'} 
-                                        mx-auto px-2 justify-between space-x-2 w-[80%] 
+                                        mx-auto px-1 justify-between space-x-2 w-[90%] 
                                         ${source.length > 1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
                             {/* Player's name and photo */}
                             <div className = "flex flex-row space-x-2 items-center">
@@ -170,12 +167,12 @@ function PlayerStats(props) {
             <div className='w-full mx-auto text-center'>
                 <h3 className='w-full bg-slate-900 text-slate-50 font-bold'>{title}</h3>
                 {
-                    clickedTeam === null ? //that means the screen is wide enough to show both teams
+                    screenWidth >= 600 ? //that means the screen is wide enough to show both teams
                     <div className='flex justify-between py-2'>
                         
-                        {[renderStats(homeStats, statKey, statSubKey)
-                        ,
-                        renderStats(awayStats, statKey, statSubKey)]}                    
+                        {renderStats(homeStats, statKey, statSubKey)}
+                        
+                        {renderStats(awayStats, statKey, statSubKey)}                    
                     </div>
                     :clickedTeam === homeTeam.id ? //at small screens, only the clicked team is shown
                         renderStats(homeStats, statKey, statSubKey)
@@ -188,6 +185,7 @@ function PlayerStats(props) {
 
     return (
         <div className='w-full mx-auto'>
+            {/* teams header */}
             <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800`}>
                 <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': ''} `} onClick={()=>setClickedTeam(homeTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
@@ -198,6 +196,7 @@ function PlayerStats(props) {
                     <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>
                 </div>
             </div>
+            {/* players statistics */}
             {renderPlayerStats('Shots (On Goal)', homeShots, awayShots, 'shots', 'total')}
             {renderPlayerStats('Goals Scored', homeGoals, awayGoals,'goals')}
             {renderPlayerStats('Goals Conceded', homeConceded, awayConceded, 'conceded')}
@@ -211,7 +210,6 @@ function PlayerStats(props) {
             {renderPlayerStats('Fouls Committed', homeCommittedFouls, awayCommittedFouls, 'fouls')}
             {renderPlayerStats('Yellow Cards', homeYellowCards, awayYellowCards, 'cards')}
             {renderPlayerStats('Red Cards', homeRedCards, awayRedCards, 'cards')}
-            {/* Add more calls to renderPlayerStats for other statistics as needed */}
         </div>
     );
 }

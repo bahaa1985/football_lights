@@ -42,9 +42,7 @@ function Statistics(props){
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} className="w-[90%] text-center my-2">                       
-                        
-                        <div>{item.type.replace('_',' ')}</div>
+                    <div key={index} className="w-[90%] text-center my-2 mx-auto">                       
                             
                         <div className="flex justify-center">
                             <div>  
@@ -73,6 +71,7 @@ function Statistics(props){
                                </div>                                                            
                            </div>
                         </div>
+                        <div>{item.type.replace('_',' ')}</div>
                     </div>
                 )
             }),

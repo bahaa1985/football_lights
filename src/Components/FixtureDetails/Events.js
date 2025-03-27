@@ -28,19 +28,19 @@ function Events(props){
                     type==='Goal'&& detail==='Normal Goal' ? 
                     <FontAwesomeIcon icon={faSoccerBall} size='2x' className="text-xl sm:text-3xl" color="green"/>:
                     type==='Goal'&& detail==='Penalty' ?
-                    <img alt='' src={penalty} className="w-8 h-8 sm:w-10 sm:h-10"/>:
+                    <img alt='' src={penalty} className="w-8 h-8 sm:w-12 sm:h-12"/>:
                     type==='Goal'&& detail=== 'Own Goal' ?
                     <FontAwesomeIcon icon={faSoccerBall} size="2x" className="text-xl sm:text-3xl" color="red"/>:
                     type==='Goal'&& detail==='Missed penalty' ?
                     <img alt='' src={missed_penalty} className="sm:w-8 sm:h-8"/>:
                     type==='Card'&& detail==='Yellow Card' ?
-                    <div className="w-4 h-6 sm:w-8 sm:h-12 bg-yellow-500"></div>:
+                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-yellow-500"></div>:
                     type==='Card'&& detail==='Red Card' ?
-                    <div className="w-4 h-6 sm:w-8 sm:h-12 bg-red-700"></div>:
+                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-red-700"></div>:
                     type==='subst'?
                     <FontAwesomeIcon icon={faRightLeft} size='2x' className="text-xl sm:text-3xl"/>:                    
                     type==='Var'?                        
-                    <img alt='' src={VAR} className="sm:w-8 sm:h-8"/>                         
+                    <img alt='' src={VAR} className="w-8 h-8 sm:w-12 sm:h-12"/>                         
                     :null
                 }
                 </div>
@@ -56,7 +56,7 @@ function Events(props){
 
     let i=0;
     return(        
-        <div className='events relative top-20 left-[50%] -translate-x-[50%] w-[90%] sm:w-[60%]' > 
+        <div className='block mx-auto my-2 w-[90%] sm:w-[60%]' > 
             <p>Penalty icon is created by <a href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Soccer icons created by Freepik - Flaticon</a></p>
             <p>Var icon is created by <a href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">Football referee icons created by kosonicon - Flaticon</a></p>
             {                    
