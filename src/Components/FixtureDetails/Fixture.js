@@ -39,7 +39,7 @@ function Fixture(){
            {/* score table */}
           <div key={fixture_data.fixture?.id} className="flex justify-around space-x-3 w-full md:w-[90%] lg:w-[60%] items-center mx-auto py-2 
            text-sm sm:text-xl border-b sm:border-none border-solid border-slate-400">
-            <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
+            <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
               <img className="w-10 h-10 sm:w-12 sm:h-12" alt={fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
               <span className='border-none ml-0'>{fixture_data.teams?.home?.name}</span>
             </NavLink>
@@ -48,7 +48,7 @@ function Fixture(){
               <span className="w-6 h-6 sm:w-8 sm:h-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.away}</span>
             </div>
             
-            <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
+            <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
               <span className='border-none mr-0'>{fixture_data.teams?.away?.name}</span>
               <img className="w-10 h-10 sm:w-12 sm:h-12" alt={fixture_data.teams?.away?.name} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
@@ -56,7 +56,7 @@ function Fixture(){
           {/* fixture info */}
           <div className='flex flex-row flex-wrap justify-start space-x-2 sm:space-x-4 py-2'>
             {/* fixture status */}
-            <div className='py-auto'>
+            <div className='flex flex-row justify-between items-center space-x-2'>
               {
                 fixture_data.fixture.status.short === "1H" ||
                 fixture_data.fixture.status.short === "2H" ||
@@ -66,7 +66,7 @@ function Fixture(){
                 fixture_data.fixture.short === "P" ||
                 fixture_data.fixture.short === "SUSB" ||
                 fixture_data.fixture.short === "INT" ? (
-                  <div className="flex ml-2">
+                  <div className="flex flex-row justify-start items-start ml-2">
                     <span class="relative flex h-3 w-3 border-none">
                       <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
                       <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
