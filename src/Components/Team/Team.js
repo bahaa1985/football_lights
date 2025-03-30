@@ -24,6 +24,11 @@ export default function Team(){
 
     const leaguesOption=useRef();  
 
+    // let [yellowCards,setYellowCards] = useState(0);
+    // let [redCards,setRedCards] = useState(0);
+
+    const yellowCards= useRef(0), redCards= useRef(0);
+
     useEffect(()=>{
               
         async function fetchData(){
@@ -38,21 +43,31 @@ export default function Team(){
 
             const fetchedLeagues = await getTeamLeagues(selectedTeam, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
-            // if(!isNaN(leagueParam)){
-            //     setSelectedLeague(teamLeagues[teamLeagues.length-1])
-            // }
-            // console.log("leagues triggered");
-
-            // console.log("team-league-season",selectedTeam,selectedLeague,selectedSeason);
             
             const fetchedStats= await  getTeamStatistics(selectedTeam, selectedSeason, selectedLeague);
             setTeamStatistics(fetchedStats.data.response);
+            //
+            
             setStatsLoaded(true);
-            // console.log("stats triggered",teamStatistics);
+            
         }
         fetchData();
     },
-    [selectedSeason,selectedLeague,selectedTeam,selectedLeague])
+    [selectedSeason,selectedLeague,selectedTeam,teamIdParam])
+
+    //get total of colored cards:
+    if(teamStatistics){
+        Object.entries(teamStatistics?.cards.yellow).map(([key,value],index)=>{
+            // Object.entries(value).map(([subKey,subValue])=>{
+                yellowCards.current += value.total
+            // })
+        })
+        Object.entries(teamStatistics?.cards.red).map(([key,value],index)=>{
+            // Object.entries(value).map(([subKey,subValue])=>{
+                redCards.current += value.total
+            // })
+        })
+    }
 
     return(
         <div>
@@ -221,7 +236,8 @@ export default function Team(){
                             <tr>
                                 <td></td>
                                 <td>Home</td>
-                                <td>Away</td>                                  
+                                <td>Away</td>
+                                <td></td>                                  
                             </tr>
                         </thead>
                         <tbody>
@@ -251,7 +267,8 @@ export default function Team(){
                             <tr>
                                 <td></td>
                                 <td>Home</td>
-                                <td>Away</td>                                 
+                                <td>Away</td>
+                                <td>Total</td>                                 
                             </tr>
                         </thead>
                         <tbody>
@@ -276,16 +293,18 @@ export default function Team(){
                     {/* clean sheet */}
                     <div>
                         <div>Clean Sheet</div>
-                        <table>
+                        <table className='w-full table-fixed'>
                             <thead>
-                                <th>Home</th>
-                                <th>Away</th>
-                                <th>Total</th>
+                                <tr>
+                                    <td></td>
+                                    <td>Home</td>
+                                    <td>Away</td>
+                                    <td>Total</td>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    
-                               
+                                <td></td>
                                 {
                                     Object.entries(teamStatistics?.clean_sheet).map(([key,value],index)=>
                                     (
@@ -300,6 +319,60 @@ export default function Team(){
                                 }
                                  </tr>
                             </tbody>
+                        </table>
+                    </div>
+                    {/* penalty */}
+                    <div>
+                        <div>Penalty</div>
+                        <table className='w-full table-fixed'>
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td>Percentage</td>
+                                    <td>Total</td>
+                                </tr>
+                                {
+                                    Object.entries(teamStatistics?.penalty).map(([key,value],index)=>(
+                                        <tr key={index}>
+                                            <td>{key}</td>
+                                            {
+                                                key !== 'total' ?
+                                                Object.entries(value).map(([subKey,subValue])=>(
+                                                    <td key={subKey}>{subValue}</td>
+                                                ))
+                                                :
+                                                <td>{value}</td>
+                                                
+                                            }
+                                        </tr>
+                                    ))
+                                }
+                            </thead>
+                        </table>
+                    </div>
+                    {/* Cards */}
+                    <div>
+                    <div>Cards</div>
+                        <table className='w-full table-fixed'>
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td>Yellow</td>
+                                    <td>Red</td>
+                                    <td>Total</td>
+                                </tr>
+                                {
+                                    // Object.entries(teamStatistics?.cards).map(([key,value],index)=>(
+                                        <tr>
+                                          <td></td>
+                                          <td>{yellowCards.current}</td>
+                                          <td>{redCards.current}</td>
+                                          <td>{yellowCards.current + redCards.current}</td>
+                                        </tr>
+                                    // ))
+                                }
+                            </thead>
                         </table>
                     </div>
                     </>                                                                       
