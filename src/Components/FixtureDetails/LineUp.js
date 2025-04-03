@@ -179,13 +179,13 @@ function LineUp(props) {
                     <span className="text-left flex items-center text-slate-50 border-none">
                       {homeTeamProfile.name}
                     </span>
-                    <span className={`flex justify-center items-center w-8 h-8 mx-2 text-center ${ratingBGColor(teamRating(homePlayers))} text-slate-50 border-none`}>
+                    <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 mx-2 text-center ${ratingBGColor(teamRating(homePlayers))} text-slate-50 border-none`}>
                       {teamRating(homePlayers)}
                     </span>
                     </div>
                     <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
                       {
-                        homeTeamProfile.formation?.join('-')
+                        homeTeamProfile.formation?.join(' - ')
                       }
                     </div>
                   </div>
@@ -201,7 +201,7 @@ function LineUp(props) {
                       <span className="text-left flex items-center text-slate-50 border-none">
                         {awayTeamProfile.name}
                       </span>
-                      <span className={`flex justify-center items-center w-8 h-8 mx-2 text-center text-slate-50 ${ratingBGColor(teamRating(awayPlayers))} border-none`}>
+                      <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 text-center text-slate-50 ${ratingBGColor(teamRating(awayPlayers))} border-none`}>
                         {
                           teamRating(awayPlayers)
                         }
@@ -209,7 +209,7 @@ function LineUp(props) {
                     </div>
                     <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
                       {
-                        awayTeamProfile.formation?.join('-')
+                        awayTeamProfile.formation?.join(' - ')
                       }
                     </div>
                   </div>

@@ -35,39 +35,40 @@ export default function Team(){
 
             const fetchedInfo = await getTeamInformation(selectedTeam);
             const fetchedSeasons= await getTeamSeasons(selectedTeam);
+            const fetchedLeagues = await getTeamLeagues(selectedTeam, selectedSeason);
+            const fetchedStats= await  getTeamStatistics(selectedTeam, selectedSeason, selectedLeague);
 
             setTeamInformation(fetchedInfo.data.response[0]);
-            console.log("info triggered");
             setTeamSeasons(fetchedSeasons.data.response);
-            console.log("seasons triggered");
-
-            const fetchedLeagues = await getTeamLeagues(selectedTeam, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
-            
-            const fetchedStats= await  getTeamStatistics(selectedTeam, selectedSeason, selectedLeague);
             setTeamStatistics(fetchedStats.data.response);
             //
-            
+            // if(statsLoaded){
+                //get total of colored cards:
+                    console.log(fetchedStats.data.response.cards.yellow);
+                    Object.entries(fetchedStats.data.response.cards.yellow).map(([key,value],index)=>{
+                        // Object.entries(value).map(([subKey,subValue])=>{
+                            yellowCards.current += value.total
+                        // })
+                    })
+                    Object.entries(fetchedStats.data.response.cards.red).map(([key,value],index)=>{
+                        // Object.entries(value).map(([subKey,subValue])=>{
+                            redCards.current += value.total
+                        // })
+                    })
+            // }
+            //
             setStatsLoaded(true);
+            //
             
         }
         fetchData();
+        //
+        
     },
     [selectedSeason,selectedLeague,selectedTeam,teamIdParam])
 
-    //get total of colored cards:
-    if(teamStatistics){
-        Object.entries(teamStatistics?.cards.yellow).map(([key,value],index)=>{
-            // Object.entries(value).map(([subKey,subValue])=>{
-                yellowCards.current += value.total
-            // })
-        })
-        Object.entries(teamStatistics?.cards.red).map(([key,value],index)=>{
-            // Object.entries(value).map(([subKey,subValue])=>{
-                redCards.current += value.total
-            // })
-        })
-    }
+    
 
     return(
         <div>
@@ -362,16 +363,15 @@ export default function Team(){
                                     <td>Red</td>
                                     <td>Total</td>
                                 </tr>
-                                {
-                                    // Object.entries(teamStatistics?.cards).map(([key,value],index)=>(
-                                        <tr>
-                                          <td></td>
-                                          <td>{yellowCards.current}</td>
-                                          <td>{redCards.current}</td>
-                                          <td>{yellowCards.current + redCards.current}</td>
-                                        </tr>
-                                    // ))
-                                }
+                                <tr>
+                                    <td></td>
+                                    {
+
+                                    }
+                                    <td>{yellowCards.current}</td>
+                                    <td>{redCards.current}</td>
+                                    <td>{yellowCards.current + redCards.current}</td>
+                                </tr>
                             </thead>
                         </table>
                     </div>
