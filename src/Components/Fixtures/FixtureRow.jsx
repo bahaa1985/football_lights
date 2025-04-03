@@ -60,7 +60,7 @@ function FixtureRow(props) {
                   >
                     {/* Match calendar */}
 
-                    <div className="flex flex-col justify-center w-[15%]">
+                    <div className="flex flex-col justify-center items-center w-[15%]">
                       {type === "all_fixtures" ? (
                         <div>
                           <FontAwesomeIcon
@@ -74,26 +74,29 @@ function FixtureRow(props) {
                         </div>
                       ) : null}
 
-                      <div>
-                        <div className="flex ml-auto">
-                        <FontAwesomeIcon
-                          className="mx-2 h-4"
-                          icon={faClock}
-                        ></FontAwesomeIcon>
-                        <span className="border-none">
-                          {new Date(elem.fixture.date).getHours() +
-                            ":" +
-                            (new Date(elem.fixture.date).getMinutes().toString()
-                              .length < 2
-                              ? "0" +
-                                new Date(elem.fixture.date).getMinutes().toString()
-                              : new Date(elem.fixture.date)
-                                  .getMinutes()
-                                  .toString())}
-                        </span>
+                      <div className="flex justify-center items-baseline">
+                        <div className="flex m-auto">
+                          <FontAwesomeIcon
+                            className="mx-2 h-4"
+                            icon={faClock}
+                          ></FontAwesomeIcon>
+                          <span className="border-none">
+                            {new Date(elem.fixture.date).getHours() +
+                              ":" +
+                              (new Date(elem.fixture.date).getMinutes().toString()
+                                .length < 2
+                                ? "0" +
+                                  new Date(elem.fixture.date).getMinutes().toString()
+                                : new Date(elem.fixture.date)
+                                    .getMinutes()
+                                    .toString())}
+                          </span>
                         </div>                                                
                         </div>
-                        <div>
+                        
+                        
+                        <div className="flex justify-center items-center">
+                        {/* <div  className="flex justify-center items-center"> */}
                         {
                           // live indicator:
                           elem.fixture.status.short === "1H" ||
@@ -104,20 +107,18 @@ function FixtureRow(props) {
                           elem.fixture.short === "P" ||
                           elem.fixture.short === "SUSB" ||
                           elem.fixture.short === "INT" ? (
-                            <div className="flex ml-2">
-                              <span class="relative flex h-3 w-3 border-none">
-                                <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
-                                <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
+                            <div className="flex justify-center items-center">
+                              <span class="relative border-none">
+                                {/* <span class="animate-ping absolute top-[50%] -translate-y-[50%]   inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75 border-none"></span> */}
+                                <span class="animate-pulse  absolute top-[50%] -translate-y-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
                               </span>
                               <span className="text-red-800 border-none">{elem.fixture.short}</span>
                             </div>
                           ) : null
                           //
                         }
-                        </div>
-                        
-                        <div className="py-auto">
-                          <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none">
+                        {/* </div> */}
+                          <span className="mx-2 sm:my-auto px-2 rounded-sm text-slate-800 border-none">
                             {elem.fixture.status.short}
                           </span>
                         </div>

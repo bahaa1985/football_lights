@@ -34,22 +34,22 @@ function Events(props){
                     type==='Goal'&& detail==='Missed penalty' ?
                     <img alt='' src={missed_penalty} className="sm:w-8 sm:h-8"/>:
                     type==='Card'&& detail==='Yellow Card' ?
-                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-yellow-500"></div>:
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-yellow-500"></div>:
                     type==='Card'&& detail==='Red Card' ?
-                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-red-700"></div>:
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-red-700"></div>:
                     type==='subst'?
                     <FontAwesomeIcon icon={faRightLeft} size='2x' className="text-xl sm:text-3xl"/>:                    
                     type==='Var'?                        
-                    <img alt='' src={VAR} className="w-8 h-8 sm:w-12 sm:h-12"/>                         
+                    <img alt='' src={VAR} className="w-10 h-8 sm:w-12 sm:h-12"/>                         
                     :null
                 }
                 </div>
                             
                 <div className="flex flex-col justify-center">
-                    <span className="border-none text-lg sm:text-xl">{type==="subst" ? "Out: " + player: player}</span>
-                    <span className="border-none text-sm sm:text-lg">{type==="subst" ? "In: " + assist: assist}</span>
-                    {(type==="Var" || (type === "Goal" && detail === "Missed penalty")) ?<span className="border-none text-lg">{detail}</span>: null}
-                    {comments ? <span className="border-none text-sm sm:text-lg">{comments}</span> : null}
+                    <span className="border-none text-md sm:text-xl">{type==="subst" ? "Out: " + player: player}</span>
+                    <span className="border-none text-sm sm:text-md">{type==="subst" ? "In: " + assist: assist}</span>
+                    {(type==="Var" || (type === "Goal" && detail === "Missed penalty")) ?<span className="border-none text-sm sm:text-md">{detail}</span>: null}
+                    {comments ? <span className="border-none text-sm sm:text-md">{comments}</span> : null}
                 </div>         
             </div>)
     }
