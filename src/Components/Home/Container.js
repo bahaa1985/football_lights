@@ -10,7 +10,7 @@ export default function Home(){
         <div className='relative top-20 w-full left-20 -translate-x-20 sm:w-[90%] mx-auto'>
             <div className='flex flex-col gap-y-10'>
                 <Favourites/>
-                {/* <DayFixtures /> */}
+                <DayFixtures />
                 <News />
             </div>
         </div>
