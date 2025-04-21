@@ -88,8 +88,6 @@ function LineUp(props) {
 
     fetchLineUp();
 
-    console.log(homePlayers);
-
     return () => {
       isMounted = false; // cleanup function to set the flag to false when the component unmounts
     };

@@ -6,14 +6,13 @@ export function setCookie(data,name){
     const jsonData = JSON.stringify(data);
     console.log("jsonData: ",jsonData);
     
-    if(name==="prefered_leagues"){
-    Cookies.set("prefered_leagues",jsonData,{expires:365 * 100});
-    console.log("new cookie: ",getCookie("prefered_leagues"));
-    
-    }
-    else{
-        Cookies.set("prefered_teams",jsonData,{expires:365 * 100});
-    }
+    // if(name==="prefered_leagues"){
+    Cookies.set(name,jsonData,{expires:365 * 100});
+    console.log("new cookie: ",getCookie("prefered_leagues")); 
+    // }
+    // else{
+        // Cookies.set("prefered_teams",jsonData,{expires:365 * 100});
+    // }
 }
 
 export function getCookie(name){

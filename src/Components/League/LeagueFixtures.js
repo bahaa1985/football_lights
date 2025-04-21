@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { groupLeagueFixtures } from "../../Api/getFixtures.js";
 import { getLeagueRounds } from "../../Api/getLeaguesTeams.js";
 
-import FixtureRow from "../Fixtures/FixtureRow.jsx";
+import FixtureRow from "../Tools/FixtureRow.jsx";
 
 export default function LeagueFixtures(props) {
   const league = props.league;
@@ -26,6 +26,8 @@ export default function LeagueFixtures(props) {
       // setFirstRound(Object.keys(fixtures[Object.keys(fixturesData)[0]][0].league.round));      
       //
       setLoaded(true);
+      console.log("fixtires",filteredFixtures);
+      
     }
     fetchData();
   }, []);
@@ -49,14 +51,13 @@ export default function LeagueFixtures(props) {
   }
 
   return (
-    <div className="w-[70%] lg:w-[50%] mx-auto">
+    <div className="w-full sm:w-[90%] lg:w-[75%] mx-auto">
       {
         isLoaded ? 
         <Fragment>
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">Loading ....</div>
-          <div className="w-full flex justify-start space-x-2 flex-wrap my-2">
+          <div className="w-full flex flex-col sm:flex-row items-start sm:justify-start space-x-2 flex-wrap my-2">
             <span className="border-none">Filter by</span>
-            {/* <input className="w-52 border border-solid border-slate-800 rounded-sm" type="text" placeholder="Enter number of game week" onChange={(e)=>filteringByGW(e)} /> */}
             <select className="w-52 border border-solid border-slate-800 rounded-sm" onChange={(e)=>filterByGameWeek(e)} >
               <option value="">{rounds[0].includes('Regular Season') ? 'Select GameWeek' : 'Select Round'}</option>
               {
@@ -67,6 +68,7 @@ export default function LeagueFixtures(props) {
                     })
               }
             </select>
+            <span className="border-none">or</span>
             <input className="w-52 border border-solid border-slate-800 rounded-sm"type="text" placeholder="Enter team name" onChange={(e)=>filterByTeam(e)} />
           </div>
           <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />

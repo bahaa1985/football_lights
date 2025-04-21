@@ -1,15 +1,12 @@
 
-import { BrowserRouter as Router , Route, Routes, NavLink } from 'react-router-dom';
-import Navbar from './Navbar.js';
-import League from './Components/LeagueDetails/League.js';
-import Fixture from './Components/FixtureDetails/Fixture.js';
+import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
+import Navbar from './Components/Tools/Navbar.js';
+import League from './Components/League/Container.js';
+import Fixture from './Components/Fixture/Container.js';
 import Player from './Components/Player.js';
-import Team from './Components/Team/Team.js';
-import Home from './Components/Home.js';
-import Preferences from './Components/Preference/Preference.js';
-import logo from './images/logo.jpg';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import Team from './Components/Team/Container.js';
+import Home from './Components/Home/Container.js';
+import Preferences from './Components/Preference/Container.js';
 
 function App() {
 

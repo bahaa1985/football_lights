@@ -3,6 +3,7 @@ import Standings from "./Standing.js";
 import LeagueFixtures from "./LeagueFixtures.js";
 import { getLeagues } from "../../Api/getLeaguesTeams.js";
 import TopPlayers from "./TopPlayers.js";
+import Tabs from "../Tools/Tabs.jsx";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
 
@@ -21,7 +22,7 @@ export default function League() {
     return seasonsArr;
   }
 
-  const [tab, setTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const [selectedleague,setSelectedLeague] = useState(leagueParam ? leagueParam : leagues[0].id);
   const [selectedSeason,setSelectedSeason] = useState(season ? season : lastSeason);
   const [leagueInfo,setLeagueInfo]=useState();
@@ -50,12 +51,14 @@ export default function League() {
     setSelectedSeason(e.target.value);
     setDisabled(false);
   }
-  return (
-    <div>
-      
-      {/* Leagues dropdown */}
-      <div className="relative top-20 left-[50%] -translate-x-[50%] w-[90%]">
 
+  function handleTabChange(index){
+    setActiveTab(index);
+  }
+
+  return (
+      <div className="relative top-20 w-[90%] mx-auto">
+{/* Leagues dropdown */}
       <div className="w-full my-4 border border-solid border-slate-800 rounded-md p-2">
         <div className="w-full flex justify-start space-x-2 my-4">
           <span className="w-30 h-auto my-auto border-none text-slate-900">Select League</span>
@@ -105,41 +108,37 @@ export default function League() {
       {/* league info */}
       {
         isLoaded && isDisabled ?
-        <div>
-          <div className="flex justify-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md p-4 my-4">
-          <div className="w-[15%] mx-2">
-            <img className="w-24 h-full rounded" src={leagueInfo.league.logo} alt={leagueInfo.league.name} />
-          </div>
-          <div className="w-[85%] mx-2"> 
-              <span className="text-[30px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
-              <div className="flex justify-start space-x-2">
-                  <img className="w-16 h-16 rounded" src={leagueInfo.country.flag} alt={leagueInfo.country.name} />
-                  <span className="w-auto my-auto text-[20px] border-none">{leagueInfo.country.name}</span>
-              </div> 
-          </div>            
+        <div className="w-[90%] mx-auto">
+          <div className="flex justify-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-lg p-4 my-4">
+            <div className="flex justify-start items-center w-[15%] mx-2">
+              <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo.league.logo} alt={leagueInfo.league.name} />
+            </div>
+            <div className="w-[85%] mx-2"> 
+                <span className="text-[30px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
+                <div className="flex justify-start space-x-2">
+                    <img className="w-16 h-16 rounded" src={leagueInfo.country.flag} alt={leagueInfo.country.name} />
+                    <span className="w-auto my-auto text-[20px] border-none">{leagueInfo.country.name}</span>
+                </div> 
+            </div>            
         </div>
-          {/*  */}
-          <div className="w-full flex justify-start flex-wrap sm:space-x-2 my-4 rounded-md">
-            <button className={`w-[50%] sm:w-40 h-12 bg-slate-800 text-slate-50 rounded-md ${tab === 0 ? 'bg-slate-600' : 'bg-slate-800'}`} onClick={()=>setTab(0)}>Fixtures</button>
-            <button className={`w-[50%] sm:w-40 h-12 bg-slate-800 text-slate-50 rounded-md ${tab === 1 ? 'bg-slate-600' : 'bg-slate-800'}`} onClick={()=>setTab(1)}>Standing</button>
-            <button className={`w-[50%] sm:w-40 h-12 bg-slate-800 text-slate-50 rounded-md ${tab === 2 ? 'bg-slate-600' : 'bg-slate-800'}`} onClick={()=>setTab(2)}>Scorers</button>
-            <button className={`w-[50%] sm:w-40 h-12 bg-slate-800 text-slate-50 rounded-md ${tab === 3 ? 'bg-slate-600' : 'bg-slate-800'}`} onClick={()=>setTab(3)}>Assisters</button>
-          </div>
-        </div>        
+        {/* tabs */}
+        
+          <Tabs className="w-full sm:w-1/3 md:w-1/4 mx-auto my-2 sm:my-4" tabs={['Fixtures','Standings','Scorers','Assisters']} activeTab={activeTab} onTabChange={handleTabChange}/>
+      </div>        
         :null
       }
       
       { 
         selectedleague && selectedSeason && isDisabled ?
-          <div className="border border-solid border-slate-800 rounded-md p-2">
+          <div className="bg-slate-200 rounded-lg p-2">
             {
-              tab === 0 ? 
+              activeTab === 0 ? 
               <LeagueFixtures league={selectedleague} season={selectedSeason} />
-            : tab === 1 ? 
+            : activeTab === 1 ? 
               <Standings league={selectedleague} season={selectedSeason} />
-            : tab === 2 ? 
+            : activeTab === 2 ? 
               <TopPlayers league={selectedleague} season={selectedSeason} type={"Goals"} />
-            : tab === 3 ? 
+            : activeTab === 3 ? 
               <TopPlayers league={selectedleague} season={selectedSeason} type={"Assists"} />
             : null
             }
@@ -147,6 +146,5 @@ export default function League() {
         :null
       }
       </div>
-    </div>
   );
 }

@@ -6,6 +6,7 @@ import arena from '../../icons/arena.png';
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
+import  Tabs from '../Tools/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const TeamsContext= createContext();
@@ -15,9 +16,12 @@ function Fixture(){
     const params=useParams();
     const fixtureId=params.fixtureId;
     const fixture_data = useLocation().state?.fixture_data;
-    const [tab, setTab] = useState("Line Up");
+    const [tab, setTab] = useState(0);
     const [left,setLeft]=useState(0)
 
+    const handleTabChange = (newTab, index) => {
+      setTab(index);
+    };
     return(
       <TeamsContext.Provider value={fixture_data.teams} className="w-full">
       
@@ -106,24 +110,19 @@ function Fixture(){
 
 <div className='w-[90%] sm:w-96 mx-auto  border-b border-solid border-slate-800 text-center'>
   {/* tabs */}
-  <div className='flex flex-row justify-around'>     
-    <div className='w-[33%] sm:w-32 h-10 text-slate-900 cursor-pointer' onClick={(e) => {e.stopPropagation();setTab("Line Up");setLeft(0)}}>Line Up</div>
-    <div className='w-[33%] sm:w-32 h-10 text-slate-900 cursor-pointer' onClick={(e) => {e.stopPropagation();setTab("Events");setLeft(33.3)}}>Events</div>
-    <div className='w-[33%] sm:w-32 h-10 text-slate-900 cursor-pointer' onClick={(e) => {e.stopPropagation(); setTab("Statistics");setLeft(66.6)}}>Statistics</div>
-  </div>
-  {/* indicator */}
-  <div className={`h-1 w-[33%] sm:w-32 bg-blue-700`} style={{marginLeft:(left).toString()+'%'}}></div>
+  <Tabs tabs={['Line Up','Events','Statistics']} activeTab={tab} onTabChange={handleTabChange}  />
+  
 </div>
         <div class="w-[90%] mx-auto">
         
             {
               // to display events, statistics and lineup panes below the fixture,
               // depending on what user click:
-              tab === "Events" ? (
+              tab === 0 ? (
                 <Events fixtureId={fixtureId} teams={fixture_data?.teams} />
-              ) : tab === "Statistics" ? (
+              ) : tab === 1 ? (
                 <Statistics fixtureId={fixtureId} />
-              ) : tab === "Line Up" ? (
+              ) : tab === 2 ? (
                 <LineUp fixtureId={fixtureId} teams={fixture_data?.teams} />
               ) : null
             }

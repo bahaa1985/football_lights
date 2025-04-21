@@ -1,6 +1,6 @@
 import {NavLink} from 'react-router-dom';
 import { useRef , useEffect } from 'react';
-import logo from './images/logo.jpg';
+import logo from '../../images/logo.jpg';
 
 
 function Navbar() {

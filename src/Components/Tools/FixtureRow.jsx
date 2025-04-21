@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,13 @@ function FixtureRow(props) {
   const fixtures = props.fixturesSource;
   const type = props.type;
 
-  // const preferedLeagues = getCookie("prefered_leagues");;
+  const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
+
+  useEffect(()=>{
+    window.addEventListener('resize',()=>{
+      setDeviceWidth(window.innerWidth);
+  }) 
+  },[])
 
   return Object.keys(fixtures).map((elem, index) => {
     return (
@@ -15,7 +21,7 @@ function FixtureRow(props) {
         {
           <>
             {
-              // checking if this component is rendered within leagueFixtures or todayFixtures as some designs will be changed
+              // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
               type === "day_matches" ? (
                 <div className="text-left bg-slate-400 p-2 flex justify-start">
                   <img
@@ -32,7 +38,7 @@ function FixtureRow(props) {
                     <span className="text-left text-slate-100 border-none">{elem}</span>
                   </NavLink>
                 </div>
-              ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove emoty gameweeks after filtering by round number
+              ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
                 <div className="bg-slate-500 text-slate-50">
                   {fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? "Game Week " + parseInt(index + 1)
@@ -56,46 +62,42 @@ function FixtureRow(props) {
                   
                   <div
                     key={i}
-                    className="flex justify-center mx-auto my-2 border-b border-b-black border-solid"
+                    className="flex justify-between sm:justify-center mx-auto my-2 border-b border-b-slate-600 border-solid"
                   >
                     {/* Match calendar */}
 
-                    <div className="flex flex-col justify-center items-center w-[15%]">
+                    <div className="flex flex-col justify-start items-start w-[30%] sm:w-[20%]">
                       {type === "all_fixtures" ? (
-                        <div>
+                        <div className="flex justify-start items-center">
                           <FontAwesomeIcon
                             className="mx-2 h-4"
                             icon={faCalendar}
                           ></FontAwesomeIcon>
-                          <span className="border-none">
+                          <span className="border-none  text-sm sm:text-md md:text-lg">
                             {new Date(elem.fixture.date).toDateString().substring(4)}
                           </span>
                           <br />
                         </div>
                       ) : null}
 
-                      <div className="flex justify-center items-baseline">
-                        <div className="flex m-auto">
-                          <FontAwesomeIcon
-                            className="mx-2 h-4"
-                            icon={faClock}
-                          ></FontAwesomeIcon>
-                          <span className="border-none">
-                            {new Date(elem.fixture.date).getHours() +
-                              ":" +
-                              (new Date(elem.fixture.date).getMinutes().toString()
-                                .length < 2
-                                ? "0" +
-                                  new Date(elem.fixture.date).getMinutes().toString()
-                                : new Date(elem.fixture.date)
-                                    .getMinutes()
-                                    .toString())}
+                      <div className="flex justify-start items-center">
+                        <FontAwesomeIcon
+                          className="mx-2 h-4"
+                          icon={faClock}
+                        ></FontAwesomeIcon>
+                        <span className="border-none text-sm sm:text-md md:text-lg">
+                          {new Date(elem.fixture.date).getHours() +
+                            ":" +
+                            (new Date(elem.fixture.date).getMinutes().toString()
+                              .length < 2
+                              ? "0" +
+                                new Date(elem.fixture.date).getMinutes().toString()
+                              : new Date(elem.fixture.date).getMinutes().toString())}
                           </span>
-                        </div>                                                
                         </div>
                         
                         
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-start items-center">
                         {/* <div  className="flex justify-center items-center"> */}
                         {
                           // live indicator:
@@ -127,15 +129,15 @@ function FixtureRow(props) {
 
                     {/* Fixture Teams */}
                     <div
-                      className={`p-auto my-2 ${type === "league" ? "w-[55%] flex justify-between" : "w-[75%] block"} `}
+                      className={`w-[60%] sm:w-[75%]  my-2 flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}
-                      <div className="flex justify-center items-center w-full my-1">
+                      <div className="flex justify-around sm:justify-center items-center w-full my-1">
                         <img
                           src={elem.teams.home.logo}
                           loading="lazy"
-                          className="ml w-10 h-10"
+                          className="w-8 h-8 sm:w-10 sm:h-10"
                           alt={elem.teams.home.name}
                         />
 
@@ -143,7 +145,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none">{elem.teams.home.name}</span>
+                          <span className="border-none text-md  md:text-lg">{elem.teams.home.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
@@ -152,13 +154,12 @@ function FixtureRow(props) {
                       </div>
 
                       {/* Away team */}
-                      <div
-                        className={`flex justify-center items-center w-full my-1 ${type === "league" ? "flex-row-reverse" : "justify-start"}`}
+                      <div className={`flex justify-around sm:justify-center items-center w-full my-1 ${deviceWidth > 600 ? " flex-row-reverse" : null}`}
                       >
                         <img
                           src={elem.teams.away.logo}
                           loading="lazy"
-                          className="w-10 h-10"
+                          className="w-8 h-8 sm:w-10 sm:h-10"
                           alt={elem.teams.away.name}
                         />
 
@@ -166,7 +167,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none">{elem.teams.away.name}</span>
+                          <span className="border-none text-md  md:text-lg">{elem.teams.away.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">

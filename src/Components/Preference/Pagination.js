@@ -77,7 +77,7 @@ function Pagination(props) {
             else{
             const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===elem.team.id)[0])
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
-            console.log("selected teams: ",preferedTeamsArr);    
+            // console.log("selected teams: ",preferedTeamsArr);    
             }
             setCookie(preferedTeamsArr,"prefered_teams");
         }     

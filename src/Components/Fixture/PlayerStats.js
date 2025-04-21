@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useContext } from 'react';
-import { TeamsContext } from './Fixture.js';
+import { TeamsContext } from './Container.js';
 
 function PlayerStats(props) {
 
