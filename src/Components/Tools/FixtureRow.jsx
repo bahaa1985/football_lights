@@ -66,7 +66,7 @@ function FixtureRow(props) {
                   >
                     {/* Match calendar */}
 
-                    <div className="flex flex-col justify-start items-start w-[30%] sm:w-[20%]">
+                    <div className="flex flex-col justify-start items-start w-[20%] sm:w-[20%]">
                       {type === "all_fixtures" ? (
                         <div className="flex justify-start items-center">
                           <FontAwesomeIcon
@@ -81,10 +81,7 @@ function FixtureRow(props) {
                       ) : null}
 
                       <div className="flex justify-start items-center">
-                        <FontAwesomeIcon
-                          className="mx-2 h-4"
-                          icon={faClock}
-                        ></FontAwesomeIcon>
+                        <FontAwesomeIcon  className="mx-2 h-4"  icon={faClock}></FontAwesomeIcon>
                         <span className="border-none text-sm sm:text-md md:text-lg">
                           {new Date(elem.fixture.date).getHours() +
                             ":" +
@@ -109,20 +106,18 @@ function FixtureRow(props) {
                           elem.fixture.short === "P" ||
                           elem.fixture.short === "SUSB" ||
                           elem.fixture.short === "INT" ? (
-                            <div className="flex justify-center items-center">
-                              <span class="relative border-none">
-                                {/* <span class="animate-ping absolute top-[50%] -translate-y-[50%]   inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75 border-none"></span> */}
-                                <span class="animate-pulse  absolute top-[50%] -translate-y-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
+                            <div className="flex flex-row justify-start items-start">
+                              <span class="relative flex h-3 w-3 border-none left-2">
+                                <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
+                                <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
                               </span>
-                              <span className="text-red-800 border-none">{elem.fixture.short}</span>
+                              <span className="relative left-4 text-red-800 border-none">{elem.fixture.status.short}</span>
                             </div>
-                          ) : null
-                          //
-                        }
-                        {/* </div> */}
+                          ) : 
                           <span className="mx-2 sm:my-auto px-2 rounded-sm text-slate-800 border-none">
                             {elem.fixture.status.short}
                           </span>
+                        }
                         </div>
 
                       </div>

@@ -4,9 +4,8 @@ import {React,useState} from 'react';
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   // const [left,setLeft]=useState(0)
   return (
-    <div>
+    <div className='w-full flex flex-row justify-center space-x-5 sm:space-x-8'>
       {/* tabs */}
-      <div className='w-full flex flex-row justify-center space-x-3'>
       {tabs.map((tab, index) => (
         <div
           key={index}
@@ -22,7 +21,6 @@ import {React,useState} from 'react';
           {tab}
         </div>
       ))}
-      </div>
        {/* indicator */}
        {/* <div className={`h-1 w-[${100/tabs.length}%] sm:w-32 bg-blue-700`} style={{marginLeft:(left).toString()+'%'}}></div> */}
     </div>

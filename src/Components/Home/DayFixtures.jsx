@@ -46,7 +46,7 @@ export default function DayFixtures() {
   }, [selectedDate]);
 
   return (
-    <div className="w-full lg:w-[48%] mx-auto">
+    <div className="w-full mx-auto">
       {isLoaded ? (
         ((
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
@@ -66,7 +66,7 @@ export default function DayFixtures() {
 
             
             <div className="w-full">
-                <div className="w-full flex  flex-row justify-center">
+                <div className="w-full flex flex-row justify-center divide-x-2 divide-slate-50">
                     {/* favourite champions fixtures tab */}
                     <div className="w-[50%] bg-slate-200" onClick={()=>setSelectedTab(0)}>
                         {

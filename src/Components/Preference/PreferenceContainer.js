@@ -17,8 +17,45 @@ export default function Preferences(params) {
 
   //get or set user's language:
   function handleLanguage(language){
-    console.log("lang",language);
-    setCookie(language,"language");
+    // console.log("lang",language);
+    switch(language){
+      case 'en':
+        setLanguage('en'); //english
+        setCookie("language",{lang:language,tag:'soccer'});
+        break;
+      case 'fr':
+        setLanguage('fr'); //french
+         setCookie("language",{lang:language,tag:'football'});
+        break;
+      case 'es':
+        setLanguage('es'); //spanish
+         setCookie("language",{lang:language,tag:'fútbol'});
+        break;
+      case 'ar':
+        setLanguage('ar');//arabic
+         setCookie("language",{lang:language,tag:'كرة القدم'});
+        break;
+      case 'zh':
+        setLanguage('zh');//chinese
+         setCookie("language",{lang:language,tag:'足球'});
+        break;
+      case 'ja':
+        setLanguage('ja'); //japanse
+         setCookie("language",{lang:language,tag:'サッカー'});
+        break;
+      case 'it':
+        setLanguage('it');//italian
+         setCookie("language",{lang:language,tag:'calcio'});
+        break;
+      case 'pt':
+        setLanguage('pt');//portugeuse
+         setCookie("language",{lang:language,tag:'futebol'});
+        break;
+      default:
+        setLanguage('en');
+         setCookie("language",{lang:language,tag:'soccer'});
+    }
+    
   }
   //use Effect:
   useEffect(() => {

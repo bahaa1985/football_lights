@@ -17,29 +17,33 @@ export default function News(){
     
     useEffect(()=>{       
         setDatesTZD();
-        const userLang= getCookie('language') || 'en';
-        const newsTag = 'football'; 
-        const cachedNews = localStorage.getItem('news');
+        const userLang= getCookie('language').lang || 'en';
+        const newsTag = getCookie('language').tag || 'soccer';
+        // console.log('newsTag',newsTag);
+        const cachedNews = sessionStorage.getItem('news');
         if (cachedNews) {
             setNews(JSON.parse(cachedNews));
             setLoaded(true);
-            console.log('news from localStorage');
+            console.log('news from sessionStorage');
         } else {
             getNews(newsTag, userLang, TZD.from, TZD.to).then((result) => {
                 setNews(result.data.articles);
                 setLoaded(true);
-                localStorage.setItem('news', JSON.stringify(result.data.articles));                
+                sessionStorage.setItem('news', JSON.stringify(result.data.articles));                
                 console.log('news from API');
             });
         }         
+        return()=>{
+
+        }
     },[]);
     return(
-        <div className='"w-full lg:w-[48%] mx-auto'>
+        <div className='w-full flex flex-wrap mx-auto'>
             {
                 news.length > 0 && loaded ? 
                     news.map((item,index)=>{
                         return (
-                            <div key={index} className='w-[90%] mx-auto'>
+                            <div key={index} className='w-[90%] md:w-[48%] mx-auto'>
                                 <div className='flex justify-between items-center'>
                                     <h3 className='text-sm text-gray-500'>{item.source.name}</h3>
                                     <p className='text-xs text-gray-400'>{item.publishedAt}</p>

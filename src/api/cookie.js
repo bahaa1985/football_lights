@@ -1,7 +1,7 @@
 // import Cookies from "universal-cookie";
 import Cookies from 'js-cookie';
 
-export function setCookie(data,name){
+export function setCookie(name,data){
     // const cookie = new Cookies();
     const jsonData = JSON.stringify(data);
     console.log("jsonData: ",jsonData);

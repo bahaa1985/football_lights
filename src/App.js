@@ -1,12 +1,12 @@
 
 import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Tools/Navbar.js';
-import League from './Components/League/Container.js';
-import Fixture from './Components/Fixture/Container.js';
+import League from './Components/League/LeagueContainer.js';
+import Fixture from './Components/Fixture/FixtureContainer.js';
 import Player from './Components/Player.js';
-import Team from './Components/Team/Container.js';
-import Home from './Components/Home/Container.js';
-import Preferences from './Components/Preference/Container.js';
+import Team from './Components/Team/TeamContainer.js';
+import Home from './Components/Home/HomeContainer.js';
+import Preferences from './Components/Preference/PreferenceContainer.js';
 
 function App() {
 

@@ -41,7 +41,7 @@ function TeamsPagination(props) {
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
             console.log("selected teams: ",preferedTeamsArr);    
             }
-            setCookie(preferedTeamsArr,"prefered_teams");
+            setCookie("prefered_teams",preferedTeamsArr);
         }     
         
     }

@@ -57,7 +57,7 @@ function Pagination(props) {
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
                 // console.log("selected leagues: ",preferedLeaguesArr);    
             }
-            setCookie(preferedLeaguesArr,"prefered_leagues");
+            setCookie("prefered_leagues",preferedLeaguesArr);
         }     
     }
 
@@ -79,7 +79,7 @@ function Pagination(props) {
             preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
             // console.log("selected teams: ",preferedTeamsArr);    
             }
-            setCookie(preferedTeamsArr,"prefered_teams");
+            setCookie("prefered_teams",preferedTeamsArr);
         }     
         
     }

@@ -57,8 +57,8 @@ function Events(props){
     let i=0;
     return(        
         <div className='block mx-auto my-2 w-[90%] sm:w-[60%]' > 
-            <p>Penalty icon is created by <a href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Soccer icons created by Freepik - Flaticon</a></p>
-            <p>Var icon is created by <a href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">Football referee icons created by kosonicon - Flaticon</a></p>
+            <p className="text-sm md:text-md">Penalty icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Freepik - Flaticon</a></p>
+            <p className="text-sm md:text-md">Var icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">created by kosonicon - Flaticon</a></p>
             {                    
                 events.map((elem,index)=>{
                     return(

@@ -17,9 +17,8 @@ function Fixture(){
     const fixtureId=params.fixtureId;
     const fixture_data = useLocation().state?.fixture_data;
     const [tab, setTab] = useState(0);
-    const [left,setLeft]=useState(0)
 
-    const handleTabChange = (newTab, index) => {
+    const handleTabChange = (index) => {
       setTab(index);
     };
     return(
@@ -87,7 +86,7 @@ function Fixture(){
             </div>
             {/* fixture time */}
             <div className="flex flex-row justify-between items-center space-x-2">
-              <FontAwesomeIcon icon={faClock} size='' />
+              <FontAwesomeIcon icon={faClock} />
               <span className='border-none text-xs sm:text-lg'>{new Date(fixture_data.fixture.date).getHours() +
                       ":" + (new Date(fixture_data.fixture.date).getMinutes().toString().length < 2 ? 
                       "0" +  new Date(fixture_data.fixture.date).getMinutes().toString() 
@@ -119,11 +118,11 @@ function Fixture(){
               // to display events, statistics and lineup panes below the fixture,
               // depending on what user click:
               tab === 0 ? (
-                <Events fixtureId={fixtureId} teams={fixture_data?.teams} />
+                <LineUp fixtureId={fixtureId} teams={fixture_data?.teams} />                
               ) : tab === 1 ? (
-                <Statistics fixtureId={fixtureId} />
+                <Events fixtureId={fixtureId} teams={fixture_data?.teams} />
               ) : tab === 2 ? (
-                <LineUp fixtureId={fixtureId} teams={fixture_data?.teams} />
+                <Statistics fixtureId={fixtureId} />
               ) : null
             }
           

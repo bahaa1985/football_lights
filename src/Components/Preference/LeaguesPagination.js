@@ -47,7 +47,7 @@ function LeaguesPagination(props) {
                 preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
                 console.log("selected leagues: ",preferedLeaguesArr);    
             }
-            setCookie(preferedLeaguesArr,"prefered_leagues");
+            setCookie("prefered_leagues",preferedLeaguesArr);
         }     
     }
 
