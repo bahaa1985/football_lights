@@ -7,7 +7,7 @@ export default function Home(){
     
 
     return(
-        <div className='relative top-20 w-full left-20 -translate-x-20 sm:w-[90%] mx-auto'>
+        <div className='relative top-20 w-full left-20 -translate-x-20 mx-auto'>
             <div className='flex flex-col gap-y-10'>
                 <Favourites/>
                 <div className='w-full'>

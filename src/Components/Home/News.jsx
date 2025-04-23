@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import getNews from '../../Api/getNews.js';
 import { getCookie } from '../../Api/cookie.js';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 export default function News(){
            
@@ -38,19 +39,19 @@ export default function News(){
         }
     },[]);
     return(
-        <div className='w-full flex flex-wrap mx-auto'>
+        <div className='w-[90%] sm:w-[80%] flex flex-col sm:flex-row sm:flex-wrap mx-auto'>
             {
                 news.length > 0 && loaded ? 
                     news.map((item,index)=>{
                         return (
-                            <div key={index} className='w-[90%] md:w-[48%] mx-auto'>
+                            <div key={index} className={`flex flex-col items-center justify-center md:w-[40%] mx-auto my text-center`}>
                                 <div className='flex justify-between items-center'>
                                     <h3 className='text-sm text-gray-500'>{item.source.name}</h3>
                                     <p className='text-xs text-gray-400'>{item.publishedAt}</p>
                                 </div>
-                                <img className='w-full h-32 rounded-md' src={item.image} alt='' loading='lazy' />
-                                <h3>{item.title}</h3>
-                                <button className='bg-blue-600 text-slate-50 font-bold w-16 h-8' onClick={()=>setStoryindex(index)}>Show</button>
+                                <img className='w-full h-36 rounded-md mx-auto' src={item.image} alt='' loading='lazy' />
+                                <h3 className='px-2'>{item.title}</h3>
+                                <button className='bg-blue-600 text-slate-50 font-bold w-16 h-8 my-2 mx-auto' onClick={()=>setStoryindex(index)}>Show</button>
                                 {
                                     storyIndex === index ?
                                     <div className='w-full h-32 overflow-visible'>

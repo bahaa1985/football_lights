@@ -23,23 +23,15 @@ function FixtureRow(props) {
             {
               // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
               type === "day_matches" ? (
-                <div className="text-left bg-slate-400 p-2 flex justify-start">
-                  <img
-                    alt=""
-                    loading="lazy"
-                    src={fixtures[elem][0].league.logo}
-                    className="ml xs:w-15 sm:w-16 h-12 object-contain"
-                  />
+                <div className="flex justify-start items-center p-2">
+                  <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>
 
-                  <NavLink
-                    className="my-auto ml-2"
-                    to={`/leagues/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}
-                  >
-                    <span className="text-left text-slate-100 border-none">{elem}</span>
+                  <NavLink  className="my-auto ml-2"  to={`/leagues/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
+                    <span className="text-left border-none">{elem}</span>
                   </NavLink>
                 </div>
               ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
-                <div className="bg-slate-500 text-slate-50">
+                <div className="">
                   {fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? "Game Week " + parseInt(index + 1)
                     : fixtures[elem][0]?.league.round}
@@ -52,18 +44,17 @@ function FixtureRow(props) {
                 <div>
                   {
                     type === "fav_teams_matches" ?
-                      <div className="flex justify-center border-none rounded-md bg-slate-400">
-                        <img loading="lazy" className="ml w-10 h-10" src={elem.league.logo} alt={elem.league.name}/>
-                        <span className="border-none">{elem.league.name}</span>
-                        <span className="border-none">{elem.league.round}</span>
+                      <div className="flex justify-start items-center p-2">
+                        <img  alt=""  loading="lazy"  src={elem.league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>  
+                        <NavLink  className="my-auto ml-2"  to={`/leagues/${elem.league.id}/${elem.league.season}`}>
+                          <span className="text-left border-none">{elem.league.name}</span>
+                        </NavLink>
+                        <span className="border-none">{' '+elem.league.round}</span>
                       </div>
                       :null
                   }
                   
-                  <div
-                    key={i}
-                    className="flex justify-between sm:justify-center mx-auto my-2 border-b border-b-slate-600 border-solid"
-                  >
+                  <div  key={i}  className="flex justify-between sm:justify-center mx-auto my-2 border-b border-b-slate-600 border-solid">
                     {/* Match calendar */}
 
                     <div className="flex flex-col justify-start items-start w-[20%] sm:w-[20%]">
@@ -140,7 +131,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-md  md:text-lg">{elem.teams.home.name}</span>
+                          <span className="border-none text-sm  lg:text-lg">{elem.teams.home.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
@@ -162,7 +153,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-md  md:text-lg">{elem.teams.away.name}</span>
+                          <span className="border-none text-sm  lg:text-lg">{elem.teams.away.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">

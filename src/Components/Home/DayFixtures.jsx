@@ -28,6 +28,7 @@ export default function DayFixtures() {
   const [teamsFixtures, setTeamsFixtures] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
   const [selectedTab,setSelectedTab] = useState(0);
+  const [deviceWidth,setDeviceWidth] = useState(window.innerWidth);
 
   const leagues = getCookie("prefered_leagues");
   const teams = getCookie("prefered_teams");
@@ -42,7 +43,15 @@ export default function DayFixtures() {
     }
     fetchFixtures();
 
-    console.log("ty", dateFixtures);
+    window.addEventListener('resize',()=>{
+      setDeviceWidth(window.innerWidth);
+    })
+    return () =>{
+      window.removeEventListener('resize',()=>{
+        setDeviceWidth(window.innerWidth);
+      })
+    }
+    // console.log("ty", dateFixtures);
   }, [selectedDate]);
 
   return (
@@ -86,8 +95,9 @@ export default function DayFixtures() {
                 </div>
                 
               {/* fixtures */}
-                <div>
+                <div className="w-full">
                     {
+                      deviceWidth < 640 ?
                         selectedTab === 0 ? 
                             dateFixtures ? 
                                 <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
@@ -104,6 +114,29 @@ export default function DayFixtures() {
                                 No current fixtures
                                 </div>  
                             :null
+                      :
+                      <div className="w-full flex flex-row justify-center divide-x-2 divide-slate-50">                        
+                          <div className="w-[48%]">
+                          {
+                            dateFixtures ? 
+                            <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
+                            : 
+                            <div className="flex justify-center items-center">
+                                No current games
+                            </div>
+                          }
+                          </div>
+                          <div className="w-[48%]">
+                            {
+                               teamsFixtures ? 
+                               <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
+                               : 
+                               <div className="flex justify-center items-center">
+                               No current fixtures
+                               </div>  
+                            }
+                          </div>                        
+                      </div>                      
                     }
                 </div>
             </div>
