@@ -6,40 +6,39 @@ function Favourites() {
     const teams=getCookie("prefered_teams");
     
     return (  
-        <div className='flex flex-col w-full bg-slate-50'>
+        <div className='flex flex-col w-[90%] sm:w-[30%] h-auto sm:h-[450px] overflow-auto mx-auto bg-slate-50 p-2 rounded-md my-2'>
             <div className='w-full bg-slate-800 text-slate-50 rounded-md'>Favourite Leagues</div>
-            <div className='w-full flex flex-wrap justify-start space-x-4 my-2'>
+            {/* <div className='w-full flex flex-col justify-start my-2'> */}
                 {
                     leagues.map((league,index)=>{
                         return(
-                            <div key={index}>
-                                <NavLink className='flex flex-col' to={`/leagues/${league.id}/${league.season}`}>
-                                    <img className='h-12 w-12 sm:h-14 sm:w-14 rounded mx-auto bg-slate-50'
-                                         alt={league.name} src={league.logo} />
-                                    {/* <div className='w-10 h-2 text-wrap'>{league.name}</div> */}
+                            <div key={index} className='w-full my-1'>
+                                <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/leagues/${league.id}/${league.season}`}>
+                                    <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
+                                    <div className='text-sm lg:text-xl'>{league.name}</div>
                                 </NavLink>
                             </div>
                         )
                     })
                 }
-            </div>
+            {/* </div> */}
 
             <div className='w-full bg-slate-800 text-slate-50 rounded-md'>Favourite Teams</div>
-            <div className='w-full flex flex-wrap justify-start space-x-4 my-2'>
+            {/* <div className='w-full flex flex-col justify-start my-2'> */}
                 
                 {
                     teams.map((team,index)=>{
                         return(
-                            <div key={index}>
-                                <NavLink className='flex flex-col' to={`/teams/${team.id}`}>                                   
-                                    <img className='h-12 w-12 sm:h-14 sm:w-14 rounded mx-auto bg-slate-50' alt={team.name} src={team.logo} />
-                                    {/* <div className='w-10 h-2 text-wrap'>{team.name}</div> */}
+                            <div key={index} className='w-full my-1'>
+                                <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/teams/${team.id}`}>                                   
+                                    <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={team.name} src={team.logo} />
+                                    <div className='text-sm lg:text-xl'>{team.name}</div>
                                 </NavLink>
                             </div>
                         )
                     })
                 }
-            </div>
+            {/* </div> */}
             
         </div>
     );

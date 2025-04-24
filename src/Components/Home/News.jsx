@@ -20,7 +20,6 @@ export default function News(){
         setDatesTZD();
         const userLang= getCookie('language').lang || 'en';
         const newsTag = getCookie('language').tag || 'soccer';
-        // console.log('newsTag',newsTag);
         const cachedNews = sessionStorage.getItem('news');
         if (cachedNews) {
             setNews(JSON.parse(cachedNews));
@@ -39,7 +38,7 @@ export default function News(){
         }
     },[]);
     return(
-        <div className='w-[90%] sm:w-[80%] flex flex-col sm:flex-row sm:flex-wrap mx-auto'>
+        <div className='w-full flex flex-col sm:flex-row sm:flex-wrap mx-auto bg-slate-50 rounded-md my-2'>
             {
                 news.length > 0 && loaded ? 
                     news.map((item,index)=>{

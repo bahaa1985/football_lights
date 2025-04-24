@@ -57,14 +57,14 @@ function FixtureRow(props) {
                   <div  key={i}  className="flex justify-between sm:justify-center mx-auto my-2 border-b border-b-slate-600 border-solid">
                     {/* Match calendar */}
 
-                    <div className="flex flex-col justify-start items-start w-[20%] sm:w-[20%]">
+                    <div className="flex flex-col justify-start items-center w-[15%] md:w-[20%] my-2 ml-0">
                       {type === "all_fixtures" ? (
                         <div className="flex justify-start items-center">
                           <FontAwesomeIcon
                             className="mx-2 h-4"
                             icon={faCalendar}
                           ></FontAwesomeIcon>
-                          <span className="border-none  text-sm sm:text-md md:text-lg">
+                          <span className="border-none  text-sm md:text-md">
                             {new Date(elem.fixture.date).toDateString().substring(4)}
                           </span>
                           <br />
@@ -73,7 +73,7 @@ function FixtureRow(props) {
 
                       <div className="flex justify-start items-center">
                         <FontAwesomeIcon  className="mx-2 h-4"  icon={faClock}></FontAwesomeIcon>
-                        <span className="border-none text-sm sm:text-md md:text-lg">
+                        <span className="border-none text-sm md:text-md">
                           {new Date(elem.fixture.date).getHours() +
                             ":" +
                             (new Date(elem.fixture.date).getMinutes().toString()
@@ -115,11 +115,11 @@ function FixtureRow(props) {
 
                     {/* Fixture Teams */}
                     <div
-                      className={`w-[60%] sm:w-[75%]  my-2 flex flex-col items-center sm:flex-row sm:justify-between`}
+                      className={`w-[75%]  my-2 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}
-                      <div className="flex justify-around sm:justify-center items-center w-full my-1">
+                      <div className="flex justify-center space-x-2 lg:justify-between items-center w-[90%] md:w-[48%] my-1">
                         <img
                           src={elem.teams.home.logo}
                           loading="lazy"
@@ -131,7 +131,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-sm  lg:text-lg">{elem.teams.home.name}</span>
+                          <span className="border-none text-sm  lg:text-md">{elem.teams.home.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
@@ -140,7 +140,7 @@ function FixtureRow(props) {
                       </div>
 
                       {/* Away team */}
-                      <div className={`flex justify-around sm:justify-center items-center w-full my-1 ${deviceWidth > 600 ? " flex-row-reverse" : null}`}
+                      <div className={`flex justify-center space-x-2 lg:justify-between items-center w-[90%] md:w-[48%] my-1 ${deviceWidth > 600 ? " flex-row-reverse" : null}`}
                       >
                         <img
                           src={elem.teams.away.logo}
@@ -153,7 +153,7 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-sm  lg:text-lg">{elem.teams.away.name}</span>
+                          <span className="border-none text-sm  lg:text-md">{elem.teams.away.name}</span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
@@ -163,8 +163,8 @@ function FixtureRow(props) {
                     </div>
 
                     {/* Details button */}
-                    <div className="flex items-center w-16">
-                      <NavLink className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"
+                    <div className="flex items-center w-[10%]">
+                      <NavLink className="p-1 bg-emerald-600 text-slate-50 text-sm lg:text-md rounded-sm hover:bg-emerald-500"
                       to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
                         {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
                           Deatils

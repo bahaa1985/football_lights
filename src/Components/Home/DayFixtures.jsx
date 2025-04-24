@@ -6,6 +6,7 @@ import {
 import "react-calendar/dist/Calendar.css";
 import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
+import Tabs from '../Tools/Tabs.jsx';
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -27,7 +28,7 @@ export default function DayFixtures() {
   const [dateFixtures, setDateFixtures] = useState([]);
   const [teamsFixtures, setTeamsFixtures] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
-  const [selectedTab,setSelectedTab] = useState(0);
+  const [activeTab,setActiveTab] = useState(0);
   const [deviceWidth,setDeviceWidth] = useState(window.innerWidth);
 
   const leagues = getCookie("prefered_leagues");
@@ -54,8 +55,12 @@ export default function DayFixtures() {
     // console.log("ty", dateFixtures);
   }, [selectedDate]);
 
+  function handleSelectedTab(index){
+    setActiveTab(index);
+  }
+
   return (
-    <div className="w-full mx-auto">
+    <div className="w-[90%] sm:w-[65%] h-auto sm:h-[450px] overflow-auto mx-auto my-2 bg-slate-50 rounded-md">
       {isLoaded ? (
         ((
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
@@ -63,7 +68,7 @@ export default function DayFixtures() {
           </div>
         ),
         (
-          <div className="w-full sm:w-[90%] mx-auto rounded-md bg-slate-50 p-2">
+          <div className="w-full mx-auto rounded-md bg-slate-50 p-2">
             {/* date picker */}
             <div>
               <input
@@ -75,30 +80,12 @@ export default function DayFixtures() {
 
             
             <div className="w-full">
-                <div className="w-full flex flex-row justify-center divide-x-2 divide-slate-50">
-                    {/* favourite champions fixtures tab */}
-                    <div className="w-[50%] bg-slate-200" onClick={()=>setSelectedTab(0)}>
-                        {
-                            <div className="p-2 bg-slate-800 text-slate-50">
-                            Favourite Leagues
-                            </div>
-                        }
-                    </div>
-                    {/* favourite teams fixtures tab */}
-                    <div className="w-[50%] bg-slate-200" onClick={()=>setSelectedTab(1)}>
-                        {
-                            <div className="p-2 bg-slate-800 text-slate-50">
-                            Favourite Teams
-                            </div>
-                        }
-                    </div>
-                </div>
                 
-              {/* fixtures */}
+                <Tabs tabs={['Leagues','Teams']} activeTab={activeTab} onTabChange={handleSelectedTab}/>
+                
                 <div className="w-full">
                     {
-                      deviceWidth < 640 ?
-                        selectedTab === 0 ? 
+                        activeTab === 0 ? 
                             dateFixtures ? 
                                 <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
                                 : 
@@ -106,37 +93,14 @@ export default function DayFixtures() {
                                     No current games
                                 </div>
                         :
-                        selectedTab === 1 ?
-                            teamsFixtures ? 
+                        activeTab === 1 ?
+                            teamsFixtures.length>0 ? 
                                 <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
                                 : 
                                 <div className="flex justify-center items-center">
                                 No current fixtures
                                 </div>  
-                            :null
-                      :
-                      <div className="w-full flex flex-row justify-center divide-x-2 divide-slate-50">                        
-                          <div className="w-[48%]">
-                          {
-                            dateFixtures ? 
-                            <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
-                            : 
-                            <div className="flex justify-center items-center">
-                                No current games
-                            </div>
-                          }
-                          </div>
-                          <div className="w-[48%]">
-                            {
-                               teamsFixtures ? 
-                               <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
-                               : 
-                               <div className="flex justify-center items-center">
-                               No current fixtures
-                               </div>  
-                            }
-                          </div>                        
-                      </div>                      
+                        :null                    
                     }
                 </div>
             </div>
