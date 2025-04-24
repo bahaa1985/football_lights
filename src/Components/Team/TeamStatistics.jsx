@@ -59,7 +59,7 @@ function TeamStatistics(props){
             <>
             {/* fixtures */}
             <div>
-                <div>Fixtures</div>
+                <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Fixtures</div>
                 <table className='w-full table-fixed'>
                     <thead>                                
                         <tr>
@@ -88,7 +88,7 @@ function TeamStatistics(props){
             </div>
             {/* Goals */}
             <div>
-            <div>Goals</div>
+            <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Goals</div>
             <table className='w-full table-fixed'>
                 <thead>                                
                     <tr>
@@ -128,7 +128,7 @@ function TeamStatistics(props){
             </div>
             {/* biggest results */}
             <div>
-                <div>Biggest Results</div>
+                <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Biggest Results</div>
                 <table className='w-full table-fixed'>
                 <thead>                                
                     <tr>
@@ -159,7 +159,7 @@ function TeamStatistics(props){
             </div>
             {/* biggest goals */}
             <div>
-                <div>Biggest Goals</div>
+                <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Biggest Goals</div>
                 <table className='w-full table-fixed'>
                 <thead>                                
                     <tr>
@@ -190,7 +190,7 @@ function TeamStatistics(props){
             </div>
             {/* clean sheet */}
             <div>
-                <div>Clean Sheet</div>
+                <div  className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Clean Sheet</div>
                 <table className='w-full table-fixed'>
                     <thead>
                         <tr>
@@ -221,7 +221,7 @@ function TeamStatistics(props){
             </div>
             {/* penalty */}
             <div>
-                <div>Penalty</div>
+                <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Penalty</div>
                 <table className='w-full table-fixed'>
                     <thead>
                         <tr>
@@ -251,7 +251,7 @@ function TeamStatistics(props){
             </div>
             {/* Cards */}
             <div>
-            <div>Cards</div>
+            <div className='w-full p-2 bg-slate-800 text-slate-50 text-center'>Cards</div>
                 <table className='w-full table-fixed'>
                     <thead>
                         <tr>

@@ -74,7 +74,7 @@ export default function Team() {
 
 
     return (
-        <div className='bg-gray-100'>
+        <div className='w-[90%] md:w-[70%] bg-slate-50'>
             {
                 statsLoaded ?
                     <>

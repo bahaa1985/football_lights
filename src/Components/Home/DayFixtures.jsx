@@ -69,6 +69,7 @@ export default function DayFixtures() {
         ),
         (
           <div className="w-full mx-auto rounded-md bg-slate-50 p-2">
+            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-md">Fixtures</div>
             {/* date picker */}
             <div>
               <input
