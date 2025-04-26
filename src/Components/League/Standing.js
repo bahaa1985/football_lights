@@ -75,11 +75,7 @@ function Standings(props){
                                 group.map((elem,index)=>{
                                     return(
                                         <tr key={index} className='bg-slate-100 text-center border-b-slate-400 border-solid border'>
-                                            <td className='p-2'>
-                                                {elem.rank}
-                                                {/* <span className={`rounded-full w-3 h-3 ${elem.group.contains('Championship') ? 'bg-green-500':'bg-red-500'} `}></span> */}
-                                            </td>
-                                            {/* <td className='border border-slate-400'><img src={elem.team.logo} className="w-10 h-10" alt={elem.team.name}/></td> */}
+                                            <td className='p-2'>{elem.rank}</td>                               
                                             <td className='flex items-center py-2'>
                                                 {
                                                     deviceWidth > 600 ?

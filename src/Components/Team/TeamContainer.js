@@ -74,12 +74,35 @@ export default function Team() {
 
 
     return (
-        <div className='w-[90%] md:w-[70%] bg-slate-50'>
+        <div className='relative top-20 w-[90%] md:w-[70%] rounded-lg bg-slate-50 left-20 -translate-x-20 mx-auto'>
             {
                 statsLoaded ?
                     <>
                         {/** Team's basic information */}
-                        <div className='team-basic'>
+                        <div className='w-[90%] md:w-[50%] mx-auto flex flex-row items-center justify-center p-2'>
+                            <img className='size-16 md:size-20 rounded-full' src={teamInformation?.team?.logo} alt={teamInformation?.team?.name}/>
+                            <h2>{teamInformation?.team?.name}</h2>
+                        </div>
+                        {/* Info */}
+                        <div className='w-[90%] md:w-[70%] flex flex-col sm:flex-row items-center justify-between mx-auto p-2 '>
+                            <div className='flex flex-col items-center justify-start p-2'>
+                                {/* <div> */}
+                                    <span>Country {teamInformation?.team?.country}</span>
+                                {/* </div> */}
+                                {/* <div> */}
+                                    <span>Founded {teamInformation?.team?.founded}</span>
+                                {/* </div> */}
+                            </div>
+                            <div  className='flex flex-col items-center justify-start p-2'>
+                                {/* <img  className='size-full md:w-44 md:h-32' src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} /> */}
+                                <span>Name: {teamInformation?.venue?.name}</span>
+                                <span>Capacity: {teamInformation?.venue?.capacity}</span>
+                            </div>
+                        </div>
+                        
+                        {/*  */}
+                        
+                        {/* <div>
                             <div className='team'>
                                 <div>
                                     <img src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
@@ -96,9 +119,9 @@ export default function Team() {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/** Venue details */}
-                        <div className='venue'>
+                        {/* <div className='venue'>
                             <div>
                                 <p>
                                     <span>Name</span><span>{teamInformation?.venue?.name}</span>
@@ -113,7 +136,7 @@ export default function Team() {
                             <div>
                                 <img className="h-48 w-56" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/** Season and leagues dropdowns */}
 

@@ -18,25 +18,21 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}>
       </Route>
-      <Route path="/leagues" element={<League />}>  
+      <Route path="/league" element={<League />}>  
         <Route path="/leagues/:leagueId/:season"/> 
       </Route>
-      <Route path="/fixtures" element={<Fixture/>} >
+      <Route path="/fixture" element={<Fixture/>} >
         <Route path=":fixtureId"/>
       </Route>
-      <Route path="/teams" element={<Team />}>
+      <Route path="/team" element={<Team />}>
         <Route path=":teamId"/>
       </Route>
-      <Route path="/players" element={<Player season={season}/>}>
+      <Route path="/player" element={<Player season={season}/>}>
         <Route path=":playerId"/>
       </Route>
       <Route path="/preference" element={<Preferences />}>
       </Route>
-      <Route path="/fixture" element={<Fixture />}> 
-        <Route path=":fixtureId"/>
-      </Route>
     </Routes>
-
      </Router>
      );
 }

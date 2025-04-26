@@ -60,7 +60,7 @@ export default function DayFixtures() {
   }
 
   return (
-    <div className="w-[90%] sm:w-[65%] h-auto sm:h-[450px] overflow-auto mx-auto my-2 bg-slate-50 rounded-md">
+    <div className="w-full sm:w-[65%] h-auto sm:h-[450px] overflow-auto mx-auto my-2 bg-slate-50 rounded-md">
       {isLoaded ? (
         ((
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
@@ -91,7 +91,7 @@ export default function DayFixtures() {
                                 <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
                                 : 
                                 <div className="flex justify-center items-center">
-                                    No current games
+                                    No current fixtures
                                 </div>
                         :
                         activeTab === 1 ?

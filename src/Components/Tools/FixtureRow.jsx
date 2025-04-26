@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 
 function FixtureRow(props) {
   const fixtures = props.fixturesSource;
@@ -26,7 +27,7 @@ function FixtureRow(props) {
                 <div className="flex justify-start items-center p-2">
                   <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>
 
-                  <NavLink  className="my-auto ml-2"  to={`/leagues/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
+                  <NavLink  className="my-auto ml-2"  to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
                     <span className="text-left border-none">{elem}</span>
                   </NavLink>
                 </div>
@@ -46,7 +47,7 @@ function FixtureRow(props) {
                     type === "fav_teams_matches" ?
                       <div className="flex justify-start items-center p-2">
                         <img  alt=""  loading="lazy"  src={elem.league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>  
-                        <NavLink  className="my-auto ml-2"  to={`/leagues/${elem.league.id}/${elem.league.season}`}>
+                        <NavLink  className="my-auto ml-2"  to={`/league/${elem.league.id}/${elem.league.season}`}>
                           <span className="text-left border-none">{elem.league.name}</span>
                         </NavLink>
                         <span className="border-none">{' '+elem.league.round}</span>
@@ -54,7 +55,7 @@ function FixtureRow(props) {
                       :null
                   }
                   
-                  <div  className="flex justify-between sm:justify-center mx-auto my-2 border-b border-b-slate-600 border-solid">
+                  <div  className="flex justify-center space-x-2 mx-auto my-2 border-b border-b-slate-600 border-solid">
                     {/* Match calendar */}
                     <div className="flex flex-col justify-start w-[10%] my-2 ml-0">
                       {type === "all_fixtures" ? (
@@ -114,7 +115,7 @@ function FixtureRow(props) {
 
                     {/* Fixture Teams */}
                     <div
-                      className={`w-[75%]  my-2 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
+                      className={`w-[65%] md:w-[75%]   my-2 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}
@@ -128,7 +129,7 @@ function FixtureRow(props) {
 
                         <NavLink
                           className="w-[50%] text-center"
-                          to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
+                          to={`/team/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none text-sm  lg:text-xl">{elem.teams.home.name}</span>
                         </NavLink>
@@ -150,7 +151,7 @@ function FixtureRow(props) {
 
                         <NavLink
                           className="w-[50%] text-center"
-                          to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
+                          to={`/team/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none text-sm  lg:text-lg">{elem.teams.away.name}</span>
                         </NavLink>
@@ -162,11 +163,12 @@ function FixtureRow(props) {
                     </div>
 
                     {/* Details button */}
-                    <div className="flex items-center w-[10%]">
-                      <NavLink className="p-1 bg-slate-400 text-slate-800 text-sm lg:text-lg rounded-sm hover:bg-slate-300"
+                    <div className="flex items-center w-[5%] md:w-[10%]">
+                      <NavLink className="p-1"
                       to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
+                        <FontAwesomeIcon icon={faAnglesRight} size="md" />
                         {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
-                          Deatils
+                          
                         {/* </button> */}
                       </NavLink>  
                     </div>

@@ -6,7 +6,7 @@ function Favourites() {
     const teams=getCookie("prefered_teams");
     
     return (  
-        <div className='flex flex-col w-[90%] sm:w-[30%] h-auto sm:h-[450px] overflow-auto mx-auto bg-slate-50 p-2 rounded-md my-2'>
+        <div className='flex flex-col w-full sm:w-[30%] h-auto sm:h-[450px] overflow-auto mx-auto bg-slate-50 p-2 rounded-md my-2'>
             <div className='w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-md mt-1'>Favourite Leagues</div>
             {/* <div className='w-full flex flex-col justify-start my-2'> */}
                 {

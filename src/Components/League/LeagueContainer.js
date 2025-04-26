@@ -123,7 +123,7 @@ export default function League() {
         </div>
         {/* tabs */}
         
-          <Tabs className="w-full sm:w-1/3 md:w-1/4 mx-auto my-2 sm:my-4" tabs={['Fixtures','Standings','Scorers','Assisters']} activeTab={activeTab} onTabChange={handleTabChange}/>
+          <Tabs className="w-full sm:w-1/3 md:w-1/4 mx-auto my-2 sm:my-4" tabs={['Fixtures','Standings','Scorers','Assists']} activeTab={activeTab} onTabChange={handleTabChange}/>
       </div>        
         :null
       }
