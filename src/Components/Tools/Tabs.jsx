@@ -1,5 +1,5 @@
 // Tabs.jsx
-import {React,useState} from 'react';
+import {React} from 'react';
 
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   // const [left,setLeft]=useState(0)
@@ -14,15 +14,11 @@ import {React,useState} from 'react';
           onClick={(e) => {
             e.stopPropagation();
             onTabChange(index);
-            console.log('Clicked tab index:', index, 'Active tab:', activeTab);
-            // setLeft(index*(100/tabs.length));
           }}
         >
           {tab}
         </div>
       ))}
-       {/* indicator */}
-       {/* <div className={`h-1 w-[${100/tabs.length}%] sm:w-32 bg-blue-700`} style={{marginLeft:(left).toString()+'%'}}></div> */}
     </div>
     
   );

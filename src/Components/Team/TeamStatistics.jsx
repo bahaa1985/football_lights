@@ -14,7 +14,7 @@ function TeamStatistics({ team, league, season }) {
         const fetchedStats = await getTeamStatistics(team, season, league);
         const stats = fetchedStats.data.response;
         setTeamStatistics(stats);
-
+        sessionStorage.setItem('stats',fetchedStats.data.response);
         if (stats.cards) {
           let yellow = 0, red = 0;
           Object.values(stats.cards.yellow || {}).forEach(val => yellow += val.total);
@@ -49,7 +49,7 @@ function TeamStatistics({ team, league, season }) {
   );
 
   const TableCell = ({ children }) => (
-    <td className="py-2 px-3">{children}</td>
+    <td className="capitalize py-2 px-3">{children}</td>
   );
 
   if (!statsLoaded || Object.keys(teamStatistics).length === 0) {
@@ -57,7 +57,7 @@ function TeamStatistics({ team, league, season }) {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-1 md:p-4">
       {/* Fixtures */}
       <Section title="Fixtures">
         <TableHeader>
@@ -80,8 +80,8 @@ function TeamStatistics({ team, league, season }) {
         </tbody>
       </Section>
 
-      {/* Goals */}
-      <Section title="Goals">
+      {/* Goals For*/}
+      <Section title="Goals For">
         <TableHeader>
           <TableRow>
             <TableCell>Type</TableCell>
@@ -91,19 +91,44 @@ function TeamStatistics({ team, league, season }) {
           </TableRow>
         </TableHeader>
         <tbody>
-          {Object.entries(teamStatistics.goals || {}).map(([key, value], index) => (
-            
-              <TableRow key={index}>
-                <TableCell className="font-medium capitalize">{key}</TableCell>
-                {
-                Object.entries(value).map((keyx, valx) => (
-                    keyx === 'total' || keyx === 'average' ? (
-                  <TableCell key={keyx}>{valx}</TableCell>):null
-                ))
-                }
-              </TableRow>
-            
-          ))}
+          {
+            Object.entries(teamStatistics.goals.for || {}).map(([key, value], index) => (
+              key === 'total' || key === 'average' ? (
+                <TableRow key={index}>
+                  <TableCell className="font-medium capitalize">{key}</TableCell>
+                  {Object.values(value).map((val, idx) => (
+                    <TableCell key={idx} className="capitalize">{val}</TableCell>
+                  ))}
+                </TableRow>
+              ) : null
+            ))
+          }          
+        </tbody>
+      </Section>
+      
+      {/* Goals Against */}
+      <Section title="Goals Against">
+        <TableHeader>
+          <TableRow>
+            <TableCell>Type</TableCell>
+            <TableCell>Home</TableCell>
+            <TableCell>Away</TableCell>
+            <TableCell>Total</TableCell>
+          </TableRow>
+        </TableHeader>
+        <tbody>          
+          { 
+            Object.entries(teamStatistics.goals.against || {}).map(([key, value], index) => (
+              key === 'total' || key === 'average' ? (
+                <TableRow key={index}>
+                  <TableCell className="font-medium capitalize">{key}</TableCell>
+                  {Object.values(value).map((val, idx) => (
+                    <TableCell key={idx} className="capitalize">{val}</TableCell>
+                  ))}
+                </TableRow>
+              ) : null
+            ))
+          }
         </tbody>
       </Section>
 

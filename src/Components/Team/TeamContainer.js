@@ -60,29 +60,35 @@ export default function Team() {
     const memoizedTeamSeasons = useMemo(() => teamSeasons, [teamSeasons]);
 
     return (
-        <div className="relative top-24 mx-auto w-[90%] md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
+        <div className="relative top-24 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
             {statsLoaded ? (
                 <>
                     {/* Team Header */}
-                    <div className="flex flex-row justify-between items-center flex-wrap mb-8">
+                    <div className="flex flex-col justify-between items-center flex-wrap mb-8">
                         <div className="flex items-center gap-4">
                             <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
                             <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{teamInformation?.team?.name}</h1>
                         </div>
-                        <div className="flex flex-col sm:flex-row justify-center gap-8 mt-4 text-center">
+                        <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
                                 <p className="text-gray-600">Country</p>
-                                <img className={'size-10 md:size-14 rounded-full'} src={teamInformation?.team?.countryLogo} alt={teamInformation?.team?.country} />
                                 <p className="font-semibold">{teamInformation?.team?.country}</p>
-                            </div>
+                            </div>                            
                             <div>
                                 <p className="text-gray-600">Founded</p>
                                 <p className="font-semibold">{teamInformation?.team?.founded}</p>
                             </div>
+                            
+                        </div>
+                        <div className="flex flex-col sm:flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
                                 <p className="text-gray-600">Venue</p>
                                 <p className="font-semibold">{teamInformation?.venue?.name}</p>
-                            </div>
+                            </div> 
+                            <div>
+                                <p className="text-gray-600">City</p>
+                                <p className="font-semibold">{teamInformation?.venue?.city}</p>
+                            </div>                           
                             <div>
                                 <p className="text-gray-600">Capacity</p>
                                 <p className="font-semibold">{teamInformation?.venue?.capacity}</p>
@@ -123,7 +129,7 @@ export default function Team() {
                     </div>
 
                     {/* Team Statistics */}
-                    <div className="bg-slate-100 p-6 rounded-lg shadow-inner">
+                    <div className="bg-slate-100 p-1 md:p-6 rounded-lg shadow-inner">
                         <h2 className="text-xl font-bold text-slate-800 mb-4">Team Statistics</h2>
                         <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
                     </div>
