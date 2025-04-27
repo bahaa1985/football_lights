@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useMemo, useRef, memo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamStatistics, getTeamLeagues } from '../../Api/getTeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
 import TeamStatistics from './TeamStatistics.jsx';
 
 export default function Team() {
-
     const teamIdParam = parseInt(useParams().teamId);
     const teams = getCookie("prefered_teams");
     const [searchParams] = useSearchParams();
     const leagueParam = searchParams.get('league');
     const season = searchParams.get('season');
-
-    // console.log(`teamIdParam: ${teamIdParam}, leagueParam: ${leagueParam}, season: ${season}`);
-
 
     const [team, setTeam] = useState(teamIdParam ? teamIdParam : teams[0].id);
     const [teamSeasons, setTeamSeasons] = useState([]);
@@ -22,9 +18,7 @@ export default function Team() {
     const [selectedSeason, setSelectedSeason] = useState(0);
     const [statsLoaded, setStatsLoaded] = useState(false);
     const [selectedLeague, setSelectedLeague] = useState(leagueParam ? parseInt(leagueParam) : teamLeagues[0]?.league?.id);
-    const [clickedSubmit, setClickedSubmit] = useState(false);
 
-    // Fetch team information
     useEffect(() => {
         async function fetchTeamInfo() {
             const fetchedInfo = await getTeamInformation(team);
@@ -33,12 +27,10 @@ export default function Team() {
         fetchTeamInfo();
     }, [team]);
 
-    // Fetch team seasons
     useEffect(() => {
         async function fetchTeamSeasons() {
             const fetchedSeasons = await getTeamSeasons(team);
             setTeamSeasons(fetchedSeasons.data.response);
-            // Automatically select the latest season if not already selected
             if (!selectedSeason) {
                 setSelectedSeason(fetchedSeasons.data.response.at(-1));
             }
@@ -46,13 +38,11 @@ export default function Team() {
         fetchTeamSeasons();
     }, [team]);
 
-    // Fetch team leagues
     useEffect(() => {
-        if (!selectedSeason) return; // Ensure a season is selected before fetching leagues
+        if (!selectedSeason) return;
         async function fetchTeamLeagues() {
             const fetchedLeagues = await getTeamLeagues(team, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
-            // Automatically select the first league if not already selected
             if (!selectedLeague && fetchedLeagues.data.response.length > 0) {
                 setSelectedLeague(fetchedLeagues.data.response[0].league.id);
             }
@@ -60,128 +50,89 @@ export default function Team() {
         fetchTeamLeagues();
     }, [team, selectedSeason]);
 
-    // Set statsLoaded to true when all data is loaded
     useEffect(() => {
         if (teamSeasons.length > 0 && teamLeagues.length > 0 && Object.keys(teamInformation).length > 0) {
             setStatsLoaded(true);
         }
     }, [teamSeasons, teamLeagues, teamInformation]);
 
-    // Memoize team leagues and seasons to avoid unnecessary re-renders
     const memoizedTeamLeagues = useMemo(() => teamLeagues, [teamLeagues]);
     const memoizedTeamSeasons = useMemo(() => teamSeasons, [teamSeasons]);
 
-
-
     return (
-        <div className='relative top-20 w-[90%] md:w-[70%] rounded-lg bg-slate-50 left-20 -translate-x-20 mx-auto'>
-            {
-                statsLoaded ?
-                    <>
-                        {/** Team's basic information */}
-                        <div className='w-[90%] md:w-[50%] mx-auto flex flex-row items-center justify-center p-2'>
-                            <img className='size-16 md:size-20 rounded-full' src={teamInformation?.team?.logo} alt={teamInformation?.team?.name}/>
-                            <h2>{teamInformation?.team?.name}</h2>
+        <div className="relative top-24 mx-auto w-[90%] md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
+            {statsLoaded ? (
+                <>
+                    {/* Team Header */}
+                    <div className="flex flex-row justify-between items-center flex-wrap mb-8">
+                        <div className="flex items-center gap-4">
+                            <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
+                            <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{teamInformation?.team?.name}</h1>
                         </div>
-                        {/* Info */}
-                        <div className='w-[90%] md:w-[70%] flex flex-col sm:flex-row items-center justify-between mx-auto p-2 '>
-                            <div className='flex flex-col items-center justify-start p-2'>
-                                {/* <div> */}
-                                    <span>Country {teamInformation?.team?.country}</span>
-                                {/* </div> */}
-                                {/* <div> */}
-                                    <span>Founded {teamInformation?.team?.founded}</span>
-                                {/* </div> */}
-                            </div>
-                            <div  className='flex flex-col items-center justify-start p-2'>
-                                {/* <img  className='size-full md:w-44 md:h-32' src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} /> */}
-                                <span>Name: {teamInformation?.venue?.name}</span>
-                                <span>Capacity: {teamInformation?.venue?.capacity}</span>
-                            </div>
-                        </div>
-                        
-                        {/*  */}
-                        
-                        {/* <div>
-                            <div className='team'>
-                                <div>
-                                    <img src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
-                                </div>
-                                <div>
-                                    <p>
-                                        <span>Name</span><span>{teamInformation?.team?.name}</span>
-                                    </p>
-                                    <p>
-                                        <span>Country</span><span>{teamInformation?.team?.country}</span>
-                                    </p>
-                                    <p>
-                                        <span>Founded</span><span>{teamInformation?.team?.founded}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div> */}
-                        {/** Venue details */}
-                        {/* <div className='venue'>
+                        <div className="flex flex-col sm:flex-row justify-center gap-8 mt-4 text-center">
                             <div>
-                                <p>
-                                    <span>Name</span><span>{teamInformation?.venue?.name}</span>
-                                </p>
-                                <p>
-                                    <span>City</span><span>{teamInformation?.venue?.city}</span>
-                                </p>
-                                <p>
-                                    <span>Capacity</span><span>{teamInformation?.venue?.capacity}</span>
-                                </p>
+                                <p className="text-gray-600">Country</p>
+                                <img className={'size-10 md:size-14 rounded-full'} src={teamInformation?.team?.countryLogo} alt={teamInformation?.team?.country} />
+                                <p className="font-semibold">{teamInformation?.team?.country}</p>
                             </div>
                             <div>
-                                <img className="h-48 w-56" src={teamInformation?.venue?.image} alt={teamInformation?.venue?.name} />
+                                <p className="text-gray-600">Founded</p>
+                                <p className="font-semibold">{teamInformation?.team?.founded}</p>
                             </div>
-                        </div> */}
+                            <div>
+                                <p className="text-gray-600">Venue</p>
+                                <p className="font-semibold">{teamInformation?.venue?.name}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-600">Capacity</p>
+                                <p className="font-semibold">{teamInformation?.venue?.capacity}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                        {/** Season and leagues dropdowns */}
-
-                        <div>
-                            {
-                                <select onChange={(e) => setSelectedSeason(parseInt(e.target.value))}
-                                 value={selectedSeason} >
-                                    <option>Select season</option>
-                                    {
-                                        memoizedTeamSeasons?.map((item, index) => {
-                                            return (
-                                                <option key={index} value={item}>{item}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            }
-
-                            <select onChange={(e) => setSelectedLeague(parseInt(e.target.value))} 
-                                   value={selectedLeague} >
-                                <option>Select league</option>
-                                {
-                                    memoizedTeamLeagues?.map((item, index) => {
-                                        return (
-                                            <option key={index} value={item.league.id}>{item.league.name}</option>
-                                        )
-                                    })
-                                }
+                    {/* Season and League Dropdowns */}
+                    <div className="bg-slate-100 p-6 rounded-lg shadow-inner mb-8">
+                        <h2 className="text-xl font-bold text-slate-800 mb-4">Select Season and League</h2>
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <select
+                                onChange={(e) => setSelectedSeason(parseInt(e.target.value))}
+                                value={selectedSeason}
+                                className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                            >
+                                <option>Select Season</option>
+                                {memoizedTeamSeasons.map((item, index) => (
+                                    <option key={index} value={item}>
+                                        {item}
+                                    </option>
+                                ))}
                             </select>
-                            {/*  */}
-                            {/* <button onClick={()=>setClickedSubmit(true)}>Get statistics</button> */}
-                        </div>
 
-                        {/** Team statistics specified to a selected league */}
-
-                        <div>
-                            {
-                                // clickedSubmit ? //handle get Team statistics component
-                                <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
-                                // : null    
-                            }
+                            <select
+                                onChange={(e) => setSelectedLeague(parseInt(e.target.value))}
+                                value={selectedLeague}
+                                className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                            >
+                                <option>Select League</option>
+                                {memoizedTeamLeagues.map((item, index) => (
+                                    <option key={index} value={item.league.id}>
+                                        {item.league.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                    </>
-                    : null
-            }
-        </div>)
+                    </div>
+
+                    {/* Team Statistics */}
+                    <div className="bg-slate-100 p-6 rounded-lg shadow-inner">
+                        <h2 className="text-xl font-bold text-slate-800 mb-4">Team Statistics</h2>
+                        <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
+                    </div>
+                </>
+            ) : (
+                <div className="flex justify-center items-center h-64">
+                    <p className="text-slate-800 text-lg font-semibold">Loading team information...</p>
+                </div>
+            )}
+        </div>
+    );
 }
-

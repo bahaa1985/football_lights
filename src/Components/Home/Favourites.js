@@ -15,7 +15,7 @@ function Favourites() {
                             <div key={index} className='w-full mt-1'>
                                 <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/leagues/${league.id}/${league.season}`}>
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
-                                    <div className='text-sm lg:text-md'>{league.name}</div>
+                                    <div className='text-sm lg:text-lg'>{league.name}</div>
                                 </NavLink>
                             </div>
                         )
@@ -32,7 +32,7 @@ function Favourites() {
                             <div key={index} className='w-full mt-1'>
                                 <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/teams/${team.id}`}>                                   
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={team.name} src={team.logo} />
-                                    <div className='text-sm lg:text-md'>{team.name}</div>
+                                    <div className='text-sm lg:text-lg'>{team.name}</div>
                                 </NavLink>
                             </div>
                         )

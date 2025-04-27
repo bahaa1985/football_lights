@@ -15,7 +15,7 @@ function LinePosition(props) {
     let playerNameArr = [];
     
     return (
-      <div className={`flex  h-auto my-auto`}>
+      <div className={`flex  h-auto my-auto md:my-2`}>
         {lineup?.map((elem, index) => {
           //iterate each player in the line to get his details
           playerNameArr = elem.player.name.split(" ");
@@ -23,12 +23,12 @@ function LinePosition(props) {
             <NavLink to={`/player/${elem.player.id}`} key={index} 
               className="text-center text-[12px] w-full m-auto z-10">
                 {/* style={{backgroundColor:'#'+ colors.primary}} */}
-              <div className={`flex justify-center items-center w-10 h-10 mx-auto my rounded-full`}>  
-                <img className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full`} src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
+              <div className={`flex justify-center items-center mx-auto my rounded-full`}>  
+                <img className={`size-9 sm:size-12 md:size-14 rounded-full`} src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
               </div>
               <div className='flex justify-center items-center'>
-                <span className="p-1 font-bold text-slate-200 border-none">{elem.player.number}</span>
-                <span className={`p-1 font-bold text-slate-50 border-none ${lineup.length > 4 ?'text-[8px] sm:text-sm' : 'text-xs'} sm:text-sm`}>
+                <span className="px-1 font-bold text-sm sm:text-md md:text-lg text-slate-200 border-none">{elem.player.number}</span>
+                <span className={`px-1 font-bold text-slate-50 border-none ${lineup.length > 4 ?'text-[10px] sm:text-md' : 'text-xs'} sm:text-sm`}>
                   {playerNameArr.length > 1
                     ? playerNameArr.slice(1)
                     : playerNameArr[0]}
