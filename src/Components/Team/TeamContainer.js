@@ -11,13 +11,13 @@ export default function Team() {
     const leagueParam = searchParams.get('league');
     const season = searchParams.get('season');
 
-    const [team, setTeam] = useState(teamIdParam ? teamIdParam : teams[0].id);
+    const [team, setTeam] = useState(teamIdParam  || teams[0].id);
     const [teamSeasons, setTeamSeasons] = useState([]);
     const [teamLeagues, setTeamLeagues] = useState([]);
     const [teamInformation, setTeamInformation] = useState([]);
-    const [selectedSeason, setSelectedSeason] = useState(0);
+    const [selectedSeason, setSelectedSeason] = useState(season ? season : teamSeasons.at(-1)?.season?.year);
     const [statsLoaded, setStatsLoaded] = useState(false);
-    const [selectedLeague, setSelectedLeague] = useState(leagueParam ? parseInt(leagueParam) : teamLeagues[0]?.league?.id);
+    const [selectedLeague, setSelectedLeague] = useState(leagueParam ?leagueParam : teamLeagues[0]?.league?.id);
 
     useEffect(() => {
         async function fetchTeamInfo() {
@@ -36,7 +36,7 @@ export default function Team() {
             }
         }
         fetchTeamSeasons();
-    }, [team]);
+    }, [team,selectedSeason]);
 
     useEffect(() => {
         if (!selectedSeason) return;
