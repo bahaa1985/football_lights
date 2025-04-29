@@ -7,28 +7,27 @@ function Player(props) {
     const [playerSeasons,setPlayerSeasons]=useState([]);
     const [playerStats,setPlayerStats]=useState([]); 
     const [leagueId,setLeagueId]=useState(0);
-    const [selectedSeason,setSelectedSeason]=useState(season);
+    const [selectedSeason,setSelectedSeason]=useState(2024);
+    const [loaded,setLoaded]=useState(false);
     const params =useParams();
     
     useEffect(()=>{
 
-        getPlayerSeasons(params.playerId)
-        .then((result)=>{
-            setPlayerSeasons(result.data.response);
-          
-        })
-
-        getPlayerStats(params.playerId,selectedSeason)
-        .then((result)=>{
-            setPlayerStats(result.data.response[0]);   
-        });               
-       
+        async function fetchData(){
+            const response_seasons = await  getPlayerSeasons(params.playerId);
+            const response_stats =  await getPlayerStats(params.playerId,selectedSeason);
+            setPlayerSeasons(response_seasons.data.response);
+            setPlayerStats(response_stats.data.response[0]);   
+            setLoaded(true);
+        } 
+        fetchData();              
     },[params.playerId,selectedSeason])
     
     return ( 
-        <div className="p-2 sm:p-4 max-w-5xl mx-auto">
-        <div className="flex flex-col items-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-center">{playerStats?.player?.name}</h2>
+        loaded ?
+        <div className="relative top-24 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
+        <div className="w-full flex flex-col items-center mb-4">
+            {/* <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-center">{playerStats?.player?.name}</h2> */}
             {playerStats?.player?.photo && (
                 <img
                     src={playerStats.player.photo}
@@ -36,6 +35,10 @@ function Player(props) {
                     className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full shadow mb-4"
                 />
             )}
+            <div>
+                <h2>Name: {playerStats.player.firstname +' ' + playerStats.player.lastname}</h2>
+                <p>Nationality: {playerStats.player.nationality}</p>
+            </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full justify-center">
                 {/* Season Dropdown */}
                 <select
@@ -62,26 +65,26 @@ function Player(props) {
 
         {/* Team and League Info */}
         {playerStats?.statistics && playerStats.statistics[leagueId] && (
-            <div className="space-y-6">
+            <div className="w-full space-y-4">
                 {/* Team */}
-                <div className="bg-slate-100 rounded-lg p-3 sm:p-4 shadow-sm">
-                    <p className="flex items-center gap-2 font-semibold text-slate-700">
-                        <span>Team:</span>
-                        <span>{playerStats.statistics[leagueId].team.name}</span>
+                <div className="bg-slate-200 rounded-lg p-3 sm:p-4 shadow-sm">
+                    <p className="flex items-center gap-2 font-semibold ">
+                        <span className="border-none text-slate-700">Team:</span>
+                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].team.name}</span>
                         <img src={playerStats.statistics[leagueId].team.logo} alt="team logo" className="w-6 h-6" />
                     </p>
                 </div>
 
                 {/* League */}
-                <div className="bg-slate-100 rounded-lg p-3 sm:p-4 shadow-sm">
-                    <p className="flex items-center gap-2 font-semibold text-slate-700">
-                        <span>League:</span>
-                        <span>{playerStats.statistics[leagueId].league.name}</span>
-                        <img src={playerStats.statistics[leagueId].league.logo} alt="league logo" className="w-6 h-6" />
+                <div className="bg-slate-200 rounded-lg p-3 sm:p-4 shadow-sm">
+                    <p className="flex items-center gap-2 font-semibold">
+                        <span className="border-none text-slate-700">League:</span>
+                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].league.name}</span>
+                        <img src={playerStats.statistics[leagueId].league.logo} alt="league logo" className="size-8 sm:size-10" />
                     </p>
                     <p className="flex items-center gap-2 mt-2 text-slate-600">
-                        <span>Country:</span>
-                        <span>{playerStats.statistics[leagueId].league.country}</span>
+                        <span className="border-none font-bold text-slate-700">Country:</span>
+                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].league.country}</span>
                         {playerStats.statistics[leagueId].league.flag && (
                             <img src={playerStats.statistics[leagueId].league.flag} alt="country flag" className="w-6 h-4" />
                         )}
@@ -92,13 +95,13 @@ function Player(props) {
                 <div className="space-y-4">
                     {Object.entries(playerStats.statistics[leagueId]).map(([key, value], index) => (
                         index > 1 && typeof value === 'object' && value !== null && (
-                            <div key={index} className="bg-white rounded-md p-3 sm:p-4 shadow">
+                            <div key={index} className="bg-slate-200 rounded-md p-3 sm:p-4 shadow">
                                 <h3 className="font-bold text-slate-700 capitalize mb-2">{key.replace('_', ' ')}</h3>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-slate-600">
+                                <div className="flex flex-row justify-between flex-wrap">
                                     {Object.entries(value).map(([subKey, subValue], idx) => (
-                                        <div key={idx} className="flex justify-between">
-                                            <span className="capitalize">{subKey.replace('_', ' ')}</span>
-                                            <span>{subValue !== null ? subValue : 'NA'}</span>
+                                        <div key={idx} className="flex justify-between space-x-2">
+                                            <span className="capitalize border-none font-bold text-slate-700">{subKey.replace('_', ' ')}</span>
+                                            <span className="border-none text-slate-600">{subValue !== null && subValue !== false ? subValue : 'NA'}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -109,6 +112,8 @@ function Player(props) {
             </div>
         )}
     </div>
+        :null
+        
         
      );
 }
