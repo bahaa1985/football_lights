@@ -32,7 +32,7 @@ function FixtureRow(props) {
                   </NavLink>
                 </div>
               ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
-                <div className="">
+                <div className="w-full bg-slate-800 text-slate-50 p-2">
                   {fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? "Game Week " + parseInt(index + 1)
                     : fixtures[elem][0]?.league.round}
@@ -54,10 +54,8 @@ function FixtureRow(props) {
                       </div>
                       :null
                   }
-                  
-                  <div  className="flex justify-center space-x-2 mx-auto my-2 border-b border-b-slate-600 border-solid">
-                    {/* Match calendar */}
-                    <div className="flex flex-col justify-start w-[10%] my-2 ml-0">
+                  {/* Match date */}
+                  <div className="flex flex-row justify-start w-full my-1">
                       {type === "all_fixtures" ? (
                         <div className="flex justify-start items-center">
                           <FontAwesomeIcon
@@ -71,8 +69,8 @@ function FixtureRow(props) {
                         </div>
                       ) : null}
 
-                      <div className="flex justify-start items-center">
-                        <FontAwesomeIcon  icon={faClock}></FontAwesomeIcon>
+                      <div className="flex justify-start items-center mx-2">
+                        <FontAwesomeIcon className="mx-2 h-4" icon={faClock}></FontAwesomeIcon>
                         <span className="border-none text-sm lg:text-lg">
                           {new Date(elem.fixture.date).getHours() +
                             ":" +
@@ -85,7 +83,7 @@ function FixtureRow(props) {
                         </div>
                         
                         
-                        <div className="flex justify-start">
+                        <div className="flex justify-start items-center">
                         {/* <div  className="flex justify-center items-center"> */}
                         {
                           // live indicator:
@@ -112,10 +110,10 @@ function FixtureRow(props) {
                         </div>
 
                       </div>
-
-                    {/* Fixture Teams */}
+                  {/* Fixture Teams */}
+                  <div  className="flex justify-center space-x-2 mx-auto my-2 border-b border-b-slate-600 border-solid">                                                            
                     <div
-                      className={`w-[65%] md:w-[75%]   my-2 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
+                      className={`w-[90%] md:w-[75%]   my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}
@@ -160,18 +158,17 @@ function FixtureRow(props) {
                           {elem.goals.away === null ? "-" : elem.goals.away}{" "}
                         </span>
                       </div>
-                    </div>
-
-                    {/* Details button */}
-                    <div className="flex items-center w-[5%] md:w-[10%]">
-                      <NavLink className="p-1"
-                      to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
-                        <FontAwesomeIcon icon={faAnglesRight} size="md" />
-                        {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
-                          
-                        {/* </button> */}
-                      </NavLink>  
-                    </div>
+                      {/* Details button */}
+                      <div className="flex items-center w-[10%]">
+                        <NavLink className="p-1"
+                        to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
+                          <FontAwesomeIcon icon={faAnglesRight} size="md" />
+                          {/* <button className="p-1 bg-emerald-600 text-slate-50 rounded-sm hover:bg-emerald-500"> */}
+                            
+                          {/* </button> */}
+                        </NavLink>  
+                      </div>
+                    </div>                    
                   </div>
                 </div>
                 

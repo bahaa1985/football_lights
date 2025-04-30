@@ -2,7 +2,6 @@
 import {React} from 'react';
 
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
-  // const [left,setLeft]=useState(0)
   return (
     <div className='w-full sm:w-fit mx-auto flex flex-row justify-center '>
       {/* tabs */}

@@ -33,8 +33,14 @@ export default function LeagueFixtures(props) {
   }, []);
 
   function filterByGameWeek(e){
+    if(e.target.value !== ""){
       setFilteredFixtures(Object.keys(fixtures).map((elem,index)=>
         fixtures[elem].filter(elem => elem.league.round === e.target.value)));
+    }
+    else{
+      setFilteredFixtures(fixtures); // reset to original fixtures
+    }
+      
   }
 
   function filterByTeam(e){
@@ -56,9 +62,9 @@ export default function LeagueFixtures(props) {
         isLoaded ? 
         <Fragment>
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">Loading ....</div>
-          <div className="w-full flex flex-col sm:flex-row items-start sm:justify-start space-x-2 flex-wrap my-2">
+          <div className="w-full flex flex-col sm:flex-row items-center sm:justify-start space-x-2 flex-wrap my-2">
             <span className="border-none">Filter by</span>
-            <select className="w-52 border border-solid border-slate-800 rounded-sm" onChange={(e)=>filterByGameWeek(e)} >
+            <select  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e)=>filterByGameWeek(e)}>
               <option value="">{rounds[0].includes('Regular Season') ? 'Select GameWeek' : 'Select Round'}</option>
               {
                     rounds.map((round,index)=>{
@@ -69,7 +75,7 @@ export default function LeagueFixtures(props) {
               }
             </select>
             <span className="border-none">or</span>
-            <input className="w-52 border border-solid border-slate-800 rounded-sm"type="text" placeholder="Enter team name" onChange={(e)=>filterByTeam(e)} />
+            <input  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" type="text" placeholder="Enter team name" onChange={(e)=>filterByTeam(e)} />
           </div>
           <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
         </Fragment>
