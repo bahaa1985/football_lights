@@ -1,4 +1,4 @@
-import {React,useState,useMemo, useEffect} from "react";
+import {React,useState, useEffect} from "react";
 import {faStar} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Ratings(props){
@@ -6,8 +6,8 @@ export default function Ratings(props){
     const homeStatistics = props.statistics.home.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
     const awayStatistics = props.statistics.away.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
 
-    console.log(homeStatistics);
-    console.log(awayStatistics);
+    // console.log(homeStatistics);
+    // console.log(awayStatistics);
     
     //
     const homeTeam = props.teams.home;

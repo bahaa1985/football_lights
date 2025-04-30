@@ -54,8 +54,8 @@ function Navbar() {
       <div className="px-3 my-0 hidden md:visible text-center md:flex md:basis-6/12">
         <ul className="w-[90%] flex sm:space-x-2 text-slate-100 font-semibold">
           <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/fixtures">Fixtures</NavLink></li>
-          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/leagues">Leagues</NavLink></li>
-          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/teams">Teams</NavLink></li>         
+          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/league">Leagues</NavLink></li>
+          <li className=" py-5 px-3 hover:border-b-4 border-gray-900 leading-3 cursor-pointer"><NavLink to="/team">Teams</NavLink></li>         
         </ul>
       </div>
 
