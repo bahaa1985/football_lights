@@ -72,26 +72,6 @@ export default function League() {
           <span className="w-30 h-auto my-auto border-none text-slate-900">Select League</span>
           <div className="w-auto flex flex-wrap justify-start space-x-2">
           {
-            // leagues.length > 0 ?
-            // <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e)=>handleSelectedLeague(e.target.value)} value={selectedleague}>
-            // {
-            //   leagues.map((league,index)=>{
-            //     return(
-            //         <option key={index} value={league.id}>{league.name} ({league.country})
-            //         </option>
-            //       // <NavLink key={index} className={`w-40 h-12 flex flex-col justify-start space-x-2 border-2 border-solid border-slate-800 text-slate-50 rounded-md cursor-pointer
-            //       //   ${selectedleague === league.id ? 'bg-slate-600 cursor-default' : 'bg-slate-800 cursor-pointer' }`} 
-            //       //   disabled={selectedleague === league.id ? true : false} 
-            //       //   onClick={()=>handleSelectedLeague(league.id)}>
-            //       //   <img className="w-10 h-10 rounded-3xl bg-slate-50 my-auto" src={league.logo} alt={league.name} />
-            //       //   <span className="text-[0.8em] text-wrap border-none my-auto">{league.name}</span>
-            //       // </NavLink>
-            //     )
-            //   })  
-            // }
-            // </select>                    
-            // :
-            // null
             leagues.length > 0 ? (
               <div className="relative w-64">
       <button
@@ -101,12 +81,12 @@ export default function League() {
         {selected ? (
           <div className="flex items-center space-x-2">
             <img src={selected.logo} alt={selected.name} className="w-6 h-6" />
-            <span>{selected.name}</span>
+            <span className="border-none">{selected.name}</span>
           </div>
         ) : (
           <span>Select a league</span>
         )}
-        <span>▼</span>
+        <span className="border-none">▼</span>
       </button>
 
       {open && (

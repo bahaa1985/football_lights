@@ -21,13 +21,14 @@ export default function TopPlayers(props) {
   }, [leagueId,season,stats_type]);
 
   return (
-    <div className='w-[90%] md:w-[70%] mx-auto'>
+    <div className='w-full md:w-[70%] mx-auto'>
         <table className='w-full table-auto'>
-        <thead className="bg-slate-800 text-left text-slate-50">
-            <tr className="h-10 text-xl">
-                <td>player</td>
-                <td>Team</td>
-                <td>{stats_type}</td>                    
+        <thead className="sticky top-16 bg-slate-800 text-left text-slate-50">
+            <tr className="h-10 divide-x-2 text-center">
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Team</th>
+                <th>{stats_type}</th>                    
             </tr>
         </thead>
         <tbody>
@@ -36,18 +37,19 @@ export default function TopPlayers(props) {
           return (
             <tr key={index} className="bg-slate-100 text-center border-b-slate-400 border-solid border">
 
+              <td>{index+1}</td>
               <td>
-                <div className="flex justify-start">
-                <img className="w-12 h-12 rounded-full" src={elem.player.photo} alt={elem.player.name} />
-                <span className="my-auto border-none">{elem.player.name}</span>
+                <div className="flex justify-center">
+                {/* <img className="size-10 sm:size-10 md:size-12 rounded-full" src={elem.player.photo} alt={elem.player.name} /> */}
+                <span className="border-none">{elem.player.name}</span>
                 </div>
                    
               </td>
 
               <td>
-                <div className="flex justify-start">
-                <img className="w-12 h-12 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
-                <span className="my-auto border-none">{elem.statistics[0].team.name}</span>
+                <div className="w-[90%] mx-auto flex justify-start items-center space-x-2 p-2">
+                <img className="size-8 sm:size-10 md:size-12 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
+                <span className="border-none">{elem.statistics[0].team.name}</span>
                 </div>
                 
               </td>

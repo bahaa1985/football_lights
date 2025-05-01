@@ -10,6 +10,7 @@ function Standings(props){
     const [standings,setStandings]=useState([])
     const [standingsGroups,setStandingsGroups]= useState([]);
     const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
+    const [description,setDesccription] = useState([])
 
     useEffect(()=>{              
         getStandings(league,season).then((result)=>{
@@ -22,7 +23,12 @@ function Standings(props){
                 
             })
             setStandingsGroups(groups)
-            //
+            const desc_keys =Object.groupBy(result.data.response[0].league.standings[0],function (item){
+                if(item.description !== null || item.description !== undefined ) {return item.description}
+            });
+            setDesccription(Object.keys(desc_keys))
+            console.log('descs',description)
+
             window.addEventListener('resize',()=>{
                 setDeviceWidth(window.innerWidth);
             })                                    
@@ -31,6 +37,22 @@ function Standings(props){
     
     return(
         <div className='w-[90%] lg:w-[70%] mx-auto'>
+            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2 my-1'>
+                <span className='size-6 bg-green-700 rounded-full border-none'></span>
+                <span className='border-none w-[70%]'>{description[0]}</span>
+            </div>
+            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
+                <span className='size-6 bg-green-500 rounded-full border-none'></span>
+                <span className='border-none w-[70%]'>{description[1]}</span>
+            </div>
+            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
+                <span className='size-6 bg-green-300 rounded-full border-none'></span>
+                <span className='border-none w-[70%]'>{description[2]}</span>
+            </div>
+            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
+                <span className='size-6 bg-red-500 rounded-full border-none'></span>
+                <span className='border-none w-[70%]'>{description.at(-1)}</span>
+            </div>
             {/* league group dropdown: */}
             {
                 standingsGroups.length > 1 ?
@@ -43,8 +65,8 @@ function Standings(props){
                 :null
             }
             <table className='relative top-0 w-full table-auto'>
-                <thead className='sticky top-20'>
-                    <tr className="bg-slate-800 text-slate-50 text-center">
+                <thead className='sticky top-16'>
+                    <tr className="bg-slate-800 text-slate-50 text-center divide-x-2">
                         <td className='p-2'>Rank</td>
                         <td className='p-2'>Team</td>
                         <td className='p-2'>Play</td>
@@ -75,18 +97,30 @@ function Standings(props){
                                 group.map((elem,index)=>{
                                     return(
                                         <tr key={index} className='bg-slate-100 text-center border-b-slate-400 border-solid border'>
-                                            <td className='p-2'>{elem.rank}</td>                               
-                                            <td className='flex items-center py-2'>
+                                            <td className='p-2'>
+                                            {
+                                                elem.description === description[0] ?
+                                                <span className='flex justify-center items-center bg-green-700 size-8 p-2 border-none rounded-full mx-2'>{elem.rank}</span>
+                                                :elem.description === description[1] ?
+                                                <span className='flex justify-center items-center bg-green-500 size-8 p-2 border-none rounded-full mx-2'>{elem.rank}</span>
+                                                :elem.description === description[2] ?
+                                                <span className='flex justify-center items-center bg-green-300 size-8 p-2 border-none rounded-full mx-2'>{elem.rank}</span>
+                                                :elem.description === description.at(-1) ?
+                                                <span className='flex justify-center items-center bg-red-500 size-8 p-2 border-none rounded-full mx-2'>{elem.rank}</span>
+                                                :<span className='flex justify-center items-center size-8 p-2 border-none mx-2'>{elem.rank}</span>
+                                            }
+                                            </td>                               
+                                            <td className='w-full flex justify-center items-center p-2'>
                                                 {
                                                     deviceWidth > 600 ?
-                                                    <img src={elem.team.logo} className="w-10 h-10" alt={elem.team.name}/>
+                                                    <img src={elem.team.logo} className="size-8 sm:size-10 lg:size-12" alt={elem.team.name}/>
                                                     :null
                                                 }
-                                                {elem.team.name}
+                                                <span className='w-[70%] border-none'>{elem.team.name}</span>
                                             </td>
                                             <td className='p-2'>{elem.all.played}</td>
                                             {
-                                                deviceWidth > 500 ?
+                                                deviceWidth > 600 ?
                                                 <>
                                                     <td className='p-2'>{elem.all.win}</td>
                                                     <td className='p-2'>{elem.all.draw}</td>
