@@ -39,20 +39,20 @@ function Fixture(){
             </div>  
           </div>  
            {/* score table */}
-          <div key={fixture_data.fixture?.id} className="flex justify-around space-x-3 w-full md:w-[90%] lg:w-[60%] items-center mx-auto py-2 
-           text-sm sm:text-xl border-b sm:border-none border-solid border-slate-400">
+          <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 w-full md:w-[90%] lg:w-[70%] items-center mx-auto py-2 
+           text-sm sm:text-lg border-b sm:border-none border-solid border-slate-400">
             <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
-              <img className="w-10 h-10 sm:w-12 sm:h-12" alt={fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
+              <img className="size-6 sm:size-10" alt={fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
               <span className='border-none ml-0'>{fixture_data.teams?.home?.name}</span>
             </NavLink>
-            <div className='flex flex-row justify-between space-x-2 sm:space-x-4 mx-auto  w-[20%]'>
+            <div className='flex flex-row justify-between  w-[20%]'>
               <span className="w-6 h-6 sm:w-8 sm:h-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.home}</span>
               <span className="w-6 h-6 sm:w-8 sm:h-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.away}</span>
             </div>
             
             <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
               <span className='border-none mr-0'>{fixture_data.teams?.away?.name}</span>
-              <img className="w-10 h-10 sm:w-12 sm:h-12" alt={fixture_data.teams?.away?.name} src={fixture_data.teams?.away?.logo}></img>
+              <img className="size-6 sm:size-10" alt={fixture_data.teams?.away?.name} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
           </div>
           {/* fixture info */}

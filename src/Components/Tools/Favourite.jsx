@@ -8,14 +8,9 @@ export default function Favourite(props){
         const cookie_name= props.cookie_name;
         const obj = props.obj
         function handlePreference(){
-         //set prefered leagues cookie 
             let preferedItemsArr=getCookie(cookie_name);  
             if(preferedItemsArr !== null){
                 if( preferedItemsArr.find(item=>item.id === elem_id) === undefined ){
-                // const seasonsLength=elem.seasons.length;
-                    // console.log("selected league",elemLeague);
-                    // const seasonYear= elem.seasons[seasonsLength-1].year;
-                    // const endDate=elem.seasons[seasonsLength-1].end;
                     preferedItemsArr.push(obj);
                 }
                 else
@@ -27,13 +22,13 @@ export default function Favourite(props){
             }     
         }
 
-        function setPreferedItemsColor(elem_id){ //to mark prefered league
+        function setPreferedItemsColor(elem_id){ //to mark prefered league/team
             let preferedItemsArr=getCookie(cookie_name); 
-            let strokeClass="text-blue-200"; 
+            let strokeClass="text-slate-200"; 
             preferedItemsArr.map((item)=>{
                 if(item.id === elem_id){
                     console.log("mark:",elem_id)
-                   strokeClass= "text-blue-600";
+                   strokeClass= "text-yellow-400";
                 }
             })
             return strokeClass;
@@ -43,14 +38,13 @@ export default function Favourite(props){
             <div>
                 <FontAwesomeIcon 
                     icon={faStar}
-                    stroke='text-blue-200'
-                    className={`size-8 sm:size-10 cursor-pointer hover:stroke-blue-600
-                        ${setPreferedItemsColor(elem_id)}`}                             
+                    className={`size-6 sm:size-8 cursor-pointe hover:text-slate-200
+                        ${setPreferedItemsColor(elem_id)} cursor-pointer`}                             
                     onClick={(event)=>
                     {
                         const senderElement = event.currentTarget; 
-                        senderElement.classList.toggle("text-blue-600");
-                        senderElement.classList.toggle("text-blue-200");  
+                        senderElement.classList.toggle("text-yellow-400");
+                        senderElement.classList.toggle("text-slate-200");  
                         handlePreference(elem_id);                                
                         // elem.league?  //if there is leagues source data, display leagues pages, if not, it will be teams       
                         //     handlePreference(elem) 

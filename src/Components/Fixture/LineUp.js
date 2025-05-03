@@ -39,7 +39,7 @@ function LineUp(props) {
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
   ///
-  const [clickedSub, setClickedSub] = useState(homeTeamProfile.homeId);
+  const [clickedSub, setClickedSub] = useState(homeParam);
   const [isLoaded, setLoaded] = useState(false); //for preventing rendering before complete fetching data
 
   // let i=0;
@@ -237,7 +237,7 @@ function LineUp(props) {
                           <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
                         </div>
                       </div>
-                      {clickedSub === homeTeamProfile.id ? (
+                      {clickedSub === homeParam ? (
                         <>
                           {/* home coach and subs */}
                           <div className="flex flex-row justify-start space-x-2">
@@ -294,18 +294,12 @@ function LineUp(props) {
                                 : (playerName = playerNameArr[0]);
 
                               return (
-                                <div key={index} className="flex flex-row jsutify start space-x-2 border-b border-solid border-slate-400">
-                                  <span className="border-none flex justify-center items-center ">
+                                <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
+                                  {/* <span className="border-none flex justify-center items-center ">
                                     {sub.player.number}
-                                  </span>
-                                  <span className="border-none text-sm">
-                                    {
-                                      // playerNameArr.length> 1 ?
-                                      // playerNameArr.slice(1) :
-                                      // playerNameArr[0]
-                                      playerName
-                                      // sub.player.id
-                                    }
+                                  </span> */}
+                                  <span className="flex space-x-3 border-none text-sm text-left">
+                                  {sub.player.number} {playerName}
                                   </span>
                                   <span className="border-none text-sm flex justify-center items-center">{
                                     sub.player.pos === 'D' ? 'Defender'

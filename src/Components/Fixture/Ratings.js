@@ -14,6 +14,8 @@ export default function Ratings(props){
     const awayTeam = props.teams.away;
     //
     //set division of the clicked team ( in small screens)
+    console.log("homeTeam",homeTeam);
+    
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(homeTeam.id);
 
@@ -81,14 +83,16 @@ export default function Ratings(props){
             {/* teams header */}
             <thead className="w-full">
               <tr className="flex flex-row w-full">
-                <th className="flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer"
+                <th className={`flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer
+                    hover:border-b-2 border-solid border-blue-400 ${clickedTeam === homeTeam.id ? 'border-b-2 border-solid border-blue-600': null}`}
                    onClick={()=>setClickedTeam(homeTeam.id)} >
                     <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8"/>
                     <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
                         {homeTeam.name}
                     </span>
                 </th>
-                <th className="flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer"
+                <th className={`flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer
+                    hover:border-b-2 border-solid border-blue-400 ${clickedTeam === awayTeam.id ? 'border-b-2 border-solid border-blue-600': null}`}
                    onClick={()=>setClickedTeam(awayTeam.id)} >
                     <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8"/>
                     <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
