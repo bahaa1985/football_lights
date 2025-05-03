@@ -1,6 +1,5 @@
-import {React, useState, useEffect, useMemo, createContext, memo} from 'react'
+import {React, useState, createContext} from 'react'
 import { useParams,useLocation,NavLink  } from 'react-router-dom'
-// import getFixture from '../../Api/getFixture.js' 
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import arena from '../../icons/arena.png';
 import Events from "./Events.js";

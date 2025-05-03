@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getLeagues } from "../../Api/getLeaguesTeams.js";
-import { getTeam } from "../../Api/getLeaguesTeams.js";
+import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import Pagination from "./Pagination.js";
 import { getCookie, setCookie } from "../../Api/cookie.js";
-import LeaguesPagination from "./LeaguesPagination.js";
-import TeamsPagination from "./TeamsPagination.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
@@ -66,7 +63,7 @@ export default function Preferences(params) {
     }
         
     if(searchTeam.trim().length>0){
-      getTeam(searchTeam).then((result) => {
+      getTeams(searchTeam).then((result) => {
         setTeams(result.data.response);
       });
     }
@@ -74,10 +71,10 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className="relative top-20 left-0 h-full">
+    <div className="w-full sm:w-[90%] relative top-20 left-0 h-full rounded-lg">
       <div>
         <label for="language">Choose a language:</label>
-        <select id="language" name="language" onChange={(e) => handleLanguage(e.target.value)} defaultValue={language}>
+        <select id="language" name="language" className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e) => handleLanguage(e.target.value)} defaultValue={language}>
           <option key={0} value="en">English</option>
           <option key={1} value="fr">Français</option>
           <option key={2} value="es">Español</option>
@@ -100,7 +97,7 @@ export default function Preferences(params) {
             </div>
             {
               leagues?
-              <Pagination source={leagues}/>
+              <Pagination type={'league'} source={leagues}/>
               :<p>No leagues available</p>
             }
         </div>
@@ -116,7 +113,7 @@ export default function Preferences(params) {
               </div>
               {
                 teams?
-                <Pagination source={teams} />
+                <Pagination type={'teams'} source={teams} />
                 :<p>No teams available</p>
               }
         </div>      

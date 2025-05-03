@@ -1,5 +1,5 @@
 import React, { useState, useMemo, memo } from 'react';
-import { getTeamStatistics } from '../../Api/getTeamDetails.js';
+import { getTeamStatistics } from '../../Api/TeamDetails.js';
 
 function TeamStatistics({ team, league, season }) {
   const [teamStatistics, setTeamStatistics] = useState({});

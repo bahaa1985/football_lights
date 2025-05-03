@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import getStatistics from "../../Api/getStatistics.js";
-import getPlayers from "../../Api/getPlayers.js";
+import getStatistics from "../../Api/Statistics.js";
+import getPlayers from "../../Api/Players.js";
 import PlayerStats from "./PlayerStats.js";
 import { useState,useMemo } from "react";
 

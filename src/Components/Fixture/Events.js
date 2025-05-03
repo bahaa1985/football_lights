@@ -1,5 +1,5 @@
-import { useState,useEffect,useMemo,memo } from "react";
-import getEvents from '../../Api/getEvents.js'
+import { useState,useMemo,memo } from "react";
+import getEvents from '../../Api/Events.js'
 import '../../styles/events.css'
 import penalty from '../../icons/penalty.png';
 import missed_penalty from '../../icons/missed_penalty.png'

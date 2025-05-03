@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   groupDateFixtures,
   getPromisedTeamFixtures,
-} from "../../Api/getFixtures.js";
+} from "../../Api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
 import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";

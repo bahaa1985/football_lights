@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { getTeamSeasons, getTeamInformation, getTeamStatistics, getTeamLeagues } from '../../Api/getTeamDetails.js';
+import { getTeamSeasons, getTeamInformation, getTeamLeagues } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
 import TeamStatistics from './TeamStatistics.jsx';
+import Favourite from '../Tools/Favourite.jsx';
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);
@@ -68,6 +69,15 @@ export default function Team() {
                         <div className="flex items-center gap-4">
                             <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
                             <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{teamInformation?.team?.name}</h1>
+                            {/* favourite */}
+                            <Favourite elem_id={teamInformation?.team.id} cookie_name={'prefered_teams'} 
+                                obj={
+                                    {
+                                        id:teamInformation?.team.id,
+                                        name:teamInformation?.team.name,
+                                        logo:teamInformation?.team.logo
+                                    }} 
+                            />
                         </div>
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>

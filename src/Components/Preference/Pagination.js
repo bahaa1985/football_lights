@@ -1,22 +1,18 @@
 import React, {useState} from "react";
-import { setCookie,getCookie } from "../../Api/cookie.js";
-// import { getLeagueRounds } from "../Api/getLeaguesTeams.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-
+import Favourite from "../Tools/Favourite.jsx";
 
 function Pagination(props) {
-    
-    
+       
     let pages=[] // items pages that will be displayed
     const [pageIndex,setPageIndex]=useState(0);
 
     const items=props.source;
+    const items_type=props.type;
+
     const pagesCount=Math.ceil(items.length/10); //get pages count by 10 items in each page
     
 
-    for(let i=0;i<pagesCount;i++){ //for loop to create items pages, every page has 10 items
-        // console.log("loop!");        
+    for(let i=0;i<pagesCount;i++){ //loop to create pagination, every page has 10 items       
         let page=[];
         for(let k=i*10;k<(i*10)+10;k++){ // to create single page of 10 items
             if(k<items.length){
@@ -26,87 +22,7 @@ function Pagination(props) {
                 break;
             }       
         }
-        // console.log("page",page);   
         pages.push(page);
-    }
-
-    let ss=[];
-    function handlePreferedLeagues(elemLeague){ //set prefered leagues cookie 
-        let preferedLeaguesArr=getCookie('prefered_leagues');  
-        if(preferedLeaguesArr !== null){
-            if( preferedLeaguesArr.find(league=>league.id === elemLeague.league.id) === undefined ){
-            const seasonsLength=elemLeague.seasons.length;
-                console.log("selected league",elemLeague);            
-                // const filteredSeason=elemLeague.seasons.filter((season)=>{
-                //     return Date.parse(season.end) >= Date.now()
-                // })[0];
-                // console.log("filtered season",filteredSeason);
-                const seasonYear= elemLeague.seasons[seasonsLength-1].year;
-                const endDate=elemLeague.seasons[seasonsLength-1].end;
-                preferedLeaguesArr.push({
-                    'id':elemLeague.league.id,
-                    'name': elemLeague.league.name,
-                    'logo':elemLeague.league.logo,
-                    'season':seasonYear,
-                    'endDate':endDate
-                });
-            }
-            else
-            {
-                const index=preferedLeaguesArr.indexOf(preferedLeaguesArr.filter(obj=>obj.id===elemLeague.league.id)[0])
-                preferedLeaguesArr=preferedLeaguesArr.slice(0,index).concat(preferedLeaguesArr.slice(index+1));
-                // console.log("selected leagues: ",preferedLeaguesArr);    
-            }
-            setCookie("prefered_leagues",preferedLeaguesArr);
-        }     
-    }
-
-   
-    // console.log("prefered teams",preferedTeamsArr);
-    
-    function handlePreferedTeams(elem){  //set prefered teams cookie 
-        let preferedTeamsArr=getCookie("prefered_teams");  
-        if(typeof(preferedTeamsArr) !== "undefined"){
-            if(preferedTeamsArr.filter(obj=>obj.id === elem.team.id)[0] === undefined){
-                preferedTeamsArr.push({
-                    'id':elem.team.id,
-                    'name':elem.team.name,
-                    'logo':elem.team.logo
-                });
-            }
-            else{
-            const index=preferedTeamsArr.indexOf(preferedTeamsArr.filter(obj=>obj.id===elem.team.id)[0])
-            preferedTeamsArr=preferedTeamsArr.slice(0,index).concat(preferedTeamsArr.slice(index+1));
-            // console.log("selected teams: ",preferedTeamsArr);    
-            }
-            setCookie("prefered_teams",preferedTeamsArr);
-        }     
-        
-    }
-
-    function setPreferedLeaguesColor(leagueId){ //to mark prefered league
-        let preferedLeaguesArr=getCookie('prefered_leagues'); 
-        let strokeClass="text-blue-100"; 
-        preferedLeaguesArr.map((elem)=>{
-        if(elem.id===leagueId){
-        console.log("mark:",elem.id)
-        strokeClass= "text-blue-600";
-        }
-        })
-        return strokeClass;
-    }
-
-    
-    function setPreferedTeamsColor(teamId){ // to mark prefered team
-        let preferedTeamsArr=getCookie("prefered_teams"); 
-        let strokeClass="text-blue-100"; 
-        preferedTeamsArr.map((elem)=>{
-            if(elem.id===teamId){
-                console.log("mark:",elem.id)
-                strokeClass= "text-blue-600";
-            }
-        })
-        return strokeClass;
     }
     
     return ( 
@@ -127,23 +43,28 @@ function Pagination(props) {
                                         {/* element name */}
                                         <p className="w-[70%]">{elem.league?.name || elem.team?.name}</p>         
                                         {/* button to save prefered league or team in a cookie */}
-                                        <FontAwesomeIcon 
-                                            icon={faStar}
-                                            className={`stroke-[4px]  w-10 h-10 cursor-pointer hover:stroke-blue-600
-                                                        ${elem.league? setPreferedLeaguesColor(elem.league.id) : setPreferedTeamsColor(elem.team?.id)}`}                             
-                                            onClick={(event)=>
-                                            {
-                                                const senderElement = event.currentTarget; 
-                                                senderElement.classList.toggle("text-blue-600");
-                                                senderElement.classList.toggle("text-blue-100");
-                                                                                  
-                                                elem.league?  //if there is leagues source data display leagues pages, if not, it will be teams       
-                                                    handlePreferedLeagues(elem) 
+                                        {
+                                            <Favourite 
+                                                elem_id={elem.league?.id || elem.team?.id} 
+                                                cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
+                                                obj={
+                                                    items_type === 'league' ?
+                                                    {
+                                                        'id':elem.league.id,
+                                                        'name': elem.league.name,
+                                                        'logo':elem.league.logo,
+                                                        'season':elem.seasons.at(-1).year,
+                                                        'endDate':elem.seasons.at(-1).end
+                                                    }
                                                     :
-                                                    handlePreferedTeams(elem)
-                                            }}/>
-                                    </div>
-                                        )
+                                                    {
+                                                        'id':elem.team.id,
+                                                        'name':elem.team.name,
+                                                        'logo':elem.team.logo
+                                                    }
+                                                } />
+                                        }
+                                    </div>)
                             })
                         }
                     </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import getNews from '../../Api/getNews.js';
+import getNews from '../../Api/News.js';
 import { getCookie } from '../../Api/cookie.js';
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 export default function News(){
            

@@ -31,7 +31,7 @@ export function getLeagueRounds(leagueId,season){
     return axios(config)
 }
 
-export function getTeam(search) {
+export function getTeams(search) {
     let config={
         method:'GET',
         url:`https://v3.football.api-sports.io/teams?search=${search}`,

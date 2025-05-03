@@ -1,10 +1,10 @@
 import { useState , useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import Standings from "./Standing.js";
 import LeagueFixtures from "./LeagueFixtures.js";
-import { getLeagues } from "../../Api/getLeaguesTeams.js";
 import TopPlayers from "./TopPlayers.js";
+import Favourite from "../Tools/Favourite.jsx";
 import Tabs from "../Tools/Tabs.jsx";
+import { getLeagues } from "../../Api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
 
@@ -84,7 +84,7 @@ export default function League() {
             <span className="border-none">{selected.name}</span>
           </div>
         ) : (
-          <span>Select a league</span>
+          <span className="border-none">Select a league</span>
         )}
         <span className="border-none">▼</span>
       </button>
@@ -139,7 +139,20 @@ export default function League() {
               <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo.league.logo} alt={leagueInfo.league.name} />
             </div>
             <div className="w-[85%] mx-2"> 
-                <span className="text-[30px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
+                <div className="flex flex-row justify-start space-x-2">
+                  <span className="text-[30px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason+1}</span>
+                  <Favourite elem_id={leagueInfo.league.id} cookie_name={'prefered_leagues'} 
+                    obj={
+                        {
+                            id:leagueInfo?.league.id,
+                            name:leagueInfo?.league.name,
+                            logo:leagueInfo?.league.logo,
+                            season:leagueInfo?.seasons.at(-1).year,
+                            end:leagueInfo?.seasons.at(-1).end
+
+                        }} 
+                />
+                </div>
                 <div className="flex justify-start space-x-2">
                     <img className="w-16 h-16 rounded" src={leagueInfo.country.flag} alt={leagueInfo.country.name} />
                     <span className="w-auto my-auto text-[20px] border-none">{leagueInfo.country.name}</span>

@@ -1,7 +1,7 @@
 import { Fragment, React } from "react";
 import { useState, useEffect } from "react";
-import { groupLeagueFixtures } from "../../Api/getFixtures.js";
-import { getLeagueRounds } from "../../Api/getLeaguesTeams.js";
+import { groupLeagueFixtures } from "../../Api/Fixtures.js";
+import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
 
 import FixtureRow from "../Tools/FixtureRow.jsx";
 
@@ -13,7 +13,6 @@ export default function LeagueFixtures(props) {
   const [rounds,setRounds] = useState([]);
   const [filteredFixtures,setFilteredFixtures]= useState([]);
   const [isLoaded,setLoaded]=useState(false);
-  const [firstRound,setFirstRound] = useState("");
 
   useEffect(() => {
     async function fetchData(){

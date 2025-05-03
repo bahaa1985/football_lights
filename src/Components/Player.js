@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPlayerSeasons, getPlayerStats, getPlayerProfile } from '../Api/getPlayerProfile.js';
+import { getPlayerSeasons, getPlayerStats, getPlayerProfile } from '../Api/PlayerProfile.js';
 
 function Player(props) {
     const season=props.season;

@@ -6,13 +6,8 @@ export function setCookie(name,data){
     const jsonData = JSON.stringify(data);
     console.log("jsonData: ",jsonData);
     
-    // if(name==="prefered_leagues"){
     Cookies.set(name,jsonData,{expires:365 * 100});
     console.log("new cookie: ",getCookie("prefered_leagues")); 
-    // }
-    // else{
-        // Cookies.set("prefered_teams",jsonData,{expires:365 * 100});
-    // }
 }
 
 export function getCookie(name){
@@ -36,7 +31,3 @@ export function removeCookie(name){
         
     }
 }
-
-
-
-// new Date('9999-12-31T23:59:59.000Z')

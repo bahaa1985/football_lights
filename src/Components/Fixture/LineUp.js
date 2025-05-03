@@ -3,8 +3,8 @@ import { useState, useMemo } from "react";
 import SoccerPlayground from "./SoccerPlayground.js";
 import LinePosition from "./LinePosition.js";
 import Ratings from "./Ratings.js";
-import getLineUps from "../../Api/getLineUp.js";
-import getPlayers from "../../Api/getPlayers.js";
+import getLineUps from "../../Api/LineUp.js";
+import getPlayers from "../../Api/Players.js";
 import "../../styles/lineup.css";
 
 //main function
