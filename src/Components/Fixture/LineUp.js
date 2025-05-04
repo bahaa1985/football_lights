@@ -169,7 +169,7 @@ function LineUp(props) {
           <>
             <div className="block md:flex md:flex-row md:justify-around lg:justify-center my-2">
                 
-                <div className="relative xs:top-[90%] md:top-[45%] w-full sm:w-8/12 lg:w-6/12 m-auto p-1">
+                <div className="relative xs:top-[90%] w-full sm:w-8/12 lg:w-6/12 mx-auto p-1">
                   {/*  team's logo, name and rating*/}
                   <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
@@ -214,24 +214,24 @@ function LineUp(props) {
                 </div>
 
                 {/* Coaches and subs section */}
-                <div className="relative xs:top-[90%] md:top-[45%] w-full md:w-5/12 mx-auto p-3">
+                <div className="relative xs:top-[90%] md:top-[45%] w-full sm:w-[45%] mx-auto p-1">
                   {
                     <>
-                      <div className="flex flex-row w-full justify-between divide-x-2">
+                      <div className="flex flex-row w-full justify-between divide-x-2 my-1">
                         <div
-                          className={`flex justify-start items-center py-1 w-1/2 rounded-lg my-2 ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          className={`flex justify-start items-center w-[90%] rounded-lg p-1 space-x-1  ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
                           onClick={() => setClickedSub(homeTeamProfile.id)}
                         >
                           <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="size-8 sm:size-10"/>
-                          <span className="w-1/2 text-center text-sm md:text-lg text-slate-50 border-none">
+                          <span className="text-center text-sm text-slate-50 border-none">
                             {homeTeamProfile.name}
                           </span>
                         </div>
                         <div
-                          className={`flex justify-end items-center py-2 w-1/2 rounded-lg my-2 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          className={`flex justify-end items-center space-x-1 w-[90%] rounded-lg p-1 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
                           onClick={() => setClickedSub(awayTeamProfile.id)}
                         >
-                          <span className="w-1/2 text-center text-sm md:text-lg text-slate-50 border-none align-middle">
+                          <span className="text-center text-sm text-slate-50 border-none">
                             {awayTeamProfile.name}
                           </span>
                           <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="size-8 sm:size-10"/>
@@ -303,16 +303,15 @@ function LineUp(props) {
                           </div>
                         </>
                       )}
-                    </>
-                  }
-                </div>
-            </div>
-            
-            {/* Ratings */}
+                      {/* Ratings */}
             <Ratings
               teams={{ home: homeTeamProfile, away: awayTeamProfile }}
               statistics={{ home: homePlayers, away: awayPlayers }}
             />
+                    </>
+                  }
+                </div>
+            </div>                        
           </>
         ) : null}
       </div>

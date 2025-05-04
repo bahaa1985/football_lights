@@ -3,7 +3,7 @@ import {React} from 'react';
 
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
-    <div className='w-full sm:w-fit mx-auto flex flex-row justify-center '>
+    <div className='w-full sm:w-fit mx-auto flex flex-row justify-center space-x-2 '>
       {/* tabs */}
       {tabs.map((tab, index) => (
         <div
