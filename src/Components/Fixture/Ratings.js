@@ -14,7 +14,7 @@ export default function Ratings(props){
     const awayTeam = props.teams.away;
     //
     //set division of the clicked team ( in small screens)
-    console.log("homeTeam",homeTeam);
+    console.log("homeTeam",homeTeam.id);
     
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(homeTeam.id);
@@ -82,22 +82,23 @@ export default function Ratings(props){
           <table className="w-full mx-auto sm:w-[70%] table-auto p-1  rounded-t-md ">
             {/* teams header */}
             <thead className="w-full">
-              <tr className="flex flex-row w-full">
-                <th className={`flex justify-start items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tl-md cursor-pointer
-                    hover:border-b-2 border-solid border-blue-400 ${clickedTeam === homeTeam.id ? 'border-b-2 border-solid border-blue-600': null}`}
+              <tr className="flex flex-row w-full divide-x-2">
+                <th className={`flex justify-start items-center py-2 w-1/2 rounded-lg my-2 cursor-pointer
+                     ${clickedTeam === homeTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(homeTeam.id)} >
-                    <img alt={homeTeam.name} src={homeTeam.logo} className="w-8 h-8"/>
-                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
+                    <img alt={homeTeam.name} src={homeTeam.logo} className="size-8"/>
+                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm md:text-lg">
                         {homeTeam.name}
                     </span>
                 </th>
-                <th className={`flex flex-row-reverse justify-start  items-center w-1/2 p-2 bg-slate-800 text-slate-50 rounded-tr-md cursor-pointer
-                    hover:border-b-2 border-solid border-blue-400 ${clickedTeam === awayTeam.id ? 'border-b-2 border-solid border-blue-600': null}`}
+                <th className={`flex justify-end items-center py-2 w-1/2 rounded-lg my-2 cursor-pointer
+                   ${clickedTeam === awayTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(awayTeam.id)} >
-                    <img alt={awayTeam} src={awayTeam.logo} className="w-8 h-8"/>
-                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm sm:text-md">
+                    <img alt={awayTeam} src={awayTeam.logo} className="size-8"/>
+                    <span className="text-center text-slate-50 border-none align-middle py-1 text-sm md:text-lg">
                         {awayTeam.name}
-                    </span></th>
+                    </span>
+                </th>
               </tr>
             </thead>
             {/* players ratings */}
@@ -140,8 +141,8 @@ export default function Ratings(props){
                     homeStatistics.map((elem, index) => {
                         return (
                             elem.statistics[0].games.rating !== null ?
-                            <td key={index} className="flex justify-between w-full px-3 border-b border-solid border-slate-800">
-                                <span className="border-none">{elem.player.name}</span>
+                            <td key={index} className="flex justify-between items-center w-full px-3 border-b border-solid border-slate-800">
+                                <span className="border-none text-sm md:text-lg">{elem.player.name}</span>
                                 <span className={`border-none w-8 h-8 flex items-center justify-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>
@@ -153,8 +154,8 @@ export default function Ratings(props){
                     awayStatistics.map((elem, index) => {
                         return (
                             elem.statistics[0].games.rating !== null ?
-                            <td key={index} className="flex justify-between w-full px-3 border-b border-solid border-slate-800">
-                                <span className="border-none">{elem.player.name}</span>
+                            <td key={index} className="flex justify-between items-center w-full px-3 border-b border-solid border-slate-800">
+                                <span className="border-none text-sm md:text-lg">{elem.player.name}</span>
                                 <span className={`border-none w-8 h-8 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>
