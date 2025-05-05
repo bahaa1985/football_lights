@@ -7,6 +7,7 @@ import Player from './Components/Player.js';
 import Team from './Components/Team/TeamContainer.js';
 import Home from './Components/Home/HomeContainer.js';
 import Preferences from './Components/Preference/PreferenceContainer.js';
+import Search from './Components/Home/Search.jsx';
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
         <Route path=":playerId"/>
       </Route>
       <Route path="/preference" element={<Preferences />}>
+      </Route>
+      <Route path='/search' element={<Search />}>
       </Route>
     </Routes>
      </Router>

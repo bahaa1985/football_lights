@@ -38,18 +38,13 @@ export default function Favourite(props){
             <div>
                 <FontAwesomeIcon 
                     icon={faStar}
-                    className={`size-6 sm:size-8 cursor-pointe hover:text-slate-200
-                        ${setPreferedItemsColor(elem_id)} cursor-pointer`}                             
+                    className={`size-6 sm:size-8 cursor-pointe hover:text-slate-200 ${setPreferedItemsColor(elem_id)} cursor-pointer`}                             
                     onClick={(event)=>
                     {
                         const senderElement = event.currentTarget; 
                         senderElement.classList.toggle("text-yellow-400");
                         senderElement.classList.toggle("text-slate-200");  
-                        handlePreference(elem_id);                                
-                        // elem.league?  //if there is leagues source data, display leagues pages, if not, it will be teams       
-                        //     handlePreference(elem) 
-                        //     :
-                        //     handlePreference(elem)
+                        handlePreference(elem_id);
                     }}/>
             </div>
         )
