@@ -20,7 +20,7 @@ function App() {
       <Route path='/' element={<Home/>}>
       </Route>
       <Route path="/league" element={<League />}>  
-        <Route path="/league/:leagueId/:season"/> 
+        <Route path=":leagueId/:season"/> 
       </Route>
       <Route path="/fixture" element={<Fixture/>} >
         <Route path=":fixtureId"/>

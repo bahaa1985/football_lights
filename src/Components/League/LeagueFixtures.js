@@ -29,7 +29,7 @@ export default function LeagueFixtures(props) {
       
     }
     fetchData();
-  }, []);
+  }, [league,season]);
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
@@ -64,7 +64,7 @@ export default function LeagueFixtures(props) {
           <div className="w-full flex flex-col sm:flex-row items-center sm:justify-start space-x-2 flex-wrap my-2">
             <span className="border-none">Filter by</span>
             <select  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e)=>filterByGameWeek(e)}>
-              <option value="">{rounds[0].includes('Regular Season') ? 'Select GameWeek' : 'Select Round'}</option>
+              <option value="">{rounds[0]?.includes('Regular Season') ? 'Select GameWeek' : 'Select Round'}</option>
               {
                     rounds.map((round,index)=>{
                       return(
