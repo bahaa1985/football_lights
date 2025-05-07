@@ -56,7 +56,7 @@ function Fixture(){
             </NavLink>
           </div>
           {/* fixture info */}
-          <div className='flex flex-row flex-wrap justify-start space-x-2 sm:space-x-4 py-2'>
+          <div className='flex flex-row flex-wrap justify-start items-center space-x-2 sm:space-x-4 py-2'>
             {/* fixture status */}
             <div className='flex flex-row justify-between items-center space-x-2'>
               {

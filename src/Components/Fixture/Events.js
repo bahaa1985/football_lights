@@ -34,9 +34,9 @@ function Events(props){
                     type==='Goal'&& detail==='Missed penalty' ?
                     <img alt='' src={missed_penalty} className="sm:w-8 sm:h-8"/>:
                     type==='Card'&& detail==='Yellow Card' ?
-                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-yellow-500"></div>:
+                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-yellow-500"></div>:
                     type==='Card'&& detail==='Red Card' ?
-                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-red-700"></div>:
+                    <div className="w-4 h-6 sm:w-6 sm:h-10 bg-red-700"></div>:
                     type==='subst'?
                     <FontAwesomeIcon icon={faRightLeft} size='2x' className="text-xl sm:text-3xl"/>:                    
                     type==='Var'?                        
@@ -46,24 +46,24 @@ function Events(props){
                 </div>
                             
                 <div className="flex flex-col justify-center">
-                    <span className="border-none text-md sm:text-xl">{type==="subst" ? "Out: " + player: player}</span>
-                    <span className="border-none text-sm sm:text-md">{type==="subst" ? "In: " + assist: assist}</span>
-                    {(type==="Var" || (type === "Goal" && detail === "Missed penalty")) ?<span className="border-none text-sm sm:text-md">{detail}</span>: null}
-                    {comments ? <span className="border-none text-sm sm:text-md">{comments}</span> : null}
+                    <span className="border-none text-sm sm:text-lg">{type==="subst" ? "Out: " + player: player}</span>
+                    <span className="border-none text-sm">{type==="subst" ? "In: " + assist: assist}</span>
+                    {(type==="Var" || (type === "Goal" && detail === "Missed penalty")) ?<span className="border-none text-sm sm:text-lg">{detail}</span>: null}
+                    {comments ? <span className="border-none text-sm">{comments}</span> : null}
                 </div>         
             </div>)
     }
 
     let i=0;
     return(        
-        <div className='block mx-auto my-2 w-[90%] sm:w-[60%]' > 
+        <div className='block mx-auto my-2 w-[90%] sm:w-[60%] bg-slate-50 rounded-xl p-2' > 
             <p className="text-sm md:text-md">Penalty icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Freepik - Flaticon</a></p>
             <p className="text-sm md:text-md">Var icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">created by kosonicon - Flaticon</a></p>
             {                    
                 events.map((elem,index)=>{
                     return(
                         <div className={`flex space-x-3 ${elem.team.id === teams.home.id ? "justify-start"  :"flex-row-reverse" } my-4 `} key={index}>
-                            <span className="border-none text-bold">`{elem.time.elapsed}</span>
+                            <span className="border-none text-sm md:text-lg">`{elem.time.elapsed}</span>
                             <div>
                             {                                        
                                 events_div(elem.team.id, elem.player.name,elem.assist.name,elem.type,elem.detail,i++,elem.comments)                                            

@@ -142,12 +142,12 @@ export default function League() {
           <div className="w-[90%] mx-auto">  {/* league info */}
             <div className="flex justify-center bg-gradient-to-r from-slate-300 via-slate-500 to-slate-400 rounded-lg p-4 my-4">
               <div className="flex justify-start items-center w-[15%] mx-2">
-                <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo.league.logo} alt={leagueInfo.league.name} />
+                <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
               </div>
               <div className="w-[85%] mx-2">
                 <div className="flex flex-row justify-start items-center space-x-2">
-                  <span className="text-[30px] border-none">{leagueInfo.league.name} {lastSeason}/{lastSeason + 1}</span>
-                  <Favourite elem_id={leagueInfo.league.id} cookie_name={'prefered_leagues'}
+                  <span className="text-[30px] border-none">{leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}</span>
+                  <Favourite elem_id={leagueInfo?.league.id} cookie_name={'prefered_leagues'}
                     obj={
                       {
                         id: leagueInfo?.league.id,
@@ -159,8 +159,8 @@ export default function League() {
                   />
                 </div>
                 <div className="flex justify-start space-x-2">
-                  <img className="w-16 h-16 rounded" src={leagueInfo.country.flag} alt={leagueInfo.country.name} />
-                  <span className="w-auto my-auto text-[20px] border-none">{leagueInfo.country.name}</span>
+                  <img className="w-16 h-16 rounded" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
+                  <span className="w-auto my-auto text-[20px] border-none">{leagueInfo?.country.name}</span>
                 </div>
               </div>
             </div>

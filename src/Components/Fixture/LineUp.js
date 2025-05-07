@@ -40,6 +40,7 @@ function LineUp(props) {
   const [awaySub, setAwaySub] = useState([]);
   ///
   const [clickedSub, setClickedSub] = useState(homeParam);
+  const [clickedTeam,setClickedTeam]= useState(homeParam);
   const [isLoaded, setLoaded] = useState(false); //for preventing rendering before complete fetching data
 
   // let i=0;
@@ -49,38 +50,42 @@ function LineUp(props) {
     async function fetchLineUp() {
       const lineup_response = await getLineUps(fixtureId);
       const players_response = await getPlayers(fixtureId);
+      console.log("lineup",lineup_response.data);
+      
       //
       if (isMounted) {
         setHomeTeamProfile({
-          id: lineup_response.data.response[0].team.id,
-          name: lineup_response.data.response[0].team.name,
-          logo: lineup_response.data.response[0].team.logo,
+          id: lineup_response?.data.response[0].team.id,
+          name: lineup_response?.data.response[0].team.name,
+          logo: lineup_response?.data.response[0].team.logo,
           formation: Array.from(
-            lineup_response.data.response[0].formation.replaceAll("-", "")
+            lineup_response?.data.response[0].formation !== null ? lineup_response?.data.response[0].formation.replaceAll("-", "")
+            :''
           ),
         });
-        setHomeLineUp(lineup_response.data.response[0].startXI);
-        setHomeGkColor(lineup_response.data.response[0].team.colors.goalkeeper);
-        setHomePlayrColor(lineup_response.data.response[0].team.colors.player);
-        setHomeCoash(lineup_response.data.response[0].coach);
-        setHomeSub(lineup_response.data.response[0].substitutes);
+        setHomeLineUp(lineup_response?.data.response[0].startXI);
+        // setHomeGkColor(lineup_response?.data.response[0].team.colors.goalkeeper);
+        // setHomePlayrColor(lineup_response?.data.response[0].team.colors.player);
+        setHomeCoash(lineup_response?.data.response[0].coach);
+        setHomeSub(lineup_response?.data.response[0].substitutes);
         //
         setAwayTeamProfile({
-          id: lineup_response.data.response[1].team.id,
-          name: lineup_response.data.response[1].team.name,
-          logo: lineup_response.data.response[1].team.logo,
+          id: lineup_response?.data.response[1].team.id,
+          name: lineup_response?.data.response[1].team.name,
+          logo: lineup_response?.data.response[1].team.logo,
           formation: Array.from(
-            lineup_response.data.response[1].formation.replaceAll("-", "")
+             lineup_response?.data.response[1].formation !== null ? lineup_response?.data.response[1].formation.replaceAll("-", "")
+            :''
           ),
         });
-        setAwayLineUp(lineup_response.data.response[1].startXI);
-        setAwayCoash(lineup_response.data.response[1].coach);
-        setAwaySub(lineup_response.data.response[1].substitutes);
-        setAwayGkColor(lineup_response.data.response[1].team.colors.goalkeeper);
-        setAwayPlayrColor(lineup_response.data.response[1].team.colors.player);
+        setAwayLineUp(lineup_response?.data.response[1].startXI);
+        setAwayCoash(lineup_response?.data.response[1].coach);
+        setAwaySub(lineup_response?.data.response[1].substitutes);
+        // setAwayGkColor(lineup_response?.data.response[1].team.colors.goalkeeper);
+        // setAwayPlayrColor(lineup_response?.data.response[1].team.colors.player);
         ///
-        setHomePlayers(players_response.data.response[0].players);
-        setAwayPlayers(players_response.data.response[1].players);
+        setHomePlayers(players_response?.data.response[0].players);
+        setAwayPlayers(players_response?.data.response[1].players);
         //
         setLoaded(true);
       }
@@ -93,8 +98,12 @@ function LineUp(props) {
     };
   }, [fixtureId]);
 
-  function linesPositions() {
-    let homeLines = [],
+  console.log('hp',homePlayers);
+  
+
+  function linesPositions() { // this function will not be called if no formation is provided, the players will be displayed as stack
+    if(homeTeamProfile.formation.length > 0 && awayTeamProfile.formation.length > 0 ){
+      let homeLines = [],
       awayLines = [];
     // Home Lines:
     for (let i = 0; i < homeTeamProfile?.formation?.length + 1; i++) {
@@ -132,6 +141,7 @@ function LineUp(props) {
     }
     awayLines = awayLines.reverse();
     return [homeLines, awayLines];
+    }
   }
 
   function teamRating(players) {
@@ -188,10 +198,83 @@ function LineUp(props) {
                     </div>
                   </div>
                   {/* Playground */}
-                  <SoccerPlayground
-                    homeLines={linesPositions()[0]}
-                    awayLines={linesPositions()[1]}
-                  />
+                  {
+                    homeTeamProfile.formation.length > 0 && awayTeamProfile.formation.length > 0 ?
+                      <SoccerPlayground
+                      homeLines={linesPositions()[0]}
+                      awayLines={linesPositions()[1]}
+                    />
+                    : //to display players in a table in case of no formation is provided:
+                    <div> 
+                      {/* teams header */}
+                      <div className="flex flex-row w-full justify-between divide-x-2 my-1">
+                        <div
+                          className={`flex justify-start items-center w-[90%] rounded-lg p-1 space-x-1  ${clickedTeam === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          onClick={() => setClickedTeam(homeTeamProfile.id)}
+                        >
+                          <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="size-8 sm:size-10"/>
+                          <span className="text-center text-sm text-slate-50 border-none">
+                            {homeTeamProfile.name}
+                          </span>
+                        </div>
+                        <div
+                          className={`flex justify-end items-center space-x-1 w-[90%] rounded-lg p-1 ${clickedTeam === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          onClick={() => setClickedTeam(awayTeamProfile.id)}
+                        >
+                          <span className="text-center text-sm text-slate-50 border-none">
+                            {awayTeamProfile.name}
+                          </span>
+                          <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="size-8 sm:size-10"/>
+                        </div>
+                      </div>
+                      {/* Team's players */}
+                      {
+                        clickedTeam === homeTeamProfile.id ?
+                        <div>
+                        {
+                          homeLineUp.map((player, index) => {
+                          return (
+                            <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
+                               <img className="size-6 sm:size-10" src={homePlayers?.filter(item=>item.player.id === player.player.id)[0].player.photo} alt={player.player.name} />
+                              <span className="flex space-x-3 border-none text-sm md:text-lg">
+                              {player.player.number}&nbsp;&nbsp;{player.player.name}
+                              </span>
+                              <span className="border-none text-sm flex justify-center items-center">{
+                                player.player.pos === 'D' ? 'Defender'
+                                : player.player.pos === 'M' ? 'Midfielder'
+                                : player.player.pos === 'F' ? 'Forward'
+                                : player.player.pos === 'G' ? 'GoalKeeper'
+                                :null
+                                }</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      :
+                      <div>
+                        {
+                          awayLineUp.map((player, index) => {
+                          return (
+                            <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
+                              <img className="size-6 sm:size-10" src={awayPlayers?.filter(item=>item.player.id === player.player.id)[0].player.photo} alt={player.player.name} />
+                              <span className="flex space-x-3 border-none text-sm md:text-lg">
+                              {player.player.number}&nbsp;&nbsp;{player.player.name}
+                              </span>
+                              <span className="border-none text-sm flex justify-center items-center">{
+                                player.player.pos === 'D' ? 'Defender'
+                                : player.player.pos === 'M' ? 'Midfielder'
+                                : player.player.pos === 'F' ? 'Forward'
+                                : player.player.pos === 'G' ? 'GoalKeeper'
+                                :null
+                                }</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      }
+                    </div>
+                  }
+                 
                   {/* Away team's logo, name and rating*/}
                   <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
