@@ -7,7 +7,7 @@ function Player(props) {
     const [playerSeasons,setPlayerSeasons]=useState([]);
     const [playerStats,setPlayerStats]=useState([]); 
     const [leagueId,setLeagueId]=useState(0);
-    const [selectedSeason,setSelectedSeason]=useState(2024);
+    const [selectedSeason,setSelectedSeason]=useState(season);
     const [loaded,setLoaded]=useState(false);
     const params =useParams();
     
@@ -30,14 +30,14 @@ function Player(props) {
             {/* <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-center">{playerStats?.player?.name}</h2> */}
             {playerStats?.player?.photo && (
                 <img
-                    src={playerStats.player.photo}
-                    alt={playerStats.player.name}
+                    src={playerStats?.player.photo}
+                    alt={playerStats?.player.name}
                     className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full shadow mb-4"
                 />
             )}
             <div>
-                <h2>Name: {playerStats.player.firstname +' ' + playerStats.player.lastname}</h2>
-                <p>Nationality: {playerStats.player.nationality}</p>
+                <h2>Name: {playerStats?.player.firstname +' ' + playerStats?.player.lastname}</h2>
+                <p>Nationality: {playerStats?.player.nationality}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full justify-center">
                 {/* Season Dropdown */}
@@ -64,14 +64,14 @@ function Player(props) {
         </div>
 
         {/* Team and League Info */}
-        {playerStats?.statistics && playerStats.statistics[leagueId] && (
+        {playerStats?.statistics && playerStats?.statistics[leagueId] && (
             <div className="w-full space-y-4">
                 {/* Team */}
                 <div className="bg-slate-200 rounded-lg p-3 sm:p-4 shadow-sm">
                     <p className="flex items-center gap-2 font-semibold ">
                         <span className="border-none text-slate-700">Team:</span>
-                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].team.name}</span>
-                        <img src={playerStats.statistics[leagueId].team.logo} alt="team logo" className="w-6 h-6" />
+                        <span className="border-none text-slate-600">{playerStats?.statistics[leagueId].team.name}</span>
+                        <img src={playerStats?.statistics[leagueId].team.logo} alt="team logo" className="w-6 h-6" />
                     </p>
                 </div>
 
@@ -79,21 +79,21 @@ function Player(props) {
                 <div className="bg-slate-200 rounded-lg p-3 sm:p-4 shadow-sm">
                     <p className="flex items-center gap-2 font-semibold">
                         <span className="border-none text-slate-700">League:</span>
-                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].league.name}</span>
-                        <img src={playerStats.statistics[leagueId].league.logo} alt="league logo" className="size-8 sm:size-10" />
+                        <span className="border-none text-slate-600">{playerStats?.statistics[leagueId].league.name}</span>
+                        <img src={playerStats?.statistics[leagueId].league.logo} alt="league logo" className="size-8 sm:size-10" />
                     </p>
                     <p className="flex items-center gap-2 mt-2 text-slate-600">
                         <span className="border-none font-bold text-slate-700">Country:</span>
-                        <span className="border-none text-slate-600">{playerStats.statistics[leagueId].league.country}</span>
-                        {playerStats.statistics[leagueId].league.flag && (
-                            <img src={playerStats.statistics[leagueId].league.flag} alt="country flag" className="w-6 h-4" />
+                        <span className="border-none text-slate-600">{playerStats?.statistics[leagueId].league.country}</span>
+                        {playerStats?.statistics[leagueId].league.flag && (
+                            <img src={playerStats?.statistics[leagueId].league.flag} alt="country flag" className="w-6 h-4" />
                         )}
                     </p>
                 </div>
 
                 {/* Statistics */}
                 <div className="space-y-4">
-                    {Object.entries(playerStats.statistics[leagueId]).map(([key, value], index) => (
+                    {Object.entries(playerStats?.statistics[leagueId]).map(([key, value], index) => (
                         index > 1 && typeof value === 'object' && value !== null && (
                             <div key={index} className="bg-slate-200 rounded-md p-3 sm:p-4 shadow">
                                 <h3 className="font-bold text-slate-700 capitalize mb-2">{key.replace('_', ' ')}</h3>

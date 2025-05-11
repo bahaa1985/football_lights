@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
-import getPlayerProfile from '../../Api/PlayerProfile.js';
+import {getPlayerByName} from '../../Api/PlayerProfile.js';
 import { getCookie, setCookie } from "../../Api/cookie.js";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +30,7 @@ export default function Search(){
                 setClicked(false);
             }
             else if(searchIndex === 2){
-                const player_response = await getPlayerProfile(null,null,searchKey,null);
+                const player_response = await getPlayerByName(searchKey);
                 setPlayers(player_response.data.response);
                 setClicked(false);
             }
@@ -45,19 +45,19 @@ export default function Search(){
                 <div className="w-full mx-auto flex flex-row justify-between gap-2 my-4">
   <button 
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 0 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
-    onClick={() => [setSearchIndex(searchRef.current.value),setSearchIndex(0)]}
+    onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(0)]}
   >
     League
   </button>
   <button 
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 1 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
-    onClick={() => [setSearchIndex(searchRef.current.value),setSearchIndex(1)]}
+    onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(1)]}
   >
     Team
   </button>
   <button 
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 2 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
-    onClick={() => [setSearchIndex(searchRef.current.value),setSearchIndex(2)]}
+    onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(2)]}
   >
     Player
   </button>
@@ -97,7 +97,7 @@ export default function Search(){
                             return(
                                 <div className='flex flex-row justify-between items-center border-b-2 border-b-slate-400 border-solid' key={index}>
                                     <NavLink to={`/player/${item.player.id}`} className='flex flex-row justify-between items-center '>
-                                        <img className='size-6 sm:size-10 rounded-full' src={item.player.image} loading='lazy' alt={item.player.name} />
+                                        <img className='size-6 sm:size-10 rounded-full' src={item.player.photo} loading='lazy' alt={item.player.name} />
                                         <span className="border-none">{item.player.name}</span> 
                                     </NavLink>                                                                      
                                 </div>

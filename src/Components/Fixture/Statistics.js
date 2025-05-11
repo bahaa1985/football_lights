@@ -34,7 +34,7 @@ function Statistics(props){
 
     return(
          
-        <div className="w-[90%] sm:w-auto mx-auto text-center">                                                      
+        <div className="w-[90%] sm:w-auto mx-auto text-center ">                                                      
         {
             isLoaded ?
             [
@@ -42,7 +42,7 @@ function Statistics(props){
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} className="w-[90%] text-center my-2 mx-auto">                       
+                    <div key={index} className="w-[90%] text-center my-2 mx-auto ">                       
                             
                         <div className="flex justify-center">
                             <div>  

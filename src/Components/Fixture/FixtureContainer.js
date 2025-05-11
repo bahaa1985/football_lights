@@ -25,8 +25,8 @@ function Fixture(){
       
       <div className="relative top-16 left-[50%] -translate-x-[50%] font-bold">
         {/*  */}
-        <div className='bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
-        p-2 my-2 mx-auto w-full sm:w-[80%]'>
+        <div className='w-[90%] flex flex-col justify-center items-center sm:w-[70%] bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
+        p-2 my-2 mx-auto'>
           {/* league info */}
           <div className='flex flex-col justify-center  space-y-1 items-center
            py-2 border-b sm:border-none text-md sm:text-xl border-solid border-slate-400'>
@@ -39,7 +39,7 @@ function Fixture(){
             </div>  
           </div>  
            {/* score table */}
-          <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 md:space-x-0 w-full md:w-[90%] lg:w-[70%] items-center mx-auto py-2 
+          <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 md:space-x-0 w-full md:w-[70%] lg:w-[50%] items-center mx-auto py-2 
            text-sm sm:text-lg border-b sm:border-none border-solid border-slate-400">
             <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
               <img className="size-6 sm:size-10" alt={fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>

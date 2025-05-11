@@ -170,11 +170,9 @@ function LineUp(props) {
     return bgColor;
   }
 
-  let playerNameArr = [],
-    playerName = "";
   return (
     <div>
-      <div className="block mx-auto my-2">
+      <div className="block mx-auto my-2 bg-slate-50 rounded-lg">
         {isLoaded ? (
           <>
             <div className="block md:flex md:flex-row md:justify-around lg:justify-center my-2">
@@ -330,17 +328,18 @@ function LineUp(props) {
                           <div>
                             {homeSub.map((sub, index) => {
                               // eslint-disable-next-line no-lone-blocks
-                              {
-                                playerNameArr = sub.player.name.split(" ");
-                                playerNameArr.length > 1
-                                  ? (playerName = playerNameArr.slice(1))
-                                  : (playerName = playerNameArr[0]);
-                              }
+                              // {
+                                // sub.player.name
+                                // playerNameArr = sub.player.name.split(" ");
+                                // playerNameArr.length > 1
+                                //   ? (playerName = playerNameArr.slice(1))
+                                //   : (playerName = playerNameArr[0]);
+                              // }
                               return (
-                                <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
+                                <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
                                   
-                                  <span className="flex space-x-3 border-none text-sm md:text-lg">
-                                  {sub.player.number}&nbsp;&nbsp;{playerName}
+                                  <span className="flex space-x-3 border-none text-sm">
+                                  {sub.player.number}&nbsp;&nbsp;{sub.player.name}
                                   </span>
                                   <span className="border-none text-sm flex justify-center items-center">{
                                     sub.player.pos === 'D' ? 'Defender'
@@ -363,15 +362,10 @@ function LineUp(props) {
                           </div>
                           <div className="">
                             {awaySub.map((sub, index) => {
-                              playerNameArr = sub.player.name.split(" ");
-                              playerNameArr.length > 1
-                                ? (playerName = playerNameArr.slice(1))
-                                : (playerName = playerNameArr[0]);
-
                               return (
-                                <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
-                                  <span className="flex space-x-3 border-none text-sm md:text-lg">
-                                  {sub.player.number}&nbsp;&nbsp;{playerName}
+                                <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
+                                  <span className="flex space-x-3 border-none text-sm">
+                                  {sub.player.number}&nbsp;&nbsp;{sub.player.name}
                                   </span>
                                   <span className="border-none text-sm flex justify-center items-center">{
                                     sub.player.pos === 'D' ? 'Defender'

@@ -42,6 +42,20 @@ export function getPlayerProfile(playerId=null,season=null,search=null,leagueId=
     return axios(config);
 }
 
+export function getPlayerByName(searchKey){
+    const config={
+        method:"GET",
+        url:`https://v3.football.api-sports.io/players/profiles?search=${searchKey}`,
+        headers: {
+            'x-rapidapi-host': 'v3.football.api-sports.io',
+            'x-rapidapi-key': process.env.REACT_APP_XRAPIDAPIKEY
+        },
+
+    };
+
+    return axios(config);
+}
+
 export function getTopScorers(leagueId,season){
     const config={
         method:"GET",
