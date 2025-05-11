@@ -7,6 +7,8 @@ export default function Favourite(props){
         const elem_id = props.elem_id;
         const cookie_name= props.cookie_name;
         const obj = props.obj
+        const [strokeColor,setStrokeColor]=useState("text-slate-200");
+
         function handlePreference(){
             let preferedItemsArr=getCookie(cookie_name);  
             if(preferedItemsArr !== null){
@@ -27,9 +29,10 @@ export default function Favourite(props){
             let strokeClass="text-slate-200"; 
             preferedItemsArr.map((item)=>{
                 if(item.id === elem_id){
-                    console.log("mark:",elem_id)
-                   strokeClass= "text-yellow-400";
+                    // console.log("mark:",elem_id)
+                  strokeClass = "text-yellow-400";
                 }
+                
             })
             return strokeClass;
         }
@@ -38,7 +41,7 @@ export default function Favourite(props){
             <div>
                 <FontAwesomeIcon 
                     icon={faStar}
-                    className={`size-6 sm:size-8 cursor-pointe hover:text-slate-200 ${setPreferedItemsColor(elem_id)} cursor-pointer`}                             
+                    className={`size-6 sm:size-8 cursor-pointe hover:text-yellow-200 ${setPreferedItemsColor(elem_id)} cursor-pointer`}                             
                     onClick={(event)=>
                     {
                         const senderElement = event.currentTarget; 

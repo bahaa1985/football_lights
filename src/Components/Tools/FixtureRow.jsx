@@ -160,7 +160,7 @@ function FixtureRow(props) {
                       </div>                      
                     </div>
                     {/* Details button */}
-                    <div className="flex items-center w-[10%]">
+                    <div className="flex justify-center items-center w-[10%]">
                         <NavLink className="p-1"
                         to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
                           <FontAwesomeIcon icon={faAnglesRight} size="md" />                          

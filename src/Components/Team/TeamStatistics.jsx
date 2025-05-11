@@ -41,7 +41,7 @@ function TeamStatistics({ team, league, season }) {
   );
 
   const TableRow = ({ children }) => (
-    <tr className="border-b border-slate-700 hover:bg-slate-100">{children}</tr>
+    <tr className="border-b border-slate-700">{children}</tr>
   );
 
   const TableHeader = ({ children }) => (

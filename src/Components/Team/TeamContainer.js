@@ -140,7 +140,7 @@ export default function Team() {
 
                     {/* Team Statistics */}
                     <div className="bg-slate-100 p-1 md:p-6 rounded-lg shadow-inner">
-                        <h2 className="text-xl font-bold text-slate-800 mb-4">Team Statistics</h2>
+                        <h2 className="text-xl font-bold text-slate-800 mb-1">Team Statistics</h2>
                         <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
                     </div>
                 </>

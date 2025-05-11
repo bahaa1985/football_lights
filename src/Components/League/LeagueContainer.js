@@ -146,7 +146,7 @@ export default function League() {
               </div>
               <div className="w-[85%] mx-2">
                 <div className="flex flex-row justify-start items-center space-x-2">
-                  <span className="text-[30px] border-none">{leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}</span>
+                  <span className=" text-[30px] border-none">{leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}</span>
                   <Favourite elem_id={leagueInfo?.league.id} cookie_name={'prefered_leagues'}
                     obj={
                       {
