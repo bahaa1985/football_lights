@@ -28,15 +28,9 @@ export default function League() {
   const [selectedSeason, setSelectedSeason] = useState(season ? season : lastSeason);
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
-  const [isDisabled, setDisabled] = useState(false);
-  const [isClicked, setClicked] = useState(false);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
-
-  const handleSelect = (option) => {
-    setSelected(option);
-    setOpen(false);
-  };
+  
 
   useEffect(() => {
     // if (isClicked) {
@@ -52,17 +46,15 @@ export default function League() {
 
   function handleSelectedLeague(leagueId) {
     setSelectedLeague(leagueId);
-    // handleTabChange(-1);
-    // handleTabChange(0);
-    // setDisabled(false);
   }
 
   function handleSelectedSeason(e) {
     setSelectedSeason(e.target.value);
-    // handleTabChange(-1);
-    // handleTabChange(0);
-    // setDisabled(false);
   }
+
+  function handleSelect(league) {
+    setSelected(league);
+  };
 
   function handleTabChange(index) {
     setActiveTab(index);
@@ -71,75 +63,27 @@ export default function League() {
   return (
     <div className="relative top-20 w-[90%] mx-auto">
      
-      <div className="w-full my-4 bg-slate-50 rounded-md p-2">
+      <div className="flex flex-row justify-start items-center gap-2 w-full my-4 bg-slate-50 rounded-lg p-2">
          {/* Leagues dropdown */}
-         <div className="flex flex-row justify-around items-center w-full sm:w-[50%]">
-          <label className="w-44">Select League</label>
+         <label className="w-fit">Your favourite leagues</label>
+         <div className="flex flex-row justify-start gap-2 items-center w-full sm:w-[50%] rounded-lg border border-solid border-slate-400">          
           {leagues.map((league, index) => (
               <div
                 key={index}
-                onClick={() => [handleSelect(league), handleSelectedLeague(league.id),console.log('kioploiu',selectedleague)
+                onClick={() => [handleSelectedLeague(league.id)
                 ]}
-                className="flex flex-col items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2"
+                className={`flex flex-col items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2 
+                  ${selectedleague === league.id ? 'border-b-2 border-solid border-blue-600' : 'border-none'}`}
               >
-                <img src={league.logo} alt={league.name} className="size-6 sm:size-10" />
-                <span className="text-sm text-center border-none">{league.name}</span>
+                <img src={league.logo} alt={league.name} className={`size-8 sm:size-12`} />
+                {/* <span className="text-sm text-center border-none">{league.name}</span> */}
               </div>
             ))}
-         </div>
-        {/* <div className="w-full flex justify-start space-x-2 my-4">
-          <span className="w-30 h-auto my-auto border-none text-slate-900">Select League</span>
-          <div className="w-auto flex flex-wrap justify-start space-x-2">
-            {
-              leagues.length > 0 ? (
-                <div className="auto">
-                  <button
-                    onClick={() => setOpen(!open)}
-                    className="w-full flex items-center justify-between border px-4 py-2 rounded bg-white shadow"
-                  >
-                    {selected ? (
-                      <div className="flex items-center space-x-2">
-                        <img src={selected.logo} alt={selected.name} className="w-6 h-6" />
-                        <span className="border-none">{selected.name}</span>
-                      </div>
-                    ) : (
-                      <span className="border-none">Select a league</span>
-                    )}
-                    <span className="border-none">▼</span>
-                  </button>
-
-                  {open && (
-                    <div className="absolute z-10 mt-2 w--[50%] border rounded bg-white shadow">
-                      {leagues.map((option, index) => (
-                        <div
-                          key={index}
-                          onClick={() => [handleSelect(option), handleSelectedLeague(option.id)]}
-                          className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2"
-                        >
-                          <img src={option.logo} alt={option.name} className="w-6 h-6" />
-                          <span className="text-sm md:text-lg border-none">{option.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : null
-            }
-          </div>
-        </div> */}
-        
-        {/* Button */}
-        {/* <div className="w-full flex justify-center  my-4">
-          <button className={`rounded-lg w-40 p-2 ${!isDisabled ? 'cursor-pointer bg-slate-400 text-slate-900' : 'cursor-default bg-slate-800 text-slate-50'}`}
-            onClick={() => [setClicked(true), setDisabled(true)]}
-            disabled={isDisabled ? true : false}>
-            Display
-          </button>
-        </div> */}
+         </div>        
       </div>    
       {
         isLoaded ?         
-          <div className="w-[90%] mx-auto">  {/* league info */}
+          <div className="w-fullmx-auto">  {/* league info */}
             <div className="flex justify-center bg-gradient-to-r from-slate-300 via-slate-500 to-slate-400 rounded-lg p-4 my-4">
               <div className="flex justify-start items-center w-[15%] mx-2">
                 <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
@@ -165,9 +109,9 @@ export default function League() {
               </div>
             </div>
             {/* seasons dropdown  */}
-            <div className="flex justify-center items-center space-x-3 bg-slate-50 my-4 py-3">
+            <div className="flex justify-center items-center space-x-3 bg-slate-50 my-4 py-3 rounded-lg">
               <span className="w-30 border-none text-slate-900">Select Season</span>
-              <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e) => [handleSelectedSeason(e),console.log('yyyy',selectedSeason)
+              <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-28" onChange={(e) => [handleSelectedSeason(e),console.log('yyyy',selectedSeason)
               ]} value={selectedSeason}>
                 {
                   seasons().map((season, index) => {
@@ -185,7 +129,7 @@ export default function League() {
       }
 
       {        
-          <div className="bg-slate-50 rounded-lg p-2 my-2 sm:my-4">
+          <div className="rounded-lg p-2 my-2 sm:my-4">
             { 
             selectedleague && selectedSeason ? (
               activeTab === 0 ? (

@@ -14,12 +14,12 @@ export default function Home(){
             </div>
             <div className='flex flex-col sm:flex-row sm:justify-between w-full'>
                 <News />
-                <div className='w-full sm:w-[90%] mx-auto'>
+                {/* <div className='w-full sm:w-[90%] mx-auto'> */}
                     {/*
                     featured fixture
                     profile                     
                      */}
-                </div>
+                {/* </div> */}
                 
             </div>
         </div>

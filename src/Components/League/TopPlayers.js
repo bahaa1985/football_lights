@@ -21,7 +21,7 @@ export default function TopPlayers(props) {
   }, [leagueId,season,stats_type]);
 
   return (
-    <div className='w-full md:w-[70%] mx-auto'>
+    <div className='w-full md:w-[80%] lg:w-[70%] mx-auto bg-slate-50'>
         <table className='w-full table-auto'>
         <thead className="sticky top-16 bg-slate-800 text-left text-slate-50">
             <tr className="h-10 divide-x-2 text-center">
@@ -35,7 +35,7 @@ export default function TopPlayers(props) {
         {
           topPlayers?.map((elem, index) => {
           return (
-            <tr key={index} className="bg-slate-100 text-center border-b-slate-400 border-solid border">
+            <tr key={index} className="bg-slate-50 text-center border-b-slate-400 border-solid border">
 
               <td>{index+1}</td>
               <td>

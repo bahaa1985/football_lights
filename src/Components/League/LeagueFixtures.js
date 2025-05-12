@@ -29,7 +29,7 @@ export default function LeagueFixtures(props) {
       
     }
     fetchData();
-  }, [league,season,filteredFixtures]);
+  }, [league,season]);
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
