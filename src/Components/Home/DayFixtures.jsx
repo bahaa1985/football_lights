@@ -7,6 +7,7 @@ import "react-calendar/dist/Calendar.css";
 import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
 import Tabs from '../Tools/Tabs.jsx';
+import getLocalLabels from "../../Api/Localization.js";
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -35,6 +36,9 @@ export default function DayFixtures() {
   const teams = getCookie("prefered_teams");
 
   useEffect(() => {
+
+    getLocalLabels()
+
     async function fetchFixtures() {
       const date_response = await groupDateFixtures(selectedDate);
       const teams_response = await getPromisedTeamFixtures(selectedDate);
@@ -52,6 +56,8 @@ export default function DayFixtures() {
         setDeviceWidth(window.innerWidth);
       })
     }
+    //
+    
     // console.log("ty", dateFixtures);
   }, [selectedDate]);
 
