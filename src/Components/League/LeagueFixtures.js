@@ -60,31 +60,47 @@ export default function LeagueFixtures(props) {
   }
 
   return (
-    <div className="w-full sm:w-[90%] lg:w-[75%] mx-auto">
-      {
-        isLoaded ? 
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-4 mt-6">
+      {isLoaded ? (
         <Fragment>
-          <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">Loading ....</div>
-          <div className="w-full flex flex-col sm:flex-row items-center sm:justify-start space-x-2 flex-wrap my-2">
-            <span className="border-none">{getTranslation('Filter By',language_cookie.lang)}</span>
-            <select  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e)=>filterByGameWeek(e)}>
-              <option value="">{rounds[0]?.includes('Regular Season') ? getTranslation('Select GameWeek',language_cookie.lang) : getTranslation('Select Round',language_cookie.lang)}</option>
-              {
-                    rounds.map((round,index)=>{
-                      return(
-                        <option key={index} value={round}>{round.includes('Regular Season') ? round.replace('Regular Season','GameWeek') : round}</option>
-                      )
-                    })
-              }
-            </select>
-            <span className="border-none">{getTranslation('or',language_cookie.lang)}</span>
-            <input  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" type="text" placeholder={getTranslation("Enter Team Name",language_cookie.lang)} onChange={(e)=>filterByTeam(e)} />
+          <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4">
+            <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+              <span className="font-semibold text-gray-700">{getTranslation('Filter By', language_cookie.lang)}</span>
+              <select
+                className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+                onChange={filterByGameWeek}
+              >
+                <option value="">
+                  {rounds[0]?.includes('Regular Season')
+                    ? getTranslation('GameWeek', language_cookie.lang)
+                    : getTranslation('Round', language_cookie.lang)}
+                </option>
+                {rounds.map((round, index) => (
+                  <option key={index} value={round}>
+                    {round.includes('Regular Season')
+                      ? round.replace('Regular Season', 'GameWeek')
+                      : round}
+                  </option>
+                ))}
+              </select>
+              <span className="text-gray-500">{getTranslation('or', language_cookie.lang)}</span>
+              <input
+                className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+                type="text"
+                placeholder={getTranslation('Enter Team Name', language_cookie.lang)}
+                onChange={filterByTeam}
+              />
+            </div>
           </div>
-          <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
+          <div className="bg-gray-50 rounded-lg shadow-inner p-2">
+            <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
+          </div>
         </Fragment>
-        :
-        <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">Loading ....</div>
-      }
+      ) : (
+        <div className="flex justify-center items-center h-40">
+          <span className="text-blue-500 font-semibold text-lg">Loading ...</span>
+        </div>
+      )}
     </div>
   );
 }

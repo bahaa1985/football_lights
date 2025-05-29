@@ -18,11 +18,11 @@ function Favourites() {
                     leagues.map((league,index)=>{
                         return(
                             <div key={index} className='w-full mt-1'>
-                                <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/league/${league.id}/${league.season}`}>
+                                <NavLink className='flex flex-row justify-start items-center gap-2' to={`/league/${league.id}/${league.season}`}>
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
                                     <div className='text-sm lg:text-lg'>
                                         {
-                                            getLeagueTranslationByCountry(league.country || 'England',league.name) || league.name
+                                            getLeagueTranslationByCountry(league.country,league.name) || league.name
                                         }
                                     </div>
                                 </NavLink>

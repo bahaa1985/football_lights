@@ -57,7 +57,7 @@ function FixtureRow(props) {
 
             {fixtures[elem].map((elem, i) => {
               return (
-                <div key={i} className="w-full lg:w-[80%] mx-auto my-1 shadow-md">
+                <div key={i} className="w-full lg:w-[90%] mx-auto my-1 shadow-md">
                   {
                     type === "fav_teams_matches" ?
                       <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg">

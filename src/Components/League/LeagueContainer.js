@@ -8,6 +8,7 @@ import { getLeagues } from "../../Api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
+import { getLeagueTranslationByCountry } from "../../leagues.js";
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);
@@ -32,7 +33,7 @@ export default function League() {
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   
-  const language_cookie = getCookie('language') || 'en';
+  const lang = getCookie('language').lang || 'en';
 
   useEffect(() => {
     // if (isClicked) {
@@ -67,7 +68,7 @@ export default function League() {
      
       <div className="flex flex-row justify-start items-center gap-2 w-full my-4 bg-slate-50 rounded-lg p-2">
          {/* Leagues dropdown */}
-         <label className="w-fit">Your favourite leagues</label>
+         <label className="w-fit">{getTranslation('Your Favourite Leagues',lang)}</label>
          <div className="flex flex-row justify-start gap-2 items-center w-full sm:w-[50%] rounded-lg border border-solid border-slate-400">          
           {leagues.map((league, index) => (
               <div
@@ -91,7 +92,7 @@ export default function League() {
                 <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
               </div>
               <div className="w-[85%] mx-2">
-                <div className="flex flex-row justify-start items-center space-x-2">
+                <div className="flex flex-row justify-start items-center gap-2">
                   <span className=" text-[30px] border-none">{leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}</span>
                   <Favourite elem_id={leagueInfo?.league.id} cookie_name={'prefered_leagues'}
                     obj={
@@ -106,13 +107,15 @@ export default function League() {
                 </div>
                 <div className="flex justify-start space-x-2">
                   <img className="w-16 h-16 rounded" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
-                  <span className="w-auto my-auto text-[20px] border-none">{leagueInfo?.country.name}</span>
+                  <span className="w-auto my-auto text-[20px] border-none">
+                        {getLeagueTranslationByCountry(leagueInfo?.country.name,lang)}
+                  </span>
                 </div>
               </div>
             </div>
             {/* seasons dropdown  */}
             <div className="flex justify-center items-center space-x-3 bg-slate-50 my-4 py-3 rounded-lg">
-              <span className="w-30 border-none text-slate-900">{getTranslation('Select Season',language_cookie.lang)}</span>
+              <span className="w-30 border-none text-slate-900">{getTranslation('Select Season',lang)}</span>
               <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-28" onChange={(e) => [handleSelectedSeason(e)]} value={selectedSeason}>
                 {
                   seasons().map((season, index) => {
@@ -130,7 +133,7 @@ export default function League() {
       }
 
       {        
-          <div className="rounded-lg p-2 my-2 sm:my-4">
+          <div className="p-2 my-2 sm:my-4 bg-white rounded-lg shadow-md">
             { 
             selectedleague && selectedSeason ? (
               activeTab === 0 ? (
