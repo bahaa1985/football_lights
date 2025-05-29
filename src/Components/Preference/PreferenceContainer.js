@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import Pagination from "./Pagination.js";
 import { getCookie, setCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
@@ -54,6 +55,8 @@ export default function Preferences(params) {
     }
     
   }
+
+  const lang= getCookie("language").lang || "en";
   //use Effect:
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -73,7 +76,7 @@ export default function Preferences(params) {
   return (
     <div className="w-full sm:w-[90%] relative top-20 left-0 h-full rounded-lg">
       <div>
-        <label for="language">Choose a language:</label>
+        <label for="language">{getTranslation('Choose a Language',lang)}</label>
         <select id="language" name="language" className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e) => handleLanguage(e.target.value)} defaultValue={language}>
           <option key={0} value="en">English</option>
           <option key={1} value="fr">Français</option>
@@ -89,32 +92,32 @@ export default function Preferences(params) {
         {/* search teams */}
         <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%]">
           <div className="w-full text-left flex justify-between p-2">
-            <input type="text" ref={searchLeagueInput} className="outline-none rounded-md pl-1" placeholder="type country or league name" />
+            <input type="text" ref={searchLeagueInput} className="outline-none rounded-md pl-1" placeholder={getTranslation("Enter Country Or League Name",lang)} />
             <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50"
               onClick={() =>setSearchLeague(searchLeagueInput.current.value)}>
-              Search
+              {getTranslation('Search',lang)}
             </button>
             </div>
             {
               leagues?
               <Pagination type={'league'} source={leagues}/>
-              :<p>No leagues available</p>
+              :<p>{getTranslation('No Leagues Available',lang)}</p>
             }
         </div>
         <br className="border-b border-black"/>
         {/* search teams */}
         <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%] ">
               <div className="w-full flex justify-between text-left p-2">
-                <input type="text" ref={searchTeamInput} className="outline-none rounded-md pl-1" placeholder="type country or team name" />
+                <input type="text" ref={searchTeamInput} className="outline-none rounded-md pl-1" placeholder={getTranslation('Enter Country Or Team Name',lang)} />
                 <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50" 
                 onClick={() => setSearchTeam(searchTeamInput.current.value)}>
-                  Search
+                  {getTranslation('Search',lang)}
                 </button>
               </div>
               {
                 teams?
                 <Pagination type={'teams'} source={teams} />
-                :<p>No teams available</p>
+                :<p>{getTranslation('No Teams Available',lang)}</p>
               }
         </div>      
       </div>

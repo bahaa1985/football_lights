@@ -2,6 +2,8 @@ import { Fragment, React } from "react";
 import { useState, useEffect } from "react";
 import { groupLeagueFixtures } from "../../Api/Fixtures.js";
 import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
+import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 import FixtureRow from "../Tools/FixtureRow.jsx";
 
@@ -30,6 +32,8 @@ export default function LeagueFixtures(props) {
     }
     fetchData();
   }, [league,season]);
+
+  const language_cookie = getCookie('language') || 'en';
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
@@ -62,9 +66,9 @@ export default function LeagueFixtures(props) {
         <Fragment>
           <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">Loading ....</div>
           <div className="w-full flex flex-col sm:flex-row items-center sm:justify-start space-x-2 flex-wrap my-2">
-            <span className="border-none">Filter by</span>
+            <span className="border-none">{getTranslation('Filter By',language_cookie.lang)}</span>
             <select  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e)=>filterByGameWeek(e)}>
-              <option value="">{rounds[0]?.includes('Regular Season') ? 'Select GameWeek' : 'Select Round'}</option>
+              <option value="">{rounds[0]?.includes('Regular Season') ? getTranslation('Select GameWeek',language_cookie.lang) : getTranslation('Select Round',language_cookie.lang)}</option>
               {
                     rounds.map((round,index)=>{
                       return(
@@ -73,8 +77,8 @@ export default function LeagueFixtures(props) {
                     })
               }
             </select>
-            <span className="border-none">or</span>
-            <input  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" type="text" placeholder="Enter team name" onChange={(e)=>filterByTeam(e)} />
+            <span className="border-none">{getTranslation('or',language_cookie.lang)}</span>
+            <input  className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" type="text" placeholder={getTranslation("Enter Team Name",language_cookie.lang)} onChange={(e)=>filterByTeam(e)} />
           </div>
           <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
         </Fragment>

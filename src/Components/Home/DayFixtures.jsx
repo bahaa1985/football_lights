@@ -8,6 +8,8 @@ import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
 import Tabs from '../Tools/Tabs.jsx';
 import getLocalLabels from "../../Api/Localization.js";
+import { getAllTranslations, getTranslation } from "../../multi_language_translations.js";
+import { getLeagueTranslationByCountry } from "../../leagues.js";
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -34,10 +36,12 @@ export default function DayFixtures() {
 
   const leagues = getCookie("prefered_leagues");
   const teams = getCookie("prefered_teams");
+  const language = getCookie('language') || 'en';
 
+  const labels = getAllTranslations(language.lang);
+  console.log('labels',labels);
+  
   useEffect(() => {
-
-    getLocalLabels()
 
     async function fetchFixtures() {
       const date_response = await groupDateFixtures(selectedDate);
@@ -56,9 +60,6 @@ export default function DayFixtures() {
         setDeviceWidth(window.innerWidth);
       })
     }
-    //
-    
-    // console.log("ty", dateFixtures);
   }, [selectedDate]);
 
   function handleSelectedTab(index){
@@ -66,53 +67,47 @@ export default function DayFixtures() {
   }
 
   return (
-    <div className="w-full sm:w-[65%] h-auto sm:h-[450px] overflow-auto mx-auto my-2 bg-slate-50 rounded-md">
+    <div className="w-full sm:w-[65%] mx-auto my-2 bg-slate-50 rounded-md">
       {isLoaded ? (
-        ((
-          <div className="absolute hidden left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
-            Loading ....
-          </div>
-        ),
         (
           <div className="w-full mx-auto rounded-md bg-slate-50 p-2">
-            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-md">Fixtures</div>
+            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-md">
+              {getTranslation('Fixtures',language.lang) || 'Fixtures'}
+            </div>
             {/* date picker */}
-            <div>
+            <div className="flex justify-center my-4">
               <input
                 type="date"
                 onChange={(e) => setSelectedDate(e.target.value)}
                 value={selectedDate}
+                className="border border-slate-300 rounded px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition"
               />
             </div>
-
-            
             <div className="w-full">
-                
-                <Tabs tabs={['Leagues','Teams']} activeTab={activeTab} onTabChange={handleSelectedTab}/>
-                
-                <div className="w-full">
-                    {
-                        activeTab === 0 ? 
-                            dateFixtures ? 
-                                <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
-                                : 
-                                <div className="flex justify-center items-center">
-                                    No current fixtures
-                                </div>
-                        :
-                        activeTab === 1 ?
-                            teamsFixtures.length>0 ? 
-                                <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
-                                : 
-                                <div className="flex justify-center items-center">
-                                No current fixtures
-                                </div>  
-                        :null                    
-                    }
-                </div>
+              <Tabs tabs={['Leagues','Teams']} activeTab={activeTab} onTabChange={handleSelectedTab}/>
+              <div className="w-full h-auto sm:h-96 sm:overflow-y-scroll">
+                {
+                  activeTab === 0 ? 
+                    dateFixtures? 
+                      <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
+                      : 
+                      <div className="flex justify-center items-center">
+                        { getTranslation('No Current Fixtures',language.lang) }
+                      </div>
+                  :
+                  activeTab === 1 ?
+                    teamsFixtures.length>0 ? 
+                      <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
+                      : 
+                      <div className="flex justify-center items-center">
+                        {getTranslation('No Current Fixtures',language.lang) || 'No Current Fixtures' }
+                      </div>  
+                  :null                    
+                }
+              </div>
             </div>
           </div>
-        ))
+        )
       ) : (
         <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
           Loading ....

@@ -3,6 +3,8 @@ import getStatistics from "../../Api/Statistics.js";
 import getPlayers from "../../Api/Players.js";
 import PlayerStats from "./PlayerStats.js";
 import { useState,useMemo } from "react";
+import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 function Statistics(props){
 
@@ -31,6 +33,8 @@ function Statistics(props){
     },[fixtureId])
 
     let total=0;
+
+    const lang = getCookie('language').lang || 'en';
 
     return(
          
@@ -71,7 +75,7 @@ function Statistics(props){
                                </div>                                                            
                            </div>
                         </div>
-                        <div>{item.type.replace('_',' ')}</div>
+                        <div>{getTranslation(item.type.replace('_',' '),lang)}</div>
                     </div>
                 )
             }),

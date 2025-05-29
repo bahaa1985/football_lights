@@ -7,6 +7,7 @@ import Tabs from "../Tools/Tabs.jsx";
 import { getLeagues } from "../../Api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);
@@ -31,6 +32,7 @@ export default function League() {
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   
+  const language_cookie = getCookie('language') || 'en';
 
   useEffect(() => {
     // if (isClicked) {
@@ -110,9 +112,8 @@ export default function League() {
             </div>
             {/* seasons dropdown  */}
             <div className="flex justify-center items-center space-x-3 bg-slate-50 my-4 py-3 rounded-lg">
-              <span className="w-30 border-none text-slate-900">Select Season</span>
-              <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-28" onChange={(e) => [handleSelectedSeason(e),console.log('yyyy',selectedSeason)
-              ]} value={selectedSeason}>
+              <span className="w-30 border-none text-slate-900">{getTranslation('Select Season',language_cookie.lang)}</span>
+              <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-28" onChange={(e) => [handleSelectedSeason(e)]} value={selectedSeason}>
                 {
                   seasons().map((season, index) => {
                     return (

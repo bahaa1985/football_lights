@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faClock, faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
-
+import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
+import  {getLeagueTranslationByCountry, getRoundTranslation} from '../../leagues.js';
 function FixtureRow(props) {
   const fixtures = props.fixturesSource;
+  console.log("fixtures",fixtures);
+  
   const type = props.type;
 
   const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
@@ -16,25 +19,37 @@ function FixtureRow(props) {
   }) 
   },[])
 
+  const lang = getCookie('language').lang || 'en';
+
   return Object.keys(fixtures).map((elem, index) => {
     return (
       <div key={index} className="block w-full">
         {
           <>
             {
-              // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
-              type === "day_matches" ? (
-                <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg">
+                // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
+                type === "day_matches" ? (
+                <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg shadow-md border border-slate-300">
                   <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>
-
                   <NavLink  className="my-auto ml-2"  to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
-                    <span className="text-left border-none">{fixtures[elem][0]?.league.round}</span>
+                  <span className="text-left border-none font-semibold">
+                    {lang === 'ar' ? 
+                    getLeagueTranslationByCountry(fixtures[elem][0]?.league.country,fixtures[elem][0]?.league.name) :
+                    fixtures[elem][0]?.league.name
+                    }
+                  </span>
                   </NavLink>
+                   <span className="border-none font-medium"> {
+                    lang === 'ar' ?
+                    getRoundTranslation(fixtures[elem][0]?.league.round)
+                    : fixtures[elem][0]?.league.round
+                  }</span>
                 </div>
-              ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
+                ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
                 <div className="w-full bg-slate-800 text-slate-50 p-2">
-                  {fixtures[elem][0]?.league.round.includes('Regular Season')
-                    ? "Game Week " + parseInt(index + 1)
+                  {
+                    fixtures[elem][0]?.league.round.includes('Regular Season')
+                    ? lang === 'ar' ? "الأسبوع " + parseInt(index + 1) : "Game Week " + parseInt(index + 1)
                     : fixtures[elem][0]?.league.round}
                 </div>
               ) : null
@@ -42,15 +57,20 @@ function FixtureRow(props) {
 
             {fixtures[elem].map((elem, i) => {
               return (
-                <div key={i} className="w-full lg:w-[80%] mx-auto">
+                <div key={i} className="w-full lg:w-[80%] mx-auto my-1 shadow-md">
                   {
                     type === "fav_teams_matches" ?
                       <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg">
                         <img  alt=""  loading="lazy"  src={elem.league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>  
                         <NavLink  className="my-auto ml-2"  to={`/league/${elem.league.id}/${elem.league.season}`}>
-                          <span className="text-left border-none">{elem.league.name}</span>
+                          <span className="text-left border-none">
+                            {
+                              lang === 'ar' ? getLeagueTranslationByCountry(elem.league.country,elem.league.name) 
+                                : elem.league.name
+                            }
+                          </span>
                         </NavLink>
-                        <span className="border-none"> {elem.league.round}</span>
+                        <span className="border-none"> {getRoundTranslation(elem.league.round,lang)}</span>
                       </div>
                       :null
                   }
@@ -111,13 +131,14 @@ function FixtureRow(props) {
 
                       </div>
                   {/* Fixture Teams */}
-                  <div  className="flex justify-center space-x-2 mx-auto my-2 border-b border-b-slate-600 border-solid">                                                            
+                  <NavLink to={`/fixture/${elem?.fixture?.id}`} state={{fixture_data:elem}}>
+                  {/* <div  className="w-[95%] flex justify-center space-x-2 mx-auto my-2">                                                             */}
                     <div
-                      className={`w-[90%] my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
+                      className={`w-[95%] my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}
-                      <div className="w-[90%] md:w-[48%] flex flex-row justify-start gap-2 lg:justify-between lg:gap-0 items-center my1">
+                      <div className="w-full md:w-[48%] flex flex-row justify-center gap-2 lg:justify-between lg:gap-0 items-center my1">
                         <img
                           src={elem.teams.home.logo}
                           loading="lazy"
@@ -138,7 +159,7 @@ function FixtureRow(props) {
                       </div>
 
                       {/* Away team */}
-                      <div className={`w-[90%] md:w-[48%] flex flex-row justify-start gap-2 lg:justify-between lg:gap-0 items-center my-1 ${deviceWidth > 600 ? "flex-row-reverse" : null}`}
+                      <div className={`w-full md:w-[48%] flex flex-row justify-center gap-2 lg:justify-between lg:gap-0 items-center my-1 ${deviceWidth > 600 ? "flex-row-reverse" : null}`}
                       >
                         <img
                           src={elem.teams.away.logo}
@@ -160,13 +181,14 @@ function FixtureRow(props) {
                       </div>                      
                     </div>
                     {/* Details button */}
-                    <div className="flex justify-start items-center w-[10%]">
+                    {/* <div className="flex justify-end items-center w-[10%]">
                         <NavLink className="p-1"
                         to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
-                          <FontAwesomeIcon icon={faAnglesRight} size="1x" />                          
+                          <FontAwesomeIcon icon={lang === 'ar' ? faAnglesLeft :  faAnglesRight} size="1x" />                          
                         </NavLink>  
-                      </div>                    
-                  </div>
+                      </div>                     */}
+                  {/* </div> */}
+                  </NavLink>
                 </div>
                 
               );

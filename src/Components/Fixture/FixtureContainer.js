@@ -7,6 +7,8 @@ import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
 import  Tabs from '../Tools/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCookie } from '../../Api/cookie.js';
+import { getTranslation } from '../../multi_language_translations.js';
 
 export const TeamsContext= createContext();
 
@@ -16,6 +18,7 @@ function Fixture(){
     const fixtureId=params.fixtureId;
     const fixture_data = useLocation().state?.fixture_data;
     const [tab, setTab] = useState(0);
+    const lang = getCookie('language').lang || 'en';
 
     const handleTabChange = (index) => {
       setTab(index);
@@ -41,7 +44,7 @@ function Fixture(){
            {/* score table */}
           <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 md:space-x-0 w-full md:w-[70%] lg:w-[50%] items-center mx-auto py-2 
            text-sm sm:text-lg border-b sm:border-none border-solid border-slate-400">
-            <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
+            <NavLink className='flex flex-row justify-start space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
               <img className="size-6 sm:size-10" alt={fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
               <span className='border-none ml-0'>{fixture_data.teams?.home?.name}</span>
             </NavLink>  
@@ -50,7 +53,7 @@ function Fixture(){
               <span className="size-6 sm:size-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.away}</span>
             </div>
             
-            <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
+            <NavLink className='flex flex-row justify-end space-x-2 items-center w-[40%]' to={`/team/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
               <span className='border-none mr-0'>{fixture_data.teams?.away?.name}</span>
               <img className="size-6 sm:size-10" alt={fixture_data.teams?.away?.name} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
@@ -108,7 +111,7 @@ function Fixture(){
 
 <div className='w-[90%] sm:w-96 mx-auto  border-b border-solid border-slate-800 text-center'>
   {/* tabs */}
-  <Tabs tabs={['Line Up','Events','Statistics']} activeTab={tab} onTabChange={handleTabChange}  />
+  <Tabs tabs={[getTranslation('Line Up',lang),getTranslation('Events',lang),getTranslation('Statistics',lang)]} activeTab={tab} onTabChange={handleTabChange}  />
   
 </div>
         <div class="w-[90%] mx-auto">

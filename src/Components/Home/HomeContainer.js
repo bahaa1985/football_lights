@@ -2,17 +2,20 @@ import React from 'react'
 import Favourites from "./Favourites.js";
 import DayFixtures from './DayFixtures.jsx';
 import News from './News.jsx';
+import { getCookie } from '../../Api/cookie.js';
 
 export default function Home(){
     
+    const language_cookie = getCookie('language') || 'en';
 
     return(
-        <div className='relative top-20 w-[90%] left-20 -translate-x-20 mx-auto'>
-            <div className='flex flex-col sm:flex-row sm:justify-between w-full'>
+        <div className={`relative top-20 w-[90%] left-20 -translate-x-20 mx-auto`}>
+            <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>
                 <Favourites/>
                 <DayFixtures />
             </div>
-            <div className='flex flex-col sm:flex-row sm:justify-between w-full'>
+            {/* <br/> */}
+            <div className='flex flex-col sm:flex-row sm:justify-between w-full my-2'>
                 <News />
                 {/* <div className='w-full sm:w-[90%] mx-auto'> */}
                     {/*

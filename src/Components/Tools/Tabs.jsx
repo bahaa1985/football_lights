@@ -1,6 +1,8 @@
 // Tabs.jsx
 import {React} from 'react';
-
+import { getCookie } from '../../Api/cookie';
+import { getTranslation } from '../../multi_language_translations';
+const language_cookie = getCookie('language') || 'en';
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className='w-full sm:w-fit mx-auto flex flex-row justify-center space-x-2 '>
@@ -15,7 +17,7 @@ import {React} from 'react';
             onTabChange(index);
           }}
         >
-          {tab}
+          {getTranslation(tab,language_cookie.lang) || tab}
         </div>
       ))}
     </div>

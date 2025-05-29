@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
+import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;
   const season = props.season;
   const stats_type = props.type;
   const [topPlayers, setTopPlayers] = useState([]);
+  const lang=getCookie('language').lang || 'en';
 
   useEffect(() => {
     if (stats_type === "Goals") {
@@ -25,10 +28,10 @@ export default function TopPlayers(props) {
         <table className='w-full table-auto'>
         <thead className="sticky top-16 bg-slate-800 text-left text-slate-50">
             <tr className="h-10 divide-x-2 text-center">
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Team</th>
-                <th>{stats_type}</th>                    
+                <th>{getTranslation('Rank',lang)}</th>
+                <th>{getTranslation('Player',lang)}</th>
+                <th>{getTranslation('Team',lang)}</th>
+                <th>{getTranslation(stats_type,lang)}</th>                    
             </tr>
         </thead>
         <tbody>

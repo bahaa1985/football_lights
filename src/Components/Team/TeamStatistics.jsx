@@ -1,5 +1,7 @@
 import React, { useState, useMemo, memo } from 'react';
 import { getTeamStatistics } from '../../Api/TeamDetails.js';
+import { getCookie } from '../../Api/cookie.js';
+import { getTranslation } from '../../multi_language_translations.js';
 
 function TeamStatistics({ team, league, season }) {
   const [teamStatistics, setTeamStatistics] = useState({});
@@ -29,9 +31,11 @@ function TeamStatistics({ team, league, season }) {
     return () => (isMount = false);
   }, [team, season, league]);
 
+  const lang = getCookie('language').lang || 'en';
+
   const Section = ({ title, children }) => (
     <div className="my-8">
-      <h2 className="text-center bg-slate-800 text-white py-2 text-lg font-bold rounded-md">{title}</h2>
+      <h2 className="text-center bg-slate-800 text-white py-2 text-lg font-bold rounded-md">{getTranslation(title,lang)}</h2>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-center mt-2 border border-slate-700 rounded-md overflow-hidden">
           {children}
@@ -62,16 +66,16 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Fixtures">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
           {Object.entries(teamStatistics.fixtures || {}).map(([key, value], index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium capitalize">{key}</TableCell>
+              <TableCell className="font-medium capitalize">{getTranslation(key,lang)}</TableCell>
               {Object.values(value).map((val, idx) => (
                 <TableCell key={idx}>{val}</TableCell>
               ))}
@@ -84,10 +88,10 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Goals For">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
@@ -95,7 +99,7 @@ function TeamStatistics({ team, league, season }) {
             Object.entries(teamStatistics.goals.for || {}).map(([key, value], index) => (
               key === 'total' || key === 'average' ? (
                 <TableRow key={index}>
-                  <TableCell className="font-medium capitalize">{key}</TableCell>
+                  <TableCell className="font-medium capitalize">{getTranslation(key,lang)}</TableCell>
                   {Object.values(value).map((val, idx) => (
                     <TableCell key={idx} className="capitalize">{val}</TableCell>
                   ))}
@@ -110,10 +114,10 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Goals Against">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>          
@@ -121,7 +125,7 @@ function TeamStatistics({ team, league, season }) {
             Object.entries(teamStatistics.goals.against || {}).map(([key, value], index) => (
               key === 'total' || key === 'average' ? (
                 <TableRow key={index}>
-                  <TableCell className="font-medium capitalize">{key}</TableCell>
+                  <TableCell className="font-medium capitalize">{getTranslation(key,lang)}</TableCell>
                   {Object.values(value).map((val, idx) => (
                     <TableCell key={idx} className="capitalize">{val}</TableCell>
                   ))}
@@ -136,16 +140,16 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Biggest Results">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
+           <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
           {Object.entries(teamStatistics.biggest || {}).map(([key, value], index) => (
             (key === "wins" || key === "loses") && (
               <TableRow key={index}>
-                <TableCell className="font-medium capitalize">{key}</TableCell>
+                <TableCell className="font-medium capitalize">{getTranslation(key,lang)}</TableCell>
                 {Object.values(value).map((val, idx) => (
                   <TableCell key={idx}>{val}</TableCell>
                 ))}
@@ -159,16 +163,16 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Biggest Goals">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
-            <TableCell>Total</TableCell>
+           <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
           {Object.entries(teamStatistics.biggest?.goals || {}).map(([key, value], index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium capitalize">{key}</TableCell>
+              <TableCell className="font-medium capitalize">{getTranslation(key,lang)}</TableCell>
               {Object.values(value).map((val, idx) => (
                 <TableCell key={idx}>{val}</TableCell>
               ))}
@@ -181,10 +185,10 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Clean Sheet">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Home</TableCell>
-            <TableCell>Away</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
@@ -201,16 +205,16 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Penalty">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Scored</TableCell>
-            <TableCell>Missed</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('Type',lang)}</TableCell>
+            <TableCell>{getTranslation('Home',lang)}</TableCell>
+            <TableCell>{getTranslation('Away',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
           {Object.entries(teamStatistics.penalty || {}).map(([key, value], index) => (
             <TableRow key={index}>
-              <TableCell className="capitalize">{key}</TableCell>
+              <TableCell className="capitalize">{getTranslation(key,lang)}</TableCell>
               {key !== 'total'
                 ? Object.values(value).map((val, idx) => (
                     <TableCell key={idx}>{val}</TableCell>
@@ -225,15 +229,13 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Cards">
         <TableHeader>
           <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Yellow</TableCell>
-            <TableCell>Red</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell>{getTranslation('yellow',lang)}</TableCell>
+            <TableCell>{getTranslation('red',lang)}</TableCell>
+            <TableCell>{getTranslation('total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>
           <TableRow>
-            <TableCell>Cards</TableCell>
             <TableCell>{yellowCards}</TableCell>
             <TableCell>{redCards}</TableCell>
             <TableCell>{yellowCards + redCards}</TableCell>

@@ -1,6 +1,8 @@
 import React,{ ReactDOM } from 'react'
 import { useState,useEffect} from 'react'
 import getStandings from '../../Api/Standings.js'
+import { getCookie } from "../../Api/cookie.js";
+import { getTranslation } from "../../multi_language_translations.js";
 
 function Standings(props){    
     
@@ -11,6 +13,8 @@ function Standings(props){
     const [standingsGroups,setStandingsGroups]= useState([]);
     const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
     const [description,setDesccription] = useState([])
+
+    const lang= getCookie('language').lang || 'en';
 
     useEffect(()=>{              
         getStandings(league,season).then((result)=>{
@@ -36,7 +40,7 @@ function Standings(props){
     },[])
     
     return(
-        <div className='w-[90%] lg:w-[70%] mx-auto'>
+        <div className='w-full lg:w-[70%] mx-auto'>
 
             {/* Qualifiactions colors indicators */}
             <div className='w-full flex flex-row justify-start items-center space-x-3 px-2 my-1'>
@@ -75,24 +79,23 @@ function Standings(props){
             <table className='relative top-0 w-full table-auto'>
                 <thead className='sticky top-16'>
                     <tr className="bg-slate-800 text-slate-50 text-center divide-x-2">
-                        <td className='p-2'>Rank</td>
-                        <td className='p-2'>Team</td>
-                        <td className='p-2'>Play</td>
+                        <td className='p-2'>{getTranslation('Rank',lang)}</td>
+                        <td className='p-2'>{getTranslation('Team',lang)}</td>
+                        <td className='p-2'>{getTranslation('Play',lang)}</td>
                         {
                             deviceWidth > 600 ?
                             <>
-                                <td className='p-2'>Win</td>
-                                <td className='p-2'>Draw</td>
-                                <td className='p-2'>Lose</td>
-                                <td className='p-2'>GF</td>
-                                <td className='p-2'>GA</td>
+                                <td className='p-2'>{getTranslation('Win',lang)}</td>
+                                <td className='p-2'>{getTranslation('Draw',lang)}</td>
+                                <td className='p-2'>{getTranslation('Lose',lang)}</td>
+                                <td className='p-2'>{getTranslation('GF',lang)}</td>
+                                <td className='p-2'>{getTranslation('GA',lang)}</td>
                             </>                            
                             :
-                            <>
-                                <td className='p-2'>GD</td>
-                            </>
+                            null
                         }
-                        <td className='p-2'>Points</td>                      
+                        <td className='p-2'>{getTranslation('GD',lang)}</td>
+                        <td className='p-2'>{getTranslation('Points',lang)}</td>                      
                     </tr>
                 </thead>
                 <tbody>
@@ -137,8 +140,9 @@ function Standings(props){
                                                     <td className='p-2'>{elem.all.goals.against}</td>
                                                 </>
                                                 :
-                                                <td className='p-2'>{elem.all.goals.for - elem.all.goals.against}</td>
+                                               null
                                             }
+                                            <td className='p-2'>{elem.all.goals.for - elem.all.goals.against}</td>
                                             <td className='p-2'>{elem.points}</td>
                                         </tr> 
                                     )

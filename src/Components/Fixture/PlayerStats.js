@@ -126,17 +126,17 @@ function PlayerStats(props) {
 
     function renderStats(source, statKey, statSubKey=null){
         return(
-        <div className={`${clickedTeam !== null ? 'w-full': 'w-[45%]'}`}>
+        <div className={`${'w-full'}`}>
             {
                  source.length > 0 ?
-                source?.map((elem) => {
+                source?.map((elem,index) => {
                     // if (elem[statKey][statSubKey] !== null)
                     return (                       
-                        <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'flex-row  items-center'} 
+                        <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'sm:flex-row justify-between items-center'} 
                                         mx-auto px-1 justify-between space-x-2 w-[90%] 
-                                        ${source.length > 1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
+                                        ${source.length > 1 && index < source.length-1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
                             {/* Player's name and photo */}
-                            <div className = "flex flex-row space-x-2 items-center">
+                            <div className = "flex flex-row space-x-2 items-center ">
                                 <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
                                 <span className='border-none font-semibold'>{elem.player.name}</span>
                             </div>
@@ -165,16 +165,17 @@ function PlayerStats(props) {
     const renderPlayerStats = (title, homeStats, awayStats, statKey, statSubKey=null) => {
         return (
             <div className='w-full mx-auto text-center'>
-                <h3 className='w-full bg-slate-900 text-slate-50 font-bold'>{title}</h3>
+                <h3 className='w-full bg-slate-900 text-slate-50 font-bold rounded-lg p-2'>{title}</h3>
                 {
-                    screenWidth >= 600 ? //that means the screen is wide enough to show both teams
-                    <div className='flex justify-between py-2'>
+                    // screenWidth >= 600 ? //that means the screen is wide enough to show both teams
+                    // <div className='flex justify-between py-2'>
                         
-                        {renderStats(homeStats, statKey, statSubKey)}
+                    //     {renderStats(homeStats, statKey, statSubKey)}
                         
-                        {renderStats(awayStats, statKey, statSubKey)}                    
-                    </div>
-                    :clickedTeam === homeTeam.id ? //at small screens, only the clicked team is shown
+                    //     {renderStats(awayStats, statKey, statSubKey)}                    
+                    // </div>
+                    // :
+                    clickedTeam === homeTeam.id ? //at small screens, only the clicked team is shown
                         renderStats(homeStats, statKey, statSubKey)
                     :renderStats(awayStats, statKey, statSubKey)
                 }
@@ -184,9 +185,9 @@ function PlayerStats(props) {
     
 
     return (
-        <div className='w-full mx-auto'>
+        <div className='w-full sm:w-[70%] mx-auto'>
             {/* teams header */}
-            <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800`}>
+            <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800 my-2`}>
                 <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': ''} `} onClick={()=>setClickedTeam(homeTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
                     <span className='border-none text-slate-50 font-bold'>{teams.home.name}</span>

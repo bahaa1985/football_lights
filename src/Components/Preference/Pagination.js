@@ -53,6 +53,7 @@ function Pagination(props) {
                                                         'id':elem.league.id,
                                                         'name': elem.league.name,
                                                         'logo':elem.league.logo,
+                                                        'country':elem.country.name,
                                                         'season':elem.seasons.at(-1).year,
                                                         'endDate':elem.seasons.at(-1).end
                                                     }
@@ -60,6 +61,7 @@ function Pagination(props) {
                                                     {
                                                         'id':elem.team.id,
                                                         'name':elem.team.name,
+                                                        'country':elem.team.country,
                                                         'logo':elem.team.logo
                                                     }
                                                 } />

@@ -72,17 +72,17 @@ async function getPromisedDateFixtures(dateString) {
   if (dateString !== "") {
     let leagues = getCookie("prefered_leagues");
     if (leagues.length > 0) {
-      let dayArray = [];
-      // for(let i=0;i<leagues.length;i++){
-        let result = await getDateFixtures(39,2024,dateString)       
-        dayArray.push(...result.data.response);
-        dayArray.sort((a, b) => {
+      let fixturesArray = [];
+      for(let i=0;i<leagues.length;i++){
+        let result = await getDateFixtures(leagues[i].id,leagues[i].season,dateString)       
+        fixturesArray.push(...result.data.response);
+        fixturesArray.sort((a, b) => {
           if (a.fixture.status !== "FT" && b.fixture.status === "FT") return -1;
           else if (a.fixture.status === "FT" && b.fixture.status !== "FT")  return 1;
           return 0;
         });
-      // }
-      return dayArray;
+      }
+      return fixturesArray;
     } else {
       return [];
     }
@@ -93,15 +93,19 @@ export async function groupDateFixtures(dateString) {
   let grouped = [];
   try{
     await getPromisedDateFixtures(dateString).then((result) => {
-      result?.reduce((group, elem) => {
-        const title = elem.league.name + " - " + elem.league.round;
-        if (!group[title]) {
-          group[title] = [];
-        }
-        group[title].push(elem);
-        grouped = group;
-        return group;
-      },grouped);
+      grouped = Object.groupBy(result,(elem)=>{
+        return elem.league.name + " - " + elem.league.round;
+      })
+      return grouped;
+      // result?.reduce((group, elem) => {
+      //   const title = elem.league.name + " - " + elem.league.round;
+      //   if (!group[title]) {
+      //     group[title] = [];
+      //   }
+      //   group[title].push(elem);
+      //   grouped = group;
+      //   return group;
+      // },grouped);
     });
   }
   catch(error){
@@ -169,16 +173,19 @@ async function getPromisedLeagueFixtures(leagueId, season) {
 export async function groupLeagueFixtures(leagueId, season) {
   let grouped = [];
   const result = await getPromisedLeagueFixtures(leagueId, season);
-  result?.reduce((group, elem) => {
-    const gw = elem.league.round;
-    if (!group[gw]) {
-      group[gw] = [];
-    }
-    group[gw].push(elem);
+  grouped = Object.groupBy(result , (elem)=>{
+    return elem.league.name + " - " + elem.league.round;
+  })
+  // result?.reduce((group, elem) => {
+  //   const gw = elem.league.round;
+  //   if (!group[gw]) {
+  //     group[gw] = [];
+  //   }
+  //   group[gw].push(elem);
 
-    grouped = group;
-    return group;
-  }, []);
+  //   grouped = group;
+  //   return group;
+  // }, []);
   // console.log("grouped fixtures", grouped);
   return grouped;
 }

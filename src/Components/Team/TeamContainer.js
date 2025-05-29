@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamLeagues } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
+import { getTranslation } from '../../multi_language_translations.js';
 import TeamStatistics from './TeamStatistics.jsx';
 import Favourite from '../Tools/Favourite.jsx';
 
@@ -60,6 +61,8 @@ export default function Team() {
     const memoizedTeamLeagues = useMemo(() => teamLeagues, [teamLeagues]);
     const memoizedTeamSeasons = useMemo(() => teamSeasons, [teamSeasons]);
 
+    const lang = getCookie('language').lang || 'en';
+
     return (
         <div className="relative top-24 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
             {statsLoaded ? (
@@ -81,26 +84,26 @@ export default function Team() {
                         </div>
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
-                                <p className="text-gray-600">Country</p>
+                                <p className="text-gray-600">{getTranslation('Country', lang)}</p>
                                 <p className="font-semibold">{teamInformation?.team?.country}</p>
                             </div>                            
                             <div>
-                                <p className="text-gray-600">Founded</p>
+                                <p className="text-gray-600">{getTranslation('Founded', lang)}</p>
                                 <p className="font-semibold">{teamInformation?.team?.founded}</p>
                             </div>
                             
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
-                                <p className="text-gray-600">Venue</p>
+                                <p className="text-gray-600">{getTranslation('Venue', lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.name}</p>
                             </div> 
                             <div>
-                                <p className="text-gray-600">City</p>
+                                <p className="text-gray-600">{getTranslation('City', lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.city}</p>
                             </div>                           
                             <div>
-                                <p className="text-gray-600">Capacity</p>
+                                <p className="text-gray-600">{getTranslation('Capacity', lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.capacity}</p>
                             </div>
                         </div>
@@ -108,14 +111,14 @@ export default function Team() {
 
                     {/* Season and League Dropdowns */}
                     <div className="bg-slate-100 p-6 rounded-lg shadow-inner mb-8">
-                        <h2 className="text-xl font-bold text-slate-800 mb-4">Select Season and League</h2>
+                        <h2 className="text-xl font-bold text-slate-800 mb-4">{getTranslation('Select Season and League', lang)}</h2>
                         <div className="flex flex-col md:flex-row gap-4">
                             <select
                                 onChange={(e) => setSelectedSeason(parseInt(e.target.value))}
                                 value={selectedSeason}
                                 className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
                             >
-                                <option>Select Season</option>
+                                <option>{getTranslation('Select Season', lang)}</option>
                                 {memoizedTeamSeasons.map((item, index) => (
                                     <option key={index} value={item}>
                                         {item}
@@ -128,7 +131,7 @@ export default function Team() {
                                 value={selectedLeague}
                                 className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
                             >
-                                <option>Select League</option>
+                                <option>{getTranslation('Select League', lang)}</option>
                                 {memoizedTeamLeagues.map((item, index) => (
                                     <option key={index} value={item.league.id}>
                                         {item.league.name}
@@ -140,13 +143,13 @@ export default function Team() {
 
                     {/* Team Statistics */}
                     <div className="bg-slate-100 p-1 md:p-6 rounded-lg shadow-inner">
-                        <h2 className="text-xl font-bold text-slate-800 mb-1">Team Statistics</h2>
+                        <h2 className="text-xl font-bold text-slate-800 mb-1">{getTranslation('Team Statistics', lang)}</h2>
                         <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
                     </div>
                 </>
             ) : (
                 <div className="flex justify-center items-center h-64">
-                    <p className="text-slate-800 text-lg font-semibold">Loading team information...</p>
+                    <p className="text-slate-800 text-lg font-semibold">{getTranslation('Loading team information...', lang)}</p>
                 </div>
             )}
         </div>

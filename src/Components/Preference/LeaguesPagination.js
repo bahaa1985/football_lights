@@ -39,7 +39,7 @@ function LeaguesPagination(props) {
                 })[0];
                 const seasonYear=filteredSeason.year;
                 const endDate=filteredSeason.end; 
-                preferedLeaguesArr.push({'id':elemLeague.league.id,'name':elemLeague.league.name,'logo':elemLeague.league.logo,'season':seasonYear,'endDate':endDate});
+                preferedLeaguesArr.push({'id':elemLeague.league.id,'name':elemLeague.league.name,'logo':elemLeague.league.logo,'country':elemLeague.country.name ,'season':seasonYear,'endDate':endDate});
             }
             else
             {
