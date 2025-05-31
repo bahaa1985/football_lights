@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
 import  {getLeagueTranslationByCountry, getRoundTranslation} from '../../leagues.js';
+import { getTeamByCountry } from "../../teams.js";
 function FixtureRow(props) {
   const fixtures = props.fixturesSource;
   console.log("fixtures",fixtures);
@@ -143,7 +144,7 @@ function FixtureRow(props) {
                           src={elem.teams.home.logo}
                           loading="lazy"
                           className="size-8 sm:size-10"
-                          alt={elem.teams.home.name}
+                          alt={getTeamByCountry(elem.teams.home.country,elem.teams.home.name)}
                         />
 
                         <NavLink
