@@ -46,7 +46,7 @@ function FixtureRow(props) {
                   }</span>
                 </div>
                 ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
-                <div className="w-full bg-slate-800 text-slate-50 p-2">
+                <div className="w-full bg-slate-800 text-slate-50 text-center p-2 rounded-lg">
                   {
                     fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? lang === 'ar' ? "الأسبوع " + parseInt(index + 1) : "Game Week " + parseInt(index + 1)

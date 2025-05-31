@@ -33,7 +33,7 @@ export default function LeagueFixtures(props) {
     fetchData();
   }, [league,season]);
 
-  const language_cookie = getCookie('language') || 'en';
+  const lang = getCookie('language') || 'en';
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
@@ -65,15 +65,15 @@ export default function LeagueFixtures(props) {
         <Fragment>
           <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4">
             <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
-              <span className="font-semibold text-gray-700">{getTranslation('Filter By', language_cookie.lang)}</span>
+              <span className="font-semibold text-gray-700">{getTranslation('Filter By', lang)}</span>
               <select
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
                 onChange={filterByGameWeek}
               >
                 <option value="">
                   {rounds[0]?.includes('Regular Season')
-                    ? getTranslation('GameWeek', language_cookie.lang)
-                    : getTranslation('Round', language_cookie.lang)}
+                    ? getTranslation('GameWeek', lang)
+                    : getTranslation('Round', lang)}
                 </option>
                 {rounds.map((round, index) => (
                   <option key={index} value={round}>
@@ -83,11 +83,11 @@ export default function LeagueFixtures(props) {
                   </option>
                 ))}
               </select>
-              <span className="text-gray-500">{getTranslation('or', language_cookie.lang)}</span>
+              <span className="text-gray-500">{getTranslation('or', lang)}</span>
               <input
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
                 type="text"
-                placeholder={getTranslation('Enter Team Name', language_cookie.lang)}
+                placeholder={getTranslation('Enter Team Name', lang)}
                 onChange={filterByTeam}
               />
             </div>

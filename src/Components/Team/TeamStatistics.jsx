@@ -34,7 +34,7 @@ function TeamStatistics({ team, league, season }) {
   const lang = getCookie('language').lang || 'en';
 
   const Section = ({ title, children }) => (
-    <div className="my-8">
+    <div className="my-4">
       <h2 className="text-center bg-slate-800 text-white py-2 text-lg font-bold rounded-md">{getTranslation(title,lang)}</h2>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-center mt-2 border border-slate-700 rounded-md overflow-hidden">
@@ -61,7 +61,7 @@ function TeamStatistics({ team, league, season }) {
   }
 
   return (
-    <div className="p-1 md:p-4">
+    <div className="p-1 md:px-4 md:py-2">
       {/* Fixtures */}
       <Section title="Fixtures">
         <TableHeader>
@@ -185,7 +185,6 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Clean Sheet">
         <TableHeader>
           <TableRow>
-            <TableCell>{getTranslation('Type',lang)}</TableCell>
             <TableCell>{getTranslation('Home',lang)}</TableCell>
             <TableCell>{getTranslation('Away',lang)}</TableCell>
             <TableCell>{getTranslation('Total',lang)}</TableCell>
@@ -193,9 +192,9 @@ function TeamStatistics({ team, league, season }) {
         </TableHeader>
         <tbody>
           <TableRow>
-            <TableCell>Clean Sheets</TableCell>
+            {/* <TableCell>{getTranslation('Clean Sheet',lang)}</TableCell> */}
             {Object.values(teamStatistics.clean_sheet || {}).map((val, idx) => (
-              <TableCell key={idx}>{val}</TableCell>
+              <TableCell key={idx}>{val}</TableCell> // to not get ckean sheets type 
             ))}
           </TableRow>
         </tbody>
@@ -208,7 +207,7 @@ function TeamStatistics({ team, league, season }) {
             <TableCell>{getTranslation('Type',lang)}</TableCell>
             <TableCell>{getTranslation('Home',lang)}</TableCell>
             <TableCell>{getTranslation('Away',lang)}</TableCell>
-            <TableCell>{getTranslation('Total',lang)}</TableCell>
+            {/* <TableCell>{getTranslation('Total',lang)}</TableCell> */}
           </TableRow>
         </TableHeader>
         <tbody>

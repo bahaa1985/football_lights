@@ -279,63 +279,65 @@ const leagues = {
     {
       "UEFA European Championship": "بطولة أمم أوروبا"
     },
-    {
-      "Copa América": "كوبا أمريكا"
-    },
-    {
-      "AFC Asian Cup": "كأس آسيا"
-    },
-    {
-      "CAF Africa Cup of Nations": "كأس الأمم الأفريقية"
-    },
-    {
-      "CONCACAF Gold Cup": "كأس الكونكاكاف الذهبية"
-    },
-    {
-      "OFC Nations Cup": "كأس أمم أوقيانوسيا"
-    },
-    {
-      "UEFA Nations League": "دوري أمم أوروبا"
-    },
-    {
-      "FIFA Confederations Cup": "كأس القارات"
-    },
-    {
-      "Olympic Football Tournament": "بطولة كرة القدم الأولمبية"
-    },
-    {
-      "FIFA Club World Cup": "كأس العالم للأندية"
-    },
-    {
-      "UEFA Champions League": "دوري أبطال أوروبا"
-    },
-    {
-      "UEFA Europa League": "الدوري الأوروبي"
-    },
-    {
-      "UEFA Europa Conference League": "دوري المؤتمر الأوروبي"
-    },
-    {
-      "Copa Libertadores": "كوبا ليبرتادوريس"
-    },
-    {
-      "Copa Sudamericana": "كوبا سود أمريكانا"
-    },
-    {
-      "AFC Champions League": "دوري أبطال آسيا"
-    },
-    {
-      "CAF Champions League": "دوري أبطال أفريقيا"
-    },
-    {
-      "CONCACAF Champions Cup": "كأس أبطال الكونكاكاف"
-    },
-    {
-      "AFC Cup": "كأس الاتحاد الآسيوي"
-    },
-    {
-      "CAF Confederation Cup": "كأس الكونفدرالية الأفريقية"
-    }
+    
+      {"Copa América": "كوبا أمريكا"}
+    ,
+    
+      {"AFC Asian Cup": "كأس آسيا"}
+    ,
+    
+      {"CAF Africa Cup of Nations": "كأس الأمم الأفريقية"}
+    ,
+    
+      {"CONCACAF Gold Cup": "كأس الكونكاكاف الذهبية"}
+    ,
+    
+      {"OFC Nations Cup": "كأس أمم أوقيانوسيا"}
+    ,
+    
+      {"UEFA Nations League": "دوري أمم أوروبا"}
+    ,
+    
+      {"FIFA Confederations Cup": "كأس القارات"}
+    ,
+    
+      {"Olympic Football Tournament": "بطولة كرة القدم الأولمبية"}
+    ,
+    
+      {"FIFA Club World Cup": "كأس العالم للأندية"}
+    ,
+    
+      {"UEFA Champions League": "دوري أبطال أوروبا"}
+    ,
+        {"Promotion - Champions League (Play Offs: 1/8-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 16)"}
+    ,
+        {"Promotion - Champions League (Play Offs: 1/16-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 32)"}
+    ,  
+
+        {"UEFA Europa League": "الدوري الأوروبي"}
+    ,
+    
+      {"UEFA Europa Conference League": "دوري المؤتمر الأوروبي"}
+    ,
+    
+      {"Copa Libertadores": "كوبا ليبرتادوريس"}
+    ,
+    
+      {"Copa Sudamericana": "كوبا سود أمريكانا"}
+    ,
+    
+      {"AFC Champions League": "دوري أبطال آسيا"}
+    ,
+    
+      {"CAF Champions League": "دوري أبطال أفريقيا"}
+    ,
+    
+      {"CONCACAF Champions Cup": "كأس أبطال الكونكاكاف"}
+    ,
+      {"AFC Cup": "كأس الاتحاد الآسيوي"}
+    ,
+    
+      {"CAF Confederation Cup": "كأس الكونفدرالية الأفريقية"}
   ]
 
 }
@@ -344,6 +346,20 @@ const rounds = {
     "Championship Round":"مرحلة البطولة",
     "Relegation Round": "مرحلة الهبوط",
     "Regular Season": "الأسبوع",
+    "1st Qualifying Round": "الجولة التأهيلية الأولى",
+    "2nd Qualifying Round": "الجولة التأهيلية الثانية",
+    "3rd Qualifying Round": "الجولة التأهيلية الثالثة",
+    "4th Qualifying Round": "الجولة التأهيلية الرابعة",
+    "Leage Stage - 1": "مرحلة الدوري - 1",
+    "Leage Stage - 2": "مرحلة الدوري - 2",
+    "Leage Stage - 3": "مرحلة الدوري - 3",
+    "Leage Stage - 4": "مرحلة الدوري - 4",
+    "Leage Stage - 5": "مرحلة الدوري - 5",
+    "Leage Stage - 6": "مرحلة الدوري - 6",
+    "Leage Stage - 7": "مرحلة الدوري - 7",
+    "Leage Stage - 8": "مرحلة الدوري - 8",
+    "Leage Stage - 9": "مرحلة الدوري - 9",
+    "Leage Stage - 10": "مرحلة الدوري - 10",
     "Playoffs": "مرحلة الترقي",
     "Final": "النهائي",
     "Group Stage": "مرحلة المجموعات",

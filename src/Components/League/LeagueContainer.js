@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
 import { getLeagueTranslationByCountry } from "../../leagues.js";
+import { getCountryNameTranslation } from "../../countries.js";
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);
@@ -64,94 +65,103 @@ export default function League() {
   }
 
   return (
-    <div className="relative top-20 w-[90%] mx-auto">
-     
-      <div className="flex flex-row justify-start items-center gap-2 w-full my-4 bg-slate-50 rounded-lg p-2">
-         {/* Leagues dropdown */}
-         <label className="w-fit">{getTranslation('Your Favourite Leagues',lang)}</label>
-         <div className="flex flex-row justify-start gap-2 items-center w-full sm:w-[50%] rounded-lg border border-solid border-slate-400">          
-          {leagues.map((league, index) => (
-              <div
-                key={index}
-                onClick={() => [handleSelectedLeague(league.id)
-                ]}
-                className={`flex flex-col items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2 
-                  ${selectedleague === league.id ? 'border-b-2 border-solid border-blue-600' : 'border-none'}`}
-              >
-                <img src={league.logo} alt={league.name} className={`size-8 sm:size-12`} />
-                {/* <span className="text-sm text-center border-none">{league.name}</span> */}
-              </div>
-            ))}
-         </div>        
-      </div>    
-      {
-        isLoaded ?         
-          <div className="w-fullmx-auto">  {/* league info */}
-            <div className="flex justify-center bg-gradient-to-r from-slate-300 via-slate-500 to-slate-400 rounded-lg p-4 my-4">
-              <div className="flex justify-start items-center w-[15%] mx-2">
-                <img className="w-14 h-14 sm:w-24 sm:h-24" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
-              </div>
-              <div className="w-[85%] mx-2">
-                <div className="flex flex-row justify-start items-center gap-2">
-                  <span className=" text-[30px] border-none">{leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}</span>
-                  <Favourite elem_id={leagueInfo?.league.id} cookie_name={'prefered_leagues'}
-                    obj={
-                      {
-                        id: leagueInfo?.league.id,
-                        name: leagueInfo?.league.name,
-                        logo: leagueInfo?.league.logo,
-                        season: leagueInfo?.seasons.at(-1).year,
-                        end: leagueInfo?.seasons.at(-1).end
-                      }}
-                  />
-                </div>
-                <div className="flex justify-start space-x-2">
-                  <img className="w-16 h-16 rounded" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
-                  <span className="w-auto my-auto text-[20px] border-none">
-                        {getLeagueTranslationByCountry(leagueInfo?.country.name,lang)}
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* seasons dropdown  */}
-            <div className="flex justify-center items-center space-x-3 bg-slate-50 my-4 py-3 rounded-lg">
-              <span className="w-30 border-none text-slate-900">{getTranslation('Select Season',lang)}</span>
-              <select className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-28" onChange={(e) => [handleSelectedSeason(e)]} value={selectedSeason}>
-                {
-                  seasons().map((season, index) => {
-                    return (
-                      <option key={index} value={season}>{season}</option>
-                    )
-                  })
-                }
-              </select>
-            </div>
-            {/* tabs */}
-            <Tabs className="w-full sm:w-1/3 md:w-1/4 mx-auto my-2 sm:my-4" tabs={['Fixtures', 'Standings', 'Scorers', 'Assists']} activeTab={activeTab} onTabChange={handleTabChange} />
-          </div>
-          : null
-      }
+    <div className="relative top-20 w-[95%] max-w-6xl mx-auto">
+      {/* Leagues Selector */}
+      <div className="flex flex-wrap items-center gap-4 w-full my-6 bg-white rounded-xl shadow p-4">
+        <label className="font-semibold text-gray-700">{getTranslation('Your Favourite Leagues', lang)}</label>
+        <div className="flex flex-wrap gap-3 items-center">
+          {leagues.map((league) => (
+            <button
+              key={league.id}
+              onClick={() => handleSelectedLeague(league.id)}
+              className={`flex flex-col items-center px-3 py-2 rounded-lg transition border-2
+                ${selectedleague === league.id
+                  ? 'border-blue-600 bg-blue-50 shadow'
+                  : 'border-transparent hover:bg-gray-100'}`}
+              style={{ minWidth: 60 }}
+            >
+              <img src={league.logo} alt={league.name} className="w-10 h-10 sm:w-14 sm:h-14 object-contain" />
+              {/* <span className="text-xs mt-1">{league.name}</span> */}
+            </button>
+          ))}
+        </div>
+      </div>
 
-      {        
-          <div className="p-2 my-2 sm:my-4 bg-white rounded-lg shadow-md">
-            { 
-            selectedleague && selectedSeason ? (
-              activeTab === 0 ? (
-                <LeagueFixtures league={selectedleague} season={selectedSeason} />
-              ) : activeTab === 1 ? (
-                <Standings league={selectedleague} season={selectedSeason} />
-              ) : activeTab === 2 ? (
-                <TopPlayers league={selectedleague} season={selectedSeason} type={"Goals"} />
-              ) : activeTab === 3 ? (
-                <TopPlayers league={selectedleague} season={selectedSeason} type={"Assists"} />
-              ) : (
-                <div>No content available for the selected tab.</div>
-              )
-            ) : (
-              <div>Please select a league and season to view the content.</div>
-            )}
+      {/* League Info */}
+      {isLoaded && leagueInfo && (
+        <div className="flex flex-col sm:flex-row items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
+          <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 bg-white rounded-full shadow mr-0 sm:mr-6 mb-4 sm:mb-0">
+            <img className="w-16 h-16 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
           </div>
-      }
+          <div className="flex-1">
+            <div className="flex flex-wrap items-center gap-3 mb-2">
+              <span className="text-2xl sm:text-3xl font-bold text-gray-800 border-none">
+                {getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name)} {lastSeason}/{lastSeason + 1}
+              </span>
+              <Favourite
+                elem_id={leagueInfo?.league.id}
+                cookie_name={'prefered_leagues'}
+                obj={{
+                  id: leagueInfo?.league.id,
+                  name: leagueInfo?.league.name,
+                  logo: leagueInfo?.league.logo,
+                  season: leagueInfo?.seasons.at(-1).year,
+                  end: leagueInfo?.seasons.at(-1).end
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <img className="w-8 h-8 rounded object-cover border" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
+              <span className="text-lg text-gray-700 border-none">{getCountryNameTranslation(leagueInfo?.country.name, lang)}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Season Selector */}
+      {isLoaded && (
+        <div className="flex flex-wrap items-center gap-4 bg-white my-6 py-4 px-4 rounded-xl shadow">
+          <span className="font-medium text-gray-700 border-none">{getTranslation('Select Season', lang)}</span>
+          <select
+            className="p-2 border rounded-md bg-gray-50 shadow-sm focus:outline-none w-32"
+            onChange={handleSelectedSeason}
+            value={selectedSeason}
+          >
+            {seasons().map((season) => (
+              <option key={season} value={season}>{season}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* Tabs */}
+      {isLoaded && (
+        <Tabs
+          className="w-full sm:w-1/2 md:w-1/3 mx-auto my-4"
+          tabs={['Fixtures', 'Standings', 'Scorers', 'Assists']}
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
+      )}
+
+      {/* Tab Content */}
+      <div className="p-4 my-6 bg-white rounded-xl shadow">
+        {selectedleague && selectedSeason ? (
+          activeTab === 0 ? (
+            <LeagueFixtures league={selectedleague} season={selectedSeason} />
+          ) : activeTab === 1 ? (
+            <Standings league={selectedleague} season={selectedSeason} />
+          ) : activeTab === 2 ? (
+            <TopPlayers league={selectedleague} season={selectedSeason} type={"Goals"} />
+          ) : activeTab === 3 ? (
+            <TopPlayers league={selectedleague} season={selectedSeason} type={"Assists"} />
+          ) : (
+            <div className="text-center text-gray-500 py-8">No content available for the selected tab.</div>
+          )
+        ) : (
+          <div className="text-center text-gray-500 py-8">Please select a league and season to view the content.</div>
+        )}
+      </div>
     </div>
   );
 }

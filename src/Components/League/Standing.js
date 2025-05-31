@@ -3,6 +3,7 @@ import { useState,useEffect} from 'react'
 import getStandings from '../../Api/Standings.js'
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
+import { getLeagueTranslationByCountry } from '../../leagues.js';
 
 function Standings(props){    
     
@@ -43,27 +44,31 @@ function Standings(props){
         <div className='w-full lg:w-[70%] mx-auto'>
 
             {/* Qualifiactions colors indicators */}
-            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2 my-1'>
+            <div className='w-full flex flex-row justify-start items-center gap-3 px-2 my-1'>
                 <span className='size-6 bg-green-700 rounded-full border-none'></span>
-                <span className='border-none w-[70%]'>{description[0]}</span>
+                <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[0])}</span>
             </div>
-            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
+            <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
                 <span className='size-6 bg-green-500 rounded-full border-none'></span>
-                <span className='border-none w-[70%]'>{description[1]}</span>
+                <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[1])}</span>
             </div>
             {
                 description[2] !== "null" ?
-                    <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
+                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
                         <span className='size-6 bg-green-300 rounded-full border-none'></span>
-                        <span className='border-none w-[70%]'>{description[2]}</span>
+                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[2])}</span>
                     </div>
                     :null
             }
+            {
+                description.at(-1) !== "null" ?
+                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
+                        <span className='size-6 bg-red-500 rounded-full border-none'></span>
+                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description.at(-1))}</span>
+                    </div>
+                :null
+            } 
             
-            <div className='w-full flex flex-row justify-start items-center space-x-3 px-2  my-1'>
-                <span className='size-6 bg-red-500 rounded-full border-none'></span>
-                <span className='border-none w-[70%]'>{description.at(-1)}</span>
-            </div>
 
             {/* league group dropdown: */}
             {
