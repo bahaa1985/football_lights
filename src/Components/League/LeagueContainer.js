@@ -65,7 +65,7 @@ export default function League() {
   }
 
   return (
-    <div className="relative top-20 w-[95%] max-w-6xl mx-auto">
+    <div className="mt-20 w-[95%] max-w-6xl mx-auto">
       {/* Leagues Selector */}
       <div className="flex flex-wrap items-center gap-4 w-full my-6 bg-white rounded-xl shadow p-4">
         <label className="font-semibold text-gray-700">{getTranslation('Your Favourite Leagues', lang)}</label>
@@ -89,7 +89,7 @@ export default function League() {
 
       {/* League Info */}
       {isLoaded && leagueInfo && (
-        <div className="flex flex-col sm:flex-row items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
+        <div className="flex flex-col sm:flex-row gap-3 items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
           <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 bg-white rounded-full shadow mr-0 sm:mr-6 mb-4 sm:mb-0">
             <img className="w-16 h-16 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
           </div>

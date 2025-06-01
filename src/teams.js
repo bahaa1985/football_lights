@@ -7,15 +7,19 @@ const teams = {
         { "Manchester City": "مانشستر سيتي" },
         { "Tottenham Hotspur": "توتنهام هوتسبير" },
         { "Leicester City": "ليستر سيتي" },
-        { "West Ham United": "وست هام يونايتد" },
+        { "West Ham": "وست هام يونايتد" },
         { "Everton": "إيفرتون" },
         { "Aston Villa": "أستون فيلا" },
         { "Leeds United": "ليدز يونايتد" },
         { "Newcastle United": "نيوكاسل يونايتد" },
-        { "Wolverhampton Wanderers": "وولفرهامبتون واندررز" },
         { "Southampton": "ساوثهامبتون" },
         { "Crystal Palace": "كريستال بالاس" },
-        { "Brighton & Hove Albion": "برايتون وهوف ألبيون" },
+        {"Newcastle United": "نيوكاسل يونايتد" },
+        {"Liecester": "ليستر سيتي" },
+        {"Wolverhampton": "وولفرهامبتون" },
+        {"Ipswitch": "إبسويتش تاون" },
+        {"Tottenham": "توتنهام هوتسبير"},
+        { "Brighton": "برايتون" },
         { "Burnley": "بيرنلي" },
         { "Watford": "واتفورد" },
         { "Norwich City": "نورويتش سيتي" },
@@ -412,4 +416,14 @@ export function getTeamByCountry(country,team) {
         return teamObj ? teamObj[team] : null; // Return the Arabic name or null if not found
     }
     return null; // Return null if the country is not found   
+}
+
+export function getTeamByName(teamName) {
+    for (const country in teams) {
+        const teamObj = teams[country].find(t => t[teamName]);
+        if (teamObj) {
+            return teamObj[teamName]; // Return the Arabic name if found
+        }
+    }
+    return null; // Return null if the team is not found
 }

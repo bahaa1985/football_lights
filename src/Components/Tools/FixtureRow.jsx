@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
 import  {getLeagueTranslationByCountry, getRoundTranslation} from '../../leagues.js';
-import { getTeamByCountry } from "../../teams.js";
+import { getTeamByCountry,getTeamByName } from "../../teams.js";
 function FixtureRow(props) {
   const fixtures = props.fixturesSource;
   console.log("fixtures",fixtures);
@@ -144,14 +144,16 @@ function FixtureRow(props) {
                           src={elem.teams.home.logo}
                           loading="lazy"
                           className="size-8 sm:size-10"
-                          alt={getTeamByCountry(elem.teams.home.country,elem.teams.home.name)}
+                          alt={elem.teams.home.name}
                         />
 
                         <NavLink
                           className="w-[50%] text-center"
                           to={`/team/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-sm  lg:text-lg">{elem.teams.home.name}</span>
+                          <span className="border-none text-sm  lg:text-lg">
+                            {elem.teams.home.name}
+                          </span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">
@@ -173,7 +175,9 @@ function FixtureRow(props) {
                           className="w-[50%] text-center"
                           to={`/team/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
-                          <span className="border-none text-sm  lg:text-lg">{elem.teams.away.name}</span>
+                          <span className="border-none text-sm  lg:text-lg">
+                            {elem.teams.away.name}
+                          </span>
                         </NavLink>
 
                         <span className="w-[10%] bg-red-800 text-slate-100 text-center rounded-sm border-none">

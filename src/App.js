@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Tools/Navbar.js';
+import Footer from './Components/Tools/Footer.js';
 import League from './Components/League/LeagueContainer.js';
 import Fixture from './Components/Fixture/FixtureContainer.js';
 import Player from './Components/Player.js';
@@ -36,6 +37,7 @@ function App() {
       <Route path='/search' element={<Search />}>
       </Route>
     </Routes>
+    <Footer />
      </Router>
      );
 }

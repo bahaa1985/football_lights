@@ -4,7 +4,6 @@ import { groupLeagueFixtures } from "../../Api/Fixtures.js";
 import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../multi_language_translations.js";
-
 import FixtureRow from "../Tools/FixtureRow.jsx";
 
 export default function LeagueFixtures(props) {
@@ -60,7 +59,7 @@ export default function LeagueFixtures(props) {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-4 mt-6">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg p-2 mt-2">
       {isLoaded ? (
         <Fragment>
           <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4">
@@ -92,7 +91,7 @@ export default function LeagueFixtures(props) {
               />
             </div>
           </div>
-          <div className="bg-gray-50 rounded-lg shadow-inner p-2">
+          <div className="bg-gray-50 rounded-lg p-2">
             <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
           </div>
         </Fragment>

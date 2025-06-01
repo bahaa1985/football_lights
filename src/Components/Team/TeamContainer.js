@@ -64,7 +64,7 @@ export default function Team() {
     const lang = getCookie('language').lang || 'en';
 
     return (
-        <div className="relative top-24 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
+        <div className="mx-auto mt-20 w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
             {statsLoaded ? (
                 <>
                     {/* Team Header */}

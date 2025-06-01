@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 function Favourites() {
     const leagues=getCookie("prefered_leagues");
+    console.log("llllllllllll",leagues);
+    
     const teams=getCookie("prefered_teams");
     const lang=getCookie('language').lang || 'en';    
     return (  

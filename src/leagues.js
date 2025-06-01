@@ -273,70 +273,48 @@ const leagues = {
     ]
     ,
   "World": [
-    {
-      "FIFA World Cup": "كأس العالم"
-    },
-    {
-      "UEFA European Championship": "بطولة أمم أوروبا"
-    },
-    
+    {"FIFA World Cup": "كأس العالم"},
+    {"UEFA European Championship": "بطولة أمم أوروبا"},    
       {"Copa América": "كوبا أمريكا"}
-    ,
-    
+    ,    
       {"AFC Asian Cup": "كأس آسيا"}
-    ,
-    
+    ,    
       {"CAF Africa Cup of Nations": "كأس الأمم الأفريقية"}
-    ,
-    
+    ,    
       {"CONCACAF Gold Cup": "كأس الكونكاكاف الذهبية"}
-    ,
-    
+    ,    
       {"OFC Nations Cup": "كأس أمم أوقيانوسيا"}
-    ,
-    
+    ,    
       {"UEFA Nations League": "دوري أمم أوروبا"}
-    ,
-    
+    ,    
       {"FIFA Confederations Cup": "كأس القارات"}
-    ,
-    
+    ,    
       {"Olympic Football Tournament": "بطولة كرة القدم الأولمبية"}
-    ,
-    
+    ,    
       {"FIFA Club World Cup": "كأس العالم للأندية"}
-    ,
-    
+    ,    
       {"UEFA Champions League": "دوري أبطال أوروبا"}
     ,
         {"Promotion - Champions League (Play Offs: 1/8-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 16)"}
     ,
         {"Promotion - Champions League (Play Offs: 1/16-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 32)"}
     ,  
-
         {"UEFA Europa League": "الدوري الأوروبي"}
-    ,
-    
+    ,    
       {"UEFA Europa Conference League": "دوري المؤتمر الأوروبي"}
-    ,
-    
+    ,    
       {"Copa Libertadores": "كوبا ليبرتادوريس"}
-    ,
-    
+    ,    
       {"Copa Sudamericana": "كوبا سود أمريكانا"}
-    ,
-    
+    ,    
       {"AFC Champions League": "دوري أبطال آسيا"}
-    ,
-    
+    ,    
       {"CAF Champions League": "دوري أبطال أفريقيا"}
-    ,
-    
+    ,    
       {"CONCACAF Champions Cup": "كأس أبطال الكونكاكاف"}
     ,
       {"AFC Cup": "كأس الاتحاد الآسيوي"}
-    ,
-    
+    ,    
       {"CAF Confederation Cup": "كأس الكونفدرالية الأفريقية"}
   ]
 
@@ -390,7 +368,7 @@ export function getLeagueTranslationByCountry(country,league) {
     });
    return leagueName;
 }
-export function getRoundTranslation(round,lang){
+export function getRoundTranslation(round){
     let roundName = "";
     Object.keys(rounds).map((elem)=>{
         if (elem === round.slice(0,round.indexOf('-')-1)) {
