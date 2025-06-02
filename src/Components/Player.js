@@ -25,7 +25,7 @@ function Player(props) {
     
     return ( 
         loaded ?
-        <div className="relative top-24 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
+        <div className="m-20 mx-auto w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
         <div className="w-full flex flex-col items-center mb-4">
             {/* <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-center">{playerStats?.player?.name}</h2> */}
             {playerStats?.player?.photo && (
