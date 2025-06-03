@@ -74,54 +74,73 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className="w-full sm:w-[90%] relative top-20 left-0 h-full rounded-lg">
-      <div>
-        <label for="language">{getTranslation('Choose a Language',lang)}</label>
-        <select id="language" name="language" className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto" onChange={(e) => handleLanguage(e.target.value)} defaultValue={language}>
+    <div className="w-full sm:w-[90%] relative top-20 left-0 h-full rounded-lg bg-gray-100 p-4">
+      <div className="mb-4">
+        <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
+          {getTranslation('Choose a Language', lang)}
+        </label>
+        <select
+          id="language"
+          name="language"
+          className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto"
+          onChange={(e) => handleLanguage(e.target.value)}
+          defaultValue={language}
+        >
+          <option key={3} value="ar">عربي</option>
           <option key={0} value="en">English</option>
           <option key={1} value="fr">Français</option>
           <option key={2} value="es">Español</option>
-          <option key={3} value="ar">عربي</option>
-          <option key={4} value="zh">中文</option>
-          <option key={5} value="ja">日本語</option>
           <option key={6} value="it">Italiano</option>
           <option key={7} value="pt">Português</option>
         </select>
       </div>
-      <div className="sm:h-auto px-auto sm:flex sm:justify-around">
-        {/* search teams */}
-        <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%]">
-          <div className="w-full text-left flex justify-between p-2">
-            <input type="text" ref={searchLeagueInput} className="outline-none rounded-md pl-1" placeholder={getTranslation("Enter Country Or League Name",lang)} />
-            <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50"
-              onClick={() =>setSearchLeague(searchLeagueInput.current.value)}>
-              {getTranslation('Search',lang)}
+      <div className="sm:h-auto px-auto sm:flex sm:justify-between gap-4">
+        {/* Search leagues */}
+        <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
+          <div className="w-full text-left flex justify-between items-center mb-4">
+            <input
+              type="text"
+              ref={searchLeagueInput}
+              className="outline-none rounded-md pl-2 py-1 border w-full mr-2"
+              placeholder={getTranslation("Enter Country Or League Name", lang)}
+            />
+            <button
+              className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              onClick={() => setSearchLeague(searchLeagueInput.current.value)}
+            >
+              {getTranslation('Search', lang)}
             </button>
-            </div>
-            {
-              leagues?
-              <Pagination type={'league'} source={leagues}/>
-              :<p>{getTranslation('No Leagues Available',lang)}</p>
-            }
+          </div>
+          {leagues && leagues.length > 0 ? (
+            <Pagination type={'league'} source={leagues} />
+          ) : (
+            <p className="text-gray-500">{getTranslation('No Leagues Available', lang)}</p>
+          )}
         </div>
-        <br className="border-b border-black"/>
-        {/* search teams */}
-        <div className="w-[90%] h-[50%] sm:h-full sm:w-[45%] ">
-              <div className="w-full flex justify-between text-left p-2">
-                <input type="text" ref={searchTeamInput} className="outline-none rounded-md pl-1" placeholder={getTranslation('Enter Country Or Team Name',lang)} />
-                <button className="w-26 text-md mx-2 p-2  rounded-md bg-blue-600 text-slate-50" 
-                onClick={() => setSearchTeam(searchTeamInput.current.value)}>
-                  {getTranslation('Search',lang)}
-                </button>
-              </div>
-              {
-                teams?
-                <Pagination type={'teams'} source={teams} />
-                :<p>{getTranslation('No Teams Available',lang)}</p>
-              }
-        </div>      
+
+        {/* Search teams */}
+        <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
+          <div className="w-full flex justify-between items-center mb-4">
+            <input
+              type="text"
+              ref={searchTeamInput}
+              className="outline-none rounded-md pl-2 py-1 border w-full mr-2"
+              placeholder={getTranslation('Enter Country Or Team Name', lang)}
+            />
+            <button
+              className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              onClick={() => setSearchTeam(searchTeamInput.current.value)}
+            >
+              {getTranslation('Search', lang)}
+            </button>
+          </div>
+          {teams && teams.length > 0 ? (
+            <Pagination type={'teams'} source={teams} />
+          ) : (
+            <p className="text-gray-500">{getTranslation('No Teams Available', lang)}</p>
+          )}
+        </div>
       </div>
-                      
-      </div>
+    </div>
   );
 }

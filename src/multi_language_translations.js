@@ -54,6 +54,7 @@ export const translation ={
     "Regular Season": "الموسم العادي",
     "Enter Team Name": "أدخل اسم الفريق",
     "or": "أو",
+    "Rotate to landscape mode to see all the columns": "قم بتدوير الجهاز إلى الوضع الأفقي لرؤية جميع الأعمدة",
     "Rank": "الترتيب",
     "Team": "الفريق",
     "Play": "لعب",

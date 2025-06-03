@@ -6,7 +6,7 @@ export function setCookie(name,data){
     const jsonData = JSON.stringify(data);
     console.log("jsonData: ",jsonData);
     
-    Cookies.set(name,jsonData,{expires:365 * 100});
+    Cookies.set(name,jsonData,{expires:new Date(2099,11,31),path:'/'});
     console.log("new cookie: ",getCookie("prefered_leagues")); 
 }
 

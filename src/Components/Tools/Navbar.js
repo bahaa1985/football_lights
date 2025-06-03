@@ -55,8 +55,7 @@ function Navbar() {
           <div className="flex justify-start gap-2 items-center float-left px-3 xs:basis-1/3 sm:basis-1/12">
             <NavLink className="px-3" to="/">
               <img className="mx-auto sm:mx-0 rounded-full max-w-14 h-14" alt=""  src={logo}/>
-            </NavLink>
-            <span ref={title_span} className='border-none text-xl text-slate-50'>Football Lights</span>
+            </NavLink>            
           </div>
 
           {/* navigation links */}

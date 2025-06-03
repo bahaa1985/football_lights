@@ -14,6 +14,7 @@ function Standings(props){
     const [standingsGroups,setStandingsGroups]= useState([]);
     const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
     const [description,setDesccription] = useState([])
+    const [country,setCountry] = useState("");
 
     const lang= getCookie('language').lang || 'en';
 
@@ -21,53 +22,64 @@ function Standings(props){
         getStandings(league,season).then((result)=>{
             console.log("standings: ",result);         
             setStandings(result.data.response[0].league.standings)
-            // if(standings?.length > 0 ){
-            let groups = result.data.response[0].league.standings.map((group)=>{
-                console.log("group:",group[0].group);
-                return group[0].group                
-                
-            })
-            setStandingsGroups(groups)
+
+            if(result.data.response[0].league.country !== "World"){
+                let groups = result.data.response[0].league.standings.map((group)=>{
+                    console.log("group:",group[0].group);
+                    return group[0].group                                
+                })
+                 setStandingsGroups(groups)
+            }
+           
             const desc_keys =Object.groupBy(result.data.response[0].league.standings[0],function (item){
-                if(item.description !== null || item.description !== undefined ) {return item.description}
+                return item.description
             });
             setDesccription(Object.keys(desc_keys))
             console.log('descs',description)
 
+            setCountry(result.data.response[0].league.country);
+
             window.addEventListener('resize',()=>{
                 setDeviceWidth(window.innerWidth);
             })                                    
-    })          
+        })          
     },[])
     
     return(
         <div className='w-full lg:w-[70%] mx-auto'>
 
             {/* Qualifiactions colors indicators */}
-            <div className='w-full flex flex-row justify-start items-center gap-3 px-2 my-1'>
-                <span className='size-6 bg-green-700 rounded-full border-none'></span>
-                <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[0])}</span>
-            </div>
-            <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
-                <span className='size-6 bg-green-500 rounded-full border-none'></span>
-                <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[1])}</span>
-            </div>
-            {
+            {               
+                country !== "World" ? 
+                // <h1 className='text-2xl font-bold text-center my-2'>{getLeagueTranslationByCountry(country,league)}</h1>               
+                [<div className='w-full flex flex-row justify-start items-center gap-3 px-2 my-1'>
+                    <span className='size-6 bg-green-700 rounded-full border-none'></span>
+                    <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[0]) || description[0]}</span>
+                </div>,
+
+                <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
+                    <span className='size-6 bg-green-500 rounded-full border-none'></span>
+                    <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[1]) ||description[1]}</span>
+                </div>,
+                
                 description[2] !== "null" ?
                     <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
                         <span className='size-6 bg-green-300 rounded-full border-none'></span>
-                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[2])}</span>
+                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description[2]) ||description[2]}</span>
                     </div>
                     :null
-            }
-            {
+                ,
+                
                 description.at(-1) !== "null" ?
                     <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
                         <span className='size-6 bg-red-500 rounded-full border-none'></span>
-                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description.at(-1))}</span>
+                        <span className='border-none w-[70%]'>{getLeagueTranslationByCountry("World",description.at(-1)) || description.at(-1)}</span>
                     </div>
+                    :null
+                ] 
                 :null
-            } 
+            }
+            
             
 
             {/* league group dropdown: */}
@@ -78,7 +90,7 @@ function Standings(props){
             }
             {
                 deviceWidth < 600 ?
-                <p>Rotate to landscape mode to see all the columns</p>
+                <p>{getTranslation('Rotate to landscape mode to see all the columns',lang)}</p>
                 :null
             }
             <table className='relative top-0 w-full table-auto'>

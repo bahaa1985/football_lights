@@ -51,7 +51,7 @@ function FixtureRow(props) {
                   {
                     fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? lang === 'ar' ? "الأسبوع " + parseInt(index + 1) : "Game Week " + parseInt(index + 1)
-                    : fixtures[elem][0]?.league.round}
+                    :  getRoundTranslation(fixtures[elem][0]?.league.round) || fixtures[elem][0]?.league.round}
                 </div>
               ) : null
             }
@@ -185,14 +185,6 @@ function FixtureRow(props) {
                         </span>
                       </div>                      
                     </div>
-                    {/* Details button */}
-                    {/* <div className="flex justify-end items-center w-[10%]">
-                        <NavLink className="p-1"
-                        to={`/fixture/${elem.fixture.id}`} state={{fixture_data:elem}}>
-                          <FontAwesomeIcon icon={lang === 'ar' ? faAnglesLeft :  faAnglesRight} size="1x" />                          
-                        </NavLink>  
-                      </div>                     */}
-                  {/* </div> */}
                   </NavLink>
                 </div>
                 

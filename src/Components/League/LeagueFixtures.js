@@ -32,7 +32,7 @@ export default function LeagueFixtures(props) {
     fetchData();
   }, [league,season]);
 
-  const lang = getCookie('language') || 'en';
+  const lang = getCookie('language').lang || 'en';
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
@@ -64,7 +64,7 @@ export default function LeagueFixtures(props) {
         <Fragment>
           <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4">
             <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
-              <span className="font-semibold text-gray-700">{getTranslation('Filter By', lang)}</span>
+              <span className="font-semibold text-gray-700 border-none">{getTranslation('Filter By', lang)}</span>
               <select
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
                 onChange={filterByGameWeek}
@@ -82,7 +82,7 @@ export default function LeagueFixtures(props) {
                   </option>
                 ))}
               </select>
-              <span className="text-gray-500">{getTranslation('or', lang)}</span>
+              <span className="text-gray-500 border-none">{getTranslation('or', lang)}</span>
               <input
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
                 type="text"
@@ -97,7 +97,7 @@ export default function LeagueFixtures(props) {
         </Fragment>
       ) : (
         <div className="flex justify-center items-center h-40">
-          <span className="text-blue-500 font-semibold text-lg">Loading ...</span>
+          <span className="text-blue-500 font-semibold text-lg border-none">Loading ...</span>
         </div>
       )}
     </div>

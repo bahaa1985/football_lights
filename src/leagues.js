@@ -301,7 +301,7 @@ const leagues = {
     ,  
         {"UEFA Europa League": "الدوري الأوروبي"}
     ,    
-      {"UEFA Europa Conference League": "دوري المؤتمر الأوروبي"}
+      {"Europa Conference League": "دوري المؤتمر الأوروبي"}
     ,    
       {"Copa Libertadores": "كوبا ليبرتادوريس"}
     ,    
@@ -316,6 +316,8 @@ const leagues = {
       {"AFC Cup": "كأس الاتحاد الآسيوي"}
     ,    
       {"CAF Confederation Cup": "كأس الكونفدرالية الأفريقية"}
+      ,
+      {"Relegation": "الهبوط"}
   ]
 
 }
