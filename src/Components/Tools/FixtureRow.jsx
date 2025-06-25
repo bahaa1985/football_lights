@@ -30,8 +30,8 @@ function FixtureRow(props) {
             {
                 // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
                 type === "day_matches" ? (
-                <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg shadow-md border border-slate-300">
-                  <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>
+                <div className="flex justify-start items-center my-2 p-2 bg-blue-600 text-slate-50 rounded-2xl shadow-md border border-slate-300">
+                  <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 h-8 sm:w-10  sm:h-10"/>
                   <NavLink  className="my-auto ml-2"  to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
                   <span className="text-left border-none font-semibold">
                     {lang === 'ar' ? 
@@ -39,6 +39,7 @@ function FixtureRow(props) {
                     fixtures[elem][0]?.league.name
                     }
                   </span>
+                  &nbsp;
                   </NavLink>
                    <span className="border-none font-medium"> {
                     lang === 'ar' ?

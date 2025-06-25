@@ -35,7 +35,7 @@ function Navbar() {
 
     return ( 
         <div dir='ltr'>
-            <nav id="nav_bar" className="bg-slate-900 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-md z-40">
+            <nav id="nav_bar" className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-md z-40">
       {/* Hamburger button */}
       <div className="my-auto md:hidden basis-1/3 px-3">
         <button id="hamburger_button" ref={hamburger_button}>
@@ -49,7 +49,7 @@ function Navbar() {
       </div>
 
   
-      <div className="w-[90%] flex flex-row sm:justify-between items-center px-3 mx-auto 
+      <div className="w-[90%] flex flex-row justify-end sm:justify-center items-center px-3 mx-auto 
         basis-2/3 sm:basis-6/12 lg:basis-4/12">
          {/* logo */}
           <div className="flex justify-start gap-2 items-center float-left px-3 xs:basis-1/3 sm:basis-1/12">

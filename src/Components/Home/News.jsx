@@ -40,13 +40,14 @@ export default function News(){
         }
     },[]);
     return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mx-auto bg-slate-50 rounded-md my-2 p-4">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mx-auto bg-slate-50 rounded-lg my-2 p-4">
+        <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-2xl">News</div>
         {
             news.length > 0 && loaded ? 
                 news.map((item, index) => (
                     <div
                         key={index}
-                        className="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow p-4 text-center"
+                        className="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow p-2 text-center"
                     >
                         <div className="flex justify-between items-center w-full mb-2">
                             <h3 className="text-sm text-gray-500">{item.source.name}</h3>

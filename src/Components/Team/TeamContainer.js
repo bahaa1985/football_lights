@@ -14,6 +14,7 @@ export default function Team() {
     const season = searchParams.get('season');
 
     const [team, setTeam] = useState(teamIdParam  || teams[0].id);
+    const [selectedTeam, setSelectedTeam] = useState(teamIdParam || teams[0].id);
     const [teamSeasons, setTeamSeasons] = useState([]);
     const [teamLeagues, setTeamLeagues] = useState([]);
     const [teamInformation, setTeamInformation] = useState([]);
@@ -67,6 +68,28 @@ export default function Team() {
         <div className="mx-auto mt-20 w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
             {statsLoaded ? (
                 <>
+                <div className="bg-slate-100 p-6 rounded-lg shadow-inner mb-4">
+                    <h2 className="w-full text-xl font-bold text-slate-800 mb-4 text-center">{getTranslation('Favourite Teams', lang)}</h2>
+                    <div className="flex flex-wrap gap-4 justify-center">
+                        {teams.map((team, index) => (
+                            <button
+                                key={index}
+                                className={`w-32 cursor-pointer flex flex-col items-center px-3 py-2 rounded-lg transition border-2 ${
+                                    team.id === selectedTeam ? 'border-blue-600 bg-blue-50 shadow'
+                  : 'border-transparent hover:bg-gray-100'
+                                }`}
+                                onClick={() => [setTeam(team.id),setSelectedTeam(team.id)]}
+                            >
+                                <img
+                                    src={team.logo}
+                                    alt={team.name}
+                                    className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
+                                />
+                                <p className="text-center font-semibold mt-2">{team.name}</p>
+                            </button>
+                        ))}
+                    </div>
+                </div>
                     {/* Team Header */}
                     <div className="flex flex-col justify-between items-center flex-wrap mb-8">
                         <div className="flex items-center gap-4">
@@ -84,26 +107,26 @@ export default function Team() {
                         </div>
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
-                                <p className="text-gray-600">{getTranslation('Country',lang)}</p>
+                                <p className="text-gray-600 text-xl font-bold">{getTranslation('Country',lang)}</p>
                                 <p className="font-semibold">{teamInformation?.team?.country}</p>
                             </div>                            
                             <div>
-                                <p className="text-gray-600">{getTranslation('Founded',lang)}</p>
+                                <p className="text-gray-600 text-xl font-bold">{getTranslation('Founded',lang)}</p>
                                 <p className="font-semibold">{teamInformation?.team?.founded}</p>
                             </div>
                             
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
-                                <p className="text-gray-600">{getTranslation('Venue',lang)}</p>
+                                <p className="text-gray-600 text-xl font-bold">{getTranslation('Venue',lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.name}</p>
                             </div> 
                             <div>
-                                <p className="text-gray-600">{getTranslation('City',lang)}</p>
+                                <p className="text-gray-600 text-xl font-bold">{getTranslation('City',lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.city}</p>
                             </div>                           
                             <div>
-                                <p className="text-gray-600">{getTranslation('Capacity',lang)}</p>
+                                <p className="text-gray-600 text-xl font-bold">{getTranslation('Capacity',lang)}</p>
                                 <p className="font-semibold">{teamInformation?.venue?.capacity}</p>
                             </div>
                         </div>

@@ -26,10 +26,10 @@ function Pagination(props) {
     }
     
     return (
-        <div className="pagination-container">
+        <div className="w-full flex flex-col items-center justify-center p-4">
             <>
                 {/* Data pages */}
-                <div className="pages-content">
+                <div className="w-full">
                     {
                         pages[pageIndex]?.map((elem, index) => {
                             return (
@@ -72,7 +72,7 @@ function Pagination(props) {
                     }
                 </div>
                 {/* Pagination buttons */}
-                <div className="pagination-buttons flex justify-center mt-4">
+                <div className="flex justify-center flex-wrap mt-4">
                     {
                         pages.map((page, index) => {
                             return (

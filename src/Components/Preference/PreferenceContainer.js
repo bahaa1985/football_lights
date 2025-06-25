@@ -74,8 +74,8 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className="w-full sm:w-[90%] relative top-20 left-0 h-full rounded-lg bg-gray-100 p-4">
-      <div className="mb-4">
+    <div className="w-full h-screen mt-16  rounded-lg bg-gray-100 p-4">
+      <div className="flex flex-row items-center gap-2 mb-4">
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a Language', lang)}
         </label>
@@ -101,7 +101,7 @@ export default function Preferences(params) {
             <input
               type="text"
               ref={searchLeagueInput}
-              className="outline-none rounded-md pl-2 py-1 border w-full mr-2"
+              className="outline-none rounded-md px-2 py-1 border w-full mr-2"
               placeholder={getTranslation("Enter Country Or League Name", lang)}
             />
             <button
@@ -124,7 +124,7 @@ export default function Preferences(params) {
             <input
               type="text"
               ref={searchTeamInput}
-              className="outline-none rounded-md pl-2 py-1 border w-full mr-2"
+              className="outline-none rounded-md px-2 py-1 border w-full mr-2"
               placeholder={getTranslation('Enter Country Or Team Name', lang)}
             />
             <button

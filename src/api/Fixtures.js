@@ -97,15 +97,6 @@ export async function groupDateFixtures(dateString) {
         return elem.league.name + " - " + elem.league.round;
       })
       return grouped;
-      // result?.reduce((group, elem) => {
-      //   const title = elem.league.name + " - " + elem.league.round;
-      //   if (!group[title]) {
-      //     group[title] = [];
-      //   }
-      //   group[title].push(elem);
-      //   grouped = group;
-      //   return group;
-      // },grouped);
     });
   }
   catch(error){
@@ -120,11 +111,9 @@ async function getPromisedLiveFixtures() {
   let ids = leagues.map((league) => league.id).join("-");
   if (ids.length > 0) {
     let liveArray = [];
-
     try {
       const result = await getLiveFixtures(ids);
       liveArray.push(...result.data.response);
-      // console.log("live result:", liveArray);
     } catch (error) {
       console.error("Error fetching live fixtures:", error);
     }
@@ -148,8 +137,6 @@ export async function groupLiveFixtures() {
       group[title].push(elem);
       return group;
     }, grouped);
-
-    // console.log("grouped live", grouped);
   } catch (error) {
     console.error("Error grouping live fixtures:", error);
   }
@@ -176,17 +163,6 @@ export async function groupLeagueFixtures(leagueId, season) {
   grouped = Object.groupBy(result , (elem)=>{
     return elem.league.name + " - " + elem.league.round;
   })
-  // result?.reduce((group, elem) => {
-  //   const gw = elem.league.round;
-  //   if (!group[gw]) {
-  //     group[gw] = [];
-  //   }
-  //   group[gw].push(elem);
-
-  //   grouped = group;
-  //   return group;
-  // }, []);
-  // console.log("grouped fixtures", grouped);
   return grouped;
 }
 
@@ -195,7 +171,6 @@ export async function getPromisedTeamFixtures(date) {
     let fixtures = [];
     let uniqueFixtures = [];
     let teams = getCookie("prefered_teams");
-    // console.log("cookies:", teams);
     if (date !== "") {
       const result = (await getTeamFixtures(date)).data.response;
       for (let i = 0; i < teams.length; i++) {

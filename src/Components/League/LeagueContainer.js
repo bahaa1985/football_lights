@@ -96,7 +96,7 @@ export default function League() {
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <span className="text-2xl sm:text-3xl font-bold text-gray-800 border-none">
-                {getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name)} {lastSeason}/{lastSeason + 1}
+                {lang === 'ar' ? getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name) : leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}
               </span>
               <Favourite
                 elem_id={leagueInfo?.league.id}

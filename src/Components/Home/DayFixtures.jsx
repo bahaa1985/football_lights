@@ -33,6 +33,7 @@ export default function DayFixtures() {
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab,setActiveTab] = useState(0);
   const [deviceWidth,setDeviceWidth] = useState(window.innerWidth);
+  const [message, setMessage] = useState('');
 
   const leagues = getCookie("prefered_leagues");
   const teams = getCookie("prefered_teams");
@@ -43,23 +44,29 @@ export default function DayFixtures() {
   
   useEffect(() => {
 
-    async function fetchFixtures() {
-      const date_response = await groupDateFixtures(selectedDate);
-      const teams_response = await getPromisedTeamFixtures(selectedDate);
-      setDateFixtures(date_response);
-      setTeamsFixtures(teams_response);
-      setLoaded(true);
-    }
-    fetchFixtures();
+    if(leagues.length !== 0 && teams.length !== 0){
+      async function fetchFixtures() {
+        const date_response = await groupDateFixtures(selectedDate);
+        const teams_response = await getPromisedTeamFixtures(selectedDate);
+        setDateFixtures(date_response);
+        setTeamsFixtures(teams_response);
+        setLoaded(true);
+      }
+      fetchFixtures();
 
-    window.addEventListener('resize',()=>{
-      setDeviceWidth(window.innerWidth);
-    })
-    return () =>{
-      window.removeEventListener('resize',()=>{
+      window.addEventListener('resize',()=>{
         setDeviceWidth(window.innerWidth);
       })
+      return () =>{
+        window.removeEventListener('resize',()=>{
+          setDeviceWidth(window.innerWidth);
+        })
+      }
     }
+    else{
+      setMessage(getTranslation('No Current Fixtures',language.lang) || 'No Leagues Or Teams Are Selected. Go to Preferences');
+    }
+    
   }, [selectedDate]);
 
   function handleSelectedTab(index){
@@ -68,10 +75,11 @@ export default function DayFixtures() {
 
   return (
     <div className="w-full sm:w-[65%] mx-auto my-2 bg-slate-50 rounded-md">
+
       {isLoaded ? (
         (
-          <div className="w-full mx-auto rounded-md bg-slate-50 p-2">
-            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-md">
+          <div className="w-full mx-auto rounded-lg bg-slate-50 p-2">
+            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-2xl">
               {getTranslation('Fixtures',language.lang) || 'Fixtures'}
             </div>
             {/* date picker */}
@@ -85,24 +93,26 @@ export default function DayFixtures() {
             </div>
             <div className="w-full">
               <Tabs tabs={['Leagues','Teams']} activeTab={activeTab} onTabChange={handleSelectedTab}/>
-              <div className="w-full h-auto sm:h-96 sm:overflow-y-scroll">
+              <div className="w-full h-auto sm:h-96 sm:overflow-y-scroll text-center">
                 {
-                  activeTab === 0 ? 
-                    dateFixtures? 
-                      <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
-                      : 
-                      <div className="flex justify-center items-center">
-                        { getTranslation('No Current Fixtures',language.lang) }
-                      </div>
-                  :
-                  activeTab === 1 ?
-                    teamsFixtures.length>0 ? 
-                      <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
-                      : 
-                      <div className="flex justify-center items-center">
-                        {getTranslation('No Current Fixtures',language.lang) || 'No Current Fixtures' }
-                      </div>  
-                  :null                    
+                  leagues.length > 0 ?
+                    (activeTab === 0 ? 
+                      dateFixtures? 
+                        <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
+                        : 
+                        <div className="flex justify-center items-center">
+                          { getTranslation('No Current Fixtures',language.lang) }
+                        </div>
+                    :
+                    activeTab === 1 ?
+                      teamsFixtures.length>0 ? 
+                        <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
+                        : 
+                        <div className="flex justify-center items-center">
+                          {getTranslation('No Current Fixtures',language.lang) || 'No Current Fixtures' }
+                        </div>  
+                    :null)
+                  :'No Favourite Leagues Or Teams Selected. Go To Preferences'                   
                 }
               </div>
             </div>

@@ -6,6 +6,8 @@ import { getCookie } from '../../Api/cookie.js';
 
 export default function Home(){
 
+    console.log("cookie", getCookie('prefered_leagues'));
+    
     return(
         <div className={`mt-20 w-[90%] mx-auto`}>
             <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>

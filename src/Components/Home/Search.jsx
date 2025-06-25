@@ -75,7 +75,7 @@ export default function Search(){
                                         <span className="border-none">{item.league.name} ({item.country.name})</span>
                                         
                                     </NavLink>
-                                    <Favourite elem_id={item.league.id} obj={{'id':item.league.id,'name':item.league.name,'logo':item.league.logo,'season':item.seasons.at(-1).year,'endDate':item.seasons.at(-1).end}} cookie_name={'prefered_leagues'} />                                    
+                                    <Favourite elem_id={item.league.id} obj={{'id':item.league.id,'name':item.league.name,'country':item.country.name,'logo':item.league.logo,'season':item.seasons.at(-1).year,'endDate':item.seasons.at(-1).end}} cookie_name={'prefered_leagues'} />                                    
                                 </div>
                             )
                         })
