@@ -13,22 +13,13 @@ import { getCountryNameTranslation } from "../../countries.js";
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);
-  const season = parseInt(useParams().season);
 
   const leagues = getCookie("prefered_leagues");
-  const lastSeason = new Date().getFullYear() - 1;
-
-  const seasons = () => {
-    let seasonsArr = [];
-    for (let i = 2010; i < lastSeason + 1; i++) {
-      seasonsArr.push(i);
-    }
-    return seasonsArr;
-  }
 
   const [activeTab, setActiveTab] = useState(0);
+  const [seasons,setSeasons]=useState([]);
   const [selectedleague, setSelectedLeague] = useState(leagueParam ? leagueParam : leagues[0].id);
-  const [selectedSeason, setSelectedSeason] = useState(season ? season : lastSeason);
+  const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0  ? seasons.at(-1).year : 2024);
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -41,6 +32,8 @@ export default function League() {
       async function fetchData() {
         const leagueData = await getLeagues(null, selectedleague);
         setLeagueInfo(leagueData.data.response[0]);
+        //
+        setSeasons(leagueData.data.response[0].seasons);
         // setClicked(false);
         setLoaded(true);
       }
@@ -90,13 +83,16 @@ export default function League() {
       {/* League Info */}
       {isLoaded && leagueInfo && (
         <div className="flex flex-col sm:flex-row gap-3 items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
-          <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 bg-white rounded-full shadow mr-0 sm:mr-6 mb-4 sm:mb-0">
+          <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 rounded-full shadow mr-0 sm:mr-6 mb-4 sm:mb-0">
             <img className="w-16 h-16 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
           </div>
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <span className="text-2xl sm:text-3xl font-bold text-gray-800 border-none">
-                {lang === 'ar' ? getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name) : leagueInfo?.league.name} {lastSeason}/{lastSeason + 1}
+                {lang === 'ar' ? 
+                  getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name) 
+                    : leagueInfo?.league.name} 
+                    {/* {seasons.at(-1).year.toString()}/{(seasons.at(-1).year + 1).toString()} */}
               </span>
               <Favourite
                 elem_id={leagueInfo?.league.id}
@@ -124,11 +120,11 @@ export default function League() {
           <span className="font-medium text-gray-700 border-none">{getTranslation('Select Season', lang)}</span>
           <select
             className="p-2 border rounded-md bg-gray-50 shadow-sm focus:outline-none w-32"
-            onChange={handleSelectedSeason}
-            value={selectedSeason}
+            onChange={(e)=>setSelectedSeason(e.target.value)}
+            
           >
-            {seasons().map((season) => (
-              <option key={season} value={season}>{season}</option>
+            {seasons.map((season) => (
+              <option key={season.year} value={season.year}>{season.year}</option>
             ))}
           </select>
         </div>

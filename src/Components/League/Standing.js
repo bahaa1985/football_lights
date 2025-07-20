@@ -9,7 +9,7 @@ function Standings(props){
     
     let league=props.league;
     let season=props.season
-
+    
     const [standings,setStandings]=useState([])
     const [standingsGroups,setStandingsGroups]= useState([]);
     const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
@@ -25,7 +25,7 @@ function Standings(props){
 
             if(result.data.response[0].league.country !== "World"){
                 let groups = result.data.response[0].league.standings.map((group)=>{
-                    console.log("group:",group[0].group);
+                    // console.log("group:",group[0].group);
                     return group[0].group                                
                 })
                  setStandingsGroups(groups)
@@ -35,7 +35,7 @@ function Standings(props){
                 return item.description
             });
             setDesccription(Object.keys(desc_keys))
-            console.log('descs',description)
+            // console.log('descs',description)
 
             setCountry(result.data.response[0].league.country);
 
@@ -43,7 +43,7 @@ function Standings(props){
                 setDeviceWidth(window.innerWidth);
             })                                    
         })          
-    },[])
+    },[league,season])
     
     return(
         <div className='w-full lg:w-[70%] mx-auto'>
@@ -93,7 +93,7 @@ function Standings(props){
                 <p>{getTranslation('Rotate to landscape mode to see all the columns',lang)}</p>
                 :null
             }
-            <table className='relative top-0 w-full table-auto'>
+            <table className='relative top-4 w-full table-auto'>
                 <thead className='sticky top-16'>
                     <tr className="bg-slate-800 text-slate-50 text-center divide-x-2">
                         <td className='p-2'>{getTranslation('Rank',lang)}</td>
@@ -124,7 +124,7 @@ function Standings(props){
                                     : null, 
                                 group.map((elem,index)=>{
                                     return(
-                                        <tr key={index} className='bg-slate-100 text-center border-b-slate-400 border-solid border'>
+                                        <tr key={index} className={`text-center border-b-slate-400 ${index !== group.length-1 ?  'border-solid border':null}`}>
                                             <td className='p-2'>
                                             {
                                                 elem.description === description[0] ?

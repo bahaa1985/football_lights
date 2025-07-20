@@ -3,6 +3,7 @@ import Favourites from "./Favourites.js";
 import DayFixtures from './DayFixtures.jsx';
 import News from './News.jsx';
 import { getCookie } from '../../Api/cookie.js';
+import { NavLink } from 'react-router-dom';
 
 export default function Home(){
 
@@ -68,34 +69,39 @@ export default function Home(){
                 
             </div>
             {/* leagues */}
-            <div className='text-3xl font-bold'>Leagues</div>
-            <div className='flex flex-row flex-wrap gap-3 justify-between p-6 my-8 border-r border-l border-b border-slate-400'>
+            <div className='bg-slate-800 py-3 text-white text-center text-3xl font-bold'>Leagues</div>
+            <div className='flex flex-row flex-wrap gap-3 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400'>
                     {
                         leaguesArray.map((league,index)=>{
                             return(
+                                <NavLink to={`/league/${league.id}`} className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={league.id}>
                                 <div className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={league.id}>
                                     <img className='size-8' src={league.logo} alt={league.name} />
-                                    <h3 className='w-24'>{league.name}</h3>
+                                    <h3 className='w-24 sm:w-full font-bold'>{league.name}</h3>
                                 </div>
+                                </NavLink>
                             )
                         })
                     }
             </div>
             {/* Teams */}
-            <div className='text-3xl font-bold'>Teams</div>
-            <div className='flex flex-row flex-wrap gap-3 justify-between p-6 my-8 border-r border-l border-b border-slate-400'>
+            <div className='bg-slate-800 py-3 text-white text-center text-3xl font-bold'>Teams</div>
+            <div className='flex flex-row flex-wrap gap-3 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400'>
                     {   teamsArray.map((team,index)=>{
                             return(
+                                <NavLink to={`/team/${team.id}`} className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                 <div className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                     <img className='size-8' src={team.logo} alt={team.name} />
-                                    <h3 className='w-24'>{team.name}</h3>
+                                    <h3 className='w-24 sm:w-full font-bold'>{team.name}</h3>
                                 </div>
+                                </NavLink>
                             )
                         })
                     }
             </div>
             {/* <br/> */}
-            <div className='flex flex-col sm:flex-row sm:justify-between w-full my-2'>
+             <div className='bg-slate-800 py-3 text-white text-center text-3xl font-bold'>News</div>
+            <div className='flex flex-col sm:flex-row sm:justify-between w-full mb-2'>
                 <News />
                 
             </div>

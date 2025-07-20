@@ -74,7 +74,7 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className="w-full h-screen mt-16  rounded-lg bg-gray-100 p-4">
+    <div className="absolute top-10 w-3/4 h-96 mt-16  rounded-lg bg-gray-100 p-4">
       <div className="flex flex-row items-center gap-2 mb-4">
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a Language', lang)}
