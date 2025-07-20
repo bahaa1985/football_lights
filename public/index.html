@@ -41,13 +41,9 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
       <script>
-        const language = document.cookie('language').lang || 'en';
-        
-        if(language === 'ar'){
-          document.body.setAttribute('dir','rtl');
-        } else {
-          document.body.setAttribute('dir','ltr');
-        }
+        const lang =JSON.parse(localStorage.getItem('language'));
+        console.log("lang",lang);
+       
       </script>
   </body>
 </html>

@@ -10,6 +10,7 @@ export default function Preferences(params) {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [language, setLanguage] = useState(getCookie("language") || "en");
+  
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
 
@@ -19,39 +20,39 @@ export default function Preferences(params) {
     switch(language){
       case 'en':
         setLanguage('en'); //english
-        setCookie("language",{lang:language,tag:'soccer'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'soccer'}))       
         break;
       case 'fr':
         setLanguage('fr'); //french
-         setCookie("language",{lang:language,tag:'football'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'football'}))
         break;
       case 'es':
         setLanguage('es'); //spanish
-         setCookie("language",{lang:language,tag:'fútbol'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'fútbol'}))
         break;
       case 'ar':
-        setLanguage('ar');//arabic
-         setCookie("language",{lang:language,tag:'كرة القدم'});
+        setLanguage('ar');//arabic       
+         window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'كرة القدم'}))
         break;
       case 'zh':
         setLanguage('zh');//chinese
-         setCookie("language",{lang:language,tag:'足球'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'足球'}))
         break;
       case 'ja':
         setLanguage('ja'); //japanse
-         setCookie("language",{lang:language,tag:'サッカー'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'サッカー'}))
         break;
       case 'it':
         setLanguage('it');//italian
-         setCookie("language",{lang:language,tag:'calcio'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'calcio'}))
         break;
       case 'pt':
         setLanguage('pt');//portugeuse
-         setCookie("language",{lang:language,tag:'futebol'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'futebol'}))
         break;
       default:
         setLanguage('en');
-         setCookie("language",{lang:language,tag:'soccer'});
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'soccer'}))
     }
     
   }
@@ -74,7 +75,7 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className="absolute top-10 w-3/4 h-96 mt-16  rounded-lg bg-gray-100 p-4">
+    <div className='w-full h-[450px] mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
       <div className="flex flex-row items-center gap-2 mb-4">
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a Language', lang)}

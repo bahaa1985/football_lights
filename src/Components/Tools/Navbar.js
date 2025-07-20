@@ -40,7 +40,7 @@ function Navbar() {
 
     return ( 
         <div dir='ltr'>
-            <nav id="nav_bar" className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-md z-40">
+            <nav id="nav_bar" className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-lg overflow-x-hidden z-40">
       {/* Hamburger button */}
       <div className="my-auto md:hidden basis-1/3 px-3">
         <button id="hamburger_button" ref={hamburger_button}>
@@ -92,8 +92,8 @@ function Navbar() {
       {/* </div> */}
       {/* Prefernces */}
       {preferenceWindow && (
-      <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg relative w-11/12 max-w-lg">
+      <div className="w-full fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg relative w-full  sm:w-3/4 xl:w-1/2">
             <button 
               onClick={() => setPreferenceWindow(false)} 
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
