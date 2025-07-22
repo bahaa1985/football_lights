@@ -4,7 +4,7 @@ import getPlayers from "../../Api/Players.js";
 import PlayerStats from "./PlayerStats.js";
 import { useState,useMemo } from "react";
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
+import { getTranslation } from "../Translation/labels.js";
 
 function Statistics(props){
 

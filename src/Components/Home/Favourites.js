@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../../multi_language_translations.js';
-import { getLeagueTranslationByCountry } from '../../leagues.js';
+import { getTranslation } from '../Translation/labels.js';
+import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
 import { NavLink } from 'react-router-dom';
 
 function Favourites() {

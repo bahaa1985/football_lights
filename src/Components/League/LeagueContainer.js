@@ -7,9 +7,9 @@ import Tabs from "../Tools/Tabs.jsx";
 import { getLeagues } from "../../Api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
-import { getLeagueTranslationByCountry } from "../../leagues.js";
-import { getCountryNameTranslation } from "../../countries.js";
+import { getTranslation } from "../Translation/labels.js";
+import { getLeagueTranslationByCountry } from "../Translation/leagues.js";
+import { getCountryNameTranslation } from "../Translation/countries.js";
 
 export default function League() {
   const leagueParam = parseInt(useParams().leagueId);

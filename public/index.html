@@ -41,9 +41,17 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
       <script>
-        const lang =JSON.parse(localStorage.getItem('language'));
-        console.log("lang",lang);
-       
+        if(localStorage.getItem('language') !== null){
+const language =JSON.parse(localStorage.getItem('language'));
+        
+        if(language.lang === 'ar'){
+          document.body.setAttribute('dir','rtl');
+        }
+        else{
+          document.body.setAttribute('dir','ltr');
+        }     
+        }
+          
       </script>
   </body>
 </html>

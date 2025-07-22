@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { groupLeagueFixtures } from "../../Api/Fixtures.js";
 import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
+import { getTranslation } from "../Translation/labels.js";
 import FixtureRow from "../Tools/FixtureRow.jsx";
 
 export default function LeagueFixtures(props) {

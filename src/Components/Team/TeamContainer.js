@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamLeagues } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../../multi_language_translations.js';
+import { getTranslation } from '../Translation/labels.js';
 import TeamStatistics from './TeamStatistics.jsx';
 import Favourite from '../Tools/Favourite.jsx';
 

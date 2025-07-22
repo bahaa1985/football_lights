@@ -8,8 +8,8 @@ import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
 import Tabs from '../Tools/Tabs.jsx';
 import getLocalLabels from "../../Api/Localization.js";
-import { getAllTranslations, getTranslation } from "../../multi_language_translations.js";
-import { getLeagueTranslationByCountry } from "../../leagues.js";
+import { getAllTranslations, getTranslation } from "../Translation/labels.js";
+import { getLeagueTranslationByCountry } from "../Translation/countries.js";
 
 export default function DayFixtures() {
   function getCurrentDate() {

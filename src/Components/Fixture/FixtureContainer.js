@@ -8,7 +8,7 @@ import LineUp from "./LineUp.js";
 import  Tabs from '../Tools/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../../multi_language_translations.js';
+import { getTranslation } from '../Translation/labels.js';
 
 export const TeamsContext= createContext();
 

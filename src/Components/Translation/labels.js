@@ -654,7 +654,7 @@ export function getTranslation(key, lang) {
   if (translation[lang] && translation[lang][key]) {
     return translation[lang][key];
   } else {
-    return translation["sp"][key] || key; // Fallback to Spanish or the key itself
+    return translation["en"][key] || key; // Fallback to Spanish or the key itself
   }
 }
 export function getAllTranslations(lang) {

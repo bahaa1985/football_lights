@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import Pagination from "./Pagination.js";
 import { getCookie, setCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
+import { getTranslation } from "../Translation/labels.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [language, setLanguage] = useState(getCookie("language") || "en");
+  const [language, setLanguage] = useState(JSON.parse(localStorage.getItem('language'))?.lang || "en");
   
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
@@ -26,13 +26,13 @@ export default function Preferences(params) {
         setLanguage('fr'); //french
         window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'football'}))
         break;
-      case 'es':
-        setLanguage('es'); //spanish
+      case 'sp':
+        setLanguage('sp'); //spanish
         window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'fútbol'}))
         break;
       case 'ar':
         setLanguage('ar');//arabic       
-         window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'كرة القدم'}))
+        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'كرة القدم'}))
         break;
       case 'zh':
         setLanguage('zh');//chinese
@@ -57,7 +57,7 @@ export default function Preferences(params) {
     
   }
 
-  const lang= getCookie("language").lang || "en";
+  const lang= JSON.parse(localStorage.getItem('language'))?.lang || "en";
   //use Effect:
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -90,7 +90,7 @@ export default function Preferences(params) {
           <option key={3} value="ar">عربي</option>
           <option key={0} value="en">English</option>
           <option key={1} value="fr">Français</option>
-          <option key={2} value="es">Español</option>
+          <option key={2} value="sp">Español</option>
           <option key={6} value="it">Italiano</option>
           <option key={7} value="pt">Português</option>
         </select>

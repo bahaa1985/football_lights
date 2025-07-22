@@ -1,7 +1,7 @@
 import React, { useState, useMemo, memo } from 'react';
 import { getTeamStatistics } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../../multi_language_translations.js';
+import { getTranslation } from '../Translation/labels.js';
 
 function TeamStatistics({ team, league, season }) {
   const [teamStatistics, setTeamStatistics] = useState({});

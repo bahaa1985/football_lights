@@ -1,13 +1,3 @@
-// This script sets the document direction based on the 'language' cookie
-// import { getCookie } from "../src/Api/cookie";
-
-//     const lang = getCookie('language').lang || 'en';
-    
-//     if(lang === 'ar'){
-//         document.body.setAttribute('dir','rtl');
-//     } else {
-//         document.body.setAttribute('dir','ltr');
-//     }
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;

@@ -186,7 +186,7 @@ const teams = {
     ],
     "Portugal": [
         { "FC Porto": "بورتو" },
-        { "SL Benfica": "بنفيكا" },
+        { "Benfica": "بنفيكا" },
         { "Sporting CP": "سبورتينغ لشبونة" },
         { "Braga": "سبورتينغ براغا" },
         { "Vitoria de Guimaraes": "فيتوريا غيماريش" },
@@ -405,6 +405,10 @@ const teams = {
         { "RoPS Rovaniemi": "روبس روفانييمي" },
         { "FC Lahti": "إف سي لاhti" },
         { "KTP Kotka": "كي تي بي كوتكا" }
+    ],
+    "Argentina":[
+        {"Boca Juniors":"بوكا جونيورز"},
+        {"River Plate":"ريفر بلات"}
     ]
         
 };

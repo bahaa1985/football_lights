@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
+import { getTranslation } from "../Translation/labels.js";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;

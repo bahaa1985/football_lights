@@ -1,7 +1,7 @@
 // Tabs.jsx
 import {React} from 'react';
 import { getCookie } from '../../Api/cookie';
-import { getTranslation } from '../../multi_language_translations';
+import { getTranslation } from '../Translation/labels';
 const language_cookie = getCookie('language') || 'en';
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (

@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import { faCalendar, faClock, faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../../multi_language_translations.js";
-import  {getLeagueTranslationByCountry, getRoundTranslation} from '../../leagues.js';
-import { getTeamByCountry,getTeamByName } from "../../teams.js";
+import { getTranslation } from "../Translation/labels.js";
+import  {getLeagueTranslationByCountry, getRoundTranslation} from '../Translation/leagues.js';
+import { getTeamByCountry,getTeamByName } from "../Translation/teams.js";
 function FixtureRow(props) {
   const fixtures = props.fixturesSource;
   console.log("fixtures",fixtures);
