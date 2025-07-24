@@ -25,7 +25,7 @@ export default function League() {
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   
-  const lang = getCookie('language').lang || 'en';
+  const lang= JSON.parse(localStorage.getItem("language"))?.lang || 'en';
 
   useEffect(() => {
     // if (isClicked) {
@@ -74,7 +74,6 @@ export default function League() {
               style={{ minWidth: 60 }}
             >
               <img src={league.logo} alt={league.name} className="w-10 h-10 sm:w-14 sm:h-14 object-contain" />
-              {/* <span className="text-xs mt-1">{league.name}</span> */}
             </button>
           ))}
         </div>
@@ -98,6 +97,7 @@ export default function League() {
                 elem_id={leagueInfo?.league.id}
                 cookie_name={'prefered_leagues'}
                 obj={{
+
                   id: leagueInfo?.league.id,
                   name: leagueInfo?.league.name,
                   logo: leagueInfo?.league.logo,
