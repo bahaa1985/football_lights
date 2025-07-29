@@ -7,7 +7,7 @@ import { getTranslation } from '../Translation/labels.js';
 const lang =  JSON.parse(localStorage.getItem('language'))?.lang || 'en';
 const teams = getCookie('prefered_teams') || [];
 
-const teamsArray=[
+export const teamsArray=[
     ...teams.map((team, idx) => ({
         id: team.id,
         name: team.name || team,

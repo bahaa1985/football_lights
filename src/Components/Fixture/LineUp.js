@@ -9,15 +9,19 @@ import "../../styles/lineup.css";
 
 //main function
 function LineUp(props) {
-  const homeParam = props.teams.home.id;
-  const awayParam = props.teams.away.id;
+  const homeId = props.teams.home.id;
+  const homeName = props.teams.home.name;
+  const homeLogo = props.teams.home.logo;
+  const awayId = props.teams.away.id;
+  const awayName = props.teams.away.name;
+  const awayLogo = props.teams.away.logo;
   const fixtureId = props.fixtureId;
   ///Home team details:
   const [homeTeamProfile, setHomeTeamProfile] = useState({
-    id: homeParam,
-    name: "",
-    logo: "",
-    formation: [],
+    id: homeId,
+    name: homeName,
+    logo: homeLogo,
+    formation: [4,4,2] //default formation
   });
   const [homeLineUp, setHomeLineUp] = useState([]);
   const [homePlayers, setHomePlayers] = useState([]);
@@ -27,10 +31,10 @@ function LineUp(props) {
   const [homeSub, setHomeSub] = useState([]);
   /// Away team details:
   const [awayTeamProfile, setAwayTeamProfile] = useState({
-    id: awayParam,
-    name: "",
-    logo: "",
-    formation: [],
+    id: awayId,
+    name: awayName,
+    logo: awayLogo,
+    formation: [4,4,2] //default formation,
   });
   const [awayLineUp, setAwayLineUp] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
@@ -39,8 +43,8 @@ function LineUp(props) {
   const [awayCoach, setAwayCoash] = useState({});
   const [awaySub, setAwaySub] = useState([]);
   ///
-  const [clickedSub, setClickedSub] = useState(homeParam);
-  const [clickedTeam,setClickedTeam]= useState(homeParam);
+  const [clickedSub, setClickedSub] = useState(homeId);
+  const [clickedTeam,setClickedTeam]= useState(homeId);
   const [isLoaded, setLoaded] = useState(false); //for preventing rendering before complete fetching data
 
   // let i=0;
@@ -53,7 +57,7 @@ function LineUp(props) {
       console.log("lineup",lineup_response.data);
       
       //
-      if (isMounted) {
+      if (isMounted && lineup_response.data.response.length > 0) {
         setHomeTeamProfile({
           id: lineup_response?.data.response[0].team.id,
           name: lineup_response?.data.response[0].team.name,
@@ -98,7 +102,7 @@ function LineUp(props) {
     };
   }, [fixtureId]);
 
-  console.log('hp',homePlayers);
+  // console.log('hp',homePlayers);
   
 
   function linesPositions() { // this function will not be called if no formation is provided, the players will be displayed as stack
@@ -171,7 +175,7 @@ function LineUp(props) {
   }
 
   return (
-    <div>
+    <div className="h-full">
       <div className="block mx-auto my-2 bg-slate-50 rounded-lg">
         {isLoaded ? (
           <>
@@ -318,7 +322,7 @@ function LineUp(props) {
                           <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="size-8 sm:size-10"/>
                         </div>
                       </div>
-                      {clickedSub === homeParam ? (
+                      {clickedSub === homeId ? (
                         <>
                           {/* home coach and subs */}
                           <div className="flex flex-row justify-start space-x-2">
@@ -390,7 +394,7 @@ function LineUp(props) {
                 </div>
             </div>                        
           </>
-        ) : null}
+        ) : <p className="h-full">No Data Available</p>}
       </div>
     </div>
   );

@@ -21,13 +21,16 @@ function Statistics(props){
             const stats_response = await getStatistics(fixtureId);
             const players_response = await getPlayers(fixtureId);
             //
-            setHomeStatistics(stats_response.data.response[0].statistics);
-            setAwayStatistics(stats_response.data.response[1].statistics);
-            //
-            setHomePlayers(players_response.data.response[0].players);
-            setAwayPlayers(players_response.data.response[1].players);
-            //
-            setLoaded(true);
+            if(stats_response.data.response.length > 0 ){
+                setHomeStatistics(stats_response.data.response[0].statistics);
+                setAwayStatistics(stats_response.data.response[1].statistics);
+                //
+                setHomePlayers(players_response.data.response[0].players);
+                setAwayPlayers(players_response.data.response[1].players);
+                //
+                setLoaded(true);
+            }
+           
         }
         fetchStatistics();                 
     },[fixtureId])
@@ -42,7 +45,7 @@ function Statistics(props){
         {
             isLoaded ?
             [
-            homeStatistics?.map((item,index)=>{
+            homeStatistics.length > 0?.map((item,index)=>{
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
@@ -81,7 +84,7 @@ function Statistics(props){
             }),
             <PlayerStats statistics={{home:homePlayers,away:awayPlayers}}  />
             ]
-            :null
+            :<p>No Data Available</p>
         }      
                                     
         </div>

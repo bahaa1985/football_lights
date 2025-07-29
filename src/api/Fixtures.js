@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "./cookie.js";
-
+import { leaguesArray } from "../Components/Tools/Leagues.jsx";
 
 export function getFixture(fixture){
   let config = {
@@ -42,10 +42,10 @@ function getLiveFixtures(leagues) {
   return axios(config);
 }
 
-function getDateFixtures(league, season, date) {
+function getDateFixtures(date) {
   let config = {
     method: "GET",
-    url: `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}&date=${date}`,
+    url: `https://v3.football.api-sports.io/fixtures?date=${date}`,
     headers: {
       "x-rapidapi-host": "v3.football.api-sports.io",
       "x-rapidapi-key": process.env.REACT_APP_XRAPIDAPIKEY,
@@ -70,22 +70,16 @@ function getTeamFixtures(date) {
 
 async function getPromisedDateFixtures(dateString) {
   if (dateString !== "") {
-    let leagues = getCookie("prefered_leagues");
-    if (leagues.length > 0) {
       let fixturesArray = [];
-      for(let i=0;i<leagues.length;i++){
-        let result = await getDateFixtures(leagues[i].id,leagues[i].season,dateString)       
+        let result = await getDateFixtures(dateString)       
         fixturesArray.push(...result.data.response);
         fixturesArray.sort((a, b) => {
           if (a.fixture.status !== "FT" && b.fixture.status === "FT") return -1;
           else if (a.fixture.status === "FT" && b.fixture.status !== "FT")  return 1;
           return 0;
         });
-      }
-      return fixturesArray;
-    } else {
-      return [];
-    }
+        const filteredFixtures =fixturesArray.filter(fixture=>leaguesArray.some((league) => league.id === fixture.league.id)) //to get only the identified leagues fixtures
+      return filteredFixtures;
   }
 }
 
@@ -93,6 +87,7 @@ export async function groupDateFixtures(dateString) {
   let grouped = [];
   try{
     await getPromisedDateFixtures(dateString).then((result) => {
+      // const filteredFixtures =result.filter(fixture=>leaguesArray.some((league) => league.id === fixture.league.id)) //to get only the identified leagues fixtures
       grouped = Object.groupBy(result,(elem)=>{
         return elem.league.name + " - " + elem.league.round;
       })

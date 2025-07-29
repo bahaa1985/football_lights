@@ -137,6 +137,7 @@ export default function Ratings(props){
                 <tr className="flex flex-col w-full">
                 {
                     clickedTeam === homeTeam.id ?
+                    homeStatistics.length>0 ?
                     homeStatistics.map((elem, index) => {
                         return (
                             elem.statistics[0].games.rating !== null ?
@@ -148,8 +149,9 @@ export default function Ratings(props){
                             </td>
                             :null
                             )
-                    })
+                    }):'No available data'
                     :
+                    awayStatistics.length>0 ?
                     awayStatistics.map((elem, index) => {
                         return (
                             elem.statistics[0].games.rating !== null ?
@@ -161,7 +163,7 @@ export default function Ratings(props){
                             </td>
                             :null
                         )
-                    })
+                    }):'No available data'
                 }
                 </tr>
             }

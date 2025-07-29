@@ -128,9 +128,8 @@ function PlayerStats(props) {
         return(
         <div className={`${'w-full'}`}>
             {
-                 source.length > 0 ?
+                source.length > 0 ?
                 source?.map((elem,index) => {
-                    // if (elem[statKey][statSubKey] !== null)
                     return (                       
                         <div className={`flex ${statKey === 'passes' ? 'flex-col items-start' : 'sm:flex-row justify-between items-center'} 
                                         mx-auto px-1 justify-between space-x-2 w-[90%] 
@@ -157,7 +156,7 @@ function PlayerStats(props) {
                         </div>                        
                     )
                 })
-                : <p>No Data</p>
+                : <p>No Available Data</p>
             }
         </div>)
     }

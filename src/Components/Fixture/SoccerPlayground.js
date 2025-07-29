@@ -15,6 +15,7 @@ const SoccerPlayground = (props) => {
       {/* Center Circle */}
       <div className="absolute top-1/2 left-1/2 w-[120px] h-[120px] border-2 border-slate-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
 
+        
       {/* Top Half */}
       <div className="absolute top-0 left-0 w-full h-1/2">
         {/* Goal Area */}
@@ -24,6 +25,7 @@ const SoccerPlayground = (props) => {
         <div className="absolute top-0 left-1/2 w-[200px] h-24 border-2 border-slate-500 transform -translate-x-1/2"></div>
         <div className='w-full h-full flex flex-col justify-center'>
         {
+            homeLines.length > 0 ?
             homeLines.map((line, index) => {
                 return (
                     <div key={index} className={`${homeLines.length===4 ? 'h-[23%]' : 'h-[19%]'}`}>
@@ -31,6 +33,7 @@ const SoccerPlayground = (props) => {
                     </div>
                 );
             })
+            :'No data available'
         }
         </div>
         
@@ -45,6 +48,7 @@ const SoccerPlayground = (props) => {
         <div className="absolute bottom-0 left-1/2 w-[200px] h-24 border-2 border-slate-500 transform -translate-x-1/2"></div>
         <div className='w-full h-full flex flex-col justify-center'>
         {
+            awayLines.length>0 ?
             awayLines.map((line, index) => {
                 return (
                     <div key={index} className={`${awayLines.length===4 ? 'h-[23%]' : 'h-[19%]'}`}>
@@ -52,6 +56,7 @@ const SoccerPlayground = (props) => {
                     </div>
                 );
             })
+            :'No data available'
         }
         </div>
       </div>

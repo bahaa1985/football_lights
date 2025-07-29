@@ -30,7 +30,7 @@ function FixtureRow(props) {
             {
                 // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
                 type === "day_matches" ? (
-                <div className="flex justify-start items-center my-2 p-2 bg-blue-600 text-slate-50 rounded-2xl shadow-md border border-slate-300">
+                <div className="flex justify-start items-center my-2 p-2 bg-blue-500 text-slate-50 shadow-md border border-slate-300">
                   <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 h-8 sm:w-10  sm:h-10"/>
                   <NavLink  className="my-auto ml-2"  to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
                   <span className="text-left border-none font-semibold">
@@ -77,7 +77,7 @@ function FixtureRow(props) {
                       :null
                   }
                   {/* Match date */}
-                  <div className="flex flex-row justify-start w-full my-1">
+                  <div className="flex flex-row justify-between w-full px-2  my-1">
                       {type === "all_fixtures" ? (
                         <div className="flex justify-start items-center">
                           <FontAwesomeIcon
@@ -91,7 +91,8 @@ function FixtureRow(props) {
                         </div>
                       ) : null}
 
-                      <div className="flex justify-start items-center mx-2">
+                      <div className="flex flex-row justify-start">
+<div className="flex justify-start items-center mx-2">
                         <FontAwesomeIcon className="mx-2 h-4" icon={faClock}></FontAwesomeIcon>
                         <span className="border-none text-sm lg:text-lg">
                           {new Date(elem.fixture.date).getHours() +
@@ -103,10 +104,8 @@ function FixtureRow(props) {
                               : new Date(elem.fixture.date).getMinutes().toString())}
                           </span>
                         </div>
-                        
-                        
+                        {/*  */}
                         <div className="flex justify-start items-center">
-                        {/* <div  className="flex justify-center items-center"> */}
                         {
                           // live indicator:
                           elem.fixture.status.short === "1H" ||
@@ -130,7 +129,10 @@ function FixtureRow(props) {
                           </span>
                         }
                         </div>
-
+                      </div>
+                        <div className="flex justify-end">
+                          <a href="/">Details</a>
+                        </div>
                       </div>
                   {/* Fixture Teams */}
                   <NavLink to={`/fixture/${elem?.fixture?.id}`} state={{fixture_data:elem}}>
@@ -140,7 +142,7 @@ function FixtureRow(props) {
                       key={i}
                     >
                       {/* Home team */}
-                      <div className="w-full md:w-[48%] flex flex-row justify-center gap-2 lg:justify-between lg:gap-0 items-center my1">
+                      <div className="w-full md:w-[48%] flex flex-row justify-center gap-2 lg:justify-between lg:gap-0 items-center my-1">
                         <img
                           src={elem.teams.home.logo}
                           loading="lazy"

@@ -5,7 +5,7 @@ import { getTranslation } from '../Translation/labels';
 const language_cookie = getCookie('language') || 'en';
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
-    <div className='w-full md:w-1/2 mx-auto flex flex-row justify-center gap-2 '>
+    <div className='w-full mx-auto flex flex-row justify-center gap-2 '>
       {/* tabs */}
       {tabs.map((tab, index) => (
         <div

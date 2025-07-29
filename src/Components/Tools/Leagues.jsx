@@ -7,7 +7,7 @@ import { getTranslation } from '../Translation/labels.js';
 const leagues = getCookie('prefered_leagues') || [];
     // console.log("cookie", getCookie('prefered_leagues')); 
 const lang= JSON.parse(localStorage.getItem("language"))?.lang || 'en'
-const leaguesArray=[
+export const leaguesArray=[
     ...leagues.map((league, idx) => ({ //user preferences
         id: league.id,
         name: league.name || league,

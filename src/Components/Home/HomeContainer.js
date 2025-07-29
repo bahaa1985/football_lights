@@ -12,13 +12,13 @@ export default function Home(){
     return(
         <div className={`mt-20 w-[90%] mx-auto`}>
             <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>
-                {/* <Favourites/>
-                <DayFixtures /> */}                
+                <Favourites/> 
+                <DayFixtures />                
             </div>
             {/* leagues */}
-            <Leagues />
+            {/* <Leagues /> */}
             {/* Teams */}
-            <Teams />
+            {/* <Teams /> */}
             {/* <br/> */}
              <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>News</div>
             <div className='flex flex-col sm:flex-row sm:justify-between w-full mb-2'>

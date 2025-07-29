@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  groupDateFixtures,
-  getPromisedTeamFixtures,
-} from "../../Api/Fixtures.js";
+import {groupDateFixtures,getPromisedTeamFixtures,} from "../../Api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
 import FixtureRow from "../Tools/FixtureRow.jsx";
 import { getCookie } from "../../Api/cookie.js";
+import { leaguesArray } from "../Tools/Leagues.jsx";
 import Tabs from '../Tools/Tabs.jsx';
 import getLocalLabels from "../../Api/Localization.js";
 import { getAllTranslations, getTranslation } from "../Translation/labels.js";
 import { getLeagueTranslationByCountry } from "../Translation/countries.js";
+import { teamsArray } from "../Tools/Teams.jsx";
+import { useSearchParams } from "react-router-dom";
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -28,15 +28,17 @@ export default function DayFixtures() {
   }
 
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
+  const [selectedSeason,setSelectedSeason] = useState(0);
   const [dateFixtures, setDateFixtures] = useState([]);
   const [teamsFixtures, setTeamsFixtures] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab,setActiveTab] = useState(0);
+  const [isClicked,setClicked]=useState(false);
   const [deviceWidth,setDeviceWidth] = useState(window.innerWidth);
   const [message, setMessage] = useState('');
 
-  const leagues = getCookie("prefered_leagues");
-  const teams = getCookie("prefered_teams");
+  const leagues = leaguesArray;
+  const teams = teamsArray;
   const language = getCookie('language') || 'en';
 
   const labels = getAllTranslations(language.lang);
@@ -44,13 +46,14 @@ export default function DayFixtures() {
   
   useEffect(() => {
 
-    if(leagues.length !== 0 && teams.length !== 0){
+    if(leagues.length > 0 && teams.length> 0 && isClicked){
       async function fetchFixtures() {
         const date_response = await groupDateFixtures(selectedDate);
-        const teams_response = await getPromisedTeamFixtures(selectedDate);
+        // const teams_response = await getPromisedTeamFixtures(selectedDate);
         setDateFixtures(date_response);
-        setTeamsFixtures(teams_response);
+        // setTeamsFixtures(teams_response);
         setLoaded(true);
+        setClicked(false);
       }
       fetchFixtures();
 
@@ -67,22 +70,22 @@ export default function DayFixtures() {
       setMessage(getTranslation('No Current Fixtures',language.lang) || 'No Leagues Or Teams Are Selected. Go to Preferences');
     }
     
-  }, [selectedDate]);
+  }, [selectedDate,isClicked]);
 
   function handleSelectedTab(index){
     setActiveTab(index);
   }
 
   return (
-    <div className="w-full sm:w-[65%] mx-auto my-2 bg-slate-50 rounded-md">
+    <div className="w-full sm:w-[65%] mx-auto my-2 bg-slate-50 ">
 
-      {isLoaded ? (
-        (
-          <div className="w-full mx-auto rounded-lg bg-slate-50 p-2">
-            <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50 rounded-2xl">
+<div>
+
+</div>
+<div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50">
               {getTranslation('Fixtures',language.lang) || 'Fixtures'}
             </div>
-            {/* date picker */}
+{/* date picker */}
             <div className="flex justify-center my-4">
               <input
                 type="date"
@@ -90,7 +93,13 @@ export default function DayFixtures() {
                 value={selectedDate}
                 className="border border-slate-300 rounded px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition"
               />
+              <button className="bg-slate-900 text-white" onClick={()=>setClicked(true)}>Confirm</button>
             </div>
+     
+      {isLoaded ? (
+        (
+          <div className="w-full mx-auto rounded-lg bg-slate-50 p-2">            
+            
             <div className="w-full">
               <Tabs tabs={['Leagues','Teams']} activeTab={activeTab} onTabChange={handleSelectedTab}/>
               <div className="w-full h-auto sm:h-96 sm:overflow-y-scroll text-center">
