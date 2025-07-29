@@ -304,7 +304,7 @@ function LineUp(props) {
                     <>
                       <div className="flex flex-row w-full justify-between divide-x-2 my-1">
                         <div
-                          className={`flex justify-start items-center w-[90%] rounded-lg p-1 space-x-1  ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          className={`flex justify-start items-center w-[90%] rounded-lg p-1 gap-2  ${clickedSub === homeTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
                           onClick={() => setClickedSub(homeTeamProfile.id)}
                         >
                           <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="size-8 sm:size-10"/>
@@ -313,7 +313,7 @@ function LineUp(props) {
                           </span>
                         </div>
                         <div
-                          className={`flex justify-end items-center space-x-1 w-[90%] rounded-lg p-1 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
+                          className={`flex justify-end items-center gap-2 w-[90%] rounded-lg p-1 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
                           onClick={() => setClickedSub(awayTeamProfile.id)}
                         >
                           <span className="text-center text-sm text-slate-50 border-none">
@@ -325,20 +325,12 @@ function LineUp(props) {
                       {clickedSub === homeId ? (
                         <>
                           {/* home coach and subs */}
-                          <div className="flex flex-row justify-start space-x-2">
+                          <div className="flex flex-row justify-start gap-2">
                             <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={homeCoach.photo} />
                             <span className="border-none flex justify-center items-center text-sm">Coach: {homeCoach.name}</span>
                           </div>
                           <div>
                             {homeSub.map((sub, index) => {
-                              // eslint-disable-next-line no-lone-blocks
-                              // {
-                                // sub.player.name
-                                // playerNameArr = sub.player.name.split(" ");
-                                // playerNameArr.length > 1
-                                //   ? (playerName = playerNameArr.slice(1))
-                                //   : (playerName = playerNameArr[0]);
-                              // }
                               return (
                                 <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
                                   

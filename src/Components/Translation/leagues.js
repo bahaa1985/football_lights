@@ -362,7 +362,7 @@ const rounds = {
 }
 export function getLeagueTranslationByCountry(country,league) {
     let leagueName = "";
-    leagues[country].map((elem)=>{
+    leagues[country]?.map((elem)=>{
         if (Object.keys(elem)[0] === league) {
           leagueName =  elem[league];
         }

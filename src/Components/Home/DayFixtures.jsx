@@ -42,7 +42,6 @@ export default function DayFixtures() {
   const language = getCookie('language') || 'en';
 
   const labels = getAllTranslations(language.lang);
-  console.log('labels',labels);
   
   useEffect(() => {
 

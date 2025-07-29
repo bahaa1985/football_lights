@@ -130,9 +130,11 @@ function FixtureRow(props) {
                         }
                         </div>
                       </div>
-                        <div className="flex justify-end">
-                          <a href="/">Details</a>
-                        </div>
+                       {Date.parse(elem.fixture.date) - Date.now() <= 1000*60*30 ?
+                          <div className="flex justify-end">
+                            <NavLink to={`/fixture/${elem?.fixture?.id}`} state={{fixture_data:elem}}>Details</NavLink>
+                              {/* <a href={`/fixture/${elem?.fixture?.id}`}>Details</a> */}
+                          </div>:null}
                       </div>
                   {/* Fixture Teams */}
                   <NavLink to={`/fixture/${elem?.fixture?.id}`} state={{fixture_data:elem}}>

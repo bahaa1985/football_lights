@@ -416,7 +416,7 @@ const teams = {
 
 export function getTeamByCountry(country,team) {
     if (teams[country]) {
-        const teamObj = teams[country].find(t => t[team]);
+        const teamObj = teams[country]?.find(t => t[team]);
         return teamObj ? teamObj[team] : null; // Return the Arabic name or null if not found
     }
     return null; // Return null if the country is not found   
@@ -424,7 +424,7 @@ export function getTeamByCountry(country,team) {
 
 export function getTeamByName(teamName) {
     for (const country in teams) {
-        const teamObj = teams[country].find(t => t[teamName]);
+        const teamObj = teams[country]?.find(t => t[teamName]);
         if (teamObj) {
             return teamObj[teamName]; // Return the Arabic name if found
         }

@@ -65,7 +65,7 @@ export default function Ratings(props){
         <div className="flex flex-col justify-center items-center 
               w-full p-2 mx-auto rounded-md bg-slate-800 text-slate-50">
           <span className="border-none text-sm sm:text-md">Man of the match</span>
-          <div className="flex flex-row justify-center items-center space-x-2 mx-auto">         
+          <div className="flex flex-row justify-center items-center gap-2 mx-auto">         
             <img className="w-12 h-12 rounded-full" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
             <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-md">
               {manOfTheMatch().player.name}
