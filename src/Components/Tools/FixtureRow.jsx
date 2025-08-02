@@ -7,8 +7,10 @@ import { getTranslation } from "../Translation/labels.js";
 import  {getLeagueTranslationByCountry, getRoundTranslation} from '../Translation/leagues.js';
 import { getTeamByCountry,getTeamByName } from "../Translation/teams.js";
 function FixtureRow(props) {
+  
   const fixtures = props.fixturesSource;
-  console.log("fixtures",fixtures);
+
+  // console.log(fixtures);
   
   const type = props.type;
 
@@ -20,7 +22,7 @@ function FixtureRow(props) {
   }) 
   },[])
 
-  const lang = getCookie('language').lang || 'en';
+   const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
 
   return Object.keys(fixtures).map((elem, index) => {
     return (
@@ -137,8 +139,6 @@ function FixtureRow(props) {
                           </div>:null}
                       </div>
                   {/* Fixture Teams */}
-                  <NavLink to={`/fixture/${elem?.fixture?.id}`} state={{fixture_data:elem}}>
-                  {/* <div  className="w-[95%] flex justify-center space-x-2 mx-auto my-2">                                                             */}
                     <div
                       className={`w-[95%] my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
@@ -157,7 +157,9 @@ function FixtureRow(props) {
                           to={`/team/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none text-sm  lg:text-lg">
-                            {elem.teams.home.name}
+                            {
+                              lang === 'ar' ? getTeamByName(elem.teams.home.name) :elem.teams.home.name
+                            }
                           </span>
                         </NavLink>
 
@@ -181,7 +183,9 @@ function FixtureRow(props) {
                           to={`/team/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                         >
                           <span className="border-none text-sm  lg:text-lg">
-                            {elem.teams.away.name}
+                            {
+                              lang === 'ar' ? getTeamByName(elem.teams.away.name) :elem.teams.away.name
+                            }
                           </span>
                         </NavLink>
 
@@ -190,7 +194,7 @@ function FixtureRow(props) {
                         </span>
                       </div>                      
                     </div>
-                  </NavLink>
+                  {/* </NavLink> */}
                 </div>
                 
               );

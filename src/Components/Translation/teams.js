@@ -11,12 +11,12 @@ const teams = {
         { "Everton": "إيفرتون" },
         { "Aston Villa": "أستون فيلا" },
         { "Leeds United": "ليدز يونايتد" },
-        { "Newcastle United": "نيوكاسل يونايتد" },
+        { "Newcastle": "نيوكاسل يونايتد" },
         { "Southampton": "ساوثهامبتون" },
         { "Crystal Palace": "كريستال بالاس" },
         {"Newcastle United": "نيوكاسل يونايتد" },
         {"Liecester": "ليستر سيتي" },
-        {"Wolverhampton": "وولفرهامبتون" },
+        {"Wolves": "وولفرهامبتون" },
         {"Ipswitch": "إبسويتش تاون" },
         {"Tottenham": "توتنهام هوتسبير"},
         { "Brighton": "برايتون" },
@@ -30,6 +30,7 @@ const teams = {
         { "Sheffield United": "شيفيلد يونايتد" },
         { "Nottingham Forest": "نوتنغهام فورست" },
         { "Middlesbrough": "ميدلزبره" },
+        {"Sunderland":"سندرلاند"},
         { "Blackburn Rovers": "بلاكبيرن روفرز" },
         { "Huddersfield Town": "هدرسفيلد تاون" },
         { "QPR": "كوينز بارك رينجرز" },
@@ -245,10 +246,10 @@ const teams = {
         { "Feyenoord": "فاينورد" },
         { "AZ Alkmaar": "ألكمار" },
         { "Vitesse Arnhem": "فيتيسه أرنهيم" },
-        { "FC Utrecht": "يوترخت" },
-        { "SC Heerenveen": "هيرنفين" },
-        { "FC Groningen": "غرونينغن" },
-        { "Heracles Almelo": "هيراكليس ألميلو" },
+        { "Utrecht": "يوترخت" },
+        { "Heerenveen": "هيرنفين" },
+        { "Groningen": "غرونينغن" },
+        { "Heracles": "هيراكليس ألميلو" },
         { "Sparta Rotterdam": "سبارتا روتردام" },
         { "Willem II": "ويليم الثاني" },
         { "ADO Den Haag": "أدو دين هاج" },
@@ -256,7 +257,9 @@ const teams = {
         { "Fortuna Sittard": "فورتونا سيتارد" },
         { "PEC Zwolle": "بي إي سي زفوله" },
         { "FC Emmen": "إمين" },
-        { "Excelsior Rotterdam": "إكسلسيور روتردام" }
+        { "Excelsior": "إكسلسيور روتردام" },
+        {"NEC Nijmegen": "إن إي سي نايميخن" },
+        { "Twente": "تفينتي" }
     ],
     "Turkey": [
         { "Galatasaray": "غلطة سراي" },
@@ -409,8 +412,35 @@ const teams = {
     "Argentina":[
         {"Boca Juniors":"بوكا جونيورز"},
         {"River Plate":"ريفر بلات"}
-    ]
-        
+    ],
+    "Egypt":[
+        {"Al Ahly":"الأهلي"},
+        {"Zamalek":"الزمالك"},
+        {"Pyramids FC":"بيراميدز"},
+        {"Al Ittihad Alexandria":"الاتحاد السكندري"},
+        {"Al Masry":"المصري"},
+        {"Al Mokawloon Al Arab":"المقاولون العرب"},
+        {"Enppi Club":"إنبي"},
+        {"Smouha SC":"سموحة"},
+        {"El Gouna FC":"الجونة"},
+        {"Ceramica Cleopatra FC":"سيراميكا كليوباترا"},
+        {"Future FC":"فيوتشر إف سي"}
+    ] ,
+    "Saudi Arabia":[
+        {"Al Hilal":"الهلال"},
+        {"Al Nassr":"النصر"},
+        {"Al Ahli":"الأهلي"},
+        {"Al Ittihad":"الاتحاد"},
+        {"Al Shabab":"الشباب"},
+        {"Al Taawoun":"التعاون"},
+        {"Al Fateh":"الفتح"},
+        {"Al Raed":"الرائد"},
+        {"Abha Club":"أبها"},
+        {"Damac FC":"ضمك"},
+        {"Al Batin FC":"الباطن"},
+        {"Al Fayha FC":"الفيحاء"},
+        {"Al Wehda FC":"الوحدة"}
+    ] 
 };
 
 
@@ -429,5 +459,5 @@ export function getTeamByName(teamName) {
             return teamObj[teamName]; // Return the Arabic name if found
         }
     }
-    return null; // Return null if the team is not found
+    return teamName; // Return null if the team is not found
 }

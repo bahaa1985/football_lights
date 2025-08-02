@@ -39,9 +39,9 @@ export default function DayFixtures() {
 
   const leagues = leaguesArray;
   const teams = teamsArray;
-  const language = getCookie('language') || 'en';
+  const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';
 
-  const labels = getAllTranslations(language.lang);
+  const labels = getAllTranslations(lang);
   
   useEffect(() => {
 
@@ -66,7 +66,7 @@ export default function DayFixtures() {
       }
     }
     else{
-      setMessage(getTranslation('No Current Fixtures',language.lang) || 'No Leagues Or Teams Are Selected. Go to Preferences');
+      setMessage(getTranslation('No Current Fixtures',lang) || 'No Leagues Or Teams Are Selected. Go to Preferences');
     }
     
   }, [selectedDate,isClicked]);
@@ -77,22 +77,18 @@ export default function DayFixtures() {
 
   return (
     <div className="w-full sm:w-[65%] mx-auto my-2 bg-slate-50 ">
-
-<div>
-
-</div>
 <div className="w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50">
-              {getTranslation('Fixtures',language.lang) || 'Fixtures'}
+              {getTranslation('Fixtures',lang) || 'Fixtures'}
             </div>
 {/* date picker */}
-            <div className="flex justify-center my-4">
+            <div className="flex justify-center gap-2 my-4">
               <input
                 type="date"
                 onChange={(e) => setSelectedDate(e.target.value)}
                 value={selectedDate}
                 className="border border-slate-300 rounded px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition"
               />
-              <button className="bg-slate-900 text-white" onClick={()=>setClicked(true)}>Confirm</button>
+              <button className="w-16 bg-slate-900 text-white rounded-md" onClick={()=>setClicked(true)}>Confirm</button>
             </div>
      
       {isLoaded ? (
@@ -109,7 +105,7 @@ export default function DayFixtures() {
                         <FixtureRow  type={"day_matches"}  fixturesSource={dateFixtures} />
                         : 
                         <div className="flex justify-center items-center">
-                          { getTranslation('No Current Fixtures',language.lang) }
+                          { getTranslation('No Current Fixtures',lang) }
                         </div>
                     :
                     activeTab === 1 ?
@@ -117,7 +113,7 @@ export default function DayFixtures() {
                         <FixtureRow type={"fav_teams_matches"} fixturesSource={teamsFixtures}    />
                         : 
                         <div className="flex justify-center items-center">
-                          {getTranslation('No Current Fixtures',language.lang) || 'No Current Fixtures' }
+                          {getTranslation('No Current Fixtures',lang) || 'No Current Fixtures' }
                         </div>  
                     :null)
                   :'No Favourite Leagues Or Teams Selected. Go To Preferences'                   
@@ -126,7 +122,7 @@ export default function DayFixtures() {
             </div>
           </div>
         )
-      ) : (
+      ) : isClicked && (
         <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-10">
           Loading ....
         </div>

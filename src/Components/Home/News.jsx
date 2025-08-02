@@ -41,8 +41,10 @@ export default function News(){
         }
     },[]);
     return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mx-auto bg-slate-50 rounded-lg my-2 p-4">
-
+        <div>
+            <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('News',lang)}</div>
+<div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mx-auto bg-slate-50 rounded-lg my-2 p-4">
+        
         {
             news.length > 0 && loaded ? 
                 news.map((item, index) => (
@@ -85,5 +87,7 @@ export default function News(){
             : null
         }
     </div>
+        </div>
+    
 )
 }

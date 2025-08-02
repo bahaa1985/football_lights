@@ -3,12 +3,16 @@ import { getCookie } from '../../Api/cookie.js';
 import { getTranslation } from '../Translation/labels.js';
 import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
 import { NavLink } from 'react-router-dom';
+import Favourite from '../Tools/Favourite.jsx';
+import { getTeamByCountry, getTeamByName } from '../Translation/teams.js';
 
 function Favourites() {
     const leagues=getCookie("prefered_leagues");
     
     const teams=getCookie("prefered_teams");
-    const lang=getCookie('language').lang || 'en';    
+    
+    const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
+
     return (  
         <div className='flex flex-col w-full h-[550px] sm:w-[30%] overflow-auto mx-auto bg-slate-50 my-2'>
             
@@ -20,7 +24,7 @@ function Favourites() {
                 leagues.length > 0 ?
                     leagues.map((league,index)=>{
                         return(
-                            <div key={index} className='w-full px-2 mt-1'>
+                            <div key={index} className='w-full flex flex-row px-2 mt-1'>
                                 <NavLink className='flex flex-row justify-start items-center gap-2' to={`/league/${league.id}/${league.season}`}>
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
                                     <div className='text-sm lg:text-lg'>
@@ -29,6 +33,7 @@ function Favourites() {
                                         }
                                     </div>
                                 </NavLink>
+                                <Favourite elem_id={league.id} cookie_name={'prefered_leagues'} obj={{'id':league.id,'name':league.name,'country':league.country.name,'logo':league.logo,'season':league.season,'endDate':league.endDate}} />
                             </div>
                         )
                     })
@@ -44,11 +49,16 @@ function Favourites() {
                     teams.length > 0 ?
                         teams.map((team,index)=>{
                             return(
-                                <div key={index} className='w-full px-2 mt-1'>
+                                <div key={index} className='w-full flex flex-row px-2 mt-1'>
                                     <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/team/${team.id}`}>                                   
                                         <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={team.name} src={team.logo} />
-                                        <div className='text-sm lg:text-lg'>{team.name}</div>
+                                        <div className='text-sm lg:text-lg'>
+                                            {
+                                                lang === 'ar' ? getTeamByCountry(team.country,team.name) : team.name
+                                            }
+                                        </div>
                                     </NavLink>
+                                    <Favourite elem_id={team.id} cookie_name={'prefered_teams'} obj={{'id':team.id,'name':team.name,'country':team.country,'logo':team.logo}} />
                                 </div>
                             )
                         })

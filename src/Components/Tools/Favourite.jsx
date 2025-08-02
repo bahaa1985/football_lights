@@ -12,7 +12,7 @@ export default function Favourite(props){
         function handlePreference(){
             let preferedItemsArr=getCookie(cookie_name);  
             if(preferedItemsArr !== null){
-                if( preferedItemsArr.find(item=>item.id === elem_id) === undefined ){
+                if( preferedItemsArr.find(item=>item.id === elem_id) === undefined  && preferedItemsArr.length <5){
                     preferedItemsArr.push(obj);
                 }
                 else

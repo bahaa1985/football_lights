@@ -20,7 +20,7 @@ export default function Home(){
             {/* Teams */}
             {/* <Teams /> */}
             {/* <br/> */}
-             <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>News</div>
+            
             <div className='flex flex-col sm:flex-row sm:justify-between w-full mb-2'>
                 <News />                
             </div>

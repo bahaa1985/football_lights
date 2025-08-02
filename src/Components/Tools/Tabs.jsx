@@ -1,8 +1,7 @@
 // Tabs.jsx
 import {React} from 'react';
-import { getCookie } from '../../Api/cookie';
 import { getTranslation } from '../Translation/labels';
-const language_cookie = getCookie('language') || 'en';
+const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className='w-full mx-auto flex flex-row justify-center gap-2 '>
@@ -17,7 +16,7 @@ const language_cookie = getCookie('language') || 'en';
             onTabChange(index);
           }}
         >
-          {getTranslation(tab,language_cookie.lang) || tab}
+          {getTranslation(tab,lang) || tab}
         </div>
       ))}
     </div>
