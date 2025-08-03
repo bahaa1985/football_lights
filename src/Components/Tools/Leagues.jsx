@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getCookie } from '../../Api/cookie.js';
 import { NavLink } from 'react-router-dom';
 import {getLeagueTranslationByCountry} from '../Translation/leagues.js'
@@ -28,13 +28,17 @@ export const leaguesArray=[
 
 export default function Leagues(){
     // const displayClass =props.displayClass;
+    const [isVisible,setVisibility]=useState(true);
     return(
             // {/* <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('Leagues',lang)}</div> */}
-            <div className={`absolute top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
+            <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
                     {
                         leaguesArray.map((league,index)=>{
                             return(
-                                <a href={`/league/${league.id}`} className='w-auto sm:w-24 flex-col sm:flex-row justify-center items-center' key={league.id}>
+                                <a href={`/league/${league.id}`} 
+                                    onClick={()=>setVisibility(!isVisible)}
+                                    className='w-auto sm:w-24 flex-col sm:flex-row justify-center items-center' 
+                                    key={league.id}>
                                 <div className='w-auto flex-col sm:flex-row justify-center items-center' key={league.id}>
                                     <img className='size-8 sm:size-12 mx-auto' src={league.logo} alt={league.name} />
                                     <h3 className='w-24 sm:w-full font-bold text-center'>{league.name}</h3>

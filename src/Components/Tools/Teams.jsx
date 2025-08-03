@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { getCookie } from '../../Api/cookie.js';
 import { NavLink } from 'react-router-dom';
 import { getTeamByCountry } from '../Translation/teams.js';
@@ -8,11 +8,11 @@ const lang =  JSON.parse(localStorage.getItem('language'))?.lang || 'en';
 const teams = getCookie('prefered_teams') || [];
 
 export const teamsArray=[
-    ...teams.map((team, idx) => ({
-        id: team.id,
-        name: team.name || team,
-        logo: team.logo || ''
-    })),
+    // ...teams.map((team, idx) => ({
+    //     id: team.id,
+    //     name: team.name || team,
+    //     logo: team.logo || ''
+    // })),
     {id:42,name:lang === 'ar' ? getTeamByCountry('England','Arsenal') : 'Arsenal',
         logo:'https://media.api-sports.io/football/teams/42.png'},  
     {id:49,name: lang === 'ar' ? getTeamByCountry('England','Chelsea') : 'Chelsea',
@@ -60,10 +60,11 @@ export const teamsArray=[
 ]
 
 export default function Teams(){
+    const [isVisible,setVisibility]=useState(true);
 return(
     <div>
-        <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('Teams',lang)}</div>
-            <div className='flex flex-row flex-wrap gap-3 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400'>
+        {/* <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 bg-slate-800 py-3 text-white text-center text-xl font-bold`}>{getTranslation('Teams',lang)}</div> */}
+            <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
                     {   teamsArray.map((team,index)=>{
                             return(
                                 <NavLink to={`/team/${team.id}`} className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>

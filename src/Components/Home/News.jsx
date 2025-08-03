@@ -42,15 +42,15 @@ export default function News(){
     },[]);
     return (
         <div>
-            <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('News',lang)}</div>
-<div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mx-auto bg-slate-50 rounded-lg my-2 p-4">
+            <div className='w-full bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('News',lang)}</div>
+<div className="flex flex-wrap w-full mx-auto bg-slate-50 rounded-lg p-4">
         
         {
             news.length > 0 && loaded ? 
                 news.map((item, index) => (
                     <div
                         key={index}
-                        className="flex flex-col items-center justify-between w-full sm:w-[80%] sm:gap-2 mx-auto bg-white rounded-lg shadow p-2 text-center"
+                        className="flex flex-col items-center justify-between w-full sm:w-[40%] sm:gap-2 mx-auto bg-white rounded-lg shadow p-2 text-center"
                     >
                         <div className="flex justify-between items-center w-full mb-2">
                             <h3 className="text-sm text-gray-500">{item.source.name}</h3>

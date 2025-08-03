@@ -7,6 +7,7 @@ import { getTranslation } from "../Translation/labels.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Leagues from "./Leagues.jsx";
+import Teams from "./Teams.jsx";
 
 function Navbar() {
   const hamburger_button = useRef(null);
@@ -17,6 +18,7 @@ function Navbar() {
   const [searchWindow, setSearchWindow] = useState(false);
   const [preferenceWindow, setPreferenceWindow] = useState(false);
   const [leaguesBar, setLeaguesBar] = useState(false);
+  const [teamsBar, setTeamsBar] = useState(false);
 
   useEffect(() => {
     const button = hamburger_button.current;
@@ -99,23 +101,25 @@ function Navbar() {
           <div className="px-3 my-0 hidden md:visible text-center md:flex md:basis-6/12">
             <ul className="w-[90%] flex sm:space-x-2 text-slate-100 font-semibold">
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer"
-                onClick={() => setLeaguesBar(!leaguesBar)}
+                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-xl font-bold"
+                onClick={() => [setLeaguesBar(!leaguesBar),setTeamsBar(false)]}
               >
                 {getTranslation("Leagues", lang)}
               </li>
-              <li className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer">
-                <NavLink to="/team">{getTranslation("Teams", lang)}</NavLink>
+              <li 
+                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-xl font-bold"
+                onClick={() => [setTeamsBar(!teamsBar),setLeaguesBar(false)]}>
+                  {getTranslation("Teams",lang)}
               </li>
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer"
-                onClick={() => handlePreferenWindow()}
+                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-xl font-bold"
+                onClick={() => [handlePreferenWindow()]}
               >
                 {getTranslation("Preferences", lang)}
               </li>
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer"
-                onClick={() => handleSearchWindow()}
+                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-xl font-bold"
+                onClick={() => [handleSearchWindow()]}
               >
                 {getTranslation("Search", lang)}
               </li>
@@ -153,12 +157,19 @@ function Navbar() {
           </div>
         )}
       </nav>
+
       {/* leagues bar */}
       {leaguesBar && (
         <div className="w-full absolute top-16 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
           <Leagues />
         </div>
       )}
+
+      {/* teams bar */}
+      {teamsBar &&(
+      <div className="w-full absolute top-16 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <Teams />
+      </div>)}
 
       {/* Hambruger items */}
       <div

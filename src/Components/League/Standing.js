@@ -4,6 +4,7 @@ import getStandings from '../../Api/Standings.js'
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../Translation/labels.js";
 import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
+import { getTeamByCountry } from '../Translation/teams.js';
 
 function Standings(props){    
     
@@ -144,7 +145,7 @@ function Standings(props){
                                                     <img src={elem.team.logo} className="size-8 sm:size-10 lg:size-12" alt={elem.team.name}/>
                                                     :null
                                                 }
-                                                <span className='w-[70%] border-none'>{elem.team.name}</span>
+                                                <span className='w-[70%] border-none'>{lang==='ar' ?getTeamByCountry(elem.team.country,elem.team.name):elem.team.name}</span>
                                             </td>
                                             <td className='p-2'>{elem.all.played}</td>
                                             {

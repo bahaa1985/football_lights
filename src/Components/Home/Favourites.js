@@ -14,10 +14,10 @@ function Favourites() {
     const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
 
     return (  
-        <div className='flex flex-col w-full h-[550px] sm:w-[30%] overflow-auto mx-auto bg-slate-50 my-2'>
+        <div className='flex flex-col w-full h-[550px] sm:w-[30%] overflow-auto  bg-slate-50 my-2'>
             
             <div className="h-1/2">
-            <div className='w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50'>
+            <div className='w-full p-2 text-center lg:text-lg bg-slate-800 text-slate-50 text-xl font-bold'>
                 {getTranslation('Favourite Leagues',lang) || 'Favourite Leagues'}
             </div>
             {
@@ -43,13 +43,14 @@ function Favourites() {
                             </div>
                         )
                     })
-                : 'No Favourite Leagues Selected'
+                : <div className='w-full px-2 font-bold text-xl'>{getTranslation('No favourite leagues are selected',lang)}</div>
             }
 
             </div>
             <div className='h-1/2'>
-<div className='w-full p-2 text-center text-sm lg:text-lg bg-slate-800 text-slate-50'>
-                {getTranslation('Favourite Teams',lang) || 'Favourite Teams'}
+<div className='w-full p-2 text-center lg:text-lg bg-slate-800 text-slate-50 text-xl font-bold'>
+               
+              {getTranslation('Favourite Teams',lang) || 'Favourite Teams'}
             </div>    
                 {
                     teams.length > 0 ?
@@ -68,7 +69,7 @@ function Favourites() {
                                 </div>
                             )
                         })
-                    : 'No Favourite Teams Selected'
+                    : <div className='w-full px-2 font-bold text-xl'>{getTranslation('No favourite teams are selected',lang)}</div>
                 }
             </div>
             
