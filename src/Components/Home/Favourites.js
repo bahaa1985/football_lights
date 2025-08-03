@@ -25,7 +25,7 @@ function Favourites() {
                     leagues.map((league,index)=>{
                         return(
                             <div key={index} className='w-full flex flex-row px-2 mt-1'>
-                                <NavLink className='flex flex-row justify-start items-center gap-2' to={`/league/${league.id}/${league.season}`}>
+                                <NavLink className='flex flex-row justify-start items-center gap-2' to={`/league/${league.id}`}>
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
                                     <div className='text-sm lg:text-lg'>
                                         {
@@ -33,7 +33,13 @@ function Favourites() {
                                         }
                                     </div>
                                 </NavLink>
-                                <Favourite elem_id={league.id} cookie_name={'prefered_leagues'} obj={{'id':league.id,'name':league.name,'country':league.country.name,'logo':league.logo,'season':league.season,'endDate':league.endDate}} />
+                                <Favourite elem_id={league.id} cookie_name={'prefered_leagues'} 
+                                obj={{id:league.id,
+                                    name:league.name,
+                                    country:league.country.name,
+                                    logo:league.logo,
+                                    season:league.season,
+                                    endDate:league.endDate}} />
                             </div>
                         )
                     })

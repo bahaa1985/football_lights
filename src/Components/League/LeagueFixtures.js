@@ -91,7 +91,7 @@ export default function LeagueFixtures(props) {
               />
             </div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-2">
+          <div className="rounded-lg p-2">
             <FixtureRow type={"all_fixtures"} fixturesSource={filteredFixtures} />
           </div>
         </Fragment>

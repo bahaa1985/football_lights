@@ -70,7 +70,7 @@ export default function Search(){
                         leagues?.map((item,index)=>{
                             return(
                                 <div className='flex flex-row justify-between items-center border-b-2 border-b-slate-400 border-solid' key={index}>
-                                    <NavLink to={`/league/${item.league.id}/${item.seasons.at(-1).year}}`} className='flex flex-row justify-between items-center'>
+                                    <NavLink to={`/league/${item.league.id}}`} className='flex flex-row justify-between items-center'>
                                         <img className='size-6 sm:size-10 rounded-full' src={item.league.logo} loading='lazy' alt={item.league.name} />
                                         <span className="border-none">{item.league.name} ({item.country.name})</span>
                                         

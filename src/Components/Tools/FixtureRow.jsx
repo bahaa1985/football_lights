@@ -50,7 +50,8 @@ function FixtureRow(props) {
                   }</span>
                 </div>
                 ) : type === "all_fixtures" && fixtures[elem].length !== 0 ? ( // to remove empty gameweeks after filtering by round number
-                <div className="w-full bg-slate-800 text-slate-50 text-center p-2 rounded-lg">
+                // div to display round title
+                <div className="w-full bg-slate-800 text-lg text-slate-50 text-center p-2"> 
                   {
                     fixtures[elem][0]?.league.round.includes('Regular Season')
                     ? lang === 'ar' ? "الأسبوع " + parseInt(index + 1) : "Game Week " + parseInt(index + 1)
@@ -61,7 +62,7 @@ function FixtureRow(props) {
 
             {fixtures[elem].map((elem, i) => {
               return (
-                <div key={i} className="w-full lg:w-[90%] mx-auto my-1 shadow-md">
+                <div key={i} className="w-full mx-auto my-1 shadow-md">
                   {
                     type === "fav_teams_matches" ?
                       <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg">
@@ -94,7 +95,7 @@ function FixtureRow(props) {
                       ) : null}
 
                       <div className="flex flex-row justify-start">
-<div className="flex justify-start items-center mx-2">
+                        <div className="flex justify-start items-center mx-2">
                         <FontAwesomeIcon className="mx-2 h-4" icon={faClock}></FontAwesomeIcon>
                         <span className="border-none text-sm lg:text-lg">
                           {new Date(elem.fixture.date).getHours() +
