@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
-import logo from "../../images/logo.jpg";
-import Search from "../Home/Search.jsx";
-import Preferences from "../Preference/PreferenceContainer.js";
+import logo from '../../src/images/logo.jpg';
+import Search from "../UI/Home/Search.jsx";
+import Preferences from "../UI/Preference/PreferenceContainer.js";
 import { getTranslation } from "../Translation/labels.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";

@@ -1,14 +1,14 @@
 
 import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
-import Navbar from './Components/Tools/Navbar.js';
-import Footer from './Components/Tools/Footer.js';
-import League from './Components/League/LeagueContainer.js';
-import Fixture from './Components/Fixture/FixtureContainer.js';
-import Player from './Components/Player.js';
-import Team from './Components/Team/TeamContainer.js';
-import Home from './Components/Home/HomeContainer.js';
-import Preferences from './Components/Preference/PreferenceContainer.js';
-import Search from './Components/Home/Search.jsx';
+import Navbar from '../src/Components/Navbar.js'
+import Footer from '../src/Components/Footer.js';
+import League from '../src/UI/League/LeagueContainer.js';
+import Fixture from '../src/UI/Fixture/FixtureContainer.js';
+import Player from '../src/UI/Player.js';
+import Team from '../src/UI/Team/TeamContainer.js';
+import Home from '../src/UI/Home/HomeContainer.js';
+import Preferences from '../src/UI/Preference/PreferenceContainer.js';
+import Search from '../src/UI/Home/Search.jsx';
 
 function App() {
 

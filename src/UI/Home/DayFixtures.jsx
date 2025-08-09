@@ -4,16 +4,12 @@ import {
   getPromisedTeamFixtures,
 } from "../../Api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
-import FixtureRow from "../Tools/FixtureRow.jsx";
-import { getCookie } from "../../Api/cookie.js";
-import { leaguesArray } from "../Tools/Leagues.jsx";
-import Tabs from "../Tools/Tabs.jsx";
-import getLocalLabels from "../../Api/Localization.js";
-import { getAllTranslations, getTranslation } from "../Translation/labels.js";
-import { getLeagueTranslationByCountry } from "../Translation/countries.js";
-import { teamsArray } from "../Tools/Teams.jsx";
-import { useSearchParams } from "react-router-dom";
-import Spinner from "../Tools/Spinner.jsx";
+import FixtureRow from '../../Components/FixtureRow.jsx'
+import { leaguesArray } from '../../Components/Leagues.jsx'
+import Tabs from '../../Components/Tabs.jsx'
+import { getAllTranslations, getTranslation } from "../../Translation/labels.js";
+import { teamsArray } from '../../Components/Teams.jsx'
+import Spinner from '../../Components/Spinner.jsx'
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -32,7 +28,6 @@ export default function DayFixtures() {
   }
 
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
-  const [selectedSeason, setSelectedSeason] = useState(0);
   const [dateFixtures, setDateFixtures] = useState([]);
   const [teamsFixtures, setTeamsFixtures] = useState([]);
   const [isLoaded, setLoaded] = useState(false);

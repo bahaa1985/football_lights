@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getTeamSeasons, getTeamInformation, getTeamLeagues } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../Translation/labels.js';
+import { getTranslation } from '../../Translation/labels.js';
 import TeamStatistics from './TeamStatistics.jsx';
-import Favourite from '../Tools/Favourite.jsx';
-import { teamsArray } from '../Tools/Teams.jsx';
+import Favourite from '../../Components/Favourite.jsx';
+import { teamsArray } from '../../Components/Teams.jsx'
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);

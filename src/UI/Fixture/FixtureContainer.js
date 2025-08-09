@@ -5,10 +5,10 @@ import arena from '../../icons/arena.png';
 import Events from "./Events.js";
 import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
-import  Tabs from '../Tools/Tabs.jsx'
+import  Tabs from '../../Components/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../Translation/labels.js';
+import { getTranslation } from '../../Translation/labels.js';
 
 export const TeamsContext= createContext();
 

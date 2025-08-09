@@ -1,6 +1,6 @@
 // Tabs.jsx
 import {React} from 'react';
-import { getTranslation } from '../Translation/labels';
+import { getTranslation } from '../Translation/labels.js'
 const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';  
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (

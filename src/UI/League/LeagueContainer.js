@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import Standings from "./Standing.js";
 import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
-import Favourite from "../Tools/Favourite.jsx";
-import Tabs from "../Tools/Tabs.jsx";
+import Favourite from '../../Components/Favourite.jsx';
+import Tabs from '../../Components/Tabs.jsx';
 import { getLeagues } from "../../Api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../Api/cookie.js";
-import { leaguesArray } from "../Tools/Leagues.jsx";
-import { getTranslation } from "../Translation/labels.js";
-import { getLeagueTranslationByCountry } from "../Translation/leagues.js";
-import { getCountryNameTranslation } from "../Translation/countries.js";
+import { leaguesArray } from '../../Components/Leagues.jsx';
+import { getTranslation } from "../../Translation/labels.js";
+import { getLeagueTranslationByCountry } from "../../Translation/leagues.js";
+import { getCountryNameTranslation } from "../../Translation/countries.js";
 
 export default function League() {
   

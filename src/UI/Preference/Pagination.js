@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import Favourite from "../Tools/Favourite.jsx";
-
+import Favourite from '../../Components/Favourite.jsx';
 function Pagination(props) {
        
     let pages=[] // items pages that will be displayed

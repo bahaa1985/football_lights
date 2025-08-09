@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../Translation/labels.js';
-import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
+import { getTranslation } from '../../Translation/labels.js';
+import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { NavLink } from 'react-router-dom';
-import Favourite from '../Tools/Favourite.jsx';
-import { getTeamByCountry, getTeamByName } from '../Translation/teams.js';
+import Favourite from '../../Components/Favourite.jsx';
+import { getTeamByCountry, getTeamByName } from '../../Translation/teams.js';
 
 function Favourites() {
     const leagues=getCookie("prefered_leagues");

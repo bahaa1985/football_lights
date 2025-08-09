@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import getNews from '../../Api/News.js';
 import { getCookie } from '../../Api/cookie.js';
-import { getTranslation } from '../Translation/labels.js';
+import { getTranslation } from '../../Translation/labels.js';
 
 export default function News(){
            
@@ -11,7 +11,8 @@ export default function News(){
     const [storyIndex,setStoryindex] = useState();
     const [isClicked,setClicked] = useState(false);
     const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
-    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tags || 'soccer';
+    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tag || 'soccer';
+    const user_country= JSON.parse(localStorage.getItem('user_preferences'))?.country;
 
     function setDatesTZD(){
         const dd=new Date().toISOString();
@@ -29,7 +30,7 @@ export default function News(){
             console.log('news from sessionStorage');
         } else 
             {
-            getNews(newsTag, lang, TZD.from, TZD.to).then((result) => {
+            getNews(newsTag,user_country, lang, TZD.from, TZD.to).then((result) => {
                 setNews(result.data.articles);
                 setLoaded(true);
                 sessionStorage.setItem('news', JSON.stringify(result.data.articles));                

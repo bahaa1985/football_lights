@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { faCalendar, faClock, faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../Translation/labels.js";
-import  {getLeagueTranslationByCountry, getRoundTranslation} from '../Translation/leagues.js';
+import  {getLeagueTranslationByCountry, getRoundTranslation} from '../Translation/leagues.js'
 import { getTeamByCountry,getTeamByName } from "../Translation/teams.js";
 function FixtureRow(props) {
   

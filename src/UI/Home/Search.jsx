@@ -2,8 +2,8 @@ import React, { useEffect, useState,useRef } from 'react';
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import {getPlayerByName} from '../../Api/PlayerProfile.js';
 import { NavLink } from 'react-router-dom';
-import Favourite from '../Tools/Favourite.jsx';
-import { getTranslation } from '../Translation/labels.js';
+import Favourite from '../../Components/Favourite.jsx'
+import { getTranslation } from '../../Translation/labels.js'
 
 export default function Search(){
     const [searchIndex,setSearchIndex] = useState(-1);

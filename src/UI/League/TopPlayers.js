@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
-import { getTranslation } from "../Translation/labels.js";
+import { getTranslation } from "../../Translation/labels.js";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;

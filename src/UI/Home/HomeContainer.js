@@ -2,8 +2,7 @@ import React, { useState,useEffect } from 'react'
 import Favourites from "./Favourites.js";
 import DayFixtures from './DayFixtures.jsx';
 import News from './News.jsx';
-import {getCountryNameTranslation} from '../Translation/countries.js';
-import { getCountryKey } from '../Translation/countries.js';
+import {getCountryNameTranslation} from '../../Translation/countries.js';
 import setPreferences from '../../Api/UserPreferences.js';
 
 export default function Home(){   
@@ -15,12 +14,14 @@ export default function Home(){
             .then(res => res.json())
             .then(data => {
             const lang = data.languages.substring(0,2);
-            const countryName = getCountryNameTranslation(data.country_name, lang);
-            setPreferences(lang,countryName); // //set user's native language based on their IP address
+            const country_code= getCountryNameTranslation(data.country_code, lang);
+            setPreferences(lang,country_code); // //set user's native language based on their IP address
             }); 
         }
     }, []);
    
+    console.log(localStorage.getItem("user_preferences"));
+    
     
     return(
         <div className={`mt-20 w-[90%] mx-auto`}>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "./cookie.js";
-import { leaguesArray } from "../Components/Tools/Leagues.jsx";
+import { leaguesArray } from "../Components/Leagues.jsx";
 
 export function getFixture(fixture){
   let config = {

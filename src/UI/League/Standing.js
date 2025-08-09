@@ -2,9 +2,9 @@ import React,{ ReactDOM } from 'react'
 import { useState,useEffect} from 'react'
 import getStandings from '../../Api/Standings.js'
 import { getCookie } from "../../Api/cookie.js";
-import { getTranslation } from "../Translation/labels.js";
-import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
-import { getTeamByCountry } from '../Translation/teams.js';
+import { getTranslation } from "../../Translation/labels.js";
+import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
+import { getTeamByCountry } from '../../Translation/teams.js';
 
 function Standings(props){    
     
