@@ -1,63 +1,62 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import Pagination from "./Pagination.js";
+import setPreferences from "../../Api/UserPreferences.js"
 import { getCookie, setCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../Translation/labels.js";
+import { countries } from "../Translation/countries.js";
+import { getCountryNameTranslation } from "../Translation/countries.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [language, setLanguage] = useState(JSON.parse(localStorage.getItem('language'))?.lang || "en");
+  const [language, setLanguage] = useState(JSON.parse(localStorage.getItem('user_preferences'))?.lang || "en");
+  const [selectedCountry,setSelectedCountry] = useState('');
   
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
-
+  
   //get or set user's language:
   function handleLanguage(language){
     // console.log("lang",language);
     switch(language){
       case 'en':
         setLanguage('en'); //english
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'soccer'}))       
+        setPreferences()
         break;
       case 'fr':
         setLanguage('fr'); //french
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'football'}))
+        setPreferences(lang)
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'football'}))
         break;
-      case 'sp':
-        setLanguage('sp'); //spanish
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'fútbol'}))
+      case 'es':
+        setLanguage('es'); //spanish
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'fútbol'}))
         break;
       case 'ar':
         setLanguage('ar');//arabic       
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'كرة القدم'}))
-        break;
-      case 'zh':
-        setLanguage('zh');//chinese
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'足球'}))
-        break;
-      case 'ja':
-        setLanguage('ja'); //japanse
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'サッカー'}))
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'كرة القدم'}))
         break;
       case 'it':
         setLanguage('it');//italian
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'calcio'}))
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'calcio'}))
         break;
       case 'pt':
         setLanguage('pt');//portugeuse
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'futebol'}))
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'futebol'}))
         break;
       default:
         setLanguage('en');
-        window.localStorage.setItem('language',JSON.stringify({lang:language,tag:'soccer'}))
+        window.localStorage.setItem('user_preferences',JSON.stringify({lang:language,tags:'soccer'}))
     }
     
   }
 
-  const lang= JSON.parse(localStorage.getItem('language'))?.lang || "en";
+  
+
+  const lang= JSON.parse(localStorage.getItem('user_preferences'))?.lang || "en";
   //use Effect:
   useEffect(() => {
     if(searchLeague.trim().length>0){
@@ -75,7 +74,7 @@ export default function Preferences(params) {
   }, [searchLeague, searchTeam]);
 
   return (
-    <div className='w-full h-[450px] mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
+    <div className='w-full h-[450px] p-4 mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
       <div className="flex flex-row items-center gap-2 mb-4">
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a Language', lang)}
@@ -90,9 +89,30 @@ export default function Preferences(params) {
           <option key={3} value="ar">عربي</option>
           <option key={0} value="en">English</option>
           <option key={1} value="fr">Français</option>
-          <option key={2} value="sp">Español</option>
+          <option key={2} value="es">Español</option>
           <option key={6} value="it">Italiano</option>
           <option key={7} value="pt">Português</option>
+        </select>
+      </div>
+      {/*  */}
+      <div className="flex flex-row items-center gap-2 mb-4">
+        <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
+          {getTranslation('Choose a country', lang)}
+        </label>
+        <select
+          id="country"
+          name="country"
+          className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto"
+          onChange={(e) => setSelectedCountry(e.target.value)}
+          defaultValue={selectedCountry}
+          >
+          {
+            Object.entries(countries).map((country,index)=>{
+            return <option key={index} value={lang==='ar' ? country[1][lang]:country[0]}>
+              {lang === 'ar' ? country[1][lang]: country[0]}
+            </option>
+          })
+          }
         </select>
       </div>
       <div className="sm:h-auto px-auto sm:flex sm:justify-between gap-4">
@@ -102,16 +122,17 @@ export default function Preferences(params) {
             <input
               type="text"
               ref={searchLeagueInput}
-              className="outline-none rounded-md px-2 py-1 border w-full mr-2"
+              className="outline-none rounded-md px-2 py-1 border mr-2"
               placeholder={getTranslation("Enter Country Or League Name", lang)}
             />
             <button
               className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
-              onClick={() => setSearchLeague(searchLeagueInput.current.value)}
+              onClick={() => setSearchLeague(getCountryNameTranslation(searchLeagueInput.current.value,'en'))}
             >
               {getTranslation('Search', lang)}
             </button>
           </div>
+          {/*  */}
           {leagues && leagues.length > 0 ? (
             <Pagination type={'league'} source={leagues} />
           ) : (
@@ -125,7 +146,7 @@ export default function Preferences(params) {
             <input
               type="text"
               ref={searchTeamInput}
-              className="outline-none rounded-md px-2 py-1 border w-full mr-2"
+              className="outline-none rounded-md px-2 py-1 border l mr-2"
               placeholder={getTranslation('Enter Country Or Team Name', lang)}
             />
             <button

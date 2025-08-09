@@ -1,6 +1,6 @@
-const countries = {
-    Aruba: { ar: "أروبا", es: "Aruba", fr: "Aruba", it: "Aruba", pt: "Aruba" },
-    Afghanistan: { ar: "أفغانستان", es: "Afganistán", fr: "Afghanistan", it: "Afghanistan", pt: "Afeganistão" },
+export const countries = {
+    Aruba: {ar: "أروبا", es: "Aruba", fr: "Aruba", it: "Aruba", pt: "Aruba" },
+    Afghanistan: {ar: "أفغانستان", es: "Afganistán", fr: "Afghanistan", it: "Afghanistan", pt: "Afeganistão" },
     Angola: { ar: "أنغولا", es: "Angola", fr: "Angola", it: "Angola", pt: "Angola" },
     Anguilla: { ar: "أنغويلا", es: "Anguila", fr: "Anguilla", it: "Anguilla", pt: "Anguila" },
     "Åland Islands": { ar: "جزر آلاند", es: "Islas Åland", fr: "Îles Åland", it: "Isole Åland", pt: "Ilhas Åland" },
@@ -229,4 +229,15 @@ export function getCountryNameTranslation(countryName, language) {
     } else {
         return countryName; // Fallback to the country code if no translation is found
     }
+}
+
+export function getCountryKey(search){
+    let country_in_en='';
+    Object.entries(countries)
+    .forEach(([country, translations]) => {
+        if (translations && Object.values(translations).includes(search)) {
+            country_in_en = country;
+        }
+    });
+    return country_in_en;
 }

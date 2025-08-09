@@ -31,7 +31,7 @@ function TeamStatistics({ team, league, season }) {
     return () => (isMount = false);
   }, [team, season, league]);
 
-  const lang = getCookie('language').lang || 'en';
+  const lang = getCookie('user_preferences').lang || 'en';
 
   const Section = ({ title, children }) => (
     <div className="my-4">

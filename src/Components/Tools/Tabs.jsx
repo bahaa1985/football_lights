@@ -1,7 +1,7 @@
 // Tabs.jsx
 import {React} from 'react';
 import { getTranslation } from '../Translation/labels';
-const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
+const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';  
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className='w-full mx-auto flex flex-row justify-center gap-2 '>

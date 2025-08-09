@@ -17,11 +17,11 @@ function Standings(props){
     const [description,setDesccription] = useState([])
     const [country,setCountry] = useState("");
 
-    const lang= getCookie('language').lang || 'en';
+    const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
     useEffect(()=>{              
         getStandings(league,season).then((result)=>{
-            console.log("standings: ",result);         
+            // console.log("standings: ",result);         
             setStandings(result.data.response[0].league.standings)
 
             if(result.data.response[0].league.country !== "World"){

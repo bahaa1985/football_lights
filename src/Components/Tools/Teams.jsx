@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
-import { getCookie } from '../../Api/cookie.js';
-import { NavLink } from 'react-router-dom';
 import { getTeamByCountry } from '../Translation/teams.js';
-import { getTranslation } from '../Translation/labels.js';
 
-const lang =  JSON.parse(localStorage.getItem('language'))?.lang || 'en';
-const teams = getCookie('prefered_teams') || [];
+const lang =  JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
+
 
 export const teamsArray=[
-    // ...teams.map((team, idx) => ({
-    //     id: team.id,
-    //     name: team.name || team,
-    //     logo: team.logo || ''
-    // })),
     {id:42,name:lang === 'ar' ? getTeamByCountry('England','Arsenal') : 'Arsenal',
         logo:'https://media.api-sports.io/football/teams/42.png'},  
     {id:49,name: lang === 'ar' ? getTeamByCountry('England','Chelsea') : 'Chelsea',
@@ -67,12 +59,14 @@ return(
             <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
                     {   teamsArray.map((team,index)=>{
                             return(
-                                <NavLink to={`/team/${team.id}`} className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
+                                <a  href={`/team/${team.id}`} 
+                                    onClick={()=>setVisibility(!isVisible)}
+                                    className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                 <div className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                     <img className='size-8 sm:size-12 mx-auto' src={team.logo} alt={team.name} />
                                     <h3 className='w-28 sm:w-full font-bold text-center'>{team.name}</h3>
                                 </div>
-                                </NavLink>
+                                </a>
                             )
                         })
                     }

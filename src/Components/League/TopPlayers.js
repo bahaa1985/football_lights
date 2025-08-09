@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
-import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../Translation/labels.js";
 
 export default function TopPlayers(props) {
@@ -8,7 +7,7 @@ export default function TopPlayers(props) {
   const season = props.season;
   const stats_type = props.type;
   const [topPlayers, setTopPlayers] = useState([]);
-  const lang=getCookie('language').lang || 'en';
+  const lang=JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
   useEffect(() => {
     if (stats_type === "Goals") {

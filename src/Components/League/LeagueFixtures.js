@@ -32,7 +32,7 @@ export default function LeagueFixtures(props) {
     fetchData();
   }, [league,season]);
 
-  const lang = getCookie('language').lang || 'en';
+  const lang = getCookie('user_preferences').lang || 'en';
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){

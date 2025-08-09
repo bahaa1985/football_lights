@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getCookie } from '../../Api/cookie.js';
-import { NavLink } from 'react-router-dom';
 import {getLeagueTranslationByCountry} from '../Translation/leagues.js'
-import { getTranslation } from '../Translation/labels.js';
 
-const leagues = getCookie('prefered_leagues') || [];
-    // console.log("cookie", getCookie('prefered_leagues')); 
-const lang= JSON.parse(localStorage.getItem("language"))?.lang || 'en'
+const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en'
 export const leaguesArray=[
-    //user preferences
-    // ...leagues.map((league, idx) => ({ 
-    //     id: league.id,
-    //     name: league.name || league,
-    //     logo: league.logo || ''
-    // })),
     {id:2,name:lang === 'ar' ? getLeagueTranslationByCountry('World','UEFA Champions League') : 'UEFA Champions League',logo:'https://media.api-sports.io/football/leagues/2.png'},
     {id:3,name:lang === 'ar' ? getLeagueTranslationByCountry('World','UEFA Europa League'):'UEFA Europa League',logo:'https://media.api-sports.io/football/leagues/3.png'},
     {id:848,name:lang === 'ar' ? getLeagueTranslationByCountry('World','Europa Conference League'):'Conference League',logo:'https://media.api-sports.io/football/leagues/848.png'},

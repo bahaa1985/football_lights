@@ -3,10 +3,12 @@ import { getCookie } from './cookie.js';
 
 
 
-function getNews(tag,lang,from,to){
-    const queryTags = encodeURIComponent(tag);
+function getNews(tags,lang,from,to){
+    // const queryTags = encodeURIComponent(tags.join(' - '));
+    // console.log(queryTags);
+    
     let config ={
-        url:`https://gnews.io/api/v4/search?q=${queryTags}&lang=${lang}&from=${from}&to=${to}&max=10&apikey=${process.env.REACT_APP_NEWS_API_KEY}`,
+        url:`https://gnews.io/api/v4/search?q=${tags}&lang=${lang}&from=${from}&to=${to}&max=10&apikey=${process.env.REACT_APP_NEWS_API_KEY}`,
         
     }
     return axios(config);

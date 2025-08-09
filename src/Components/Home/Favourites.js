@@ -11,7 +11,7 @@ function Favourites() {
     
     const teams=getCookie("prefered_teams");
     
-    const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
+    const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';  
 
     return (  
         <div className='flex flex-col w-full h-[550px] sm:w-[30%] overflow-auto  bg-slate-50 my-2'>
@@ -43,7 +43,7 @@ function Favourites() {
                             </div>
                         )
                     })
-                : <div className='w-full px-2 font-bold text-xl'>{getTranslation('No favourite leagues are selected',lang)}</div>
+                : <div className='w-full px-2 font-bold text-lg'>{getTranslation('No favourite leagues are selected',lang)}</div>
             }
 
             </div>
@@ -69,7 +69,7 @@ function Favourites() {
                                 </div>
                             )
                         })
-                    : <div className='w-full px-2 font-bold text-xl'>{getTranslation('No favourite teams are selected',lang)}</div>
+                    : <div className='w-full px-2 font-bold text-lg'>{getTranslation('No favourite teams are selected',lang)}</div>
                 }
             </div>
             

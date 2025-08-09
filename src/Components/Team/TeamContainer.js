@@ -5,6 +5,7 @@ import { getCookie } from '../../Api/cookie.js';
 import { getTranslation } from '../Translation/labels.js';
 import TeamStatistics from './TeamStatistics.jsx';
 import Favourite from '../Tools/Favourite.jsx';
+import { teamsArray } from '../Tools/Teams.jsx';
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);
@@ -96,14 +97,18 @@ export default function Team() {
                             <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
                             <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{teamInformation?.team?.name}</h1>
                             {/* favourite */}
-                            <Favourite elem_id={teamInformation?.team.id} cookie_name={'prefered_teams'} 
+                            {
+                                !teamsArray.find(team=>team.id === teamInformation?.team.id) &&
+                                <Favourite elem_id={teamInformation?.team.id} cookie_name={'prefered_teams'} 
                                 obj={
                                     {
                                         id:teamInformation?.team.id,
                                         name:teamInformation?.team.name,
                                         logo:teamInformation?.team.logo
-                                    }} 
+                                }} 
                             />
+                            }
+                            
                         </div>
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>

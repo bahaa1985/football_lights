@@ -13,6 +13,7 @@ import { getLeagueTranslationByCountry } from "../Translation/leagues.js";
 import { getCountryNameTranslation } from "../Translation/countries.js";
 
 export default function League() {
+  
   const leagueId = parseInt(useParams().leagueId);
 
   const preferedLeagues = getCookie("prefered_leagues");
@@ -23,9 +24,8 @@ export default function League() {
   const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0  ? seasons.at(-1).year : 2024);
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
-  const [selected, setSelected] = useState(null);
   
-  const lang= JSON.parse(localStorage.getItem("language"))?.lang || 'en';
+  const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
   useEffect(() => {
       async function fetchData() {
@@ -33,7 +33,7 @@ export default function League() {
         setLeagueInfo(leagueData.data.response[0]);
         //
         setSeasons(leagueData.data.response[0].seasons);
-        // setClicked(false);
+        // 
         setLoaded(true);
       }
       fetchData();
@@ -51,24 +51,28 @@ export default function League() {
   return (
     <div className="mt-20 w-[95%] max-w-6xl mx-auto">
       {/* Leagues Selector */}
-      <div className="flex flex-wrap items-center gap-4 w-full my-6 bg-white rounded-xl shadow p-4">
-        <label className="font-semibold text-gray-700">{getTranslation('Your Favourite Leagues', lang)}</label>
-        <div className="flex flex-wrap gap-3 items-center">
-          {preferedLeagues.map((league) => (
-            <button
-              key={league.id}
-              onClick={() => [handleSelectedLeague(league.id)]}
-              className={`flex flex-col items-center px-3 py-2 rounded-lg transition border-2
-                ${selectedleague === league.id
-                  ? 'border-blue-600 bg-blue-50 shadow'
-                  : 'border-transparent hover:bg-gray-100'}`}
-              style={{ minWidth: 60 }}
-            >
-              <img src={league.logo} alt={league.name} className="w-10 h-10 sm:w-14 sm:h-14 object-contain" />
-            </button>
-          ))}
-        </div>
-      </div>
+      {
+        preferedLeagues.length > 0 && (
+          <div className="flex flex-wrap items-center gap-4 w-full my-6 bg-white rounded-xl shadow p-4">
+            <label className="font-semibold text-gray-700">{getTranslation('Your Favourite Leagues', lang)}</label>
+            <div className="flex flex-wrap gap-3 items-center">
+              {preferedLeagues.map((league) => (
+                <button
+                  key={league.id}
+                  onClick={() => [handleSelectedLeague(league.id)]}
+                  className={`flex flex-col items-center px-3 py-2 rounded-lg transition border-2
+                    ${selectedleague === league.id
+                      ? 'border-blue-600 bg-blue-50 shadow'
+                      : 'border-transparent hover:bg-gray-100'}`}
+                  style={{ minWidth: 60 }}
+                >
+                  <img src={league.logo} alt={league.name} className="w-10 h-10 sm:w-14 sm:h-14 object-contain" />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      
 
       {/* League Info */}
       {isLoaded && leagueInfo && (
@@ -86,7 +90,7 @@ export default function League() {
               </span>
               {
                 //To show favourite icon if only the league is in the user's favourites
-                leaguesArray.filter(league => league.id === selectedleague).length === 0 &&
+                  !leaguesArray.find(league => league.id === selectedleague) &&
                   <Favourite
                   elem_id={selectedleague}
                   cookie_name={'prefered_leagues'}

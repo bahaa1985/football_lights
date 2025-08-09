@@ -10,8 +10,8 @@ export default function News(){
     const [TZD,setTZD]=useState({from:'',to:''}); // set TZD dates format to use in news api
     const [storyIndex,setStoryindex] = useState();
     const [isClicked,setClicked] = useState(false);
-    const lang= JSON.parse(localStorage.getItem("language"))?.lang || 'en';
-    const newsTag = JSON.parse(localStorage.getItem('language'))?.tag || 'soccer';
+    const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
+    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tags || 'soccer';
 
     function setDatesTZD(){
         const dd=new Date().toISOString();
@@ -50,7 +50,7 @@ export default function News(){
                 news.map((item, index) => (
                     <div
                         key={index}
-                        className="flex flex-col items-center justify-between w-full sm:w-[40%] sm:gap-2 mx-auto bg-white rounded-lg shadow p-2 text-center"
+                        className="flex flex-col items-center justify-between w-full sm:w-[40%] sm:gap-2 mx-auto my-4 bg-white rounded-lg shadow p-2 text-center"
                     >
                         <div className="flex justify-between items-center w-full mb-2">
                             <h3 className="text-sm text-gray-500">{item.source.name}</h3>

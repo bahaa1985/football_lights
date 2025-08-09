@@ -1,12 +1,9 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import {getPlayerByName} from '../../Api/PlayerProfile.js';
-import { getCookie, setCookie } from "../../Api/cookie.js";
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import Favourite from '../Tools/Favourite.jsx';
-import { Nav } from 'react-bootstrap';
+import { getTranslation } from '../Translation/labels.js';
 
 export default function Search(){
     const [searchIndex,setSearchIndex] = useState(-1);
@@ -16,6 +13,8 @@ export default function Search(){
     const [leagues,setLeagues] = useState([]);
     const [teams,setTeams] = useState([]);
     const [players,setPlayers] = useState([]);
+
+    const lang=localStorage.getItem('user_preferences')?.lang || 'en';
 
     useEffect(()=>{
         async function fetchData(){
@@ -39,7 +38,7 @@ export default function Search(){
     },[isClicked,searchIndex,searchKey])
 
     return(
-        <div className='w-full h-96 mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
+        <div className='w-full h-96 mx-auto px-4 overflow-y-scroll bg-slate-100 rounded-lg'>
             <div className='w-full md:w-[70%] mx-auto flex flex-col items-center space-y-2'>
                 <input type='text' ref={searchRef} className="w-full p-2 my-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" onChange={()=>setSearchIndex(-1)} />               
                 <div className="w-full mx-auto flex flex-row justify-between gap-2 my-4">
@@ -47,19 +46,19 @@ export default function Search(){
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 0 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
     onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(0)]}
   >
-    League
+    {getTranslation('League',lang)}
   </button>
   <button 
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 1 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
     onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(1)]}
   >
-    Team
+    {getTranslation('Team',lang)}
   </button>
   <button 
     className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 2 ? 'bg-slate-800 text-white' : 'bg-slate-300 text-gray-700'}`} 
     onClick={() => [setSearchKey(searchRef.current.value),setSearchIndex(2)]}
   >
-    Player
+    {getTranslation('Player',lang)}
   </button>
 </div>
  

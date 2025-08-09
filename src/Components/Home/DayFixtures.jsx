@@ -43,7 +43,7 @@ export default function DayFixtures() {
 
   const leagues = leaguesArray;
   const teams = teamsArray;
-  const lang = JSON.parse(localStorage.getItem("language"))?.lang || "en";
+  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const labels = getAllTranslations(lang);
 

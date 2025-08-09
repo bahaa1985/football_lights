@@ -41,8 +41,8 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
       <script>
-        if(localStorage.getItem('language') !== null){
-const language =JSON.parse(localStorage.getItem('language'));
+        if(localStorage.getItem('user_preferences') !== null){
+const language =JSON.parse(localStorage.getItem('user_preferences'));
         
         if(language.lang === 'ar'){
           document.body.setAttribute('dir','rtl');

@@ -22,7 +22,7 @@ function FixtureRow(props) {
   }) 
   },[])
 
-   const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';  
+   const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';  
 
   return Object.keys(fixtures).map((elem, index) => {
     return (
