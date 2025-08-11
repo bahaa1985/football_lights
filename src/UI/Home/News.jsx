@@ -11,32 +11,33 @@ export default function News(){
     const [storyIndex,setStoryindex] = useState();
     const [isClicked,setClicked] = useState(false);
     const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
-    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tag || 'soccer';
-    const user_country= JSON.parse(localStorage.getItem('user_preferences'))?.country;
+    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tag.toString() || 'soccer';
+    const user_country= JSON.parse(localStorage.getItem('user_preferences'))?.country.toLowerCase()|| 'en';
 
-    function setDatesTZD(){
-        const dd=new Date().toISOString();
-        const yy=new Date(new Date()-(24*60*60*1000)).toISOString()
-        setTZD({from:yy,to:dd});
+   
+    const datesTZD={
+        current:new Date().toISOString(),
+        prev:new Date(new Date()-(24*60*60*1000)).toISOString()
+        // setTZD({from:yy,to:dd});
     }
     
     useEffect(()=>{       
-        setDatesTZD();
+        // setDatesTZD();
         
         const cachedNews = sessionStorage.getItem('news');
-        if (cachedNews) {
-            setNews(JSON.parse(cachedNews));
-            setLoaded(true);
-            console.log('news from sessionStorage');
-        } else 
-            {
-            getNews(newsTag,user_country, lang, TZD.from, TZD.to).then((result) => {
+        // if (cachedNews) {
+        //     setNews(JSON.parse(cachedNews));
+        //     setLoaded(true);
+        //     console.log('news from sessionStorage');
+        // } else 
+        //     {
+            getNews(newsTag,user_country, lang,datesTZD.prev, datesTZD.current).then((result) => {
                 setNews(result.data.articles);
                 setLoaded(true);
                 sessionStorage.setItem('news', JSON.stringify(result.data.articles));                
                 console.log('news from API');
             });
-        }         
+        // }         
         return()=>{
 
         }

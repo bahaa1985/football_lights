@@ -20,24 +20,37 @@ export default function Preferences(params) {
   
   //use Effect:
   useEffect(() => {
-    if(searchLeague.trim().length>0){
+    try{
+      if(searchLeague.trim().length>0){
       getLeagues(searchLeague).then((result) => {
         setLeagues(result.data.response);       
       });
     }
         
-    if(searchTeam.trim().length>0){
-      getTeams(searchTeam).then((result) => {
-        setTeams(result.data.response);
-      });
+      if(searchTeam.trim().length>0){
+        getTeams(searchTeam).then((result) => {
+          setTeams(result.data.response);
+        });
+      }
     }
+    catch(e){
+
+    }
+    
 
   }, [searchLeague, searchTeam]);
 
+  const [closed, setClosed] = useState(false);
+
+  if (closed) return null;
+
+  console.log(selectedLanguage);
+  
+
   return (
-    <div className='w-full flex-col items-center h-[480px] p-4 mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
+    <div className='w-full flex flex-col items-center h-[480px] p-4 mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
       {/* Languages dropdown */}
-      <div className="flex flex-row items-center gap-2 mb-4">
+      <div className={`w-full flex flex-row items-center justify-start gap-2 mb-4`}>
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a Language', selectedLanguage)}
         </label>
@@ -46,7 +59,7 @@ export default function Preferences(params) {
           name="language"
           className="p-2 border rounded-md bg-white shadow-sm focus:outline-none w-full sm:w-auto"
           onChange={(e) => setLanguage(e.target.value)}
-          defaultValue={selectedLanguage}
+          value={selectedLanguage}
         >
           <option key={3} value="ar">عربي</option>
           <option key={0} value="en">English</option>
@@ -57,7 +70,7 @@ export default function Preferences(params) {
         </select>
       </div>
       {/* Countries dropdown */}
-      <div className="flex flex-row items-center gap-2 mb-4">
+      <div className="w-full flex flex-row items-center justify-start gap-2 mb-4">
         <label htmlFor="language" className="block text-lg font-semibold text-gray-700">
           {getTranslation('Choose a country', selectedLanguage)}
         </label>
@@ -89,7 +102,9 @@ export default function Preferences(params) {
             />
             <button
               className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
-              onClick={() => setSearchLeague(getCountryNameTranslation(searchLeagueInput.current.value,'en'))}
+              onClick={() => 
+                setSearchLeague(getCountryNameTranslation(searchLeagueInput.current.value))
+              }
             >
               {getTranslation('Search', selectedLanguage)}
             </button>
@@ -125,8 +140,14 @@ export default function Preferences(params) {
           )}
         </div>
       </div>
-      <button className="w-32 bg-slate-900 text-white text-xl rounded-lg p-4 mt-40 mx-auto" onClick={()=>setPreferences(selectedLanguage,selectedCountry)}>
-        {getTranslation('Save',selectedLanguage)}
+      <button 
+        className="w-32 bg-slate-900 text-white text-xl rounded-lg p-4 mt-40 mx-auto" 
+        onClick={() => {
+          setPreferences(selectedLanguage, selectedCountry);
+            setClosed(true);
+            window.location.href = "/";
+        }}>
+        {getTranslation('Confirm',selectedLanguage)}
       </button>
     </div>
   );

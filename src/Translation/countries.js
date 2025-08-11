@@ -223,12 +223,18 @@ export const countries = {
     World: { code: "WORLD", ar: "العالم", es: "Mundo", fr: "Monde", it: "Mondo", pt: "Mundo" }
 };
 
-export function getCountryNameTranslation(countryName, language) {
-    if (countries[countryName] && countries[countryName][language]) {
-        return countries[countryName][language];
-    } else {
-        return countryName; // Fallback to the country code if no translation is found
+export function getCountryNameTranslation(countryName) {
+    for (const [key, value] of Object.entries(countries)) {
+        if (Object.values(value).includes(countryName)) {
+            return key;
+        }
     }
+    // if (countries[countryName] && countries[countryName][language]) {
+    //     console.log("country in ar:",countries[countryName][language]);
+    //     return countries[countryName][language];
+    // } else {
+    //     return countryName; // Fallback to the country name if no translation is found
+    // }
 }
 
 export function getCountryKey(search){

@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import Favourites from "./Favourites.js";
 import DayFixtures from './DayFixtures.jsx';
 import News from './News.jsx';
-import {getCountryNameTranslation} from '../../Translation/countries.js';
+import {getCountryNameTranslation, countries} from '../../Translation/countries.js';
 import setPreferences from '../../Api/UserPreferences.js';
 
 export default function Home(){   
@@ -21,6 +21,7 @@ export default function Home(){
     }, []);
    
     console.log(localStorage.getItem("user_preferences"));
+    
     
     
     return(
