@@ -4,6 +4,7 @@ import { faCalendar, faClock, faAnglesRight, faAnglesLeft } from "@fortawesome/f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import  {getLeagueTranslationByCountry, getRoundTranslation} from '../Translation/leagues.js'
 import { getTeamByCountry,getTeamByName } from "../Translation/teams.js";
+import { getTranslation } from "../Translation/labels.js";
 function FixtureRow(props) {
   
   const fixtures = props.fixturesSource;
@@ -52,7 +53,7 @@ function FixtureRow(props) {
                 <div className="w-full bg-slate-800 text-lg text-slate-50 text-center p-2"> 
                   {
                     fixtures[elem][0]?.league.round.includes('Regular Season')
-                    ? lang === 'ar' ? "الأسبوع " + parseInt(index + 1) : "Game Week " + parseInt(index + 1)
+                    ? getTranslation('GameWeek',lang) + ' ' + parseInt(index + 1)
                     :  getRoundTranslation(fixtures[elem][0]?.league.round) || fixtures[elem][0]?.league.round}
                 </div>
               ) : null
@@ -139,7 +140,7 @@ function FixtureRow(props) {
                       </div>
                   {/* Fixture Teams */}
                     <div
-                      className={`w-[95%] my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
+                      className={`w-full sm:w-[75%] xl:w-[60%] my-1 mx-auto flex flex-col items-center sm:flex-row sm:justify-between`}
                       key={i}
                     >
                       {/* Home team */}

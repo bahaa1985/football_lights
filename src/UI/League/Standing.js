@@ -125,7 +125,7 @@ function Standings(props){
                                     : null, 
                                 group.map((elem,index)=>{
                                     return(
-                                        <tr key={index} className={`text-center border-b-slate-400 ${index !== group.length-1 ?  'border-solid border':null}`}>
+                                        <tr key={index} className={`text-center border-b-slate-400 border-solid border`}>
                                             <td className='p-2'>
                                             {
                                                 elem.description === description[0] ?
@@ -145,7 +145,7 @@ function Standings(props){
                                                     <img src={elem.team.logo} className="size-8 sm:size-10 lg:size-12" alt={elem.team.name}/>
                                                     :null
                                                 }
-                                                <span className='w-[70%] border-none'>{lang==='ar' ?getTeamByCountry(elem.team.country,elem.team.name):elem.team.name}</span>
+                                                <span className='w-[70%] border-none'>{lang==='ar' ?getTeamByCountry(country,elem.team.name):elem.team.name}</span>
                                             </td>
                                             <td className='p-2'>{elem.all.played}</td>
                                             {

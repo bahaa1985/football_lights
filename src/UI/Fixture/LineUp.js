@@ -6,6 +6,9 @@ import Ratings from "./Ratings.js";
 import getLineUps from "../../Api/LineUp.js";
 import getPlayers from "../../Api/Players.js";
 import "../../styles/lineup.css";
+import { getTranslation } from "../../Translation/labels.js";
+import { getTeamByName } from "../../Translation/teams.js";
+import Spinner from "../../Components/Spinner.jsx";
 
 //main function
 function LineUp(props) {
@@ -46,6 +49,8 @@ function LineUp(props) {
   const [clickedSub, setClickedSub] = useState(homeId);
   const [clickedTeam,setClickedTeam]= useState(homeId);
   const [isLoaded, setLoaded] = useState(false); //for preventing rendering before complete fetching data
+  //
+  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
   // let i=0;
   useMemo(() => {
@@ -183,17 +188,17 @@ function LineUp(props) {
                 
                 <div className="relative xs:top-[90%] w-full sm:w-8/12 lg:w-6/12 mx-auto p-1">
                   {/*  team's logo, name and rating*/}
-                  <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                  <div className={`p-2 w-full flex flex-row justify-between mx-auto rounded-md bg-slate-800`}>
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
                     <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
                     <span className="text-left flex items-center text-slate-50 border-none">
-                      {homeTeamProfile.name}
+                      {getTeamByName(homeTeamProfile.name)}
                     </span>
                     <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 mx-2 text-center ${ratingBGColor(teamRating(homePlayers))} text-slate-50 border-none`}>
                       {teamRating(homePlayers)}
                     </span>
                     </div>
-                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
+                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-lg">
                       {
                         homeTeamProfile.formation?.join(' - ')
                       }
@@ -278,11 +283,11 @@ function LineUp(props) {
                   }
                  
                   {/* Away team's logo, name and rating*/}
-                  <div className={` p-2 w-full mx-auto rounded-md bg-slate-800`}>
+                  <div className={`p-2 flex flex-row justify-between w-full mx-auto rounded-md bg-slate-800`}>
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
                       <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
                       <span className="text-left flex items-center text-slate-50 border-none">
-                        {awayTeamProfile.name}
+                        {getTeamByName(awayTeamProfile.name)}
                       </span>
                       <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 text-center text-slate-50 ${ratingBGColor(teamRating(awayPlayers))} border-none`}>
                         {
@@ -290,7 +295,7 @@ function LineUp(props) {
                         }
                       </span>
                     </div>
-                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-sm sm:text-md">
+                    <div className="flex justify-center space-x-2 px-auto text-slate-50 text-lg">
                       {
                         awayTeamProfile.formation?.join(' - ')
                       }
@@ -308,7 +313,7 @@ function LineUp(props) {
                           onClick={() => setClickedSub(homeTeamProfile.id)}
                         >
                           <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="size-8 sm:size-10"/>
-                          <span className="text-center text-sm text-slate-50 border-none">
+                          <span className="text-center text-sm sm:text-lg text-slate-50 border-none">
                             {homeTeamProfile.name}
                           </span>
                         </div>
@@ -316,7 +321,7 @@ function LineUp(props) {
                           className={`flex justify-end items-center gap-2 w-[90%] rounded-lg p-1 ${clickedSub === awayTeamProfile.id ? "bg-slate-800" : "bg-slate-400"} cursor-pointer`}
                           onClick={() => setClickedSub(awayTeamProfile.id)}
                         >
-                          <span className="text-center text-sm text-slate-50 border-none">
+                          <span className="text-center text-sm sm:text-lg text-slate-50 border-none">
                             {awayTeamProfile.name}
                           </span>
                           <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="size-8 sm:size-10"/>
@@ -327,17 +332,17 @@ function LineUp(props) {
                           {/* home coach and subs */}
                           <div className="flex flex-row justify-start gap-2">
                             <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={homeCoach.photo} />
-                            <span className="border-none flex justify-center items-center text-sm">Coach: {homeCoach.name}</span>
+                            <span className="border-none flex justify-center items-center text-sm sm:text-lg">Coach: {homeCoach.name}</span>
                           </div>
                           <div>
                             {homeSub.map((sub, index) => {
                               return (
                                 <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
                                   
-                                  <span className="flex space-x-3 border-none text-sm">
+                                  <span className="flex space-x-3 border-none text-sm sm:text-lg">
                                   {sub.player.number}&nbsp;&nbsp;{sub.player.name}
                                   </span>
-                                  <span className="border-none text-sm flex justify-center items-center">{
+                                  <span className="border-none text-sm sm:text-lg flex justify-center items-center">{
                                     sub.player.pos === 'D' ? 'Defender'
                                     : sub.player.pos === 'M' ? 'Midfielder'
                                     : sub.player.pos === 'F' ? 'Forward'
@@ -386,7 +391,9 @@ function LineUp(props) {
                 </div>
             </div>                        
           </>
-        ) : <p className="h-full">No Data Available</p>}
+        ) : !isLoaded && homeLineUp.length === 0 ? <p className="h-full">No Data Available</p>
+          : <Spinner/>
+      }
       </div>
     </div>
   );

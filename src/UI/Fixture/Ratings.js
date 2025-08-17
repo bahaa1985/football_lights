@@ -59,15 +59,17 @@ export default function Ratings(props){
         return bgColor;
     }
     
+    const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en'; 
+    
     return (
       <div className="mx-auto my-2">
         {/* man of the match */}
         <div className="flex flex-col justify-center items-center 
               w-full p-2 mx-auto rounded-md bg-slate-800 text-slate-50">
-          <span className="border-none text-sm sm:text-md">Man of the match</span>
+          <span className="border-none text-sm sm:text-lg">Man of the match</span>
           <div className="flex flex-row justify-center items-center gap-2 mx-auto">         
             <img className="w-12 h-12 rounded-full" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
-            <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-md">
+            <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-lg">
               {manOfTheMatch().player.name}
             </span>
             <span className={`border-none w-8 h-8 sm:w-10 sm:h-10 font-bold text-center 
@@ -77,7 +79,7 @@ export default function Ratings(props){
           </div>
         </div>
         
-        <div className="">
+        <div>
           <table className="w-full mx-auto table-auto p-1 rounded-lg ">
             {/* teams header */}
             <thead className="w-full flex flex-row ">
@@ -86,7 +88,7 @@ export default function Ratings(props){
                      ${clickedTeam === homeTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(homeTeam.id)} >
                     <img alt={homeTeam.name} src={homeTeam.logo} className="size-8"/>
-                    <span className="text-center text-slate-50 border-none py-1 text-sm">
+                    <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
                         {homeTeam.name}
                     </span>
                 </th>
@@ -94,7 +96,7 @@ export default function Ratings(props){
                    ${clickedTeam === awayTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(awayTeam.id)} >
                     <img alt={awayTeam} src={awayTeam.logo} className="size-8"/>
-                    <span className="text-center text-slate-50 border-none py-1 text-sm">
+                    <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
                         {awayTeam.name}
                     </span>
                 </th>
@@ -142,8 +144,8 @@ export default function Ratings(props){
                         return (
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between items-center w-full px-3 border-b border-solid border-slate-800">
-                                <span className="border-none text-sm">{elem.player.name}</span>
-                                <span className={`border-none size-6 flex items-center justify-center font-bold text-sm text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                                <span className="border-none text-sm sm:text-lg">{elem.player.name}</span>
+                                <span className={`border-none size-8 flex items-center justify-center font-bold text-sm sm:text-lg text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>
                             </td>
@@ -156,8 +158,8 @@ export default function Ratings(props){
                         return (
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between items-center w-full px-3 border-b border-solid border-slate-800">
-                                <span className="border-none text-sm">{elem.player.name}</span>
-                                <span className={`border-none size-6 text-center font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
+                                <span className="border-none text-sm sm:text-lg">{elem.player.name}</span>
+                                <span className={`border-none size-8 flex items-center justify-center font-bold text-sm sm:text-lg text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>
                             </td>

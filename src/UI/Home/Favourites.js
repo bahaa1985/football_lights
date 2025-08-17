@@ -25,7 +25,7 @@ function Favourites() {
                     leagues.map((league,index)=>{
                         return(
                             <div key={index} className='w-full flex flex-row px-2 mt-1'>
-                                <NavLink className='flex flex-row justify-start items-center gap-2' to={`/league/${league.id}`}>
+                                <NavLink className='flex flex-row justify-start items-center gap-2' to={`/leagues/${league.id}`}>
                                     <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={league.name} src={league.logo} />
                                     <div className='text-sm lg:text-lg'>
                                         {
@@ -57,7 +57,7 @@ function Favourites() {
                         teams.map((team,index)=>{
                             return(
                                 <div key={index} className='w-full flex flex-row px-2 mt-1'>
-                                    <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/team/${team.id}`}>                                   
+                                    <NavLink className='flex flex-row justify-start items-center space-x-2' to={`/teams/${team.id}`}>                                   
                                         <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={team.name} src={team.logo} />
                                         <div className='text-sm lg:text-lg'>
                                             {

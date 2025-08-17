@@ -4,21 +4,21 @@ import logo from '../../src/images/logo.jpg';
 import Search from "../UI/Home/Search.jsx";
 import Preferences from "../UI/Preference/PreferenceContainer.js";
 import { getTranslation } from "../Translation/labels.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Leagues from "./Leagues.jsx";
 import Teams from "./Teams.jsx";
 
 function Navbar() {
   const hamburger_button = useRef(null);
   const hamburger_items = useRef(null);
-  const title_span = useRef(null);
+
   const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const [searchWindow, setSearchWindow] = useState(false);
   const [preferenceWindow, setPreferenceWindow] = useState(false);
   const [leaguesBar, setLeaguesBar] = useState(false);
   const [teamsBar, setTeamsBar] = useState(false);
+  const [leaguesBarMini,setLeaguesBarMini] = useState(false); //for mobile view
+  const [teamsBarMini,setTeamsBarMini] = useState(false); //for mobile view
 
   useEffect(() => {
     const button = hamburger_button.current;
@@ -30,7 +30,7 @@ function Navbar() {
 
   function handleHamburgerClick() {
     hamburger_items.current.classList.toggle("h-0");
-    hamburger_items.current.classList.toggle("h-96");
+    hamburger_items.current.classList.toggle("h-auto");
     hamburger_button.current.children[0].classList.toggle("hidden");
     hamburger_button.current.children[1].classList.toggle("hidden");
     // title_span.current.classList.toggle('hidden');
@@ -46,7 +46,7 @@ function Navbar() {
     <div className="flex flex-col w-full">
       <nav
         id="nav_bar"
-        className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-lg overflow-x-hidden z-40"
+        className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-lg shadow-slate-400 overflow-x-hidden z-40"
       >
         {/* Hamburger button */}
         <div className="my-auto md:hidden basis-1/3 px-3">
@@ -101,33 +101,55 @@ function Navbar() {
           <div className="px-3 my-0 hidden md:visible text-center md:flex md:basis-6/12">
             <ul className="w-[90%] flex sm:space-x-2 text-slate-100 font-semibold">
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold"
-                onClick={() => [setLeaguesBar(!leaguesBar),setTeamsBar(false)]}
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
+                  leaguesBar || window.location.pathname.startsWith("/leagues")
+                    ? "bg-orange-500 text-white"
+                    : ""
+                }`}
+                onClick={() => {
+                  setLeaguesBar(!leaguesBar);
+                  setTeamsBar(false);
+                }}
               >
                 {getTranslation("Leagues", lang)}
               </li>
-              <li 
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold"
-                onClick={() => [setTeamsBar(!teamsBar),setLeaguesBar(false)]}>
-                  {getTranslation("Teams",lang)}
+              <li
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
+                  teamsBar || window.location.pathname.startsWith("/teams")
+                    ? "bg-orange-500 text-white"
+                    : ""
+                }`}
+                onClick={() => {
+                  setTeamsBar(!teamsBar);
+                  setLeaguesBar(false);
+                }}
+              >
+                {getTranslation("Teams", lang)}
               </li>
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold"
-                onClick={() => [handlePreferenWindow()]}
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
+                  preferenceWindow ? "bg-orange-500 text-white" : ""
+                }`}
+                onClick={() => {
+                  handlePreferenWindow();
+                }}
               >
                 {getTranslation("Preferences", lang)}
               </li>
               <li
-                className=" py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold"
-                onClick={() => [handleSearchWindow()]}
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
+                  searchWindow ? "bg-orange-500 text-white" : ""
+                }`}
+                onClick={() => {
+                  handleSearchWindow();
+                }}
               >
                 {getTranslation("Search", lang)}
               </li>
             </ul>
           </div>
-        </div>
+          </div>
 
-        {/* search window */}
         {searchWindow && (
           <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg relative w-full sm:w-2/3">
@@ -160,14 +182,14 @@ function Navbar() {
 
       {/* leagues bar */}
       {leaguesBar && (
-        <div className="w-full absolute top-16 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="w-full fixed top-16 inset-0  bg-black bg-opacity-50 flex justify-center z-50">
           <Leagues />
         </div>
       )}
 
       {/* teams bar */}
       {teamsBar &&(
-      <div className="w-full absolute top-16 inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="w-full fixed top-16 inset-0  bg-black bg-opacity-50 flex justify-center z-50">
         <Teams />
       </div>)}
 
@@ -175,37 +197,59 @@ function Navbar() {
       <div
         id="hamburger_items"
         ref={hamburger_items}
-        className="fixed w-full h-0 overflow-y-hidden my-auto top-16 left-0 text-center z-10 "
+        className="fixed w-full h-0 overflow-y-hidden my-auto top-16 left-0 text-center z-10"
       >
         <ul className="myul w-full flex flex-col items-center px-2 bg-slate-900 z-10 text-slate-100">
-          <li className="liclass w-full  py-2 border-b border-gray-600 border-solid">
-            <NavLink to="/league">{getTranslation("Leagues", lang)}</NavLink>
+          <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"
+          onClick={() => {
+            setLeaguesBarMini(!leaguesBarMini);
+            setTeamsBarMini(false);
+          }}
+          >
+            {getTranslation("Leagues", lang)}
+            {
+              leaguesBarMini ? <Leagues /> : null
+            }
+            {/* <NavLink to="/league">{getTranslation("Leagues", lang)}</NavLink> */}
           </li>
-          <li className="liclass w-full  py-2 border-b border-gray-600 border-solid">
-            <NavLink to="/team">{getTranslation("Teams", lang)}</NavLink>
+          <li 
+            className="liclass w-full  py-2 border-b border-gray-600 border-solid"
+            onClick={()=>{
+              setTeamsBarMini(!teamsBarMini);
+              setLeaguesBarMini(false);
+              // handleHamburgerClick();
+            }}
+          >
+            {getTranslation("Teams", lang)}
+            {
+              teamsBarMini ? <Teams /> : null
+            }
+            {/* <NavLink to="/team">{getTranslation("Teams", lang)}</NavLink> */}
           </li>
           <li
             className="liclass w-full  py-2 border-b border-gray-600 border-solid"
-            onClick={() => handlePreferenWindow()}
+            onClick={() => {
+              handlePreferenWindow();
+              setLeaguesBarMini(false);
+              setTeamsBarMini(false);
+              handleHamburgerClick();
+              }
+            }
           >
             {getTranslation("Preferences", lang)}
           </li>
           <li
             className="liclass w-full  py-2 border-b border-gray-600 border-solid"
-            onClick={() => handleSearchWindow()}
+            onClick={() => {
+              handleSearchWindow();
+              setLeaguesBarMini(false);
+              setTeamsBarMini(false);
+              handleHamburgerClick();
+            }
+          }
           >
             {getTranslation("Search", lang)}
           </li>
-          {/* <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"><NavLink to="/preference">Preference</NavLink></li> */}
-          {/* search bar */}
-          {/* <li className="liclass mx-5 py-2">
-          <div className="flex justify-between my-auto">
-            <svg viewBox="0 0 512 512" className="w-6 cursor-pointer p-0.5 rounded-l-md bg-[#fff]" title="search" fill="#1f2937">
-              <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
-            </svg>
-            <input type="text" className=" rounded-r-md bg-[#fff]  outline-none " />
-          </div>
-        </li> */}
         </ul>
       </div>
     </div>

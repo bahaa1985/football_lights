@@ -1,9 +1,15 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx,css}"],
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}", // مهم جداً علشان Tailwind يشتغل مع React
+  ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor:{
+        phtaloGreen: '#0A3D2A',
+        phtaloGreenLight: '#0B4E3A',
+      }
+    },
   },
   plugins: [],
 }
-

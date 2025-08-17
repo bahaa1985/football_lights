@@ -3,7 +3,7 @@ import {getLeagueTranslationByCountry} from '../Translation/leagues.js'
 
 const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en'
 export const leaguesArray=[
-    {id:2,name:lang === 'ar' ? getLeagueTranslationByCountry('World','UEFA Champions League') : 'UEFA Champions League',logo:'https://media.api-sports.io/football/leagues/2.png'},
+    {id:2,name:lang === 'ar' ? getLeagueTranslationByCountry('World','Champions League') : 'UEFA Champions League',logo:'https://media.api-sports.io/football/leagues/2.png'},
     {id:3,name:lang === 'ar' ? getLeagueTranslationByCountry('World','UEFA Europa League'):'UEFA Europa League',logo:'https://media.api-sports.io/football/leagues/3.png'},
     {id:848,name:lang === 'ar' ? getLeagueTranslationByCountry('World','Europa Conference League'):'Conference League',logo:'https://media.api-sports.io/football/leagues/848.png'},
     {id:39,name:lang === 'ar' ? getLeagueTranslationByCountry('England','Premier League'):'Premier League',logo:'https://media.api-sports.io/football/leagues/39.png'},
@@ -18,13 +18,21 @@ export const leaguesArray=[
 export default function Leagues(){
     // const displayClass =props.displayClass;
     const [isVisible,setVisibility]=useState(true);
+    const [screenWidth,setScreenWidth] = useState(0);
+    useEffect(()=>{
+        setScreenWidth(window.innerWidth);
+        return () => {
+            setScreenWidth(0);
+        }
+    },[])
+
     return(
             // {/* <div className='bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('Leagues',lang)}</div> */}
-            <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
+            <div className={` ${isVisible ? 'flex':'hidden'} flex w-full h-fit flex-row flex-wrap gap-2 justify-between p-6 mb-8 ${screenWidth > 425 ? 'bg-white text-slate-800' : 'bg-slate-800 text-white'} border-r border-l border-b border-slate-400 z-50`}>
                     {
                         leaguesArray.map((league,index)=>{
                             return(
-                                <a href={`/league/${league.id}`} 
+                                <a href={`/leagues/${league.id}`} 
                                     onClick={()=>setVisibility(!isVisible)}
                                     className='w-auto sm:w-24 flex-col sm:flex-row justify-center items-center' 
                                     key={league.id}>

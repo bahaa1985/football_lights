@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
 import { getTranslation } from "../../Translation/labels.js";
+import { getTeamByName } from "../../Translation/teams.js";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;
@@ -43,15 +44,15 @@ export default function TopPlayers(props) {
               <td>
                 <div className="flex justify-center">
                 {/* <img className="size-10 sm:size-10 md:size-12 rounded-full" src={elem.player.photo} alt={elem.player.name} /> */}
-                <span className="border-none">{elem.player.name}</span>
+                <span className="border-none text-sm sm:text-xl">{elem.player.name}</span>
                 </div>
                    
               </td>
 
               <td>
-                <div className="w-[90%] mx-auto flex justify-start items-center space-x-2 p-2">
+                <div className="w-[90%] mx-auto flex justify-start items-center gap-2 p-2 text-sm sm:text-xl">
                 <img className="size-8 sm:size-10 md:size-12 rounded-full" src={elem.statistics[0].team.logo} alt={elem.statistics[0].team.name}/>
-                <span className="border-none">{elem.statistics[0].team.name}</span>
+                <span className="border-none">{lang === 'ar' ? getTeamByName(elem.statistics[0].team.name):elem.statistics[0].team.name}</span>
                 </div>
                 
               </td>
@@ -60,9 +61,9 @@ export default function TopPlayers(props) {
                 <div>
                 {
                   stats_type === 'Goals' ?
-                  <span className="my-auto border-none">{elem.statistics[0].goals.total}</span>
+                  <span className="my-auto border-none text-sm sm:text-xl">{elem.statistics[0].goals.total}</span>
                   :
-                  <span className="my-auto border-none">{elem.statistics[0].goals.assists}</span>
+                  <span className="my-auto border-none text-sm sm:text-xl">{elem.statistics[0].goals.assists}</span>
                   
                 }
                 </div>

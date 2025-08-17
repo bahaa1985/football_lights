@@ -5,6 +5,8 @@ import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
 import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 import FixtureRow from '../../Components/FixtureRow.jsx';
+import Spinner from "../../Components/Spinner.jsx";
+import { getTeamByName } from "../../Translation/teams.js";
 
 export default function LeagueFixtures(props) {
   const league = props.league;
@@ -22,8 +24,7 @@ export default function LeagueFixtures(props) {
       const roundsData = await getLeagueRounds(league,season);
       setFixtures(fixturesData);
       setFilteredFixtures(fixturesData);  
-      setRounds(roundsData.data.response); 
-      // setFirstRound(Object.keys(fixtures[Object.keys(fixturesData)[0]][0].league.round));      
+      setRounds(roundsData.data.response);       
       //
       setLoaded(true);
       console.log("fixtires",filteredFixtures);
@@ -32,7 +33,7 @@ export default function LeagueFixtures(props) {
     fetchData();
   }, [league,season]);
 
-  const lang = getCookie('user_preferences').lang || 'en';
+  const lang = JSON.parse(localStorage.getItem('user_preferences')).lang || 'en';
 
   function filterByGameWeek(e){
     if(e.target.value !== ""){
@@ -46,7 +47,7 @@ export default function LeagueFixtures(props) {
   }
 
   function filterByTeam(e){
-    const value = e.target.value.toLowerCase();
+    let value = getTeamByName(e.target.value).toLowerCase();
     if (value === "") {
       setFilteredFixtures(fixtures); // Reset to original fixtures
     } else {
@@ -67,7 +68,7 @@ export default function LeagueFixtures(props) {
               <span className="font-semibold text-gray-700 border-none">{getTranslation('Filter By', lang)}</span>
               <select
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
-                onChange={filterByGameWeek}
+                onChange={(e)=>filterByGameWeek(e)}
               >
                 <option value="">
                   {rounds[0]?.includes('Regular Season')
@@ -77,7 +78,7 @@ export default function LeagueFixtures(props) {
                 {rounds.map((round, index) => (
                   <option key={index} value={round}>
                     {round.includes('Regular Season')
-                      ? round.replace('Regular Season', 'GameWeek')
+                      ? (getTranslation('GameWeek',lang)+' ' +(index+1).toString())
                       : round}
                   </option>
                 ))}
@@ -96,9 +97,7 @@ export default function LeagueFixtures(props) {
           </div>
         </Fragment>
       ) : (
-        <div className="flex justify-center items-center h-40">
-          <span className="text-blue-500 font-semibold text-lg border-none">Loading ...</span>
-        </div>
+        <Spinner />
       )}
     </div>
   );

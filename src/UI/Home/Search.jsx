@@ -69,7 +69,7 @@ export default function Search(){
                         leagues?.map((item,index)=>{
                             return(
                                 <div className='flex flex-row justify-between items-center border-b-2 border-b-slate-400 border-solid' key={index}>
-                                    <NavLink to={`/league/${item.league.id}}`} className='flex flex-row justify-between items-center'>
+                                    <NavLink to={`/leagues/${item.league.id}}`} className='flex flex-row justify-between items-center'>
                                         <img className='size-6 sm:size-10 rounded-full' src={item.league.logo} loading='lazy' alt={item.league.name} />
                                         <span className="border-none">{item.league.name} ({item.country.name})</span>
                                         
@@ -82,7 +82,7 @@ export default function Search(){
                         teams.map((item,index)=>{
                             return(
                                 <div className='flex flex-row justify-between items-center border-b-2 border-b-slate-400 border-solid' key={index}>
-                                    <NavLink to={`/team/${item.team.id}`} className='flex flex-row justify-between items-center '>
+                                    <NavLink to={`/teams/${item.team.id}`} className='flex flex-row justify-between items-center '>
                                         <img className='size-6 sm:size-10 rounded-full' src={item.team.logo} loading='lazy' alt={item.team.name} />
                                         <span className="border-none">{item.team.name} ({item.team.country})</span>
                                        
@@ -95,7 +95,7 @@ export default function Search(){
                         players.map((item,index)=>{
                             return(
                                 <div className='flex flex-row justify-between items-center border-b-2 border-b-slate-400 border-solid' key={index}>
-                                    <NavLink to={`/player/${item.player.id}`} className='flex flex-row justify-between items-center '>
+                                    <NavLink to={`/players/${item.player.id}`} className='flex flex-row justify-between items-center '>
                                         <img className='size-6 sm:size-10 rounded-full' src={item.player.photo} loading='lazy' alt={item.player.name} />
                                         <span className="border-none">{item.player.name}</span> 
                                     </NavLink>                                                                      

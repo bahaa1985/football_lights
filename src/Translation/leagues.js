@@ -293,15 +293,16 @@ const leagues = {
     ,    
       {"FIFA Club World Cup": "كأس العالم للأندية"}
     ,    
-      {"UEFA Champions League": "دوري أبطال أوروبا"}
+      {"Champions League": "دوري أبطال أوروبا"}
     ,
         {"Promotion - Champions League (Play Offs: 1/8-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 16)"}
     ,
         {"Promotion - Champions League (Play Offs: 1/16-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 32)"}
     ,  
-        {"UEFA Europa League": "الدوري الأوروبي"}
+        {"UEFA Europa League": "الدوري الأوروبي"},
+        {"Conference League Qualification": "تصفيات دوري المؤتمر الأوروبي"}
     ,    
-      {"Europa Conference League": "دوري المؤتمر الأوروبي"}
+      {"UEFA Europa Conference League": "دوري المؤتمر الأوروبي"}
     ,    
       {"Copa Libertadores": "كوبا ليبرتادوريس"}
     ,    

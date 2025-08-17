@@ -11,8 +11,8 @@ export default function News(){
     const [storyIndex,setStoryindex] = useState();
     const [isClicked,setClicked] = useState(false);
     const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
-    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tag.toString() || 'soccer';
-    const user_country= JSON.parse(localStorage.getItem('user_preferences'))?.country.toLowerCase()|| 'en';
+    const newsTag = JSON.parse(localStorage.getItem('user_preferences'))?.tag?.toString() || 'soccer';
+    const user_country= JSON.parse(localStorage.getItem('user_preferences'))?.country?.toLowerCase()|| 'en';
 
    
     const datesTZD={

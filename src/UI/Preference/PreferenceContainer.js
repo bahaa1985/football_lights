@@ -90,7 +90,7 @@ export default function Preferences(params) {
           }
         </select>
       </div>
-      <div className="sm:h-auto px-auto sm:flex sm:justify-between gap-4">
+      <div className="w-full sm:h-auto sm:flex flex-col sm:flex-row sm:justify-between gap-4">
         {/* Search leagues */}
         <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
           <div className="w-full text-left flex justify-between items-center mb-4">
@@ -98,7 +98,7 @@ export default function Preferences(params) {
               type="text"
               ref={searchLeagueInput}
               className="outline-none rounded-md px-2 py-1 border mr-2"
-              placeholder={getTranslation("Enter Country Or League Name", selectedLanguage)}
+              placeholder={getTranslation("Search By Country Name", selectedLanguage)}
             />
             <button
               className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
@@ -124,7 +124,7 @@ export default function Preferences(params) {
               type="text"
               ref={searchTeamInput}
               className="outline-none rounded-md px-2 py-1 border l mr-2"
-              placeholder={getTranslation('Enter Country Or Team Name', selectedLanguage)}
+              placeholder={getTranslation('Search By Team Name', selectedLanguage)}
             />
             <button
               className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"

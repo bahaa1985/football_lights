@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getTeamByCountry } from '../Translation/teams.js';
 
 const lang =  JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
@@ -53,15 +53,24 @@ export const teamsArray=[
 
 export default function Teams(){
     const [isVisible,setVisibility]=useState(true);
+    const [screenWidth,setScreenWidth] = useState(0);
+
+    useEffect(()=>{
+        setScreenWidth(window.innerWidth);
+        return () => {
+            setScreenWidth(0);
+        }
+    })
 return(
     <div>
         {/* <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 bg-slate-800 py-3 text-white text-center text-xl font-bold`}>{getTranslation('Teams',lang)}</div> */}
-            <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 flex w-full flex-row flex-wrap gap-2 justify-between p-6 mb-8 bg-white border-r border-l border-b border-slate-400 z-50`}>
+            <div className={`${isVisible ? 'flex':'hidden'} flex w-full h-fit flex-row flex-wrap gap-2 justify-between p-6 mb-8 ${screenWidth > 425 ? 'bg-white text-slate-800' : 'bg-slate-800 text-white'} 
+            border-r border-l border-b border-slate-400 z-50 overflow-scroll`}>
                     {   teamsArray.map((team,index)=>{
                             return(
-                                <a  href={`/team/${team.id}`} 
+                                <a  href={`/teams/${team.id}`} 
                                     onClick={()=>setVisibility(!isVisible)}
-                                    className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
+                                    className='w-24 sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                 <div className='w-auto sm:w-44 flex-col sm:flex-row justify-center items-center' key={team.id}>
                                     <img className='size-8 sm:size-12 mx-auto' src={team.logo} alt={team.name} />
                                     <h3 className='w-28 sm:w-full font-bold text-center'>{team.name}</h3>

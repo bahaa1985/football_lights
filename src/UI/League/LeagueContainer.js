@@ -29,12 +29,29 @@ export default function League() {
 
   useEffect(() => {
       async function fetchData() {
-        const leagueData = await getLeagues(null, selectedleague);
-        setLeagueInfo(leagueData.data.response[0]);
-        //
-        setSeasons(leagueData.data.response[0].seasons);
-        // 
-        setLoaded(true);
+        setLoaded(false);
+        try {
+          const leagueData = await getLeagues(null, selectedleague);
+          if (
+            !leagueData ||
+            !leagueData.data ||
+            !leagueData.data.response ||
+            leagueData.data.response.length === 0
+          ) {
+            setLeagueInfo(null);
+            setSeasons([]);
+            alert(getTranslation('No league data found for the selected league.', lang));
+          } else {
+            setLeagueInfo(leagueData.data.response[0]);
+            setSeasons(leagueData.data.response[0].seasons);
+          }
+        } catch (error) {
+          setLeagueInfo(null);
+          setSeasons([]);
+          alert(getTranslation('Failed to load league data. Please try again later.', lang));
+        } finally {
+          setLoaded(true);
+        }
       }
       fetchData();
 
