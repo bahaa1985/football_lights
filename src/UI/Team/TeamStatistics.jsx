@@ -31,13 +31,13 @@ function TeamStatistics({ team, league, season }) {
     return () => (isMount = false);
   }, [team, season, league]);
 
-  const lang = getCookie('user_preferences').lang || 'en';
+  const lang = JSON.parse(localStorage.getItem('user_preferences')).lang || 'en';
 
   const Section = ({ title, children }) => (
     <div className="my-4">
       <h2 className="text-center bg-slate-800 text-white py-2 text-lg font-bold rounded-md">{getTranslation(title,lang)}</h2>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm text-center mt-2 border border-slate-700 rounded-md overflow-hidden">
+        <table className="w-full text-sm text-center border border-slate-700 rounded-md overflow-hidden">
           {children}
         </table>
       </div>
@@ -228,9 +228,9 @@ function TeamStatistics({ team, league, season }) {
       <Section title="Cards">
         <TableHeader>
           <TableRow>
-            <TableCell>{getTranslation('yellow',lang)}</TableCell>
-            <TableCell>{getTranslation('red',lang)}</TableCell>
-            <TableCell>{getTranslation('total',lang)}</TableCell>
+            <TableCell>{getTranslation('Yellow Cards',lang)}</TableCell>
+            <TableCell>{getTranslation('Red Cards',lang)}</TableCell>
+            <TableCell>{getTranslation('Total',lang)}</TableCell>
           </TableRow>
         </TableHeader>
         <tbody>

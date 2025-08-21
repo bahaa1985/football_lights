@@ -1,5 +1,7 @@
 import React, { useState,useEffect,useContext } from 'react';
 import { TeamsContext } from './FixtureContainer.js';
+import { getTranslation } from '../../Translation/labels.js';
+import { getTeamByName } from '../../Translation/teams.js';
 
 function PlayerStats(props) {
 
@@ -10,7 +12,9 @@ function PlayerStats(props) {
     const awayTeam = teams.away;
     //set division of the clicked team ( in small screens)
     const [screenWidth,setScreenWidth] = useState(0);
-    const [clickedTeam,setClickedTeam] = useState(null);
+    const [clickedTeam,setClickedTeam] = useState(homeTeam.id);
+
+     const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
     useEffect(()=>{
         const handleResize = () => {
@@ -164,7 +168,7 @@ function PlayerStats(props) {
     const renderPlayerStats = (title, homeStats, awayStats, statKey, statSubKey=null) => {
         return (
             <div className='w-full mx-auto text-center'>
-                <h3 className='w-full bg-slate-900 text-slate-50 font-bold rounded-lg p-2'>{title}</h3>
+                <h3 className='w-full bg-slate-900 text-slate-50 font-bold rounded-lg p-2'>{getTranslation(title,lang)}</h3>
                 {
                     // screenWidth >= 600 ? //that means the screen is wide enough to show both teams
                     // <div className='flex justify-between py-2'>
@@ -184,16 +188,16 @@ function PlayerStats(props) {
     
 
     return (
-        <div className='w-full sm:w-[70%] mx-auto'>
+        <div className='w-full sm:w-[45%] mx-auto'>
             {/* teams header */}
             <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800 my-2`}>
-                <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': ''} `} onClick={()=>setClickedTeam(homeTeam.id)}>
+                <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam === homeTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900'} `} onClick={()=>setClickedTeam(homeTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
-                    <span className='border-none text-slate-50 font-bold'>{teams.home.name}</span>
+                    <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(teams.home.name):teams.home.name}</span>
                 </div>
-                <div className={`flex flex-row-reverse space-x-2 items-center w-1/2 ${clickedTeam ? 'cursor-pointer': '' }`} onClick={()=>setClickedTeam(awayTeam.id)}>
+                <div className={`flex flex-row-reverse space-x-2 items-center w-1/2 ${clickedTeam === awayTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900' }`} onClick={()=>setClickedTeam(awayTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.away.logo} alt={teams.away.name} />
-                    <span className='border-none text-slate-50 font-bold'>{teams.away.name}</span>
+                    <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(teams.away.name):teams.away.name}</span>
                 </div>
             </div>
             {/* players statistics */}

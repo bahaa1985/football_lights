@@ -33,8 +33,9 @@ export default function DayFixtures() {
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [isClicked, setClicked] = useState(false);
-  const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
+  // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [message, setMessage] = useState("");
+  const [isLive,setLive] = useState(false); // if true trigger timer to update results every minute
 
   const leagues = leaguesArray;
   const teams = teamsArray;
@@ -44,24 +45,40 @@ export default function DayFixtures() {
 
   useEffect(() => {
     if (leagues.length > 0 && teams.length > 0 && isClicked) {
+
       async function fetchFixtures() {
-        const date_response = await groupDateFixtures(selectedDate);
-        // const teams_response = await getPromisedTeamFixtures(selectedDate);
-        setDateFixtures(date_response);
-        // setTeamsFixtures(teams_response);
+        const fixtures_response = await groupDateFixtures(selectedDate);
+        setDateFixtures(fixtures_response);        
+
+        // 
         setLoaded(true);
         setClicked(false);
+        //
       }
-      fetchFixtures();
+      //
+      fetchFixtures() //to fetch fixtures for the first time
+      const checkLive =dateFixtures?.filter(fixture=>{
+          return fixture.status.short === '1H'|| 'HT' ||'2H' || 'ET' || 'BT' ||'P'  || 'SUSP' || 'INT' || 'LIVE'      
+        })
+         if(checkLive){
+          setLive(true);
+        }
+      //timer to fetch data every minute if there is live games:
+      if(isLive){
+        setInterval(fetchFixtures(),1000*60)
+        console.log("live game!");
+        
+      }
+      //
 
-      window.addEventListener("resize", () => {
-        setDeviceWidth(window.innerWidth);
-      });
-      return () => {
-        window.removeEventListener("resize", () => {
-          setDeviceWidth(window.innerWidth);
-        });
-      };
+      // window.addEventListener("resize", () => {
+      //   setDeviceWidth(window.innerWidth);
+      // });
+      // return () => {
+      //   window.removeEventListener("resize", () => {
+      //     setDeviceWidth(window.innerWidth);
+      //   });
+      // };
     } else {
       setMessage(
         getTranslation("No Current Fixtures", lang) ||

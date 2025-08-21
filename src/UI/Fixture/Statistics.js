@@ -37,29 +37,31 @@ function Statistics(props){
 
     let total=0;
 
-    const lang = getCookie('language').lang || 'en';
+    const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
 
     return(
          
-        <div className="w-[90%] sm:w-auto mx-auto text-center ">                                                      
+        <div className="w-[90%] flex flex-col sm:flex-row sm:justify-center gap-2 sm:w-auto mx-auto text-center ">                                                      
         {
             isLoaded ?
             [
-            homeStatistics.length > 0?.map((item,index)=>{
+                <div className="w-full sm:w-[45%]">
+                    {
+homeStatistics?.map((item,index)=>{
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} className="w-[90%] text-center my-2 mx-auto ">                       
+                    <div key={index} className="w-full text-center my-2 mx-auto ">                       
                             
                         <div className="flex justify-center">
                             <div>  
                                <div className="w-full text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
-                               <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2 rotate-180">
+                               <div className="w-36 sm:w-56 bg-gray-300 h-2 rotate-180">
                                    {
                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
-                                       <div style={{width:`${Number.parseInt(item.value) *100 / total}%`}} className={`bg-green-600 rounded-r-full  h-2`}></div>:
+                                       <div style={{width:`${Number.parseInt(item.value) *100 / total}%`}} className={`bg-green-600  h-2`}></div>:
                                        item.value?.toString().includes('%') ? 
-                                       <div style={{width:`${item.value}`}} className={`bg-green-600 rounded-r-full  h-2`}></div>
+                                       <div style={{width:`${item.value}`}} className={`bg-green-600  h-2`}></div>
                                        :null
                                    }   
                                </div>                            
@@ -67,12 +69,12 @@ function Statistics(props){
 
                            <div> 
                                 <div className="w-full text-right font-bold px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div> 
-                               <div className="w-36 sm:w-56 bg-gray-200 rounded-r-full h-2">
+                               <div className="w-36 sm:w-56 bg-gray-300 h-2">
                                    {
                                        awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
-                                       <div style={{width:`${Number.parseInt(awayStatistics[index].value) *100 / total}%`}} className={` bg-blue-600 rounded-r-full h-2`}></div>:
+                                       <div style={{width:`${Number.parseInt(awayStatistics[index].value) *100 / total}%`}} className={` bg-blue-600 h-2`}></div>:
                                        awayStatistics[index].value?.toString().includes('%') ?
-                                       <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 rounded-r-full h-2`}></div>
+                                       <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 h-2`}></div>
                                        :null
                                    }
                                </div>                                                            
@@ -81,7 +83,10 @@ function Statistics(props){
                         <div>{getTranslation(item.type.replace('_',' '),lang)}</div>
                     </div>
                 )
-            }),
+            })
+                    }
+                </div>
+            ,
             <PlayerStats statistics={{home:homePlayers,away:awayPlayers}}  />
             ]
             :<p>No Data Available</p>

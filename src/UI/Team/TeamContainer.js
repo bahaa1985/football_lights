@@ -6,6 +6,8 @@ import { getTranslation } from '../../Translation/labels.js';
 import TeamStatistics from './TeamStatistics.jsx';
 import Favourite from '../../Components/Favourite.jsx';
 import { teamsArray } from '../../Components/Teams.jsx'
+import { getTeamByCountry } from '../../Translation/teams.js';
+import { getCountryNameTranslation } from '../../Translation/countries.js';
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);
@@ -63,7 +65,7 @@ export default function Team() {
     const memoizedTeamLeagues = useMemo(() => teamLeagues, [teamLeagues]);
     const memoizedTeamSeasons = useMemo(() => teamSeasons, [teamSeasons]);
 
-    const lang = getCookie('language').lang || 'en';
+     const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
     return (
         <div className="mx-auto mt-20 w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
@@ -95,7 +97,7 @@ export default function Team() {
                     <div className="flex flex-col justify-between items-center flex-wrap mb-8">
                         <div className="flex items-center gap-4">
                             <img className="w-16 h-16 md:w-20 md:h-20 rounded-full" src={teamInformation?.team?.logo} alt={teamInformation?.team?.name} />
-                            <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{teamInformation?.team?.name}</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-slate-800">{lang==='ar' ? getTeamByCountry(teamInformation?.team?.country,teamInformation?.team?.name) : teamInformation?.team?.name}</h1>
                             {/* favourite */}
                             {
                                 !teamsArray.find(team=>team.id === teamInformation?.team.id) &&
@@ -113,7 +115,7 @@ export default function Team() {
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
                                 <p className="text-gray-600 text-xl font-bold">{getTranslation('Country',lang)}</p>
-                                <p className="font-semibold">{teamInformation?.team?.country}</p>
+                                <p className="font-semibold">{getCountryNameTranslation(teamInformation?.team?.country,lang)}</p>
                             </div>                            
                             <div>
                                 <p className="text-gray-600 text-xl font-bold">{getTranslation('Founded',lang)}</p>
