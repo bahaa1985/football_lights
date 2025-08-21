@@ -7,7 +7,7 @@ import TeamStatistics from './TeamStatistics.jsx';
 import Favourite from '../../Components/Favourite.jsx';
 import { teamsArray } from '../../Components/Teams.jsx'
 import { getTeamByCountry } from '../../Translation/teams.js';
-import { getCountryNameTranslation } from '../../Translation/countries.js';
+import { getCountryNameBylang} from '../../Translation/countries.js';
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);
@@ -115,7 +115,7 @@ export default function Team() {
                         <div className="flex flex-row justify-center flex-wrap gap-4 mt-2 text-center">
                             <div>
                                 <p className="text-gray-600 text-xl font-bold">{getTranslation('Country',lang)}</p>
-                                <p className="font-semibold">{getCountryNameTranslation(teamInformation?.team?.country,lang)}</p>
+                                <p className="font-semibold">{getCountryNameBylang(teamInformation?.team?.country,lang)}</p>
                             </div>                            
                             <div>
                                 <p className="text-gray-600 text-xl font-bold">{getTranslation('Founded',lang)}</p>

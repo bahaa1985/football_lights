@@ -44,47 +44,52 @@ export default function DayFixtures() {
   const labels = getAllTranslations(lang);
 
   useEffect(() => {
+    let intervalId;
+
+    async function fetchFixtures() {
+      try {
+      const fixtures_response = await groupDateFixtures(selectedDate);
+      setDateFixtures(fixtures_response);
+
+      setLoaded(true);
+      setClicked(false);
+      console.log('Fixtures fetched!');      
+      //
+      } catch (error) {
+      console.error("Error fetching fixtures:", error);
+      }
+    }
+
     if (leagues.length > 0 && teams.length > 0 && isClicked) {
-
-      async function fetchFixtures() {
-        const fixtures_response = await groupDateFixtures(selectedDate);
-        setDateFixtures(fixtures_response);        
-
-        // 
-        setLoaded(true);
-        setClicked(false);
-        //
-      }
-      //
-      fetchFixtures() //to fetch fixtures for the first time
-      const checkLive =dateFixtures?.filter(fixture=>{
-          return fixture.status.short === '1H'|| 'HT' ||'2H' || 'ET' || 'BT' ||'P'  || 'SUSP' || 'INT' || 'LIVE'      
-        })
-         if(checkLive){
-          setLive(true);
-        }
-      //timer to fetch data every minute if there is live games:
-      if(isLive){
-        setInterval(fetchFixtures(),1000*60)
-        console.log("live game!");
-        
-      }
-      //
-
-      // window.addEventListener("resize", () => {
-      //   setDeviceWidth(window.innerWidth);
-      // });
-      // return () => {
-      //   window.removeEventListener("resize", () => {
-      //     setDeviceWidth(window.innerWidth);
-      //   });
-      // };
+      fetchFixtures();
     } else {
       setMessage(
-        getTranslation("No Current Fixtures", lang) ||
-          "No Leagues Or Teams Are Selected. Go to Preferences"
+      getTranslation("No Current Fixtures", lang) ||
+      "No Leagues Or Teams Are Selected. Go to Preferences"
       );
     }
+
+    // Check for live fixtures and set up interval if needed
+    function hasLiveFixtures(fixtures) {
+      if (isLoaded){
+        return fixtures?.some(fixture =>
+        [
+          '1H', '2H', 'ET', 'BT', 'P', 'SUSP', 'INT'
+        ].includes(fixture.status.short)
+        ); 
+      }
+      return false      
+    }
+
+    if (hasLiveFixtures(dateFixtures)) {
+      setInterval(fetchFixtures, 1000 * 60);
+      console.log("Live game detected, polling every minute.");
+    }
+
+    // return () => {
+    //   if (intervalId) clearInterval(intervalId);
+    // };
+    
   }, [selectedDate, isClicked]);
 
   function handleSelectedTab(index) {

@@ -10,7 +10,7 @@ import { getCookie } from "../../Api/cookie.js";
 import { leaguesArray } from '../../Components/Leagues.jsx';
 import { getTranslation } from "../../Translation/labels.js";
 import { getLeagueTranslationByCountry } from "../../Translation/leagues.js";
-import { getCountryNameTranslation } from "../../Translation/countries.js";
+import { getCountryNameBylang, getCountryNameTranslation } from "../../Translation/countries.js";
 
 export default function League() {
   
@@ -124,7 +124,7 @@ export default function League() {
             </div>
             <div className="flex items-center gap-2">
               <img className="w-12 h-10 rounded object-cover" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
-              <span className="text-xl font-bold text-gray-700 border-none">{getCountryNameTranslation(leagueInfo?.country.name, lang)}</span>
+              <span className="text-xl font-bold text-gray-700 border-none">{getCountryNameBylang(leagueInfo?.country.name, lang)}</span>
             </div>
           </div>
         </div>
