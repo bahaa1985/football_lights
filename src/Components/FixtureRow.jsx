@@ -108,12 +108,7 @@ function FixtureRow(props) {
                           elem.fixture.short === "SUSB" ||
                           elem.fixture.short === "INT" ? (
                             <div className="flex flex-row justify-start items-start">
-                              {/* <span class="relative flex h-3 w-3 border-none left-2">
-                                <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
-                                <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
-                              </span> */}
                               <span className="text-sm font-bold border-none text-red-700 animate-pulse">'{elem.fixture.status.elapsed}</span>
-                              {/* <span className="relative left-4 text-red-800 border-none">{elem.fixture.status.short}</span> */}
                             </div>
                           ) : 
                         <div className="flex justify-start items-center mx-2">

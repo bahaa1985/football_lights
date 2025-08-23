@@ -37,6 +37,9 @@ function Statistics(props){
 
     let total=0;
 
+    console.log("hp",homePlayers);
+    
+
     const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
 
     return(
@@ -45,42 +48,44 @@ function Statistics(props){
         {
             isLoaded ?
             [
-                <div className="w-full sm:w-[45%]">
+                <div className="w-full sm:w-1/2">
                     {
 homeStatistics?.map((item,index)=>{
                                
                 total=Number.parseInt(item.value)+Number.parseInt(awayStatistics[index].value);             
                 return(
-                    <div key={index} className="w-full text-center my-2 mx-auto ">                       
-                            
-                        <div className="flex justify-center">
-                            <div>  
-                               <div className="w-full text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
-                               <div className="w-36 sm:w-56 bg-gray-300 h-2 rotate-180">
-                                   {
-                                       item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
-                                       <div style={{width:`${Number.parseInt(item.value) *100 / total}%`}} className={`bg-green-600  h-2`}></div>:
-                                       item.value?.toString().includes('%') ? 
-                                       <div style={{width:`${item.value}`}} className={`bg-green-600  h-2`}></div>
-                                       :null
-                                   }   
-                               </div>                            
-                           </div>
-
-                           <div> 
-                                <div className="w-full text-right font-bold px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div> 
-                               <div className="w-36 sm:w-56 bg-gray-300 h-2">
-                                   {
-                                       awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
-                                       <div style={{width:`${Number.parseInt(awayStatistics[index].value) *100 / total}%`}} className={` bg-blue-600 h-2`}></div>:
-                                       awayStatistics[index].value?.toString().includes('%') ?
-                                       <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 h-2`}></div>
-                                       :null
-                                   }
-                               </div>                                                            
-                           </div>
+                    <div key={index} className="w-full text-center my-4 mx-auto ">                                                   
+                        <div className="flex flex-col justify-center">
+                            <div className="w-full flex flex-row justify-between">
+                                <div className="text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
+                                <div>{getTranslation(item.type.replace('_',' '),lang)}</div>
+                                <div className="text-right font-bold px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div>
+                            </div>
+                            {/*  */}
+                            <div className="flex flex-row items-center space-x-2"> 
+                                {/* <div className="w-full text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div> */}
+                                <div className="w-36 sm:w-56 bg-gray-300 h-2 rotate-180">
+                                    {
+                                        item.value !== null && item.value !== 0 && !item.value.toString().includes('%')  ?
+                                        <div style={{width:`${Number.parseInt(item.value) *100 / total}%`}} className={`bg-green-600  h-2`}></div>:
+                                        item.value?.toString().includes('%') ? 
+                                        <div style={{width:`${item.value}`}} className={`bg-green-600  h-2`}></div>
+                                        :null
+                                    }   
+                                </div>
+                                {/* <div className="w-full text-right font-bold px-2 sm:px-4">{`${awayStatistics[index].value === null ? 0 : awayStatistics[index].value}`}</div>  */}
+                                <div className="w-36 sm:w-56 bg-gray-300 h-2">
+                                    {
+                                        awayStatistics[index].value !== null && awayStatistics[index].value !== 0 && !awayStatistics[index].value.toString().includes('%')  ?
+                                        <div style={{width:`${Number.parseInt(awayStatistics[index].value) *100 / total}%`}} className={` bg-blue-600 h-2`}></div>:
+                                        awayStatistics[index].value?.toString().includes('%') ?
+                                        <div style={{width:`${awayStatistics[index].value}`}} className={` bg-blue-600 h-2`}></div>
+                                        :null
+                                    }
+                                </div>                                                            
+                            </div>                            
                         </div>
-                        <div>{getTranslation(item.type.replace('_',' '),lang)}</div>
+                        {/* <div>{getTranslation(item.type.replace('_',' '),lang)}</div> */}
                     </div>
                 )
             })

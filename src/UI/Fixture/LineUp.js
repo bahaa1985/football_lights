@@ -107,8 +107,6 @@ function LineUp(props) {
     };
   }, [fixtureId]);
 
-  // console.log('hp',homePlayers);
-  
 
   function linesPositions() { // this function will not be called if no formation is provided, the players will be displayed as stack
     if(homeTeamProfile.formation.length > 0 && awayTeamProfile.formation.length > 0 ){

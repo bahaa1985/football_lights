@@ -19,13 +19,9 @@ export default function Home(){
             }); 
         }
     }, []);
-   
-    console.log(localStorage.getItem("user_preferences"));
-    
-    
-    
+
     return(
-        <div className={`mt-20 w-[90%] mx-auto`}>
+        <div className={`flex-1 mt-20 w-[90%] mx-auto`}>
             <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>
                 <Favourites/> 
                 <DayFixtures />                

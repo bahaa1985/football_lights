@@ -1,4 +1,4 @@
-export const translation ={
+ export const translation ={
   'ar': {
     "No favourite leagues are selected": "لم يتم اختيار أي دوريات مفضلة",
     "No favourite teams are selected": "لم يتم اختيار أي فرق مفضلة",
@@ -82,6 +82,7 @@ export const translation ={
     "No Teams Available": "لا توجد فرق متاحة",
     "Shots (On Goal)": "تسديدات (على المرمى)",
     "Goals Conceded": "أهداف مستقبلة",
+    "Goals Scored": "أهداف مسجلة",
     "Saves": "تصديات",
     "Passes": "تمريرات",
     "Key": "مفتاح",
@@ -89,14 +90,16 @@ export const translation ={
     "Tackles": "تدخلات",
     "Blocks": "تصديات دفاعية",
     "Interceptions": "اعتراضات",
-    "Duel": "صراع",
+    "Duels": "صراع",
     "Won": "فاز",
     "Dribbles": "مراوغات",
     "Attempts": "محاولات",
     "Success": "نجاح",
     "Fouls": "أخطاء",
     "Drawn": "حصل عليها",
-    "Committed": "ارتكب",
+    "Fouls Drawn": "اخطاء حصل عليها",
+    "Fouls Committed": "أخطاء ارتكبها",
+    "Committed": "ارتكب",    
     "Saved": "تصدى",
     "Shots on Goal": "تسديدات على المرمى",
     "Shots off Goal": "تسديدات خارج المرمى",
@@ -117,6 +120,7 @@ export const translation ={
     "Line Up": "التشكيلة",
     "Events": "الأحداث",
     "Statistics": "الإحصائيات",
+    "Man Of The Match": "رجل المباراة",
   },
   "en":{
     "Leagues": "Leagues",
@@ -204,6 +208,7 @@ export const translation ={
     "Blocks": "Blocks",
     "Interceptions": "Interceptions",
     "Duel": "Duel",
+    "Goals Scored": "Goals Scored",
     "Won": "Won",
     "Dribbles": "Dribbles",
     "Attempts": "Attempts",
@@ -211,6 +216,8 @@ export const translation ={
     "Fouls": "Fouls",
     "Drawn": "Drawn",
     "Committed": "Committed",
+    "Fouls Drawn": "Fouls Drawn",
+    "Fouls Committed": "Fouls Committed",
     "Saved": "Saved",
     "Shots on Goal": "Shots on Goal",
     "Shots off Goal": "Shots off Goal",
@@ -231,6 +238,7 @@ export const translation ={
     "Line Up": "Line Up",
     "Events": "Events",
     "Statistics": "Statistics",
+    "Man Of The Match":"Man Of The Match"
   },
   "es": {
     "Leagues": "Ligas",
@@ -278,6 +286,7 @@ export const translation ={
     "missed": "fallados",
     "Cards": "Tarjetas",
     "yellow": "amarilla",
+    "Goals Scored": "Goles Anotados",
     "red": "roja",
     "total": "total",
     "Total": "Total",
@@ -329,6 +338,8 @@ export const translation ={
     "Fouls": "Faltas",
     "Drawn": "Provocadas",
     "Committed": "Cometidas",
+    "Fouls Drawn": "Faltas Provocadas",
+    "Fouls Committed": "Faltas Cometidas",
     "Saved": "Salvado",
     "Shots on Goal": "Disparos a Puerta",
     "Shots off Goal": "Disparos Fuera",
@@ -349,6 +360,7 @@ export const translation ={
     "Line Up": "Alineación",
     "Events": "Eventos",
     "Statistics": "Estadísticas",
+    "Man Of The Match": "Hombre del Partido"
   },
   "it": {
     "Leagues": "Campionati",
@@ -379,6 +391,7 @@ export const translation ={
     "draws": "pareggi",
     "loses": "sconfitte",
     "Goals For": "Gol Fatti",
+    "Goals Scored": "Gol Segnati",
     "Goals Against": "Gol Subiti",
     "For": "A Favore",
     "Against": "Contro",
@@ -447,6 +460,8 @@ export const translation ={
     "Fouls": "Falli",
     "Drawn": "Subiti",
     "Committed": "Commessi",
+    "Fouls Drawn": "Falli Subiti",
+    "Fouls Committed": "Falli Commessi",
     "Saved": "Parato",
     "Shots on Goal": "Tiri in Porta",
     "Shots off Goal": "Tiri Fuori",
@@ -467,6 +482,7 @@ export const translation ={
     "Line Up": "Formazione",
     "Events": "Eventi",
     "Statistics": "Statistiche",
+    "Man Of The Match": "Uomo della Partita"
   },
   "fr": {
     "Leagues": "Ligues",
@@ -495,6 +511,7 @@ export const translation ={
     "played": "joué",
     "wins": "victoires",
     "draws": "nuls",
+    "Goals Scored": "Buts Marqués",
     "loses": "défaites",
     "Goals For": "Buts Pour",
     "Goals Against": "Buts Contre",
@@ -565,6 +582,8 @@ export const translation ={
     "Fouls": "Fautes",
     "Drawn": "Obtenues",
     "Committed": "Commis",
+    "Fouls Drawn": "Fautes Obtenues",
+    "Fouls Committed": "Fautes Comises",
     "Saved": "Sauvé",
     "Shots on Goal": "Tirs au But",
     "Shots off Goal": "Tirs Hors Cadre",
@@ -585,6 +604,7 @@ export const translation ={
     "Line Up": "Composition",
     "Events": "Événements",
     "Statistics": "Statistiques",
+    "Man Of The Match": "Homme du Match"
   },
   "pt": {
     "Leagues": "Ligas",
@@ -617,6 +637,7 @@ export const translation ={
     "Goals": "Gols",
     "Goals For": "Gols a Favor",
     "Goals Against": "Gols Contra",
+    "Goals Scored": "Gols Marcados",
     "For": "A Favor",
     "Against": "Contra",
     "Average": "Média",
@@ -683,6 +704,8 @@ export const translation ={
     "Fouls": "Faltas",
     "Drawn": "Sofridas",
     "Committed": "Cometidas",
+    "Fouls Drawn": "Faltas Sofridas",
+    "Fouls Committed": "Faltas Cometidas",
     "Saved": "Defendido",
     "Shots on Goal": "Chutes no Gol",
     "Shots off Goal": "Chutes Fora",
@@ -703,6 +726,7 @@ export const translation ={
     "Line Up": "Escalação",
     "Events": "Eventos",
     "Statistics": "Estatísticas",
+    "Man Of The Match": "Homem do Jogo"
   }
 }
 

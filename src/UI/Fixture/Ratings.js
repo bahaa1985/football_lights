@@ -1,6 +1,7 @@
 import {React,useState, useEffect} from "react";
-import {faStar} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getTranslation } from "../../Translation/labels.js";
+import { getTeamByName } from "../../Translation/teams.js";
+
 export default function Ratings(props){
 
     const homeStatistics = props.statistics.home.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
@@ -66,7 +67,7 @@ export default function Ratings(props){
         {/* man of the match */}
         <div className="flex flex-col justify-center items-center 
               w-full p-2 mx-auto rounded-md bg-slate-800 text-slate-50">
-          <span className="border-none text-sm sm:text-lg">Man of the match</span>
+          <span className="border-none text-sm sm:text-lg">{getTranslation('Man Of The Match',lang)}</span>
           <div className="flex flex-row justify-center items-center gap-2 mx-auto">         
             <img className="w-12 h-12 rounded-full" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
             <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-lg">
@@ -89,7 +90,7 @@ export default function Ratings(props){
                    onClick={()=>setClickedTeam(homeTeam.id)} >
                     <img alt={homeTeam.name} src={homeTeam.logo} className="size-8"/>
                     <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
-                        {homeTeam.name}
+                        {getTeamByName(homeTeam.name)}
                     </span>
                 </th>
                 <th className={`flex flex-row-reverse  items-center p-1 w-[90%] rounded-lg my-2 cursor-pointer
@@ -97,45 +98,14 @@ export default function Ratings(props){
                    onClick={()=>setClickedTeam(awayTeam.id)} >
                     <img alt={awayTeam} src={awayTeam.logo} className="size-8"/>
                     <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
-                        {awayTeam.name}
+                        {getTeamByName(awayTeam.name)}
                     </span>
                 </th>
               </tr>
             </thead>
             {/* players ratings */}
             <tbody className="border-b-[0px] border-slate-800 border-solid">
-            {
-                // screenWidth >= 500 ? //if screen size is more than 425, display both of teams ratings,
-                // // otherwise displaying depends on user's selection  
-                // homeStatistics.map((elem, index) => {
-                // return (
-                  
-                //   <tr key={index} className="sm:flex flex-row w-full border-b border-slate-500 border-solid">
-                //     {
-                //       elem.statistics[0].games.rating !== null ? 
-                //         <td className="flex justify-between sm:w-[50%] sm:px-3">
-                //             <span className="border-none">{elem.player.name}</span>
-                //             <span className={`flex justify-center items-center border-none w-8 h-8 font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
-                //                 {elem.statistics[0].games.rating}
-                //             </span>
-                //         </td>
-                //         : null
-                //     }
-                    
-                //     {
-                //       awayStatistics[index] !== undefined && awayStatistics[index].statistics[0].games.rating !== null ? 
-                //         <td className="flex justify-between sm:w-[50%] sm:px-3">
-                //             <span className="border-none">{awayStatistics[index].player.name}</span>
-                //             <span className={`flex justify-center items-center border-none w-8 h-8 font-bold text-md text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
-                //               {awayStatistics[index].statistics[0].games.rating}
-                //             </span>
-                //         </td>
-                //         : null
-                //     }
-                //   </tr>
-                // );
-                // })
-                // :
+            {              
                 <tr className="flex flex-col w-full">
                 {
                     clickedTeam === homeTeam.id ?

@@ -6,17 +6,19 @@ import missed_penalty from '../../icons/missed_penalty.png'
 import { faSoccerBall,faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import VAR from '../../icons/var.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Spinner from "../../Components/Spinner.jsx";
 
 function Events(props){
     
     const fixtureId = props.fixtureId; 
     const teams= props.teams;
-    const [events,setEvents] = useState([])  
+    const [events,setEvents] = useState([]);
+    const [isLoaded,setIsLoaded] = useState(false);
 
     useMemo(()=>{
         getEvents(fixtureId).then((result)=>{
-            console.log("events are rendered");
-           setEvents( result.data.response )
+           setEvents( result.data.response );
+        //    setIsLoaded(true);
         })        
     },[fixtureId])
     
@@ -56,10 +58,11 @@ function Events(props){
 
     let i=0;
     return(        
-        <div className='block mx-auto my-2 w-[90%] sm:w-[60%] bg-slate-50 rounded-xl p-2' > 
+        <div className='block mx-auto my-2 w-[90%] sm:w-[60%] h-full bg-slate-50 rounded-xl p-2' > 
             <p className="text-sm md:text-md">Penalty icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Freepik - Flaticon</a></p>
             <p className="text-sm md:text-md">Var icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">created by kosonicon - Flaticon</a></p>
-            {                    
+            { 
+            isLoaded ?                   
                 events.map((elem,index)=>{
                     return(
                         <div className={`flex space-x-3 ${elem.team.id === teams.home.id ? "justify-start"  :"flex-row-reverse" } my-4 `} key={index}>
@@ -71,7 +74,9 @@ function Events(props){
                             </div>
                         </div>
                     )
-                })                   
+                })
+            :                   
+            <Spinner />
             }
         </div>
     )}

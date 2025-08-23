@@ -15,30 +15,34 @@ function App() {
   const season=2024;
   
   return (
-     <Router>
-      <Navbar/>
-    <Routes>
-      <Route path='/' element={<Home/>}>
-      </Route>
-      <Route path="/leagues" element={<League />}>  
-        <Route path=":leagueId"/> 
-      </Route>
-      <Route path="/fixture" element={<Fixture/>} >
-        <Route path=":fixtureId"/>
-      </Route>
-      <Route path="/teams" element={<Team />}>
-        <Route path=":teamId"/>
-      </Route>
-      <Route path="/players" element={<Player season={season}/>}>
-        <Route path=":playerId"/>
-      </Route>
-      <Route path="/preferences" element={<Preferences />}>
-      </Route>
-      <Route path='/search' element={<Search />}>
-      </Route>
-    </Routes>
-    <Footer />
-     </Router>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* Header */}
+        <Navbar className="h-16" />
+        {/* Main Content */}
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/leagues" element={<League />}>
+              <Route path=":leagueId" />
+            </Route>
+            <Route path="/fixture" element={<Fixture />}>
+              <Route path=":fixtureId" />
+            </Route>
+            <Route path="/teams" element={<Team />}>
+              <Route path=":teamId" />
+            </Route>
+            <Route path="/players" element={<Player season={season} />}>
+              <Route path=":playerId" />
+            </Route>
+            <Route path="/preferences" element={<Preferences />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
+        </main>
+        {/* Footer */}
+        <Footer className="h-16" />
+      </div>
+    </Router>
      );
 }
 

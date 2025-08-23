@@ -31,7 +31,7 @@ function Fixture(){
     return(
       <TeamsContext.Provider value={fixture_data.teams} className="w-full">
       
-      <div className="mt-20 font-bold h-full">
+      <div className="flex-1  mt-20 font-bold h-full">
         {/*  */}
         <div className='w-[90%] flex flex-col justify-center items-center sm:w-[70%] bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
         p-2 my-2 mx-auto'>
@@ -76,13 +76,7 @@ function Fixture(){
                 fixture_data.fixture.short === "P" ||
                 fixture_data.fixture.short === "SUSB" ||
                 fixture_data.fixture.short === "INT" ? ( //if the game is live show the red dot
-                  <div className="flex flex-row justify-start items-start ml-2">
-                    <span class="relative flex h-3 w-3 border-none">
-                      <span class="animate-ping absolute top-[50%]   inline-flex h-full w-full rounded-full bg-red-400 opacity-75 border-none"></span>
-                      <span class="relative top-[50%] inline-flex rounded-full h-3 w-3 bg-red-700 border-none"></span>
-                    </span>
-                    <span className="text-red-800 border-none">{fixture_data.fixture.status.short}</span>
-                  </div>
+                  <span className="text-lg font-bold border-none text-red-700 animate-pulse">{fixture_data.fixture.status.short}</span>
                 ) : //if the game is not live don't show red dot
                 <div className="py-auto">
                   <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none text-xs sm:text-lg">

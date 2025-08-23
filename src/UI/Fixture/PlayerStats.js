@@ -139,12 +139,12 @@ function PlayerStats(props) {
                                         mx-auto px-1 justify-between space-x-2 w-[90%] 
                                         ${source.length > 1 && index < source.length-1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
                             {/* Player's name and photo */}
-                            <div className = "flex flex-row space-x-2 items-center ">
+                            <div className = "w-auto flex flex-row space-x-2 items-center ">
                                 <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
                                 <span className='border-none font-semibold'>{elem.player.name}</span>
                             </div>
                             {/* player's statistics */}
-                            <div>
+                            <div className={`${statKey === 'passes' ? 'text-center w-full' : 'text-end w-auto '  }`}>
                                 <span className='border-none'>
                                 {
                                     statKey !== 'passes' && statKey !== 'shots' ?
