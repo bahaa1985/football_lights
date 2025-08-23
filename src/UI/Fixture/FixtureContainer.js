@@ -38,7 +38,7 @@ function Fixture(){
           {/* league info */}
           <div className='flex flex-col justify-center  space-y-1 items-center
            py-2 border-b sm:border-none text-md sm:text-xl border-solid border-slate-400'>
-            <div className='flex flex-row justify-start items-center space-x-2'>
+            <div className='flex flex-row justify-start items-center gap-2'>
               <img className='w-8 h-8 sm:w-10 sm:h-10' src={fixture_data.league.logo} alt={fixture_data.league.name} />
               <span className='border-none text-sm sm:text-lg'>{getLeagueTranslationByCountry(fixture_data.league.country,fixture_data.league.name)} {fixture_data.league.season}/{new Date().getFullYear()}</span>
             </div>

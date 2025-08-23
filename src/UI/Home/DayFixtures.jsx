@@ -44,53 +44,57 @@ export default function DayFixtures() {
   const labels = getAllTranslations(lang);
 
   useEffect(() => {
-    let intervalId;
+  let intervalId;
+  let isMounted = true; // Track if the component is still mounted
 
-    async function fetchFixtures() {
-      try {
+  async function fetchFixtures() {
+    try {
       const fixtures_response = await groupDateFixtures(selectedDate);
-      setDateFixtures(fixtures_response);
-
-      setLoaded(true);
-      setClicked(false);
-      console.log('Fixtures fetched!');      
-      //
-      } catch (error) {
-      console.error("Error fetching fixtures:", error);
+      if (isMounted) {
+        setDateFixtures(fixtures_response);
+        setLoaded(true);
+        setClicked(false);
+        console.log("Fixtures fetched!");
       }
+    } catch (error) {
+      console.error("Error fetching fixtures:", error);
     }
+  }
 
-    if (leagues.length > 0 && teams.length > 0 && isClicked) {
-      fetchFixtures();
-    } else {
-      setMessage(
+  if (leagues.length > 0 && teams.length > 0 && isClicked) {
+    fetchFixtures();
+  } else {
+    setMessage(
       getTranslation("No Current Fixtures", lang) ||
-      "No Leagues Or Teams Are Selected. Go to Preferences"
+        "No Leagues Or Teams Are Selected. Go to Preferences"
+    );
+  }
+
+  // Check for live fixtures and set up interval if needed
+  function hasLiveFixtures(fixtures) {
+    if (isLoaded) {
+      return Object.values(fixtures)?.some((league) =>
+        league.some((elem) =>
+          ["1H", "2H", "ET", "BT", "P", "SUSP", "INT"].includes(
+            elem.fixture.status.short
+          )
+        )
       );
     }
+    return false;
+  }
 
-    // Check for live fixtures and set up interval if needed
-    function hasLiveFixtures(fixtures) {
-      if (isLoaded){
-        return fixtures?.some(fixture =>
-        [
-          '1H', '2H', 'ET', 'BT', 'P', 'SUSP', 'INT'
-        ].includes(fixture.status.short)
-        ); 
-      }
-      return false      
-    }
+  if (hasLiveFixtures(dateFixtures)) {
+    intervalId = setInterval(fetchFixtures, 1000 * 60);
+    console.log("Live game detected, polling every minute.");
+  }
 
-    if (hasLiveFixtures(dateFixtures)) {
-      setInterval(fetchFixtures, 1000 * 60);
-      console.log("Live game detected, polling every minute.");
-    }
-
-    // return () => {
-    //   if (intervalId) clearInterval(intervalId);
-    // };
-    
-  }, [selectedDate, isClicked]);
+  // Cleanup function to clear interval and prevent state updates on unmounted component
+  return () => {
+    clearInterval(intervalId);
+    isMounted = false; // Mark the component as unmounted
+  };
+}, [selectedDate, isClicked]);
 
   function handleSelectedTab(index) {
     setActiveTab(index);
@@ -114,7 +118,7 @@ export default function DayFixtures() {
           className="w-16 bg-slate-900 text-white rounded-md"
           onClick={() => setClicked(true)}
         >
-          Confirm
+          {getTranslation('Confirm',lang)}
         </button>
       </div>
 
