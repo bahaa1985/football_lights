@@ -43,7 +43,7 @@ export default function News(){
         }
     },[]);
     return (
-        <div>
+        <div className='w-full'>
             <div className='w-full bg-slate-800 py-3 text-white text-center text-xl font-bold'>{getTranslation('News',lang)}</div>
 <div className="flex flex-wrap w-full mx-auto bg-slate-50 rounded-lg p-4">
         

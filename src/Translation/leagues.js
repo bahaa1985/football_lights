@@ -362,7 +362,7 @@ const rounds = {
     "Group L": "مجموعة 12"
 }
 export function getLeagueTranslationByCountry(country,league) {
-    let leagueName = "";
+    let leagueName = league;
     leagues[country]?.map((elem)=>{
         if (Object.keys(elem)[0] === league) {
           leagueName =  elem[league];

@@ -20,7 +20,7 @@ function LinePosition(props) {
           //iterate each player in the line to get his details
           playerNameArr = elem.player.name.split(" ");
           return (
-            <NavLink to={`/player/${elem.player.id}`} key={index} 
+            <NavLink to={`/players/${elem.player.id}`} key={index} 
               className="text-center text-[12px] w-full m-auto z-10">
                 {/* style={{backgroundColor:'#'+ colors.primary}} */}
               <div className={`flex justify-center items-center mx-auto my rounded-full`}>  

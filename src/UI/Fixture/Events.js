@@ -18,7 +18,7 @@ function Events(props){
     useMemo(()=>{
         getEvents(fixtureId).then((result)=>{
            setEvents( result.data.response );
-        //    setIsLoaded(true);
+           setIsLoaded(true);
         })        
     },[fixtureId])
     
