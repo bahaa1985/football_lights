@@ -21,7 +21,7 @@ export default function League() {
   const [activeTab, setActiveTab] = useState(0);
   const [seasons,setSeasons]=useState([]);
   const [selectedleague, setSelectedLeague] = useState(leagueId ? leagueId : preferedLeagues[0].id);
-  const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0  ? seasons.at(-1).year : 2024);
+  const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0  ? seasons?.at(seasons.length-1).year : 2025);
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
   
@@ -44,6 +44,8 @@ export default function League() {
           } else {
             setLeagueInfo(leagueData.data.response[0]);
             setSeasons(leagueData.data.response[0].seasons);
+            // console.log("seasons", leagueData.data.response[0].seasons);
+            
           }
         } catch (error) {
           setLeagueInfo(null);
@@ -53,6 +55,7 @@ export default function League() {
           setLoaded(true);
         }
       }
+
       fetchData();
 
   }, [selectedleague, selectedSeason])
@@ -137,7 +140,7 @@ export default function League() {
           <select
             className="p-2 border rounded-md bg-gray-50 shadow-sm focus:outline-none w-32"
             onChange={(e)=>setSelectedSeason(e.target.value)}
-            
+            value={selectedSeason}
           >
             {seasons.map((season) => (
               <option key={season.year} value={season.year}>{season.year}</option>

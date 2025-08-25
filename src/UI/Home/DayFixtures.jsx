@@ -10,6 +10,8 @@ import Tabs from '../../Components/Tabs.jsx'
 import { getAllTranslations, getTranslation } from "../../Translation/labels.js";
 import { teamsArray } from '../../Components/Teams.jsx'
 import Spinner from '../../Components/Spinner.jsx'
+import { useSelector,useDispatch } from 'react-redux';
+import {requestsIncrement,resetCounter} from './ReduxStore/counterSlice.js';
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -35,13 +37,13 @@ export default function DayFixtures() {
   const [isClicked, setClicked] = useState(false);
   // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [message, setMessage] = useState("");
-  const [isLive,setLive] = useState(false); // if true trigger timer to update results every minute
+  
+  const requestsCount = useSelector((state)=>state.counter.counter);
 
   const leagues = leaguesArray;
   const teams = teamsArray;
   const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
-  const labels = getAllTranslations(lang);
 
   useEffect(() => {
   let intervalId;
