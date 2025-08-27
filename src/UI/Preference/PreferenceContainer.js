@@ -93,15 +93,15 @@ export default function Preferences(params) {
       <div className="w-full sm:h-auto sm:flex flex-col sm:flex-row sm:justify-between gap-4">
         {/* Search leagues */}
         <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
-          <div className="w-full text-left flex justify-between items-center mb-4">
+          <div className="w-full  flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"
               ref={searchLeagueInput}
-              className="outline-none rounded-md px-2 py-1 border mr-2"
+              className="w-[90%] mx-auto outline-none rounded-md px-2 py-1 border"
               placeholder={getTranslation("Search By Country Name", selectedLanguage)}
             />
             <button
-              className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              className="w-[90%] sm:w-[50%] mx-auto text-md px-2 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
               onClick={() => 
                 setSearchLeague(getCountryNameTranslation(searchLeagueInput.current.value))
               }
@@ -119,15 +119,15 @@ export default function Preferences(params) {
 
         {/* Search teams */}
         <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
-          <div className="w-full flex justify-between items-center mb-4">
+          <div className="w-full flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"
               ref={searchTeamInput}
-              className="outline-none rounded-md px-2 py-1 border l mr-2"
+              className="w-[90%] mx-auto outline-none rounded-md px-2 py-1 border"
               placeholder={getTranslation('Search By Team Name', selectedLanguage)}
             />
             <button
-              className="text-md px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              className="w-[90%] sm:w-[50%] mx-auto text-md px-2 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
               onClick={() => setSearchTeam(searchTeamInput.current.value)}
             >
               {getTranslation('Search', selectedLanguage)}

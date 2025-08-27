@@ -11,9 +11,12 @@ const counterSlice = createSlice(
         reducers:{
             requestsIncrement(state){
                 state.requestsCount++;
+                console.log("Incremented requestsCount to", state.requestsCount);
+                
             },
             resetCounter(state){
                 state.requestsCount=0;
+                console.log("Requests counter reset to 0");
             },            
         }
     }

@@ -11,7 +11,7 @@ import { getAllTranslations, getTranslation } from "../../Translation/labels.js"
 import { teamsArray } from '../../Components/Teams.jsx'
 import Spinner from '../../Components/Spinner.jsx'
 import { useSelector,useDispatch } from 'react-redux';
-import {requestsIncrement,resetCounter} from './ReduxStore/counterSlice.js';
+import {requestsIncrement,resetCounter,} from '../../ReduxStore/counterSlice.js';
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -35,10 +35,12 @@ export default function DayFixtures() {
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [isClicked, setClicked] = useState(false);
+  let [time,setTime] = useState(0);
   // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [message, setMessage] = useState("");
   
-  const requestsCount = useSelector((state)=>state.counter.counter);
+  const requests_count = useSelector((state)=>state.counter.requestsCount);
+  const dispatch = useDispatch();
 
   const leagues = leaguesArray;
   const teams = teamsArray;
@@ -57,50 +59,81 @@ export default function DayFixtures() {
         setLoaded(true);
         setClicked(false);
         console.log("Fixtures fetched!");
+        //
+        dispatch(requestsIncrement());
       }
     } catch (error) {
       console.error("Error fetching fixtures:", error);
     }
   }
 
-  if (leagues.length > 0 && teams.length > 0 && isClicked) {
-    fetchFixtures();
-  } else {
-    setMessage(
-      getTranslation("No Current Fixtures", lang) ||
-        "No Leagues Or Teams Are Selected. Go to Preferences"
-    );
-  }
+    if (leagues.length > 0 && teams.length > 0 && isClicked) {
+     
+        if(requests_count <6){
+          fetchFixtures();
+        }
+        else{
+          alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+      } else {
+        setMessage(
+          getTranslation("No Current Fixtures", lang) ||
+            "No Leagues Or Teams Are Selected. Go to Preferences"
+        );
+      }
 
-  // Check for live fixtures and set up interval if needed
-  function hasLiveFixtures(fixtures) {
-    if (isLoaded) {
-      return Object.values(fixtures)?.some((league) =>
-        league.some((elem) =>
-          ["1H", "2H", "ET", "BT", "P", "SUSP", "INT"].includes(
-            elem.fixture.status.short
-          )
-        )
-      );
+      // Check for live fixtures and set up interval if needed
+      function hasLiveFixtures(fixtures) {
+        if (isLoaded) {
+          return Object.values(fixtures)?.some((league) =>
+            league.some((elem) =>
+              ["1H", "2H", "ET", "BT", "P", "SUSP", "INT"].includes(
+                elem.fixture.status.short
+              )
+            )
+          );
+        }
+        return false;
+      }
+
+      if(requests_count < 6){
+      if (hasLiveFixtures(dateFixtures)) {
+        intervalId = setInterval(fetchFixtures, 1000 * 60);
+        console.log("Live game detected, polling every minute.");
+      }
     }
-    return false;
-  }
+  
 
-  if (hasLiveFixtures(dateFixtures)) {
-    intervalId = setInterval(fetchFixtures, 1000 * 60);
-    console.log("Live game detected, polling every minute.");
-  }
+     // Redux 
+    let reduxTimer = setTimeout(()=>{
+      dispatch(resetCounter());
+    },1000 * 60)
+  // let reduxTimer = setInterval(()=>{
+  //   setTime(prevTime => prevTime + 1);
+  //   console.log("timer",time);
+    
+  //   if(time === 60){ // Reset every 1 minute
+  //     setTime(0);
+  //     dispatch(resetCounter());
+  //   }
+  // },1000*1)
 
   // Cleanup function to clear interval and prevent state updates on unmounted component
   return () => {
     clearInterval(intervalId);
+    clearTimeout(reduxTimer);
+    
     isMounted = false; // Mark the component as unmounted
   };
+  
 }, [selectedDate, isClicked]);
 
   function handleSelectedTab(index) {
     setActiveTab(index);
   }
+
+ 
+
 
   return (
     <div className="w-full sm:w-[65%] my-2 bg-slate-50 ">
