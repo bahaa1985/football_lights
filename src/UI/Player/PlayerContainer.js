@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPlayerSeasons, getPlayerStats } from '../../Api/PlayerProfile.js';
+import { getPlayerSeasons, getPlayerStats } from '../../api/PlayerProfile.js';
 import { getTranslation } from '../../Translation/labels.js';
 import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { getCountryNameBylang } from '../../Translation/countries.js';

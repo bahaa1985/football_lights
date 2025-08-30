@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "./cookie.js";
+import { getCookie } from "./Cookie.js";
 import { leaguesArray } from "../Components/Leagues.jsx";
 
 export function getFixture(fixture){

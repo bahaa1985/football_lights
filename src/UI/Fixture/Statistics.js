@@ -3,7 +3,7 @@ import getStatistics from "../../Api/Statistics.js";
 import getPlayers from "../../Api/Players.js";
 import PlayerStats from "./PlayerStats.js";
 import { useState, useMemo } from "react";
-import { getCookie } from "../../Api/cookie.js";
+import { getCookie } from "../../api/Cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";

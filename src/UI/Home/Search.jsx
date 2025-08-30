@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
-import { getPlayerByName } from "../../Api/PlayerProfile.js";
+import { getLeagues, getTeams } from "../../api/LeaguesTeams.js";
+import { getPlayerByName } from "../../api/PlayerProfile.js";
 import { NavLink } from "react-router-dom";
 import Favourite from "../../Components/Favourite.jsx";
 import { getTranslation } from "../../Translation/labels.js";

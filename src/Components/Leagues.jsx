@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getLeagueTranslationByCountry } from "../Translation/leagues.js";
-import { getCookie } from "../Api/cookie.js";
+import { getCookie } from "../api/Cookie.js";
 
 const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 const prefered_leagues = getCookie("prefered_leagues") || [];

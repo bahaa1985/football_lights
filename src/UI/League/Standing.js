@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import getStandings from '../../Api/Standings.js'
+import getStandings from '../../api/Standings.js'
 import { getTranslation } from "../../Translation/labels.js";
 import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { getTeamByCountry } from '../../Translation/teams.js';

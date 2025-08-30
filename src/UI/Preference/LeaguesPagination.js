@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import { setCookie,getCookie } from "../../Api/cookie.js";
-// import { getLeagueRounds } from "../Api/getLeaguesTeams.js";
+import { setCookie,getCookie } from "../../api/Cookie.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 

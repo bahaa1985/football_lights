@@ -1,5 +1,5 @@
 import { React } from "react";
-import { getCookie, setCookie } from "../Api/cookie.js";
+import { getCookie, setCookie } from "../api/Cookie.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 

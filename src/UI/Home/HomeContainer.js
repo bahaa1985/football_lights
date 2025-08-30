@@ -3,7 +3,7 @@ import Favourites from "./Favourites.js";
 import DayFixtures from './DayFixtures.jsx';
 import News from './News.jsx';
 import { getCountryNameTranslation } from '../../Translation/countries.js';
-import setPreferences from '../../Api/UserPreferences.js';
+import setPreferences from '../../api/UserPreferences.js';
 
 export default function Home() {
 

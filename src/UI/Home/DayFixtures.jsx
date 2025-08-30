@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { groupDateFixtures } from "../../Api/Fixtures.js";
+import { groupDateFixtures } from "../../api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
 import FixtureRow from "../../Components/FixtureRow.jsx";
 import { leaguesArray } from "../../Components/Leagues.jsx";

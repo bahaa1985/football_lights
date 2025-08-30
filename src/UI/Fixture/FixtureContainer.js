@@ -7,7 +7,6 @@ import Statistics from "./Statistics.js";
 import LineUp from "./LineUp.js";
 import Tabs from '../../Components/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getCookie } from '../../Api/cookie.js';
 import { getTranslation } from '../../Translation/labels.js';
 import { getLeagueTranslationByCountry, getRoundTranslation } from '../../Translation/leagues.js';
 import { getTeamByName } from '../../Translation/teams.js';

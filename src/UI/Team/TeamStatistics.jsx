@@ -1,5 +1,5 @@
 import React, { useState, useMemo, memo } from "react";
-import { getTeamStatistics } from "../../Api/TeamDetails.js";
+import { getTeamStatistics } from "../../api/TeamDetails.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { useSelector, useDispatch } from "react-redux";
 import {

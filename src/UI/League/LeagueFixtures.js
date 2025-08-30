@@ -1,7 +1,7 @@
 import { Fragment, React } from "react";
 import { useState, useEffect } from "react";
-import { groupLeagueFixtures } from "../../Api/Fixtures.js";
-import { getLeagueRounds } from "../../Api/LeaguesTeams.js";
+import { groupLeagueFixtures } from "../../api/Fixtures.js";
+import { getLeagueRounds } from "../../api/LeaguesTeams.js";
 import { getTranslation } from "../../Translation/labels.js";
 import FixtureRow from '../../Components/FixtureRow.jsx';
 import Spinner from "../../Components/Spinner.jsx";

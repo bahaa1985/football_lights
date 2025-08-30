@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
+import { getTopScorers, getTopAssists } from "../../api/PlayerProfile.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { getTeamByName } from "../../Translation/teams.js";
 import { useSelector, useDispatch } from "react-redux";

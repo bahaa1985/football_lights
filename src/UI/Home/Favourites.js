@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCookie } from '../../Api/cookie.js';
+import { getCookie } from '../../api/Cookie.js';
 import { getTranslation } from '../../Translation/labels.js';
 import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { NavLink } from 'react-router-dom';

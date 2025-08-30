@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import getNews from "../../Api/News.js";
-import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 
 export default function News() {
