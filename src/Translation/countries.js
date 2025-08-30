@@ -169,7 +169,7 @@ export const countries = {
     Romania: { code: "RO", ar: "رومانيا", es: "Rumanía", fr: "Roumanie", it: "Romania", pt: "Romênia" },
     Russia: { code: "RU", ar: "روسيا", es: "Rusia", fr: "Russie", it: "Russia", pt: "Rússia" },
     Rwanda: { code: "RW", ar: "رواندا", es: "Ruanda", fr: "Rwanda", it: "Ruanda", pt: "Ruanda" },
-    "Saudi Arabia": { code: "SA", ar: "المملكة العربية السعودية", es: "Arabia Saudita", fr: "Arabie saoudite", it: "Arabia Saudita", pt: "Arábia Saudita" },
+    "Saudi-Arabia": { code: "SA", ar: "السعودية", es: "Arabia Saudita", fr: "Arabie saoudite", it: "Arabia Saudita", pt: "Arábia Saudita" },
     "Solomon Islands": { code: "SB", ar: "جزر سليمان", es: "Islas Salomón", fr: "Îles Salomon", it: "Isole Salomone", pt: "Ilhas Salomão" },
     Seychelles: { code: "SC", ar: "سيشل", es: "Seychelles", fr: "Seychelles", it: "Seychelles", pt: "Seicheles" },
     Sudan: { code: "SD", ar: "السودان", es: "Sudán", fr: "Soudan", it: "Sudan", pt: "Sudão" },

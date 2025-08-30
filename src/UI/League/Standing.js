@@ -1,10 +1,12 @@
 import React,{ ReactDOM } from 'react'
 import { useState,useEffect} from 'react'
 import getStandings from '../../Api/Standings.js'
-import { getCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { getTeamByCountry } from '../../Translation/teams.js';
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import { Spinner } from 'react-bootstrap';
 
 function Standings(props){    
     
@@ -16,34 +18,57 @@ function Standings(props){
     const [deviceWidth,setDeviceWidth]=useState(window.innerWidth);
     const [description,setDesccription] = useState([])
     const [country,setCountry] = useState("");
+    const [isLoaded,setLoaded] = useState(false);
 
     const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
-    useEffect(()=>{              
-        getStandings(league,season).then((result)=>{
-            // console.log("standings: ",result);         
-            setStandings(result.data.response[0].league.standings)
+    const dispatch = useDispatch();
+    const requests_count = useSelector(state => state.counter.requestsCount);
 
-            if(result.data.response[0].league.country !== "World"){
-                let groups = result.data.response[0].league.standings.map((group)=>{
-                    // console.log("group:",group[0].group);
+    useEffect(()=>{  
+        async function fetchStadings(){
+            try{
+            const standings_response = await getStandings(league,season);
+            setStandings(standings_response.data.response[0].league.standings);
+            if(standings_response.data.response[0].league.country !== "World"){
+                let groups = standings_response.data.response[0].league.standings.map((group)=>{
                     return group[0].group                                
                 })
                  setStandingsGroups(groups)
             }
            
-            const desc_keys =Object.groupBy(result.data.response[0].league.standings[0],function (item){
+            const desc_keys =Object.groupBy(standings_response.data.response[0].league.standings[0],function (item){
                 return item.description
             });
             setDesccription(Object.keys(desc_keys))
-            // console.log('descs',description)
 
-            setCountry(result.data.response[0].league.country);
+            setCountry(standings_response.data.response[0].league.country);
 
-            window.addEventListener('resize',()=>{
-                setDeviceWidth(window.innerWidth);
-            })                                    
-        })          
+            setLoaded(true);
+            
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
+        }
+        catch{
+            alert('Error in Standings')
+        }
+
+        } 
+        
+        if(requests_count < 10 ){
+            fetchStadings();
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+
+        //reset api requests to zero
+        dispatch(resetRequests());        
+        
+        window.addEventListener('resize',()=>{
+            setDeviceWidth(window.innerWidth);
+        }) 
+
     },[league,season])
     
     return(
@@ -118,6 +143,7 @@ function Standings(props){
                 </thead>
                 <tbody>
                     {
+                        isLoaded && standings.length > 0 ? 
                         standings.map((group)=>{
                             return(
                                 [standingsGroups.length > 1 ? 
@@ -168,6 +194,8 @@ function Standings(props){
                             )]                                           
                         )                     
                         })
+                        :
+                        <Spinner />
                     }
                 </tbody>
             </table>

@@ -31,8 +31,8 @@ function FixtureRow(props) {
             {
                 // checking if this component is rendered from leagueFixtures or todayFixtures as some designs will be changed
                 type === "day_matches" ? (
-                <div className="flex justify-start items-center my-2 p-2 bg-blue-500 text-slate-50 shadow-md border border-slate-300">
-                  <img  alt=""  loading="lazy"  src={fixtures[elem][0].league.logo}  className="ml w-8 h-8 sm:w-10  sm:h-10"/>
+                <div className="flex justify-start items-center my-2 p-2 bg-orange-500 text-slate-50 shadow-md border border-slate-300">
+                  <img  alt=""  referrerPolicy="no-referrer"  src={fixtures[elem][0].league.logo}  className="ml w-8 h-8 sm:w-10  sm:h-10"/>
                   <NavLink  className="my-auto ml-2"  to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}>
                   <span className="text-left border-none font-semibold">
                     {lang === 'ar' ? 
@@ -65,7 +65,7 @@ function FixtureRow(props) {
                   {
                     type === "fav_teams_matches" ?
                       <div className="flex justify-start items-center my-2 p-2 bg-slate-400 text-slate-50 rounded-lg">
-                        <img  alt=""  loading="lazy"  src={elem.league.logo}  className="ml w-8 sm:w-10 h-8 sm:h-10"/>  
+                        <img  alt=""  src={elem.league.logo} referrerPolicy="no-referrer"  className="ml w-8 sm:w-10 h-8 sm:h-10"/>  
                         <NavLink  className="my-auto ml-2"  to={`/league/${elem.league.id}/${elem.league.season}`}>
                           <span className="text-left border-none">
                             {
@@ -145,9 +145,9 @@ function FixtureRow(props) {
                       <div className="w-full md:w-[48%] flex flex-row justify-center gap-2 lg:justify-between lg:gap-0 items-center my-1">
                         <img
                           src={elem.teams.home.logo}
-                          loading="lazy"
                           className="size-8 sm:size-10"
                           alt={elem.teams.home.name}
+                          referrerPolicy="no-referrer"
                         />
 
                         <NavLink
@@ -171,9 +171,9 @@ function FixtureRow(props) {
                       >
                         <img
                           src={elem.teams.away.logo}
-                          loading="lazy"
                           className="size-8 sm:size-10"
                           alt={elem.teams.away.name}
+                          referrerPolicy="no-referrer"
                         />
 
                         <NavLink

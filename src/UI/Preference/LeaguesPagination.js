@@ -26,7 +26,7 @@ function LeaguesPagination(props) {
                 break;
             }       
         }
-        console.log("page",page);   
+        // console.log("page",page);   
         pages.push(page);
     }
   

@@ -6,10 +6,6 @@ export default function Ratings(props){
 
     const homeStatistics = props.statistics.home.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
     const awayStatistics = props.statistics.away.filter((elem)=>elem.statistics[0].games.rating !==null).sort((a,b)=>parseFloat(b.statistics[0].games.rating)-parseFloat(a.statistics[0].games.rating));
-
-    // console.log(homeStatistics);
-    // console.log(awayStatistics);
-    
     //
     const homeTeam = props.teams.home;
     const awayTeam = props.teams.away;
@@ -69,12 +65,12 @@ export default function Ratings(props){
               w-full p-2 mx-auto rounded-md bg-slate-800 text-slate-50">
           <span className="border-none text-sm sm:text-lg">{getTranslation('Man Of The Match',lang)}</span>
           <div className="flex flex-row justify-center items-center gap-2 mx-auto">         
-            <img className="w-12 h-12 rounded-full" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
+            <img className="w-12 h-12 rounded-full" referrerPolicy="no-referrer" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
             <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-lg">
               {manOfTheMatch().player.name}
             </span>
             <span className={`border-none w-8 h-8 sm:w-10 sm:h-10 font-bold text-center 
-              flex items-center justify-center mx-2 text-slate-50 ${ratingBGColor(manOfTheMatch().statistics[0].games.rating)}`}>
+              flex items-center justify-center mx-2 text-slate-50 text-lg ${ratingBGColor(manOfTheMatch().statistics[0].games.rating)}`}>
               {manOfTheMatch().statistics[0].games.rating}
             </span>
           </div>
@@ -88,17 +84,17 @@ export default function Ratings(props){
                 <th className={`flex justify-start items-center p-1 w-[90%] rounded-lg my-2 cursor-pointer
                      ${clickedTeam === homeTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(homeTeam.id)} >
-                    <img alt={homeTeam.name} src={homeTeam.logo} className="size-8"/>
+                    <img alt={homeTeam.name} src={homeTeam.logo} referrerPolicy="no-referrer" className="size-8"/>
                     <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
-                        {getTeamByName(homeTeam.name)}
+                        {lang === 'ar' ? getTeamByName(homeTeam.name):homeTeam.name}
                     </span>
                 </th>
                 <th className={`flex flex-row-reverse  items-center p-1 w-[90%] rounded-lg my-2 cursor-pointer
                    ${clickedTeam === awayTeam.id ? 'bg-slate-800': 'bg-slate-400'}`}
                    onClick={()=>setClickedTeam(awayTeam.id)} >
-                    <img alt={awayTeam} src={awayTeam.logo} className="size-8"/>
+                    <img alt={awayTeam} src={awayTeam.logo} referrerPolicy="no-referrer" className="size-8"/>
                     <span className="text-center text-slate-50 border-none py-1 text-sm sm:text-lg">
-                        {getTeamByName(awayTeam.name)}
+                        {lang === 'ar' ? getTeamByName(awayTeam.name):awayTeam.name}
                     </span>
                 </th>
               </tr>

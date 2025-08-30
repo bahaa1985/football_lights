@@ -4,7 +4,7 @@ import Navbar from '../src/Components/Navbar.js'
 import Footer from '../src/Components/Footer.js';
 import League from '../src/UI/League/LeagueContainer.js';
 import Fixture from '../src/UI/Fixture/FixtureContainer.js';
-import Player from '../src/UI/Player.js';
+import Player from '../src/UI/Player/PlayerContainer.js';
 import Team from '../src/UI/Team/TeamContainer.js';
 import Home from '../src/UI/Home/HomeContainer.js';
 import Preferences from '../src/UI/Preference/PreferenceContainer.js';

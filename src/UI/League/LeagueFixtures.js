@@ -7,6 +7,8 @@ import { getTranslation } from "../../Translation/labels.js";
 import FixtureRow from '../../Components/FixtureRow.jsx';
 import Spinner from "../../Components/Spinner.jsx";
 import { getTeamByName } from "../../Translation/teams.js";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
 
 export default function LeagueFixtures(props) {
   const league = props.league;
@@ -17,20 +19,38 @@ export default function LeagueFixtures(props) {
   const [filteredFixtures,setFilteredFixtures]= useState([]);
   const [isLoaded,setLoaded]=useState(false);
 
+  const requests_count = useSelector(state => state.counter.requestsCount );
+  const dispatch = useDispatch();
+
   useEffect(() => {
     async function fetchData(){
-      
-      const fixturesData = await groupLeagueFixtures(league, season);
-      const roundsData = await getLeagueRounds(league,season);
-      setFixtures(fixturesData);
-      setFilteredFixtures(fixturesData);  
-      setRounds(roundsData.data.response);       
-      //
-      setLoaded(true);
-      console.log("fixtires",filteredFixtures);
-      
+      try{
+        const fixturesData = await groupLeagueFixtures(league, season);
+        const roundsData = await getLeagueRounds(league,season);
+        setFixtures(fixturesData);
+        setFilteredFixtures(fixturesData);  
+        setRounds(roundsData.data.response);       
+        //
+        setLoaded(true);
+        
+        //redux reducer increase requests count by one:
+        dispatch(requestsIncrement());    
+      }
+      catch{
+        alert('ُError in League fixtures')
+      }
     }
-    fetchData();
+
+    if(requests_count < 10){
+      fetchData()
+    }
+    else{
+      alert("API request limit reached. Please wait a minute before making more requests.");
+    }
+
+    //reset api requests to zero
+    dispatch(resetRequests());
+
   }, [league,season]);
 
   const lang = JSON.parse(localStorage.getItem('user_preferences')).lang || 'en';

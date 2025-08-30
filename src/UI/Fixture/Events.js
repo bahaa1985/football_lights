@@ -7,30 +7,52 @@ import { faSoccerBall,faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import VAR from '../../icons/var.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Spinner from "../../Components/Spinner.jsx";
+import { getTranslation } from "../../Translation/labels.js";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement,resetRequests } from "../../ReduxStore/counterSlice.js";
+
 
 function Events(props){
     
     const fixtureId = props.fixtureId; 
     const teams= props.teams;
     const [events,setEvents] = useState([]);
-    const [isLoaded,setIsLoaded] = useState(false);
+    const [isLoaded,setLoaded] = useState(false);
+
+    const requests_count = useSelector(state=>state.counter.requestsCount);
+    const dispatch = useDispatch();
 
     useMemo(()=>{
-        getEvents(fixtureId).then((result)=>{
-           setEvents( result.data.response );
-           setIsLoaded(true);
-        })        
+        async function fetchEvents(){
+            const eventsData =await  getEvents(fixtureId);
+            setEvents(eventsData.data.response);
+            setLoaded(true);
+            
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement);
+        }
+        
+        if(requests_count < 10){
+            fetchEvents();
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+
+        //reset api requests to zero
+        dispatch(resetRequests());
+
     },[fixtureId])
     
     const events_div=(teamId,player,assist,type,detail,index,comments)=>{
-        
+    const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
     return(
             <div key={index} className={`flex ${teamId !== teams.home.id ? 'flex-row-reverse':null} items-center`}>           
-                <div className="w-8 sm:w-12 px-2 sm:px-3">{
+                <div className="px-2 sm:px-3">{
                     type==='Goal'&& detail==='Normal Goal' ? 
                     <FontAwesomeIcon icon={faSoccerBall} size='2x' className="text-xl sm:text-3xl" color="green"/>:
                     type==='Goal'&& detail==='Penalty' ?
-                    <img alt='' src={penalty} className="w-8 h-8 sm:w-12 sm:h-12"/>:
+                    <img alt='' src={penalty} className="w-8 h-6 sm:w-12 sm:h-8"/>:
                     type==='Goal'&& detail=== 'Own Goal' ?
                     <FontAwesomeIcon icon={faSoccerBall} size="2x" className="text-xl sm:text-3xl" color="red"/>:
                     type==='Goal'&& detail==='Missed penalty' ?
@@ -49,9 +71,9 @@ function Events(props){
                             
                 <div className="flex flex-col justify-center">
                     <span className="border-none text-sm sm:text-lg">{type==="subst" ? "Out: " + player: player}</span>
-                    <span className="border-none text-sm">{type==="subst" ? "In: " + assist: assist}</span>
+                    <span className="border-none text-sm sm:text-lg">{type==="subst" ? "In: " + assist: assist}</span>
                     {(type==="Var" || (type === "Goal" && detail === "Missed penalty")) ?<span className="border-none text-sm sm:text-lg">{detail}</span>: null}
-                    {comments ? <span className="border-none text-sm">{comments}</span> : null}
+                    {comments ? <span className="border-none text-xs sm:text-sm">{getTranslation(comments,lang)}</span> : null}
                 </div>         
             </div>)
     }
@@ -62,8 +84,8 @@ function Events(props){
             <p className="text-sm md:text-md">Penalty icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Freepik - Flaticon</a></p>
             <p className="text-sm md:text-md">Var icon is created by <a className="underline" href="https://www.flaticon.com/free-icons/football-referee" title="football referee icons">created by kosonicon - Flaticon</a></p>
             { 
-            isLoaded ?                   
-                events.map((elem,index)=>{
+            isLoaded  ?                   
+                events?.map((elem,index)=>{
                     return(
                         <div className={`flex space-x-3 ${elem.team.id === teams.home.id ? "justify-start"  :"flex-row-reverse" } my-4 `} key={index}>
                             <span className="border-none text-sm md:text-lg">`{elem.time.elapsed}</span>

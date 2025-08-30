@@ -14,7 +14,7 @@ const counterSlice = createSlice(
                 console.log("Incremented requestsCount to", state.requestsCount);
                 
             },
-            resetCounter(state){
+            resetRequests(state){
                 state.requestsCount=0;
                 console.log("Requests counter reset to 0");
             },            
@@ -23,4 +23,4 @@ const counterSlice = createSlice(
 )
 
 export default counterSlice.reducer;
-export const {requestsIncrement,resetCounter} = counterSlice.actions;
+export const {requestsIncrement,resetRequests} = counterSlice.actions;

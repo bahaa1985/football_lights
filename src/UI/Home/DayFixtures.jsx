@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  groupDateFixtures,
-  getPromisedTeamFixtures,
-} from "../../Api/Fixtures.js";
+import {  groupDateFixtures,getPromisedTeamFixtures} from "../../Api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
 import FixtureRow from '../../Components/FixtureRow.jsx'
 import { leaguesArray } from '../../Components/Leagues.jsx'
@@ -11,7 +8,7 @@ import { getAllTranslations, getTranslation } from "../../Translation/labels.js"
 import { teamsArray } from '../../Components/Teams.jsx'
 import Spinner from '../../Components/Spinner.jsx'
 import { useSelector,useDispatch } from 'react-redux';
-import {requestsIncrement,resetCounter,} from '../../ReduxStore/counterSlice.js';
+import {requestsIncrement, resetRequests,} from '../../ReduxStore/counterSlice.js';
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -51,25 +48,47 @@ export default function DayFixtures() {
   let intervalId;
   let isMounted = true; // Track if the component is still mounted
 
+  
   async function fetchFixtures() {
     try {
-      const fixtures_response = await groupDateFixtures(selectedDate);
-      if (isMounted) {
-        setDateFixtures(fixtures_response);
-        setLoaded(true);
-        setClicked(false);
-        console.log("Fixtures fetched!");
-        //
-        dispatch(requestsIncrement());
+      if(selectedDate === new Date().toDateString()){
+        const cached_fixtures= JSON.parse(localStorage.getItem('cached_fixtures'));
+        if(cached_fixtures){
+          setDateFixtures(JSON.parse(localStorage.getItem('cached_fixtures')))
+        }
+        else{
+          const fixtures_response = await groupDateFixtures(selectedDate);
+          if (isMounted) {
+          setDateFixtures(fixtures_response);
+          setLoaded(true);
+          setClicked(false);
+          console.log("Fixtures fetched!");
+          //redux reducer increase requests count by one:
+          dispatch(requestsIncrement());
+          //set cached fixtures:
+          localStorage.setItem('cached_fixtures',fixtures_response)
+        }
+        }
+      }
+      else{
+        const fixtures_response = await groupDateFixtures(selectedDate);
+        if (isMounted) {
+          setDateFixtures(fixtures_response);
+          setLoaded(true);
+          setClicked(false);
+          console.log("Fixtures fetched!");
+          //redux reducer increase requests count by one:
+          dispatch(requestsIncrement());
+        }
       }
     } catch (error) {
-      console.error("Error fetching fixtures:", error);
+      alert("Error fetching fixtures:", error);
     }
   }
 
     if (leagues.length > 0 && teams.length > 0 && isClicked) {
      
-        if(requests_count <6){
+        if(requests_count < 6){
           fetchFixtures();
         }
         else{
@@ -96,32 +115,20 @@ export default function DayFixtures() {
         return false;
       }
 
-      if(requests_count < 6){
-      if (hasLiveFixtures(dateFixtures)) {
-        intervalId = setInterval(fetchFixtures, 1000 * 60);
-        console.log("Live game detected, polling every minute.");
-      }
+      if(requests_count < 10){
+        if (hasLiveFixtures(dateFixtures)) {
+          intervalId = setInterval(fetchFixtures, 1000 * 60);
+          console.log("Live game detected, polling every minute.");
+        }
     }
   
 
-     // Redux 
-    let reduxTimer = setTimeout(()=>{
-      dispatch(resetCounter());
-    },1000 * 60)
-  // let reduxTimer = setInterval(()=>{
-  //   setTime(prevTime => prevTime + 1);
-  //   console.log("timer",time);
-    
-  //   if(time === 60){ // Reset every 1 minute
-  //     setTime(0);
-  //     dispatch(resetCounter());
-  //   }
-  // },1000*1)
+    //reset api requests to zero
+    dispatch(resetRequests());
 
   // Cleanup function to clear interval and prevent state updates on unmounted component
   return () => {
     clearInterval(intervalId);
-    clearTimeout(reduxTimer);
     
     isMounted = false; // Mark the component as unmounted
   };

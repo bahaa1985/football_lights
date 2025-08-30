@@ -24,7 +24,7 @@ function LinePosition(props) {
               className="text-center text-[12px] w-full m-auto z-10">
                 {/* style={{backgroundColor:'#'+ colors.primary}} */}
               <div className={`flex justify-center items-center mx-auto my rounded-full`}>  
-                <img className={`size-9 sm:size-12 md:size-14 rounded-full`} src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
+                <img referrerPolicy="no-referrer" className={`size-9 sm:size-12 md:size-14 rounded-full`} src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />                
               </div>
               <div className='flex justify-center items-center'>
                 <span className="px-1 font-bold text-sm sm:text-md md:text-lg text-slate-200 border-none">{elem.player.number}</span>

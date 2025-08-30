@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPlayerSeasons, getPlayerStats, getPlayerProfile } from '../Api/PlayerProfile.js';
-import { getTranslation } from '../Translation/labels.js';
-import { getLeagueTranslationByCountry } from '../Translation/leagues.js';
-import { getCountryNameBylang } from '../Translation/countries.js';
+import { getPlayerSeasons, getPlayerStats, getPlayerProfile } from '../../Api/PlayerProfile.js';
+import { getTranslation } from '../../Translation/labels.js';
+import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
+import { getCountryNameBylang } from '../../Translation/countries.js';
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import Spinner from '../../Components/Spinner.jsx';
+import { getTeamByCountry, getTeamByName } from '../../Translation/teams.js';
 
-import Spinner from '../Components/Spinner.jsx';
-import { getTeamByCountry, getTeamByName } from '../Translation/teams.js';
-
-function Player(props) {
+export default function PlayerContainer(props) {
     const season=props.season;
     const [playerSeasons,setPlayerSeasons]=useState([]);
     const [playerStats,setPlayerStats]=useState([]); 
@@ -17,16 +18,34 @@ function Player(props) {
     const [isLoaded,setLoaded]=useState(false);
     const params =useParams();
     
+    const dispatch = useDispatch();
+    const requests_count = useSelector(state => state.counter.requestsCount);
+
     useEffect(()=>{
         
         async function fetchData(){
-            const response_seasons = await  getPlayerSeasons(params.playerId);
-            const response_stats =  await getPlayerStats(params.playerId,selectedSeason);
-            setPlayerSeasons(response_seasons.data.response);
-            setPlayerStats(response_stats.data.response[0]);   
-            setLoaded(true);
+            try{
+                const response_seasons = await  getPlayerSeasons(params.playerId);
+                const response_stats =  await getPlayerStats(params.playerId,selectedSeason);
+                setPlayerSeasons(response_seasons.data.response);
+                setPlayerStats(response_stats.data.response[0]);   
+                setLoaded(true);
+            }
+            catch{
+                alert(`Error in player's data`);
+            }
+             //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
         } 
-        fetchData();    
+        if(requests_count < 10){
+            fetchData();    
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+
+        //reset api requests to zero
+        dispatch(resetRequests());  
   
     },[params.playerId,selectedSeason])
 
@@ -42,6 +61,7 @@ function Player(props) {
                     src={playerStats?.player.photo}
                     alt={playerStats?.player.name}
                     className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full shadow mb-4"
+                    referrerPolicy="no-referrer"
                 />
             )}
             <div>
@@ -147,5 +167,3 @@ function Player(props) {
         :<Spinner />
      );
 }
-
-export default Player;

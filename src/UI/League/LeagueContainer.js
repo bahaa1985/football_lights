@@ -11,6 +11,8 @@ import { leaguesArray } from '../../Components/Leagues.jsx';
 import { getTranslation } from "../../Translation/labels.js";
 import { getLeagueTranslationByCountry } from "../../Translation/leagues.js";
 import { getCountryNameBylang, getCountryNameTranslation } from "../../Translation/countries.js";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement,resetRequests } from "../../ReduxStore/counterSlice.js";
 
 export default function League() {
   
@@ -27,26 +29,31 @@ export default function League() {
   
   const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
+  const requests_count = useSelector((state)=>state.counter.requestsCount);
+  const dispatch = useDispatch();
+
   useEffect(() => {
       async function fetchData() {
         setLoaded(false);
         try {
-          const leagueData = await getLeagues(null, selectedleague);
-          if (
-            !leagueData ||
-            !leagueData.data ||
-            !leagueData.data.response ||
-            leagueData.data.response.length === 0
-          ) {
-            setLeagueInfo(null);
-            setSeasons([]);
-            alert(getTranslation('No league data found for the selected league.', lang));
-          } else {
-            setLeagueInfo(leagueData.data.response[0]);
-            setSeasons(leagueData.data.response[0].seasons);
-            // console.log("seasons", leagueData.data.response[0].seasons);
-            
-          }
+            const leagueData = await getLeagues(null, selectedleague);
+            if (
+              !leagueData ||
+              !leagueData.data ||
+              !leagueData.data.response ||
+              leagueData.data.response.length === 0
+            ) {
+              setLeagueInfo(null);
+              setSeasons([]);
+              alert(getTranslation('No league data found for the selected league.', lang));
+            } else {
+              setLeagueInfo(leagueData.data.response[0]);
+              setSeasons(leagueData.data.response[0].seasons);
+              // console.log("seasons", leagueData.data.response[0].seasons);
+              
+            }
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
         } catch (error) {
           setLeagueInfo(null);
           setSeasons([]);
@@ -56,7 +63,17 @@ export default function League() {
         }
       }
 
-      fetchData();
+      if(requests_count< 10){
+        fetchData();
+      }
+      else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+      }
+
+      //reset api requests to zero
+      dispatch(resetRequests());
+
+      
 
   }, [selectedleague, selectedSeason])
 
@@ -106,7 +123,7 @@ export default function League() {
                 {lang === 'ar' ? 
                   getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name) 
                     : leagueInfo?.league.name} &nbsp;
-                    {selectedSeason}/{(parseInt(selectedSeason.toString())+1)}
+                    {selectedSeason}
               </span>
               {
                 //To show favourite icon if only the league is in the user's favourites

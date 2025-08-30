@@ -140,7 +140,7 @@ function PlayerStats(props) {
                                         ${source.length > 1 && index < source.length-1 ? 'border-b-[1px] border-solid border-slate-400' : ''}`}>
                             {/* Player's name and photo */}
                             <div className = "w-auto flex flex-row space-x-2 items-center ">
-                                <img className='w-10 h-10 rounded-full' loading='lazy' src={elem.player.photo} alt={elem.player.name} />
+                                <img className='size-12 rounded-full' referrerPolicy="no-referrer" src={elem.player.photo} alt={elem.player.name} />
                                 <span className='border-none font-semibold'>{elem.player.name}</span>
                             </div>
                             {/* player's statistics */}
@@ -191,11 +191,11 @@ function PlayerStats(props) {
         <div className='w-full sm:w-[45%] mx-auto'>
             {/* teams header */}
             <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800 my-2`}>
-                <div className={`flex flex-row space-x-2 items-center w-1/2 ${clickedTeam === homeTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900'} `} onClick={()=>setClickedTeam(homeTeam.id)}>
+                <div className={`flex flex-row gap-2 items-center w-1/2 ${clickedTeam === homeTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900'} `} onClick={()=>setClickedTeam(homeTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.home.logo} alt={teams.home.name} />
                     <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(teams.home.name):teams.home.name}</span>
                 </div>
-                <div className={`flex flex-row-reverse space-x-2 items-center w-1/2 ${clickedTeam === awayTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900' }`} onClick={()=>setClickedTeam(awayTeam.id)}>
+                <div className={`flex flex-row-reverse gap-2 items-center w-1/2 ${clickedTeam === awayTeam.id ? 'bg-slate-800 text-slate-50': 'bg-slate-300 text-slate-900' }`} onClick={()=>setClickedTeam(awayTeam.id)}>
                     <img className='w-14 h-14 rounded-full' src={teams.away.logo} alt={teams.away.name} />
                     <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(teams.away.name):teams.away.name}</span>
                 </div>

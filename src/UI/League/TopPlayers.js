@@ -2,25 +2,49 @@ import React, { useState, useEffect } from "react";
 import { getTopScorers, getTopAssists } from "../../Api/PlayerProfile.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { getTeamByName } from "../../Translation/teams.js";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import { Spinner } from "react-bootstrap";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;
   const season = props.season;
   const stats_type = props.type;
   const [topPlayers, setTopPlayers] = useState([]);
+  const [isLoaded,setLoaded] = useState(false);
+
   const lang=JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
+  const dispatch = useDispatch();
+  const requests_count = useSelector(state => state.counter.requestsCount);
+
   useEffect(() => {
-    if (stats_type === "Goals") {
-      getTopScorers(leagueId, season).then((result) => {
-        setTopPlayers(result.data.response);
-      });
-    } 
-    else {
-      getTopAssists(leagueId, season).then((result) => {
-        setTopPlayers(result.data.response);
-      });
+    const fetchTopPlayers = async ()=>{
+      if (stats_type === "Goals") {
+        const scorers_response = await getTopScorers(leagueId, season);
+        setTopPlayers(scorers_response.data.response);  
+        setLoaded(true);      
+      } 
+      else {
+        const assists_response = await getTopAssists(leagueId, season);
+        setTopPlayers(assists_response.data.response);
+        setLoaded(true);
+      }
+
+      //redux reducer increase requests count by one:
+      dispatch(requestsIncrement());
     }
+    
+    if(requests_count < 10){
+      dispatch(requestsIncrement());
+    }
+    else{
+        alert("API request limit reached. Please wait a minute before making more requests.");
+    }
+
+    //reset api requests to zero
+    dispatch(resetRequests());
+
   }, [leagueId,season,stats_type]);
 
   return (
@@ -36,6 +60,7 @@ export default function TopPlayers(props) {
         </thead>
         <tbody>
         {
+          isLoaded && topPlayers.length > 0 ?
           topPlayers?.map((elem, index) => {
           return (
             <tr key={index} className="bg-slate-50 text-center border-b-slate-400 border-solid border">
@@ -73,6 +98,8 @@ export default function TopPlayers(props) {
             </tr>
             )
           })
+          :
+          <Spinner/>
         }
         </tbody>
         </table>

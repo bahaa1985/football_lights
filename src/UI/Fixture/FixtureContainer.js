@@ -39,19 +39,20 @@ function Fixture(){
           <div className='flex flex-col justify-center  space-y-1 items-center
            py-2 border-b sm:border-none text-md sm:text-xl border-solid border-slate-400'>
             <div className='flex flex-row justify-start items-center gap-2'>
-              <img className='w-8 h-8 sm:w-10 sm:h-10' src={fixture_data.league.logo} alt={fixture_data.league.name} />
-              <span className='border-none text-sm sm:text-lg'>{getLeagueTranslationByCountry(fixture_data.league.country,fixture_data.league.name)} {fixture_data.league.season}/{new Date().getFullYear()}</span>
+              <img className='size-8 sm:size-16' referrerPolicy="no-referrer" src={fixture_data.league.logo} alt={fixture_data.league.name} />
+              <span className='border-none text-sm sm:text-lg'>{lang === 'ar' ?  getLeagueTranslationByCountry(fixture_data.league.country,fixture_data.league.name):fixture_data.league.name} {fixture_data.league.season}</span>
+              <span className='border-none text-sm sm:text-lg'>{lang === 'ar' ?  getRoundTranslation(fixture_data.league.round):fixture_data.league.round}</span>
             </div>
             <div className='flex flex-row justify-start items-center space-x-2'>
-              <span className='border-none text-sm sm:text-lg'>{getRoundTranslation(fixture_data.league.round)}</span>
+              
             </div>  
           </div>  
            {/* score table */}
           <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 md:space-x-0 w-full md:w-[80%] xl:w-[50%] items-center mx-auto py-2 
            text-sm sm:text-lg border-b sm:border-none border-solid border-slate-400">
             <NavLink className='flex flex-row justify-start gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
-              <img className="size-6 sm:size-10" alt={getTeamByName(fixture_data.teams?.home?.name)} src={fixture_data.teams?.home?.logo}></img>
-              <span className='border-none ml-0'>{getTeamByName(fixture_data.teams?.home?.name)}</span>
+              <img className="size-6 sm:size-10" referrerPolicy="no-referrer" alt={lang === 'ar' ?  getTeamByName(fixture_data.teams?.home?.name):fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
+              <span className='border-none ml-0'>{lang === 'ar' ?  getTeamByName(fixture_data.teams?.home?.name):fixture_data.teams?.home?.name}</span>
             </NavLink>  
             <div className='flex flex-row justify-between  w-[20%]'>
               <span className="size-6 sm:size-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.home}</span>
@@ -59,8 +60,8 @@ function Fixture(){
             </div>
             
             <NavLink className='flex flex-row justify-end gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
-              <span className='border-none mr-0'>{getTeamByName(fixture_data.teams?.away?.name)}</span>
-              <img className="size-6 sm:size-10" alt={getTeamByName(fixture_data.teams?.away?.name)} src={fixture_data.teams?.away?.logo}></img>
+              <span className='border-none mr-0'>{lang === 'ar' ? getTeamByName(fixture_data.teams?.away?.name):fixture_data.teams?.away?.name}</span>
+              <img className="size-6 sm:size-10" referrerPolicy="no-referrer" alt={getTeamByName(fixture_data.teams?.away?.name)} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
           </div>
           {/* fixture info */}
@@ -101,7 +102,7 @@ function Fixture(){
             </div>
             {/* fixture arena */}
             <div className="flex flex-row justify-between items-center gap-2">
-              <img className='w-8 h-8' src={arena} alt='Arena' />
+              <img className='w-8 h-8' referrerPolicy="no-referrer" src={arena} alt='Arena' />
               <span className='border-none text-xs sm:text-lg'>{fixture_data.fixture.venue.name}, {fixture_data.fixture.venue.city}</span>
             </div>
           </div>

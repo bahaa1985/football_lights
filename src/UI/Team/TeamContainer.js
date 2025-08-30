@@ -8,6 +8,9 @@ import Favourite from '../../Components/Favourite.jsx';
 import { teamsArray } from '../../Components/Teams.jsx'
 import { getTeamByCountry } from '../../Translation/teams.js';
 import { getCountryNameBylang} from '../../Translation/countries.js';
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import Spinner from '../../Components/Spinner.jsx';
 
 export default function Team() {
     const teamIdParam = parseInt(useParams().teamId);
@@ -25,35 +28,82 @@ export default function Team() {
     const [statsLoaded, setStatsLoaded] = useState(false);
     const [selectedLeague, setSelectedLeague] = useState(leagueParam ?leagueParam : teamLeagues[0]?.league?.id);
 
+    const dispatch = useDispatch();
+    const requests_count = useSelector(state => state.counter.requestsCount);
+
     useEffect(() => {
         async function fetchTeamInfo() {
+            try{
             const fetchedInfo = await getTeamInformation(team);
             setTeamInformation(fetchedInfo.data.response[0]);
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
+            }
+            catch{
+                alert('Error in Team info')
+            }
         }
-        fetchTeamInfo();
+        if(requests_count < 10){
+            fetchTeamInfo();
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+        
     }, [team]);
 
     useEffect(() => {
         async function fetchTeamSeasons() {
+            try{
             const fetchedSeasons = await getTeamSeasons(team);
             setTeamSeasons(fetchedSeasons.data.response);
             if (!selectedSeason) {
                 setSelectedSeason(fetchedSeasons.data.response.at(-1));
             }
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
         }
-        fetchTeamSeasons();
+        catch{
+            alert('Error in Team seasons')
+        }
+        }
+
+        if(requests_count < 10 ){
+            fetchTeamSeasons();
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+
     }, [team,selectedSeason]);
 
     useEffect(() => {
         if (!selectedSeason) return;
         async function fetchTeamLeagues() {
+            try{
             const fetchedLeagues = await getTeamLeagues(team, selectedSeason);
             setTeamLeagues(fetchedLeagues.data.response);
             if (!selectedLeague && fetchedLeagues.data.response.length > 0) {
                 setSelectedLeague(fetchedLeagues.data.response[0].league.id);
             }
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
         }
-        fetchTeamLeagues();
+        catch{
+            alert('Error in Team leagues')
+        }
+        }
+
+        if(requests_count  < 10 ){
+            fetchTeamLeagues();
+        }
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+
+        //reset api requests to zero
+        dispatch(resetRequests());  
+
     }, [team, selectedSeason]);
 
     useEffect(() => {
@@ -71,28 +121,33 @@ export default function Team() {
         <div className="mx-auto mt-20 w-full md:w-[75%] rounded-lg bg-white p-6 shadow-lg">
             {statsLoaded ? (
                 <>
-                <div className="bg-slate-100 p-6 rounded-lg shadow-inner mb-4">
-                    <h2 className="w-full text-xl font-bold text-slate-800 mb-4 text-center">{getTranslation('Favourite Teams', lang)}</h2>
-                    <div className="flex flex-wrap gap-4 justify-center">
-                        {teams.map((team, index) => (
-                            <button
-                                key={index}
-                                className={`w-32 cursor-pointer flex flex-col items-center px-3 py-2 rounded-lg transition border-2 ${
-                                    team.id === selectedTeam ? 'border-blue-600 bg-blue-50 shadow'
-                  : 'border-transparent hover:bg-gray-100'
-                                }`}
-                                onClick={() => [setTeam(team.id),setSelectedTeam(team.id)]}
-                            >
-                                <img
-                                    src={team.logo}
-                                    alt={team.name}
-                                    className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
-                                />
-                                <p className="text-center font-semibold mt-2">{team.name}</p>
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                {
+                teams.length > 0  ? 
+                    <div className="bg-slate-100 p-6 rounded-lg shadow-inner mb-4">
+                        <h2 className="w-full text-xl font-bold text-slate-800 mb-4 text-center">{getTranslation('Favourite Teams', lang)}</h2>
+                        <div className="flex flex-wrap gap-4 justify-center">
+                            {teams.map((team, index) => (
+                                <button
+                                    key={index}
+                                    className={`w-32 cursor-pointer flex flex-col items-center px-3 py-2 rounded-lg transition border-2 ${
+                                        team.id === selectedTeam ? 'border-blue-600 bg-blue-50 shadow'
+                    : 'border-transparent hover:bg-gray-100'
+                                    }`}
+                                    onClick={() => [setTeam(team.id),setSelectedTeam(team.id)]}
+                                >
+                                    <img
+                                        src={team.logo}
+                                        alt={team.name}
+                                        className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
+                                        referrerPolicy="no-referrer"
+                                    />
+                                    <p className="text-center font-semibold mt-2">{team.name}</p>
+                                </button>
+                            ))}
+                        </div>
+                    </div> 
+                : null 
+                }
                     {/* Team Header */}
                     <div className="flex flex-col justify-between items-center flex-wrap mb-8">
                         <div className="flex items-center gap-4">
@@ -177,11 +232,9 @@ export default function Team() {
                         <TeamStatistics team={team} season={selectedSeason} league={selectedLeague} />
                     </div>
                 </>
-            ) : (
-                <div className="flex justify-center items-center h-64">
-                    <p className="text-slate-800 text-lg font-semibold">Loading team information...</p>
-                </div>
-            )}
+            ) : 
+            <Spinner />
+            }
         </div>
     );
 }

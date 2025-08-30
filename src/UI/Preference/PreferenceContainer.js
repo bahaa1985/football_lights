@@ -6,6 +6,8 @@ import { getCookie, setCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { countries } from "../../Translation/countries.js";
 import { getCountryNameTranslation } from "../../Translation/countries.js";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
@@ -18,25 +20,35 @@ export default function Preferences(params) {
   const searchLeagueInput = useRef("");
   const searchTeamInput = useRef("");
   
+  const requests_count = useSelector(state => state.counter.requestsCount );
+  const dispatch = useDispatch();
+
   //use Effect:
   useEffect(() => {
-    try{
-      if(searchLeague.trim().length>0){
-      getLeagues(searchLeague).then((result) => {
-        setLeagues(result.data.response);       
-      });
-    }
-        
-      if(searchTeam.trim().length>0){
-        getTeams(searchTeam).then((result) => {
-          setTeams(result.data.response);
-        });
+    const fetchLeaguesTeams = async ()=>{
+      try{
+      const leagues_response = await getLeagues(searchLeague);
+      const teams_response = await getTeams(searchTeam);
+      //
+      setLeagues(leagues_response.data.response);
+      setTeams(teams_response.data.response);
+      //redux reducer increase requests count by one:
+      dispatch(requestsIncrement());
+      }
+      catch{
+        alert('Error in league and Teams')
       }
     }
-    catch(e){
-
+   
+    if(requests_count  < 10){
+      fetchLeaguesTeams();
+    }
+    else{
+      alert("API request limit reached. Please wait a minute before making more requests.");
     }
     
+    //reset api requests to zero
+    dispatch(resetRequests()); 
 
   }, [searchLeague, searchTeam]);
 
@@ -90,6 +102,17 @@ export default function Preferences(params) {
           }
         </select>
       </div>
+      
+      <button 
+        className="w-32 bg-slate-900 text-white text-xl rounded-lg p-4 my-4 mx-auto" 
+        onClick={() => {
+          setPreferences(selectedLanguage, selectedCountry);
+            setClosed(true);
+            window.location.href = "/";
+        }}>
+        {getTranslation('Confirm',selectedLanguage)}
+      </button>
+
       <div className="w-full sm:h-auto sm:flex flex-col sm:flex-row sm:justify-between gap-4">
         {/* Search leagues */}
         <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
@@ -140,15 +163,7 @@ export default function Preferences(params) {
           )}
         </div>
       </div>
-      <button 
-        className="w-32 bg-slate-900 text-white text-xl rounded-lg p-4 mt-40 mx-auto" 
-        onClick={() => {
-          setPreferences(selectedLanguage, selectedCountry);
-            setClosed(true);
-            window.location.href = "/";
-        }}>
-        {getTranslation('Confirm',selectedLanguage)}
-      </button>
+      
     </div>
   );
 }

@@ -38,6 +38,7 @@ function Pagination(props) {
                                         src={elem.league?.logo || elem.team?.logo}
                                         className="logo w-12 h-12 rounded-full mr-4"
                                         alt={elem.league?.name || elem.team?.name}
+                                        referrerPolicy="no-referrer"
                                     />
                                     {/* Element name */}
                                     <p className="name flex-grow text-lg font-medium text-gray-700">

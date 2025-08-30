@@ -9,6 +9,8 @@ import "../../styles/lineup.css";
 import { getTranslation } from "../../Translation/labels.js";
 import { getTeamByName } from "../../Translation/teams.js";
 import Spinner from "../../Components/Spinner.jsx";
+import { useSelector,useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
 
 //main function
 function LineUp(props) {
@@ -52,7 +54,9 @@ function LineUp(props) {
   //
   const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
-  // let i=0;
+  const dispatch = useDispatch();
+  const requests_count = useSelector(state => state.counter.requestsCount);
+
   useMemo(() => {
     let isMounted = true; // flag to track if the component is mounted
     // call formation and line up players:
@@ -97,10 +101,20 @@ function LineUp(props) {
         setAwayPlayers(players_response?.data.response[1].players);
         //
         setLoaded(true);
+        //redux reducer increase requests count by one:
+        dispatch(requestsIncrement());
+
       }
     }
 
-    fetchLineUp();
+    if(requests_count < 10){
+      fetchLineUp();
+    }
+    else{
+        alert("API request limit reached. Please wait a minute before making more requests.");
+    }
+
+    dispatch(resetRequests());
 
     return () => {
       isMounted = false; // cleanup function to set the flag to false when the component unmounts
@@ -190,7 +204,7 @@ function LineUp(props) {
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
                     <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="w-8 h-8"/>
                     <span className="text-left flex items-center text-slate-50 border-none">
-                      {getTeamByName(homeTeamProfile.name)}
+                      {lang === 'ar' ? getTeamByName(homeTeamProfile.name):homeTeamProfile.name}
                     </span>
                     <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 mx-2 text-center ${ratingBGColor(teamRating(homePlayers))} text-slate-50 border-none`}>
                       {teamRating(homePlayers)}
@@ -219,7 +233,7 @@ function LineUp(props) {
                         >
                           <img  alt={homeTeamProfile.name}  src={homeTeamProfile.logo}  className="size-8 sm:size-10"/>
                           <span className="text-center text-sm text-slate-50 border-none">
-                            {homeTeamProfile.name}
+                            {lang === 'ar' ? getTeamByName(homeTeamProfile.name):homeTeamProfile.name}
                           </span>
                         </div>
                         <div
@@ -227,7 +241,7 @@ function LineUp(props) {
                           onClick={() => setClickedTeam(awayTeamProfile.id)}
                         >
                           <span className="text-center text-sm text-slate-50 border-none">
-                            {awayTeamProfile.name}
+                            {lang === 'ar' ? getTeamByName(awayTeamProfile.name):awayTeamProfile.name}
                           </span>
                           <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="size-8 sm:size-10"/>
                         </div>
@@ -285,7 +299,7 @@ function LineUp(props) {
                     <div className="flex justify-start sm:justify-center space-x-2 px-auto">
                       <img  alt={awayTeamProfile.name}  src={awayTeamProfile.logo}  className="w-8 h-8"/>
                       <span className="text-left flex items-center text-slate-50 border-none">
-                        {getTeamByName(awayTeamProfile.name)}
+                        {lang === 'ar' ? getTeamByName(awayTeamProfile.name):awayTeamProfile.name}
                       </span>
                       <span className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 text-center text-slate-50 ${ratingBGColor(teamRating(awayPlayers))} border-none`}>
                         {

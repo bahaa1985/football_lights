@@ -4,6 +4,8 @@ import {getPlayerByName} from '../../Api/PlayerProfile.js';
 import { NavLink } from 'react-router-dom';
 import Favourite from '../../Components/Favourite.jsx'
 import { getTranslation } from '../../Translation/labels.js'
+import { useSelector,useDispatch } from 'react-redux';
+import {requestsIncrement,resetRequests} from '../../ReduxStore/counterSlice.js';
 
 export default function Search(){
     const [searchIndex,setSearchIndex] = useState(-1);
@@ -16,8 +18,12 @@ export default function Search(){
 
     const lang=localStorage.getItem('user_preferences')?.lang || 'en';
 
+    const dispatch = useDispatch();
+    const requests_count = useSelector((state)=>state.counter.requestsCount);
+
     useEffect(()=>{
         async function fetchData(){
+           
             if(searchIndex === 0){
                 const leagues_response = await getLeagues(searchKey);
                 setLeagues(leagues_response.data.response)
@@ -33,8 +39,19 @@ export default function Search(){
                 setPlayers(player_response.data.response);
                 setClicked(false);
             }
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
         }
-        fetchData();
+        if(requests_count < 10){
+            fetchData();
+         }         
+        else{
+            alert("API request limit reached. Please wait a minute before making more requests.");
+        }
+        
+        //
+        dispatch(resetRequests())
+        
     },[isClicked,searchIndex,searchKey])
 
     return(

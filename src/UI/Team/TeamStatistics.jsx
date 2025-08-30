@@ -2,6 +2,8 @@ import React, { useState, useMemo, memo } from 'react';
 import { getTeamStatistics } from '../../Api/TeamDetails.js';
 import { getCookie } from '../../Api/cookie.js';
 import { getTranslation } from '../../Translation/labels.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { requestsIncrement, resetRequests } from '../../ReduxStore/counterSlice.js';
 
 function TeamStatistics({ team, league, season }) {
   const [teamStatistics, setTeamStatistics] = useState({});
@@ -9,9 +11,13 @@ function TeamStatistics({ team, league, season }) {
   const [yellowCards, setYellowCards] = useState(0);
   const [redCards, setRedCards] = useState(0);
 
+  const dispatch = useDispatch();
+  const requests_count = useSelector(state => state.counter.requestsCount);
+
   useMemo(() => {
     let isMount = true;
     async function fetchData() {
+      try{
       if (isMount) {
         const fetchedStats = await getTeamStatistics(team, season, league);
         const stats = fetchedStats.data.response;
@@ -25,9 +31,26 @@ function TeamStatistics({ team, league, season }) {
           setRedCards(red);
         }
         setStatsLoaded(true);
+
+        //redux reducer increase requests count by one:
+        dispatch(requestsIncrement());
       }
     }
-    fetchData();
+    catch{
+      alert('Error in Team statistics')
+    }
+    }
+
+    if(requests_count < 10){
+      fetchData();
+    }
+    else{
+      alert("API request limit reached. Please wait a minute before making more requests.");
+    }
+
+    //reset api requests to zero
+    dispatch(resetRequests()); 
+    
     return () => (isMount = false);
   }, [team, season, league]);
 
@@ -49,11 +72,11 @@ function TeamStatistics({ team, league, season }) {
   );
 
   const TableHeader = ({ children }) => (
-    <thead className="bg-slate-700 text-white">{children}</thead>
+    <thead className="bg-slate-700 text-white text-sm sm:text-lg">{children}</thead>
   );
 
   const TableCell = ({ children }) => (
-    <td className="capitalize py-2 px-3">{children}</td>
+    <td className="capitalize py-2 px-3 text-sm sm:text-lg">{children}</td>
   );
 
   if (!statsLoaded || Object.keys(teamStatistics).length === 0) {

@@ -22,9 +22,7 @@ export default function LiveFixtures(props) {
 
     useEffect(()=>{            
 
-        // groupDateFixtures(dateString).then(result=>{
-        //     setToDayFixtures(result);
-        // });
+        
         groupLiveFixtures().then((result)=>{
             setLiveFixtures(result)  
         })
