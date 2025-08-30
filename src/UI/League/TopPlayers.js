@@ -4,7 +4,7 @@ import { getTranslation } from "../../Translation/labels.js";
 import { getTeamByName } from "../../Translation/teams.js";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
-import { Spinner } from "react-bootstrap";
+import { Spinner } from "../../Components/Spinner.jsx";
 
 export default function TopPlayers(props) {
   const leagueId = props.league;

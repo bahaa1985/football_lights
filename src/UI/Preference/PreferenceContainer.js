@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { getLeagues, getTeams } from "../../Api/LeaguesTeams.js";
 import Pagination from "./Pagination.js";
 import setPreferences from "../../Api/UserPreferences.js"
-import { getCookie, setCookie } from "../../Api/cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { countries } from "../../Translation/countries.js";
 import { getCountryNameTranslation } from "../../Translation/countries.js";
