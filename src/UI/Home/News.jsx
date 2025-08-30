@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getNews from "../../Api/News.js";
+import getNews from "../../api/News.js";
 import { getTranslation } from "../../Translation/labels.js";
 
 export default function News() {
