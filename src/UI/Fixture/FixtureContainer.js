@@ -2,14 +2,14 @@ import { React, useState, createContext } from 'react'
 import { useParams, useLocation, NavLink } from 'react-router-dom'
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import arena from '../../icons/arena.png';
-import Events from "./Events.js";
-import Statistics from "./Statistics.js";
-import LineUp from "./LineUp.js";
-import Tabs from '../../Components/Tabs.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getTranslation } from '../../Translation/labels.js';
 import { getLeagueTranslationByCountry, getRoundTranslation } from '../../Translation/leagues.js';
 import { getTeamByName } from '../../Translation/teams.js';
+import Events from "./Events.js";
+import Statistics from "./Statistics.js";
+import LineUp from "./LineUp.js";
+import Tabs from '../../Components/Tabs.jsx'
 
 export const TeamsContext = createContext();
 

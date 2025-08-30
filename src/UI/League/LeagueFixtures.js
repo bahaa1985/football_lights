@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { groupLeagueFixtures } from "../../api/Fixtures.js";
 import { getLeagueRounds } from "../../api/LeaguesTeams.js";
 import { getTranslation } from "../../Translation/labels.js";
-import FixtureRow from '../../Components/FixtureRow.jsx';
-import Spinner from "../../Components/Spinner.jsx";
 import { getTeamByName } from "../../Translation/teams.js";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import FixtureRow from '../../Components/FixtureRow.jsx';
+import Spinner from "../../Components/Spinner.jsx";
 
 export default function LeagueFixtures(props) {
   const league = props.league;

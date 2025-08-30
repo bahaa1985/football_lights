@@ -6,8 +6,8 @@ import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { getCountryNameBylang } from '../../Translation/countries.js';
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
-import Spinner from '../../Components/Spinner.jsx';
 import { getTeamByCountry } from '../../Translation/teams.js';
+import Spinner from '../../Components/Spinner.jsx';
 
 export default function PlayerContainer(props) {
     const season = props.season;

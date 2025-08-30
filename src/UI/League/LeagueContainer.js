@@ -1,9 +1,4 @@
 import { useState, useEffect } from "react";
-import Standings from "./Standing.js";
-import LeagueFixtures from "./LeagueFixtures.js";
-import TopPlayers from "./TopPlayers.js";
-import Favourite from '../../Components/Favourite.jsx';
-import Tabs from '../../Components/Tabs.jsx';
 import { getLeagues } from "../../api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../api/Cookie.js";
@@ -13,6 +8,12 @@ import { getLeagueTranslationByCountry } from "../../Translation/leagues.js";
 import { getCountryNameBylang } from "../../Translation/countries.js";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import Standings from "./Standing.js";
+import LeagueFixtures from "./LeagueFixtures.js";
+import TopPlayers from "./TopPlayers.js";
+import Favourite from '../../Components/Favourite.jsx';
+import Tabs from '../../Components/Tabs.jsx';
+
 
 export default function League() {
 

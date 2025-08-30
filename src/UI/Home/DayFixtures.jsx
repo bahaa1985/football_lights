@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { groupDateFixtures } from "../../api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
-import FixtureRow from "../../Components/FixtureRow.jsx";
 import { leaguesArray } from "../../Components/Leagues.jsx";
 import Tabs from "../../Components/Tabs.jsx";
 import { getTranslation } from "../../Translation/labels.js";
@@ -12,6 +11,7 @@ import {
   requestsIncrement,
   resetRequests,
 } from "../../ReduxStore/counterSlice.js";
+import FixtureRow from "../../Components/FixtureRow.jsx";
 
 export default function DayFixtures() {
   function getCurrentDate() {

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getLeagues, getTeams } from "../../api/LeaguesTeams.js";
-import Pagination from "./Pagination.js";
-import setPreferences from "../../api/UserPreferences.js"
 import { getTranslation } from "../../Translation/labels.js";
 import { countries } from "../../Translation/countries.js";
 import { getCountryNameTranslation } from "../../Translation/countries.js";
 import { useSelector,useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import Pagination from "./Pagination.js";
+import setPreferences from "../../api/UserPreferences.js"
 
 export default function Preferences(params) {
   const [searchLeague, setSearchLeague] = useState("");
