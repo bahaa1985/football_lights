@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {  groupDateFixtures,getPromisedTeamFixtures} from "../../Api/Fixtures.js";
+import { groupDateFixtures } from "../../Api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
-import FixtureRow from '../../Components/FixtureRow.jsx'
-import { leaguesArray } from '../../Components/Leagues.jsx'
-import Tabs from '../../Components/Tabs.jsx'
-import { getAllTranslations, getTranslation } from "../../Translation/labels.js";
-import { teamsArray } from '../../Components/Teams.jsx'
-import Spinner from '../../Components/Spinner.jsx'
-import { useSelector,useDispatch } from 'react-redux';
-import {requestsIncrement, resetRequests,} from '../../ReduxStore/counterSlice.js';
+import FixtureRow from "../../Components/FixtureRow.jsx";
+import { leaguesArray } from "../../Components/Leagues.jsx";
+import Tabs from "../../Components/Tabs.jsx";
+import { getTranslation } from "../../Translation/labels.js";
+import { teamsArray } from "../../Components/Teams.jsx";
+import Spinner from "../../Components/Spinner.jsx";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  requestsIncrement,
+  resetRequests,
+} from "../../ReduxStore/counterSlice.js";
 
 export default function DayFixtures() {
   function getCurrentDate() {
@@ -32,115 +35,110 @@ export default function DayFixtures() {
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [isClicked, setClicked] = useState(false);
-  let [time,setTime] = useState(0);
-  // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [message, setMessage] = useState("");
-  
-  const requests_count = useSelector((state)=>state.counter.requestsCount);
+
+  const requests_count = useSelector((state) => state.counter.requestsCount);
   const dispatch = useDispatch();
 
   const leagues = leaguesArray;
   const teams = teamsArray;
-  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
-
+  const lang =
+    JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   useEffect(() => {
-  let intervalId;
-  let isMounted = true; // Track if the component is still mounted
+    let intervalId;
+    let isMounted = true; // Track if the component is still mounted
 
-  
-  async function fetchFixtures() {
-    try {
-      if(selectedDate === new Date().toDateString()){
-        const cached_fixtures= JSON.parse(localStorage.getItem('cached_fixtures'));
-        if(cached_fixtures){
-          setDateFixtures(JSON.parse(localStorage.getItem('cached_fixtures')))
-        }
-        else{
+    async function fetchFixtures() {
+      try {
+        if (selectedDate === new Date().toDateString()) {
+          const cached_fixtures = JSON.parse(
+            localStorage.getItem("cached_fixtures")
+          );
+          if (cached_fixtures) {
+            setDateFixtures(
+              JSON.parse(localStorage.getItem("cached_fixtures"))
+            );
+          } else {
+            const fixtures_response = await groupDateFixtures(selectedDate);
+            if (isMounted) {
+              setDateFixtures(fixtures_response);
+              setLoaded(true);
+              setClicked(false);
+              console.log("Fixtures fetched!");
+              //redux reducer increase requests count by one:
+              dispatch(requestsIncrement());
+              //set cached fixtures:
+              localStorage.setItem("cached_fixtures", fixtures_response);
+            }
+          }
+        } else {
           const fixtures_response = await groupDateFixtures(selectedDate);
           if (isMounted) {
-          setDateFixtures(fixtures_response);
-          setLoaded(true);
-          setClicked(false);
-          console.log("Fixtures fetched!");
-          //redux reducer increase requests count by one:
-          dispatch(requestsIncrement());
-          //set cached fixtures:
-          localStorage.setItem('cached_fixtures',fixtures_response)
+            setDateFixtures(fixtures_response);
+            setLoaded(true);
+            setClicked(false);
+            console.log("Fixtures fetched!");
+            //redux reducer increase requests count by one:
+            dispatch(requestsIncrement());
+          }
         }
-        }
+      } catch (error) {
+        alert("Error fetching fixtures:", error);
       }
-      else{
-        const fixtures_response = await groupDateFixtures(selectedDate);
-        if (isMounted) {
-          setDateFixtures(fixtures_response);
-          setLoaded(true);
-          setClicked(false);
-          console.log("Fixtures fetched!");
-          //redux reducer increase requests count by one:
-          dispatch(requestsIncrement());
-        }
-      }
-    } catch (error) {
-      alert("Error fetching fixtures:", error);
     }
-  }
 
+    //fetch data from api if the confirm button is clicked:
     if (leagues.length > 0 && teams.length > 0 && isClicked) {
-     
-        if(requests_count < 6){
-          fetchFixtures();
-        }
-        else{
-          alert("API request limit reached. Please wait a minute before making more requests.");
-        }
+      if (requests_count < 6) {
+        fetchFixtures();
       } else {
-        setMessage(
-          getTranslation("No Current Fixtures", lang) ||
-            "No Leagues Or Teams Are Selected. Go to Preferences"
+        alert(
+          "API request limit reached. Please wait a minute before making more requests."
         );
       }
-
-      // Check for live fixtures and set up interval if needed
-      function hasLiveFixtures(fixtures) {
-        if (isLoaded) {
-          return Object.values(fixtures)?.some((league) =>
-            league.some((elem) =>
-              ["1H", "2H", "ET", "BT", "P", "SUSP", "INT"].includes(
-                elem.fixture.status.short
-              )
-            )
-          );
-        }
-        return false;
-      }
-
-      if(requests_count < 10){
-        if (hasLiveFixtures(dateFixtures)) {
-          intervalId = setInterval(fetchFixtures, 1000 * 60);
-          console.log("Live game detected, polling every minute.");
-        }
+    } else {
+      setMessage(
+        getTranslation("No Current Fixtures", lang) ||
+          "No Leagues Or Teams Are Selected. Go to Preferences"
+      );
     }
-  
+
+    // Check for live fixtures and set up interval if needed
+    function hasLiveFixtures(fixtures) {
+      if (isLoaded) {
+        return Object.values(fixtures)?.some((league) =>
+          league.some((elem) =>
+            ["1H", "2H", "ET", "BT", "P", "SUSP", "INT"].includes(
+              elem.fixture.status.short
+            )
+          )
+        );
+      }
+      return false;
+    }
+
+    if (requests_count < 10) {
+      if (hasLiveFixtures(dateFixtures)) {
+        intervalId = setInterval(fetchFixtures, 1000 * 60);
+        console.log("Live game detected, polling every minute.");
+      }
+    }
 
     //reset api requests to zero
     dispatch(resetRequests());
 
-  // Cleanup function to clear interval and prevent state updates on unmounted component
-  return () => {
-    clearInterval(intervalId);
-    
-    isMounted = false; // Mark the component as unmounted
-  };
-  
-}, [selectedDate, isClicked]);
+    // Cleanup function to clear interval and prevent state updates on unmounted component
+    return () => {
+      clearInterval(intervalId);
+
+      isMounted = false; // Mark the component as unmounted
+    };
+  }, [selectedDate, isClicked]);
 
   function handleSelectedTab(index) {
     setActiveTab(index);
   }
-
- 
-
 
   return (
     <div className="w-full sm:w-[65%] my-2 bg-slate-50 ">
@@ -149,7 +147,9 @@ export default function DayFixtures() {
       </div>
       {/* date picker */}
       <div className="flex justify-center gap-2 my-4">
-        <span className="flex justify-center items-center border-none text-lg font-bold mx-2">{getTranslation('Select date',lang)}</span>
+        <span className="flex justify-center items-center border-none text-lg font-bold mx-2">
+          {getTranslation("Select date", lang)}
+        </span>
         <input
           type="date"
           onChange={(e) => setSelectedDate(e.target.value)}
@@ -160,7 +160,7 @@ export default function DayFixtures() {
           className="w-16 bg-slate-900 text-white rounded-md"
           onClick={() => setClicked(true)}
         >
-          {getTranslation('Confirm',lang)}
+          {getTranslation("Confirm", lang)}
         </button>
       </div>
 

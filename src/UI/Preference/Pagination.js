@@ -1,29 +1,32 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Favourite from '../../Components/Favourite.jsx';
+import { leaguesArray } from "../../Components/Leagues.jsx";
+import { teamsArray } from "../../Components/Teams.jsx";
+
 function Pagination(props) {
-       
-    let pages=[] // items pages that will be displayed
-    const [pageIndex,setPageIndex]=useState(0);
 
-    const items=props.source;
-    const items_type=props.type;
+    let pages = [] // items pages that will be displayed
+    const [pageIndex, setPageIndex] = useState(0);
 
-    const pagesCount=Math.ceil(items.length/10); //get pages count by 10 items in each page
-    
+    const items = props.source;
+    const items_type = props.type;
 
-    for(let i=0;i<pagesCount;i++){ //loop to create pagination, every page has 10 items       
-        let page=[];
-        for(let k=i*10;k<(i*10)+10;k++){ // to create single page of 10 items
-            if(k<items.length){
-            page.push(items[k])
-            }             
-            else{
+    const pagesCount = Math.ceil(items.length / 10); //get pages count by 10 items in each page
+
+
+    for (let i = 0; i < pagesCount; i++) { //loop to create pagination, every page has 10 items       
+        let page = [];
+        for (let k = i * 10; k < (i * 10) + 10; k++) { // to create single page of 10 items
+            if (k < items.length) {
+                page.push(items[k])
+            }
+            else {
                 break;
-            }       
+            }
         }
         pages.push(page);
     }
-    
+
     return (
         <div className="w-full flex flex-col items-center justify-center p-4">
             <>
@@ -45,27 +48,38 @@ function Pagination(props) {
                                         {elem.league?.name || elem.team?.name}
                                     </p>
                                     {/* Favourite button */}
-                                    <Favourite
-                                        elem_id={elem.league?.id || elem.team?.id}
-                                        cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
-                                        obj={
-                                            items_type === 'league'
-                                                ? {
-                                                      id: elem.league.id,
-                                                      name: elem.league.name,
-                                                      logo: elem.league.logo,
-                                                      country: elem.country.name,
-                                                      season: elem.seasons.at(-1).year,
-                                                      endDate: elem.seasons.at(-1).end,
-                                                  }
-                                                : {
-                                                      id: elem.team.id,
-                                                      name: elem.team.name,
-                                                      country: elem.team.country,
-                                                      logo: elem.team.logo,
-                                                  }
-                                        }
-                                    />
+                                    {/* if the source is leagues */}
+                                    {items_type === 'league' && !leaguesArray.find(league => league.id === elem.league?.id) &&
+                                        <Favourite
+                                            elem_id={elem.league?.id}
+                                            cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
+                                            obj={{
+                                                id: elem.league.id,
+                                                name: elem.league.name,
+                                                logo: elem.league.logo,
+                                                country: elem.country.name,
+                                                season: elem.seasons.at(-1).year,
+                                                endDate: elem.seasons.at(-1).end,
+                                            }
+
+                                            }
+                                        />
+                                    }
+                                    {/* if the source is teams */}
+                                    {items_type === 'teams' && !teamsArray.find(team => team.id === elem.team?.id) &&
+                                        <Favourite
+                                            elem_id={elem.team?.id}
+                                            cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
+                                            obj={
+                                                {
+                                                    id: elem.team.id,
+                                                    name: elem.team.name,
+                                                    country: elem.team.country,
+                                                    logo: elem.team.logo,
+                                                }
+                                            }
+                                        />
+                                    }
                                 </div>
                             );
                         })
@@ -78,11 +92,10 @@ function Pagination(props) {
                             return (
                                 <button
                                     key={index}
-                                    className={`pagination-button rounded-full w-10 h-10 mx-1 ${
-                                        index === pageIndex
+                                    className={`pagination-button rounded-full w-10 h-10 mx-1 ${index === pageIndex
                                             ? "bg-blue-500 text-white font-bold"
                                             : "bg-gray-200 text-gray-700"
-                                    }`}
+                                        }`}
                                     onClick={() => setPageIndex(index)}
                                 >
                                     {index + 1}

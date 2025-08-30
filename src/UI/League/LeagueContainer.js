@@ -10,70 +10,68 @@ import { getCookie } from "../../Api/cookie.js";
 import { leaguesArray } from '../../Components/Leagues.jsx';
 import { getTranslation } from "../../Translation/labels.js";
 import { getLeagueTranslationByCountry } from "../../Translation/leagues.js";
-import { getCountryNameBylang, getCountryNameTranslation } from "../../Translation/countries.js";
-import { useSelector,useDispatch } from "react-redux";
-import { requestsIncrement,resetRequests } from "../../ReduxStore/counterSlice.js";
+import { getCountryNameBylang } from "../../Translation/countries.js";
+import { useSelector, useDispatch } from "react-redux";
+import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
 
 export default function League() {
-  
+
   const leagueId = parseInt(useParams().leagueId);
 
   const preferedLeagues = getCookie("prefered_leagues");
 
   const [activeTab, setActiveTab] = useState(0);
-  const [seasons,setSeasons]=useState([]);
+  const [seasons, setSeasons] = useState([]);
   const [selectedleague, setSelectedLeague] = useState(leagueId ? leagueId : preferedLeagues[0].id);
-  const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0  ? seasons?.at(seasons.length-1).year : 2025);
+  const [selectedSeason, setSelectedSeason] = useState(seasons.length > 0 ? seasons?.at(seasons.length - 1).year : 2025);
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
-  
-  const lang= JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
-  const requests_count = useSelector((state)=>state.counter.requestsCount);
+  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
+
+  const requests_count = useSelector((state) => state.counter.requestsCount);
   const dispatch = useDispatch();
 
   useEffect(() => {
-      async function fetchData() {
-        setLoaded(false);
-        try {
-            const leagueData = await getLeagues(null, selectedleague);
-            if (
-              !leagueData ||
-              !leagueData.data ||
-              !leagueData.data.response ||
-              leagueData.data.response.length === 0
-            ) {
-              setLeagueInfo(null);
-              setSeasons([]);
-              alert(getTranslation('No league data found for the selected league.', lang));
-            } else {
-              setLeagueInfo(leagueData.data.response[0]);
-              setSeasons(leagueData.data.response[0].seasons);
-              // console.log("seasons", leagueData.data.response[0].seasons);
-              
-            }
-            //redux reducer increase requests count by one:
-            dispatch(requestsIncrement());
-        } catch (error) {
+    async function fetchData() {
+
+      try {
+        const leagueData = await getLeagues(null, selectedleague);
+        if (
+          !leagueData ||
+          !leagueData.data ||
+          !leagueData.data.response ||
+          leagueData.data.response.length === 0
+        ) {
           setLeagueInfo(null);
           setSeasons([]);
-          alert(getTranslation('Failed to load league data. Please try again later.', lang));
-        } finally {
-          setLoaded(true);
+          alert(getTranslation('No league data found for the selected league.', lang));
+        } else {
+          setLeagueInfo(leagueData.data.response[0]);
+          setSeasons(leagueData.data.response[0].seasons);
+          // console.log("seasons", leagueData.data.response[0].seasons);
+
         }
+        //redux reducer increase requests count by one:
+        dispatch(requestsIncrement());
+        //
+        setLoaded(true);
+      } catch (error) {
+        setLeagueInfo(null);
+        setSeasons([]);
+        alert(getTranslation('Failed to load league data. Please try again later.', lang));
       }
+    }
 
-      if(requests_count< 10){
-        fetchData();
-      }
-      else{
-            alert("API request limit reached. Please wait a minute before making more requests.");
-      }
+    if (requests_count < 10) {
+      fetchData();
+    }
+    else {
+      alert("API request limit reached. Please wait a minute before making more requests.");
+    }
 
-      //reset api requests to zero
-      dispatch(resetRequests());
-
-      
+    //reset api requests to zero
+    dispatch(resetRequests());
 
   }, [selectedleague, selectedSeason])
 
@@ -109,7 +107,7 @@ export default function League() {
             </div>
           </div>
         )}
-      
+
 
       {/* League Info */}
       {isLoaded && leagueInfo && (
@@ -120,15 +118,15 @@ export default function League() {
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <span className="text-2xl sm:text-3xl font-bold text-gray-800 border-none">
-                {lang === 'ar' ? 
-                  getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name) 
-                    : leagueInfo?.league.name} &nbsp;
-                    {selectedSeason}
+                {lang === 'ar' ?
+                  getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name)
+                  : leagueInfo?.league.name} &nbsp;
+                {selectedSeason}
               </span>
               {
                 //To show favourite icon if only the league is in the user's favourites
-                  !leaguesArray.find(league => league.id === selectedleague) &&
-                  <Favourite
+                !leaguesArray.find(league => league.id === selectedleague) &&
+                <Favourite
                   elem_id={selectedleague}
                   cookie_name={'prefered_leagues'}
                   obj={{
@@ -156,7 +154,7 @@ export default function League() {
           <span className="font-medium text-gray-700 border-none">{getTranslation('Select Season', lang)}</span>
           <select
             className="p-2 border rounded-md bg-gray-50 shadow-sm focus:outline-none w-32"
-            onChange={(e)=>setSelectedSeason(e.target.value)}
+            onChange={(e) => setSelectedSeason(e.target.value)}
             value={selectedSeason}
           >
             {seasons.map((season) => (

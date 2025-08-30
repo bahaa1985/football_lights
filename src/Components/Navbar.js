@@ -17,8 +17,8 @@ function Navbar() {
   const [preferenceWindow, setPreferenceWindow] = useState(false);
   const [leaguesBar, setLeaguesBar] = useState(false);
   const [teamsBar, setTeamsBar] = useState(false);
-  const [leaguesBarMini,setLeaguesBarMini] = useState(false); //for mobile view
-  const [teamsBarMini,setTeamsBarMini] = useState(false); //for mobile view
+  const [leaguesBarMini, setLeaguesBarMini] = useState(false); //for mobile view
+  const [teamsBarMini, setTeamsBarMini] = useState(false); //for mobile view
 
   useEffect(() => {
     const button = hamburger_button.current;
@@ -33,11 +33,12 @@ function Navbar() {
     hamburger_items.current.classList.toggle("h-auto");
     hamburger_button.current.children[0].classList.toggle("hidden");
     hamburger_button.current.children[1].classList.toggle("hidden");
-    // title_span.current.classList.toggle('hidden');
   }
+
   function handleSearchWindow() {
     setSearchWindow(!searchWindow);
   }
+
   function handlePreferenWindow() {
     setPreferenceWindow(!preferenceWindow);
   }
@@ -101,11 +102,10 @@ function Navbar() {
           <div className="px-3 my-0 hidden md:visible text-center md:flex md:basis-6/12">
             <ul className="w-[90%] flex sm:space-x-2 text-slate-100 font-semibold">
               <li
-                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
-                  leaguesBar || window.location.pathname.startsWith("/leagues")
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${leaguesBar || window.location.pathname.startsWith("/leagues")
                     ? "bg-orange-500 text-white"
                     : ""
-                }`}
+                  }`}
                 onClick={() => {
                   setLeaguesBar(!leaguesBar);
                   setTeamsBar(false);
@@ -114,11 +114,10 @@ function Navbar() {
                 {getTranslation("Leagues", lang)}
               </li>
               <li
-                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
-                  teamsBar || window.location.pathname.startsWith("/teams")
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${teamsBar || window.location.pathname.startsWith("/teams")
                     ? "bg-orange-500 text-white"
                     : ""
-                }`}
+                  }`}
                 onClick={() => {
                   setTeamsBar(!teamsBar);
                   setLeaguesBar(false);
@@ -127,9 +126,8 @@ function Navbar() {
                 {getTranslation("Teams", lang)}
               </li>
               <li
-                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
-                  preferenceWindow ? "bg-orange-500 text-white" : ""
-                }`}
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${preferenceWindow ? "bg-orange-500 text-white" : ""
+                  }`}
                 onClick={() => {
                   handlePreferenWindow();
                 }}
@@ -137,9 +135,8 @@ function Navbar() {
                 {getTranslation("Preferences", lang)}
               </li>
               <li
-                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${
-                  searchWindow ? "bg-orange-500 text-white" : ""
-                }`}
+                className={`py-5 px-3 border-gray-900 leading-3 cursor-pointer text-lg font-bold rounded ${searchWindow ? "bg-orange-500 text-white" : ""
+                  }`}
                 onClick={() => {
                   handleSearchWindow();
                 }}
@@ -148,13 +145,14 @@ function Navbar() {
               </li>
             </ul>
           </div>
-          </div>
+        </div>
 
+        {/* ٍSearch window */}
         {searchWindow && (
           <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg relative w-full sm:w-2/3">
               <button
-                onClick={() => [setSearchWindow(false),window.location.href='/']}
+                onClick={() => [setSearchWindow(false), window.location.href = '/']}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               >
                 ✕
@@ -164,12 +162,12 @@ function Navbar() {
           </div>
         )}
 
-        {/* Prefernces */}
+        {/* Prefernces window */}
         {preferenceWindow && (
           <div className="w-full fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg relative w-full sm:w-2/3">
               <button
-                onClick={() => [setPreferenceWindow(false),window.location.href='/']}
+                onClick={() => [setPreferenceWindow(false), window.location.href = '/']}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               >
                 ✕
@@ -188,10 +186,10 @@ function Navbar() {
       )}
 
       {/* teams bar */}
-      {teamsBar &&(
-      <div className="w-full fixed top-16 inset-0  bg-black bg-opacity-50 flex justify-center z-50">
-        <Teams />
-      </div>)}
+      {teamsBar && (
+        <div className="w-full fixed top-16 inset-0  bg-black bg-opacity-50 flex justify-center z-50">
+          <Teams />
+        </div>)}
 
       {/* Hambruger items */}
       <div
@@ -201,30 +199,27 @@ function Navbar() {
       >
         <ul className="myul w-full flex flex-col items-center px-2 bg-slate-900 z-10 text-slate-100">
           <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"
-          onClick={() => {
-            setLeaguesBarMini(!leaguesBarMini);
-            setTeamsBarMini(false);
-          }}
+            onClick={() => {
+              setLeaguesBarMini(!leaguesBarMini);
+              setTeamsBarMini(false);
+            }}
           >
             {getTranslation("Leagues", lang)}
             {
               leaguesBarMini ? <Leagues /> : null
             }
-            {/* <NavLink to="/league">{getTranslation("Leagues", lang)}</NavLink> */}
           </li>
-          <li 
+          <li
             className="liclass w-full  py-2 border-b border-gray-600 border-solid"
-            onClick={()=>{
+            onClick={() => {
               setTeamsBarMini(!teamsBarMini);
               setLeaguesBarMini(false);
-              // handleHamburgerClick();
             }}
           >
             {getTranslation("Teams", lang)}
             {
               teamsBarMini ? <Teams /> : null
             }
-            {/* <NavLink to="/team">{getTranslation("Teams", lang)}</NavLink> */}
           </li>
           <li
             className="liclass w-full  py-2 border-b border-gray-600 border-solid"
@@ -233,7 +228,7 @@ function Navbar() {
               setLeaguesBarMini(false);
               setTeamsBarMini(false);
               handleHamburgerClick();
-              }
+            }
             }
           >
             {getTranslation("Preferences", lang)}
@@ -246,7 +241,7 @@ function Navbar() {
               setTeamsBarMini(false);
               handleHamburgerClick();
             }
-          }
+            }
           >
             {getTranslation("Search", lang)}
           </li>
