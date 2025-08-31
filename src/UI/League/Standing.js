@@ -40,9 +40,12 @@ function Standings(props) {
 
                 //set descriptions of qualifications and relegation
                 const desc_keys = Object.groupBy(standings_response.data.response[0].league.standings[0], function (item) {
-                    return item.description
+                    return item.description !== 'null'
                 });
                 setDesccription(Object.keys(desc_keys))
+
+                console.log(description);
+                
 
                 setCountry(standings_response.data.response[0].league.country);
 
@@ -78,34 +81,29 @@ function Standings(props) {
 
             {/* Qualifictions colors indicators */}
             {
-                country !== "World" ?
+                country !== "World" ??
                     // <h1 className='text-2xl font-bold text-center my-2'>{getLeagueTranslationByCountry(country,league)}</h1>               
-                    [<div className='w-full flex flex-row justify-start items-center gap-3 px-2 my-1'>
+                    [
+                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2 my-1'>
                         <span className='size-6 bg-green-700 rounded-full border-none'></span>
                         <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description[0]) || description[0] : description[0]}</span>
                     </div>,
 
-                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
+                     <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
                         <span className='size-6 bg-green-500 rounded-full border-none'></span>
                         <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description[1]) || description[1] : description[1]}</span>
                     </div>,
 
-                    description[2] !== "null" ?
-                        <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
-                            <span className='size-6 bg-green-300 rounded-full border-none'></span>
-                            <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description[2]) || description[2] : description[2]}</span>
-                        </div>
-                        : null
-                        ,
+                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
+                        <span className='size-6 bg-green-300 rounded-full border-none'></span>
+                        <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description[2]) || description[2] : description[2]}</span>
+                    </div>,
 
-                    description.at(-1) !== "null" ?
-                        <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
-                            <span className='size-6 bg-red-500 rounded-full border-none'></span>
-                            <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description.at(-1)) || description.at(-1) : description.at(-1)}</span>
-                        </div>
-                        : null
+                    <div className='w-full flex flex-row justify-start items-center gap-3 px-2  my-1'>
+                        <span className='size-6 bg-red-500 rounded-full border-none'></span>
+                        <span className='border-none w-[70%]'>{lang === 'ar' ? getLeagueTranslationByCountry("World", description.at(-1)) || description.at(-1) : description.at(-1)}</span>
+                    </div>
                     ]
-                    : null
             }
 
 
@@ -137,7 +135,8 @@ function Standings(props) {
                                     <td className='p-2'>{getTranslation('GA', lang)}</td>
                                 </>
                                 :
-                                null
+                                <>
+                                </>
                         }
                         <td className='p-2'>{getTranslation('GD', lang)}</td>
                         <td className='p-2'>{getTranslation('Points', lang)}</td>

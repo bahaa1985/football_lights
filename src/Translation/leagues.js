@@ -293,7 +293,8 @@ const leagues = {
     ,    
       {"FIFA Club World Cup": "كأس العالم للأندية"}
     ,    
-      {"Champions League": "دوري أبطال أوروبا"}
+      {"Champions League": "دوري أبطال أوروبا"},
+      {"UEFA Champions League":"دوري أبطال أوروبا"}
     ,
         {"Promotion - Champions League (Play Offs: 1/8-finals)": "الترقية - دوري أبطال أوروبا (ملحق: دور الـ 16)"}
     ,

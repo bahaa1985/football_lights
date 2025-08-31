@@ -2,7 +2,7 @@ export default function setPreferences(language,countryName){
    
         switch(language){
             case 'en':
-                localStorage.setItem("user_preferences", JSON.stringify({lang:'en',tag:'football AND Soccer',country:countryName}))
+                localStorage.setItem("user_preferences", JSON.stringify({lang:'en',tag:'Football Soccer',country:countryName}))
                 break;
             case 'ar':
                 localStorage.setItem("user_preferences", JSON.stringify({lang:'ar',tag:'كرة',country:countryName}))

@@ -16,7 +16,7 @@ export default function Home() {
                     const lang = data.languages.substring(0, 2);
                     const country_code = getCountryNameTranslation(data.country_code, lang);
                     setPreferences(lang, country_code); // //set user's native language based on their IP address
-                    window.location.href('/'); // auto reload
+                    window.location.href=('/'); // auto reload
                 });
         }
     }, []);

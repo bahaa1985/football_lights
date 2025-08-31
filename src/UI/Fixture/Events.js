@@ -44,8 +44,10 @@ function Events(props) {
 
     }, [fixtureId])
 
+    const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
+
     const events_div = (teamId, player, assist, type, detail, index, comments) => {
-        const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
+
         return (
             <div key={index} className={`flex ${teamId !== teams.home.id ? 'flex-row-reverse' : null} items-center`}>
                 <div className="px-2 sm:px-3">{
@@ -70,9 +72,9 @@ function Events(props) {
                 </div>
 
                 <div className="flex flex-col justify-center">
-                    <span className="border-none text-sm sm:text-lg">{type === "subst" ? "Out: " + player : player}</span>
-                    <span className="border-none text-sm sm:text-lg">{type === "subst" ? "In: " + assist : assist}</span>
-                    {(type === "Var" || (type === "Goal" && detail === "Missed penalty")) ? <span className="border-none text-sm sm:text-lg">{detail}</span> : null}
+                    <span className="border-none text-sm sm:text-lg">{type === "subst" ? getTranslation("In",lang) +" " + assist : assist}</span>
+                    <span className="border-none text-xs sm:text-sm">{type === "subst" ? getTranslation("Out",lang) + " " + player : player}</span>                    
+                    {(type === "Var" || (type === "Goal" && detail === "Missed penalty")) ? <span className="border-none text-xs sm:text-sm">{detail}</span> : null}
                     {comments ? <span className="border-none text-xs sm:text-sm">{getTranslation(comments, lang)}</span> : null}
                 </div>
             </div>)

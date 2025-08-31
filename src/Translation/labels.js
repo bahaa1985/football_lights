@@ -143,6 +143,9 @@
     "Events": "الأحداث",
     "Statistics": "الإحصائيات",
     "Man Of The Match": "رجل المباراة",
+    "Penalty cancelled":"الغاء ضربة الجزاء",
+    "Time wasting":"اضاعة الوقت",
+    "Penalty confirmed":"تأكيد ضربة الجزاء"
   },
   "en":{
     "Leagues": "Leagues",

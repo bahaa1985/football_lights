@@ -19,7 +19,7 @@ export default function Search() {
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
 
-  const lang = localStorage.getItem("user_preferences")?.lang || "en";
+  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const dispatch = useDispatch();
   const requests_count = useSelector((state) => state.counter.requestsCount);
