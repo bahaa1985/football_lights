@@ -112,7 +112,7 @@ export default function League() {
 
       {/* League Info */}
       {isLoaded && leagueInfo && (
-        <div className="flex flex-col sm:flex-row gap-3 items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
+        <div className="flex flex-row gap-3 items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
           <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0">
             <img className="w-16 h-16 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
           </div>

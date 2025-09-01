@@ -116,7 +116,7 @@ function Standings(props) {
             }
             {
                 deviceWidth < 600 ?
-                    <p>{getTranslation('Rotate to landscape mode to see all the columns', lang)}</p>
+                    <p>{getTranslation('Rotate to landscape mode to show all details', lang)}</p>
                     : null
             }
             <table className='relative top-4 w-full table-auto'>
@@ -185,7 +185,8 @@ function Standings(props) {
                                                             <td className='p-2'>{elem.all.goals.against}</td>
                                                         </>
                                                         :
-                                                        null
+                                                        <>
+                                                        </>
                                                 }
                                                 <td className='p-2'>{elem.all.goals.for - elem.all.goals.against}</td>
                                                 <td className='p-2'>{elem.points}</td>

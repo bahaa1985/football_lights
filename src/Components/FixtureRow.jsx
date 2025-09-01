@@ -175,7 +175,7 @@ function FixtureRow(props) {
                           to={`/fixture/${elem?.fixture?.id}`}
                           state={{ fixture_data: elem }}
                         >
-                          Details
+                          {getTranslation('Details',lang)}
                         </NavLink>
                         {/* <a href={`/fixture/${elem?.fixture?.id}`}>Details</a> */}
                       </div>
