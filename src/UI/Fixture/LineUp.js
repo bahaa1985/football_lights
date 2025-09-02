@@ -6,6 +6,8 @@ import Ratings from "./Ratings.js";
 import getLineUps from "../../api/LineUp.js";
 import getPlayers from "../../api/Players.js";
 import { getTeamByName } from "../../Translation/teams.js";
+import CoachAndSubs from "../../Components/CoachAndSubs.jsx";
+import PlayersTable from "../../Components/PlayersTable.js";
 import Spinner from "../../Components/Spinner.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
@@ -26,12 +28,12 @@ function LineUp(props) {
     logo: homeLogo,
     formation: [4, 4, 2] //default formation
   });
-  const [homeLineUp, setHomeLineUp] = useState([]);
+  const [homeStartingXI, setHomeStartingXI] = useState([]);
   const [homePlayers, setHomePlayers] = useState([]);
   const [homeGkColor, setHomeGkColor] = useState([]); //kit colors
   const [homePlayerColor, setHomePlayrColor] = useState([]); //kit colors
   const [homeCoach, setHomeCoash] = useState({});
-  const [homeSub, setHomeSub] = useState([]);
+  const [homeSubstitutes, setHomeSubstitutes] = useState([]);
 
   /// Away team details:
   const [awayTeamProfile, setAwayTeamProfile] = useState({
@@ -40,12 +42,12 @@ function LineUp(props) {
     logo: awayLogo,
     formation: [4, 4, 2] //default formation,
   });
-  const [awayLineUp, setAwayLineUp] = useState([]);
+  const [awayStartingXI, setAwayStartingXI] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
   const [awayGkColor, setAwayGkColor] = useState([]); //kit colors
   const [awayPlayerColor, setAwayPlayrColor] = useState([]); //kit colors
   const [awayCoach, setAwayCoash] = useState({});
-  const [awaySub, setAwaySub] = useState([]);
+  const [awaySubstitutes, setAwaySubstitutes] = useState([]);
   ///
   const [clickedSub, setClickedSub] = useState(homeId);
   const [clickedTeam, setClickedTeam] = useState(homeId);
@@ -75,9 +77,9 @@ function LineUp(props) {
               : ''
           ),
         });
-        setHomeLineUp(lineup_response?.data.response[0].startXI);
+        setHomeStartingXI(lineup_response?.data.response[0].startXI);
         setHomeCoash(lineup_response?.data.response[0].coach);
-        setHomeSub(lineup_response?.data.response[0].substitutes);
+        setHomeSubstitutes(lineup_response?.data.response[0].substitutes);
         //
         setAwayTeamProfile({
           id: lineup_response?.data.response[1].team.id,
@@ -88,9 +90,9 @@ function LineUp(props) {
               : ''
           ),
         });
-        setAwayLineUp(lineup_response?.data.response[1].startXI);
+        setAwayStartingXI(lineup_response?.data.response[1].startXI);
         setAwayCoash(lineup_response?.data.response[1].coach);
-        setAwaySub(lineup_response?.data.response[1].substitutes);
+        setAwaySubstitutes(lineup_response?.data.response[1].substitutes);
         ///
         setHomePlayers(players_response?.data.response[0].players);
         setAwayPlayers(players_response?.data.response[1].players);
@@ -124,7 +126,7 @@ function LineUp(props) {
         awayLines = [];
       // Home Lines:
       for (let i = 0; i < homeTeamProfile?.formation?.length + 1; i++) {
-        const sp_lineup = homeLineUp
+        const sp_lineup = homeStartingXI
           .filter((elem) => parseInt(elem.player.grid[0]) === i + 1)
           .sort(
             (playerA, playerB) =>
@@ -141,7 +143,7 @@ function LineUp(props) {
       }
       // Away Lines:
       for (let i = 0; i < awayTeamProfile?.formation?.length + 1; i++) {
-        const sp_lineup = awayLineUp
+        const sp_lineup = awayStartingXI
           .filter((elem) => parseInt(elem.player.grid[0]) === i + 1)
           .sort(
             (playerA, playerB) =>
@@ -192,7 +194,7 @@ function LineUp(props) {
   return (
     <div className="h-full">
       <div className="block mx-auto my-2 bg-slate-50 rounded-lg">
-        {isLoaded ? (
+        {isLoaded && homeStartingXI ? (
           <>
             <div className="block md:flex md:flex-row md:justify-around lg:justify-center my-2">
 
@@ -247,47 +249,9 @@ function LineUp(props) {
                       {/* Team's players */}
                       {
                         clickedTeam === homeTeamProfile.id ?
-                          <div>
-                            {
-                              homeLineUp.map((player, index) => {
-                                return (
-                                  <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
-                                    <img className="size-6 sm:size-10" src={homePlayers?.filter(item => item.player.id === player.player.id)[0].player.photo} alt={player.player.name} />
-                                    <span className="flex space-x-3 border-none text-sm md:text-lg">
-                                      {player.player.number}&nbsp;&nbsp;{player.player.name}
-                                    </span>
-                                    <span className="border-none text-sm flex justify-center items-center">{
-                                      player.player.pos === 'D' ? 'Defender'
-                                        : player.player.pos === 'M' ? 'Midfielder'
-                                          : player.player.pos === 'F' ? 'Forward'
-                                            : player.player.pos === 'G' ? 'GoalKeeper'
-                                              : null
-                                    }</span>
-                                  </div>
-                                );
-                              })}
-                          </div>
+                          <PlayersTable startingXI={homeStartingXI} players={homePlayers} />
                           :
-                          <div>
-                            {
-                              awayLineUp.map((player, index) => {
-                                return (
-                                  <div key={index} className="flex flex-row justify-between border-b border-solid border-slate-400">
-                                    <img className="size-6 sm:size-10" src={awayPlayers?.filter(item => item.player.id === player.player.id)[0].player.photo} alt={player.player.name} />
-                                    <span className="flex space-x-3 border-none text-sm md:text-lg">
-                                      {player.player.number}&nbsp;&nbsp;{player.player.name}
-                                    </span>
-                                    <span className="border-none text-sm flex justify-center items-center">{
-                                      player.player.pos === 'D' ? 'Defender'
-                                        : player.player.pos === 'M' ? 'Midfielder'
-                                          : player.player.pos === 'F' ? 'Forward'
-                                            : player.player.pos === 'G' ? 'GoalKeeper'
-                                              : null
-                                    }</span>
-                                  </div>
-                                );
-                              })}
-                          </div>
+                          <PlayersTable startingXI={awayStartingXI} players={awayPlayers} />
                       }
                     </div>
                 }
@@ -340,55 +304,12 @@ function LineUp(props) {
                     {clickedSub === homeId ? (
                       <>
                         {/* home coach and subs */}
-                        <div className="flex flex-row justify-start gap-2">
-                          <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={homeCoach.photo} />
-                          <span className="border-none flex justify-center items-center text-sm sm:text-lg">Coach: {homeCoach.name}</span>
-                        </div>
-                        <div>
-                          {homeSub.map((sub, index) => {
-                            return (
-                              <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
-
-                                <span className="flex space-x-3 border-none text-sm sm:text-lg">
-                                  {sub.player.number}&nbsp;&nbsp;{sub.player.name}
-                                </span>
-                                <span className="border-none text-sm sm:text-lg flex justify-center items-center">{
-                                  sub.player.pos === 'D' ? 'Defender'
-                                    : sub.player.pos === 'M' ? 'Midfielder'
-                                      : sub.player.pos === 'F' ? 'Forward'
-                                        : sub.player.pos === 'G' ? 'GoalKeeper'
-                                          : null
-                                }</span>
-                              </div>
-                            );
-                          })}
-                        </div>
+                        <CoachAndSubs coach={homeCoach} substitutes={homeSubstitutes}/>
                       </>
                     ) : (
                       <>
                         {/* away coach and subs */}
-                        <div className="flex flex-row justify-start space-x-2">
-                          <img class="w-10 h-10 sm:w-14 sm:h-14 rounded-full" alt="" src={awayCoach.photo} />
-                          <span className="border-none flex justify-center items-center text-sm sm:text-lg">Coach: {awayCoach.name}</span>
-                        </div>
-                        <div className="">
-                          {awaySub.map((sub, index) => {
-                            return (
-                              <div key={index} className="flex flex-row justify-between p-1 border-b border-solid border-slate-400">
-                                <span className="flex space-x-3 border-none text-sm sm:text-lg">
-                                  {sub.player.number}&nbsp;&nbsp;{sub.player.name}
-                                </span>
-                                <span className="border-none text-sm sm:text-lg flex justify-center items-center">{
-                                  sub.player.pos === 'D' ? 'Defender'
-                                    : sub.player.pos === 'M' ? 'Midfielder'
-                                      : sub.player.pos === 'F' ? 'Forward'
-                                        : sub.player.pos === 'G' ? 'GoalKeeper'
-                                          : null
-                                }</span>
-                              </div>
-                            );
-                          })}
-                        </div>
+                        <CoachAndSubs coach={awayCoach} substitutes={awaySubstitutes} />
                       </>
                     )}
                     {/* Ratings */}
@@ -401,7 +322,7 @@ function LineUp(props) {
               </div>
             </div>
           </>
-        ) : !isLoaded && homeLineUp.length === 0 ? <p className="h-full">No Data Available</p>
+        ) : isLoaded && !homeStartingXI ? <p className="h-full">No Data Available</p>
           : <Spinner />
         }
       </div>

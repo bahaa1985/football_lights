@@ -47,45 +47,11 @@ function Navbar() {
     <div className="flex flex-col w-full">
       <nav
         id="nav_bar"
-        className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-center shadow-lg shadow-slate-400 overflow-x-hidden z-40"
+        className="bg-slate-800 w-full h-16 p-1 fixed top-0 left-0 flex no-wrap justify-between shadow-lg shadow-slate-400 overflow-x-hidden z-40"
       >
-        {/* Hamburger button */}
-        <div className="my-auto md:hidden basis-1/3 px-3">
-          <button id="hamburger_button" ref={hamburger_button}>
-            <svg
-              id="hamburger_lines"
-              className="h-12 w-12 stroke-slate-100"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-            <svg
-              id="hamburger_close"
-              className="hidden h-12 w-12 stroke-gray-100"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
         <div
-          className="w-[90%] flex flex-row justify-end sm:justify-center items-center px-3 mx-auto 
-        basis-2/3 sm:basis-6/12 lg:basis-4/12"
+          className="w-auto flex flex-row justify-start sm:justify-center items-center sm:space-x-10  sm:mx-auto
+        sm:basis-6/12 lg:basis-4/12"
         >
           {/* logo */}
           <div className="flex justify-start gap-2 items-center float-left px-3 xs:basis-1/3 sm:basis-1/12">
@@ -96,6 +62,7 @@ function Navbar() {
                 src={logo}
               />
             </NavLink>
+            <span className="w-16 hidden  sm:flex items-center justify-center border-none text-lg text-white font-bold">Football Lights</span>
           </div>
 
           {/* navigation links */}
@@ -147,6 +114,40 @@ function Navbar() {
           </div>
         </div>
 
+        {/* Hamburger button */}
+        <div className="my-auto md:hidden px-3">
+          <button id="hamburger_button" ref={hamburger_button}>
+            <svg
+              id="hamburger_lines"
+              className="h-12 w-12 stroke-slate-100"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+            <svg
+              id="hamburger_close"
+              className="hidden h-12 w-12 stroke-gray-100"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
         {/* ٍSearch window */}
         {searchWindow && (
           <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -195,7 +196,7 @@ function Navbar() {
       <div
         id="hamburger_items"
         ref={hamburger_items}
-        className="fixed w-full h-0 overflow-y-hidden my-auto top-16 left-0 text-center z-10"
+        className="fixed w-full h-0 overflow-y-hidden my-auto top-16 left-0 text-center z-50"
       >
         <ul className="myul w-full flex flex-col items-center px-2 bg-slate-900 z-10 text-slate-100">
           <li className="liclass w-full  py-2 border-b border-gray-600 border-solid"

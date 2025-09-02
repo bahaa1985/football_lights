@@ -11,7 +11,7 @@ export default function Ratings(props){
     const awayTeam = props.teams.away;
     //
     //set division of the clicked team ( in small screens)
-    console.log("homeTeam",homeTeam.id);
+    // console.log("homeTeam",homeTeam.id);
     
     const [screenWidth,setScreenWidth] = useState(0);
     const [clickedTeam,setClickedTeam] = useState(homeTeam.id);

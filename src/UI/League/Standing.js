@@ -67,12 +67,13 @@ function Standings(props) {
             alert("API request limit reached. Please wait a minute before making more requests.");
         }
 
-        //reset api requests to zero
-        dispatch(resetRequests());
-
         window.addEventListener('resize', () => {
             setDeviceWidth(window.innerWidth);
         })
+        
+        //reset api requests to zero
+        dispatch(resetRequests());
+
 
     }, [league, season])
 

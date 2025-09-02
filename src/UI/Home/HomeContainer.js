@@ -24,8 +24,8 @@ export default function Home() {
     return (
         <div className={`flex-1 mt-20 w-[90%] mx-auto`}>
             <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>
+                 <DayFixtures />
                 <Favourites />
-                <DayFixtures />
             </div>
             <div className='flex flex-col sm:flex-row sm:justify-between w-full mb-2'>
                 <News />
