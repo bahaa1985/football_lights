@@ -43,7 +43,7 @@ function FixtureRow(props) {
                   />
                   <NavLink
                     className="my-auto ml-2"
-                    to={`/league/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}
+                    to={`/leagues/${fixtures[elem][0].league.id}/${fixtures[elem][0].league.season}`}
                   >
                     <span className="text-left border-none font-semibold">
                       {lang === "ar"
