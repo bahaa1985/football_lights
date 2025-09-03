@@ -22,7 +22,6 @@ function LinePosition(props) {
         return (
           <NavLink to={`/players/${elem.player.id}`} key={index}
             className="text-center text-[12px] w-full m-auto z-10">
-            {/* style={{backgroundColor:'#'+ colors.primary}} */}
             <div className={`flex justify-center items-center mx-auto my rounded-full`}>
               <img referrerPolicy="no-referrer" className={`size-9 sm:size-12 md:size-14 rounded-full`} src={getPlayerStats(elem.player.id)[0].player.photo} alt={getPlayerStats(elem.player.id)[0].player.name} />
             </div>

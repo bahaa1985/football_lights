@@ -5,12 +5,16 @@ import PlayerStats from "./PlayerStats.js";
 import { useState, useMemo } from "react";
 import { getCookie } from "../../api/Cookie.js";
 import { getTranslation } from "../../Translation/labels.js";
+import { getTeamByName } from "../../Translation/teams.js";
 import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
+import Spinner from "../../Components/Spinner.jsx";
 
 function Statistics(props) {
 
-    const fixtureId = props.fixtureId
+    const fixtureId = props.fixtureId;
+    const homeTeam= props.teams.home;
+    const awayTeam = props.teams.away;
 
     const [homeStatistics, setHomeStatistics] = useState([]);
     const [homePlayers, setHomePlayers] = useState([]);
@@ -60,17 +64,27 @@ function Statistics(props) {
 
         <div className="w-[90%] flex flex-col sm:flex-row sm:justify-between gap-2 sm:w-auto mx-auto text-center ">
             {
-                isLoaded ?
+                isLoaded && homeStatistics ?
                     [
                         <div className="w-full sm:w-[45%]">
+                            {/* teams header */}
+                            <div id='team-header' className={`w-full flex flex-row justify-around bg-slate-800 my-2`}>
+                                <div className={`flex flex-row gap-2 items-center w-1/2 bg-slate-300 text-slate-900te-50`}>
+                                    <img className='w-14 h-14 rounded-full' src={homeTeam.logo} alt={homeTeam.name} />
+                                    <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(homeTeam.name) : homeTeam.name}</span>
+                                </div>
+                                <div className='flex flex-row-reverse gap-2 items-center w-1/2 bg-slate-300 text-slate-900'>
+                                    <img className='w-14 h-14 rounded-full' src={awayTeam.logo} alt={awayTeam.name} />
+                                    <span className='border-none font-bold cursor-pointer'>{lang === 'ar' ? getTeamByName(awayTeam.name) : awayTeam.name}</span>
+                                </div>
+                            </div>
                             {
                                 homeStatistics?.map((item, index) => {
-
                                     total = Number.parseInt(item.value) + Number.parseInt(awayStatistics[index].value);
                                     return (
                                         <div key={index} className="w-full text-center my-4 mx-auto ">
                                             <div className="flex flex-col justify-center">
-                                                {/* display hoe and away stats */}
+                                                {/* display home and away stats */}
                                                 <div className="w-full flex flex-row justify-between px-2">
                                                     <div className="text-left font-bold px-2 sm:px-4">{`${item.value === null ? 0 : item.value}`}</div>
                                                     <div>{getTranslation(item.type.replace('_', ' '), lang)}</div>
@@ -108,7 +122,10 @@ function Statistics(props) {
                         ,
                         <PlayerStats statistics={{ home: homePlayers, away: awayPlayers }} />
                     ]
-                    : <p>No Data Available</p>
+                    : 
+                    !isLoaded ?
+                    <Spinner />
+                    :null
             }
 
         </div>

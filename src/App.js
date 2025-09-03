@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
-import Navbar from '../src/Components/Navbar.js'
-import Footer from '../src/Components/Footer.js';
+import Navbar from '../src/Components/Navbar.jsx'
+import Footer from '../src/Components/Footer.jsx';
 import League from '../src/UI/League/LeagueContainer.js';
 import Fixture from '../src/UI/Fixture/FixtureContainer.js';
 import Player from '../src/UI/Player/PlayerContainer.js';

@@ -91,8 +91,8 @@
     "Rating": "التقييم",
     "Captain": "قائد",
     "Substitutes": "تبديلات",
-    "In": "دخل",
-    "Out": "خرج",
+    "In": "دخول",
+    "Out": "خروج",
     "Bench": "الاحتياط",
     "On": "على المرمى",
     "Conceded": "مستقبلة",
@@ -145,7 +145,13 @@
     "Man Of The Match": "رجل المباراة",
     "Penalty cancelled":"الغاء ضربة الجزاء",
     "Time wasting":"اضاعة الوقت",
-    "Penalty confirmed":"تأكيد ضربة الجزاء"
+    "Penalty confirmed":"تأكيد ضربة الجزاء",
+    "Goal confirmed":"تأكيد الهدف",
+    "Details":"تفاصيل",
+    "GoalKeeper":"حارس مرمى",
+    "Defender":"مدافع",
+    "Midfielder":"وسط",
+    "Forward":"مهاجم"
   },
   "en":{
     "Leagues": "Leagues",

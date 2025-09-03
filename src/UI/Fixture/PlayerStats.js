@@ -170,14 +170,6 @@ function PlayerStats(props) {
             <div className='w-full mx-auto text-center'>
                 <h3 className='w-full bg-slate-900 text-slate-50 font-bold rounded-lg p-2'>{getTranslation(title, lang)}</h3>
                 {
-                    // screenWidth >= 600 ? //that means the screen is wide enough to show both teams
-                    // <div className='flex justify-between py-2'>
-
-                    //     {renderStats(homeStats, statKey, statSubKey)}
-
-                    //     {renderStats(awayStats, statKey, statSubKey)}                    
-                    // </div>
-                    // :
                     clickedTeam === homeTeam.id ? //at small screens, only the clicked team is shown
                         renderStats(homeStats, statKey, statSubKey)
                         : renderStats(awayStats, statKey, statSubKey)

@@ -21,7 +21,7 @@ function Fixture() {
   console.log("fixture_data", fixture_data);
 
   const [tab, setTab] = useState(0);
-  const lang = JSON.parse(localStorage.getItem('language'))?.lang || 'en';
+  const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
 
   const handleTabChange = (index) => {
     setTab(index);
@@ -32,7 +32,7 @@ function Fixture() {
 
       <div className="flex-1  mt-20 font-bold h-full">
         {/*  */}
-        <div className='w-[90%] flex flex-col justify-center items-center sm:w-[70%] bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
+        <div className='w-[90%] flex flex-col justify-center items-center sm:w-[80%] lg:w-[60%] bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 
         p-2 my-2 mx-auto'>
           {/* league info */}
           <div className='flex flex-col justify-center  space-y-1 items-center
@@ -49,17 +49,17 @@ function Fixture() {
           {/* score table */}
           <div key={fixture_data.fixture?.id} className="flex justify-around space-x-2 md:space-x-0 w-full md:w-[80%] xl:w-[50%] items-center mx-auto py-2 
            text-sm sm:text-lg border-b sm:border-none border-solid border-slate-400">
-            <NavLink className='flex flex-row justify-start gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.home?.id}?league=${fixture_data.league?.id}`}>
-              <img className="size-6 sm:size-10" referrerPolicy="no-referrer" alt={lang === 'ar' ? getTeamByName(fixture_data.teams?.home?.name) : fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
-              <span className='border-none ml-0'>{lang === 'ar' ? getTeamByName(fixture_data.teams?.home?.name) : fixture_data.teams?.home?.name}</span>
+            <NavLink className='flex flex-row justify-start gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams.home.id}?league=${fixture_data.league.id}`}>
+              <img className="size-6 sm:size-10" referrerPolicy="no-referrer" alt={lang === 'ar' ? getTeamByName(fixture_data.teams.home.name) : fixture_data.teams?.home?.name} src={fixture_data.teams?.home?.logo}></img>
+              <span className='border-none ml-0'>{lang === 'ar' ? getTeamByName(fixture_data.teams.home.name) : fixture_data.teams.home.name}</span>
             </NavLink>
             <div className='flex flex-row justify-between  w-[20%]'>
               <span className="size-6 sm:size-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.home}</span>
               <span className="size-6 sm:size-8 border-none bg-slate-900 text-slate-50 flex justify-center items-center text-sm sm:text-lg">{fixture_data.goals?.away}</span>
             </div>
 
-            <NavLink className='flex flex-row justify-end gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams?.away?.id}?league=${fixture_data.league?.id}`}>
-              <span className='border-none mr-0'>{lang === 'ar' ? getTeamByName(fixture_data.teams?.away?.name) : fixture_data.teams?.away?.name}</span>
+            <NavLink className='flex flex-row justify-end gap-2 items-center w-[40%]' to={`/teams/${fixture_data.teams.away.id}?league=${fixture_data.league.id}`}>
+              <span className='border-none mr-0'>{lang === 'ar' ? getTeamByName(fixture_data.teams.away.name) : fixture_data.teams.away.name}</span>
               <img className="size-6 sm:size-10" referrerPolicy="no-referrer" alt={getTeamByName(fixture_data.teams?.away?.name)} src={fixture_data.teams?.away?.logo}></img>
             </NavLink>
           </div>
@@ -77,12 +77,7 @@ function Fixture() {
                   fixture_data.fixture.short === "SUSB" ||
                   fixture_data.fixture.short === "INT" ? ( //if the game is live show the red dot
                   <span className="text-lg font-bold border-none text-red-700 animate-pulse">{fixture_data.fixture.status.short}</span>
-                ) : //if the game is not live don't show red dot
-                  <div className="py-auto">
-                    <span className="h-[50%] mx-2 sm:my-auto px-2 rounded-sm bg-green-600 text-slate-100 border-none text-xs sm:text-lg">
-                      {fixture_data.fixture.status.short}
-                    </span>
-                  </div>
+                ) : null
               }
             </div>
             {/* fixture time */}
@@ -123,7 +118,7 @@ function Fixture() {
             ) : tab === 1 ? (
               <Events fixtureId={fixtureId} teams={fixture_data?.teams} />
             ) : tab === 2 ? (
-              <Statistics fixtureId={fixtureId} />
+              <Statistics fixtureId={fixtureId} teams={fixture_data?.teams} />
             ) : null
           }
 

@@ -4,7 +4,7 @@ import { getTranslation } from '../Translation/labels.js'
 const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';  
  const Tabs = ({ tabs, activeTab, onTabChange }) => {
   return (
-    <div className='w-full mx-auto flex flex-row justify-center gap-2 '>
+    <div className='w-full mx-auto flex flex-row justify-center gap-4 '>
       {/* tabs */}
       {tabs.map((tab, index) => (
         <div
