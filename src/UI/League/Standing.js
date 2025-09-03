@@ -74,6 +74,7 @@ function Standings(props) {
         //reset api requests to zero
         dispatch(resetRequests());
 
+        return setDeviceWidth(window.innerWidth);
 
     }, [league, season])
 
