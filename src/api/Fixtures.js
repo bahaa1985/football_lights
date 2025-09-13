@@ -97,7 +97,7 @@ export async function groupDateFixtures(dateString) {
   catch(error){
     console.log("Error grouping date fixtures:",error);
   }
-  console.log("fixtures",grouped);
+  // console.log("fixtures",grouped);
   return grouped;
 }
 

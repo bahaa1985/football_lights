@@ -16,6 +16,7 @@ function Standings(props) {
     const [standings, setStandings] = useState([])
     const [standingsGroups, setStandingsGroups] = useState([]);
     const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
+    const [orientation,setOrientation] = useState(window.screen.orientation?.type);
     const [description, setDesccription] = useState([])
     const [country, setCountry] = useState("");
     const [isLoaded, setLoaded] = useState(false);
@@ -67,14 +68,16 @@ function Standings(props) {
             alert("API request limit reached. Please wait a minute before making more requests.");
         }
 
-        window.addEventListener('resize', () => {
-            setDeviceWidth(window.innerWidth);
-        })
-        
         //reset api requests to zero
         dispatch(resetRequests());
-
-        return setDeviceWidth(window.innerWidth);
+        
+        window.addEventListener('resize', () => {
+            setDeviceWidth(window.screen.width);
+            console.log("DW",deviceWidth);
+            
+        })
+      
+        return ()=> setDeviceWidth(window.screen.width);
 
     }, [league, season])
 

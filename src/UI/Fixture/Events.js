@@ -74,7 +74,7 @@ function Events(props) {
                 <div className="flex flex-col justify-center">
                     <span className="border-none text-sm sm:text-lg">{type === "subst" ? getTranslation("In",lang) +" " + assist : assist}</span>
                     <span className="border-none text-xs sm:text-sm">{type === "subst" ? getTranslation("Out",lang) + " " + player : player}</span>                    
-                    {(type === "Var" || (type === "Goal" && detail === "Missed penalty")) ? <span className="border-none text-xs sm:text-sm">{detail}</span> : null}
+                    {(type === "Var" || (type === "Goal" && detail === "Missed penalty")) ? <span className="border-none text-xs sm:text-sm">{getTranslation(detail,lang)}</span> : null}
                     {comments ? <span className="border-none text-xs sm:text-sm">{getTranslation(comments, lang)}</span> : null}
                 </div>
             </div>)

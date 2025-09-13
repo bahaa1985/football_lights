@@ -18,7 +18,7 @@ export default function Search() {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
-
+  const [isVisible,setVisibility] = useState(true);
   const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const dispatch = useDispatch();
@@ -54,9 +54,11 @@ export default function Search() {
     dispatch(resetRequests());
   }, [isClicked, searchIndex, searchKey]);
 
+  if (!isVisible) return null;
+
   return (
-    <div className="w-full h-96 mx-auto px-4 overflow-y-scroll bg-slate-100 rounded-lg">
-      <div className="w-full md:w-[70%] mx-auto flex flex-col items-center space-y-2">
+    <div className="w-full h-full px-4 rounded-lg">
+      <div className="w-full md:w-[50%] mx-auto flex flex-col items-center space-y-2">
         <input
           type="text"
           ref={searchRef}
@@ -65,7 +67,7 @@ export default function Search() {
         />
         <div className="w-full mx-auto flex flex-row justify-between gap-2 my-4">
           <button
-            className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 0 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
+            className={`flex-1 py-2 md:w-2/12 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 0 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
             onClick={() => [
               setSearchKey(searchRef.current.value),
               setSearchIndex(0),
@@ -74,7 +76,7 @@ export default function Search() {
             {getTranslation("League", lang)}
           </button>
           <button
-            className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 1 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
+            className={`flex-1 py-2 md:w-2/12 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 1 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
             onClick={() => [
               setSearchKey(searchRef.current.value),
               setSearchIndex(1),
@@ -83,7 +85,7 @@ export default function Search() {
             {getTranslation("Team", lang)}
           </button>
           <button
-            className={`flex-1 py-2 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 2 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
+            className={`flex-1 py-2 md:w-1/3 rounded-md font-semibold transition-colors duration-200 ${searchIndex === 2 ? "bg-slate-800 text-white" : "bg-slate-300 text-gray-700"}`}
             onClick={() => [
               setSearchKey(searchRef.current.value),
               setSearchIndex(2),
@@ -104,6 +106,7 @@ export default function Search() {
                   <NavLink
                     to={`/leagues/${item.league.id}}`}
                     className="flex flex-row justify-between items-center"
+                    onClick={() => setVisibility(false)} // Hide search window on click
                   >
                     <img
                       className="size-6 sm:size-10 rounded-full"
@@ -139,7 +142,8 @@ export default function Search() {
                   >
                     <NavLink
                       to={`/teams/${item.team.id}`}
-                      className="flex flex-row justify-between items-center "
+                      className="flex flex-row justify-between items-center"
+                      onClick={() => setVisibility(false)} // Hide search window on click
                     >
                       <img
                         className="size-6 sm:size-10 rounded-full"
@@ -172,7 +176,8 @@ export default function Search() {
                     >
                       <NavLink
                         to={`/players/${item.player.id}`}
-                        className="flex flex-row justify-between items-center "
+                        className="flex flex-row justify-between items-center"
+                        onClick={() => setVisibility(false)} // Hide search window on click
                       >
                         <img
                           className="size-6 sm:size-10 rounded-full"

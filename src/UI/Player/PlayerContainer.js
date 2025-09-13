@@ -30,11 +30,15 @@ export default function PlayerContainer(props) {
                 setPlayerSeasons(response_seasons.data.response);
                 setPlayerStats(response_stats.data.response[0]);
                 setLoaded(true);
+                //
+                console.log(response_stats);
+                
                 //redux reducer increase requests count by one:
                 dispatch(requestsIncrement());
             }
             catch {
                 alert(`Error in player's data`);
+                window.location.href='/';
             }
         }
 

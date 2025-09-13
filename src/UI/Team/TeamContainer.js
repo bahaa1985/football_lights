@@ -50,7 +50,7 @@ export default function Team() {
             alert("API request limit reached. Please wait a minute before making more requests.");
         }
 
-    }, [team]);
+    }, [team,selectedSeason]);
 
     useEffect(() => {
         async function fetchTeamSeasons() {

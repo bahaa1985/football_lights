@@ -1,6 +1,8 @@
 import {React,useState, useEffect} from "react";
 import { getTranslation } from "../../Translation/labels.js";
 import { getTeamByName } from "../../Translation/teams.js";
+import { Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 export default function Ratings(props){
 
@@ -67,7 +69,9 @@ export default function Ratings(props){
           <div className="flex flex-row justify-center items-center gap-2 mx-auto">         
             <img className="w-12 h-12 rounded-full" referrerPolicy="no-referrer" src={manOfTheMatch().player.photo} alt={manOfTheMatch().player.name}/>
             <span className="border-none font-bold mx-2 text-slate-50 text-sm sm:text-lg">
-              {manOfTheMatch().player.name}
+              <NavLink to={`/players/${manOfTheMatch().player.id}`}>
+                {manOfTheMatch().player.name}
+              </NavLink>              
             </span>
             <span className={`border-none w-8 h-8 sm:w-10 sm:h-10 font-bold text-center 
               flex items-center justify-center mx-2 text-slate-50 text-lg ${ratingBGColor(manOfTheMatch().statistics[0].games.rating)}`}>
@@ -110,7 +114,9 @@ export default function Ratings(props){
                         return (
                             elem.statistics[0].games.rating !== null ?
                             <td key={index} className="flex justify-between items-center w-full px-3 border-b border-solid border-slate-800">
-                                <span className="border-none text-sm sm:text-lg">{elem.player.name}</span>
+                                <NavLink to={`/players/${elem.player.id}`}>
+                                    <span className="border-none text-sm sm:text-lg">{elem.player.name}</span>
+                                </NavLink>                                
                                 <span className={`border-none size-8 flex items-center justify-center font-bold text-sm sm:text-lg text-slate-50 ${ratingBGColor(elem.statistics[0].games.rating)}`}>
                                     {elem.statistics[0].games.rating}
                                 </span>

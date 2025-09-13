@@ -90,13 +90,13 @@ const teams = {
         {"Oviedo": "ريال أوفييدو" },
     ],
     "Germany": [
-        { "Bayern Munich": "بايرن ميونيخ" },
+        { "Bayern München": "بايرن ميونيخ" },
         { "Borussia Dortmund": "بوروسيا دورتموند" },
         { "RB Leipzig": "آر بي لايبزيغ" },
         { "Bayer Leverkusen": "باير ليفركوزن" },
         { "Eintracht Frankfurt": "آينتراخت فرانكفورت" },
         { "VfL Wolfsburg": "فولفسبورغ" },
-        { "Borussia Monchengladbach": "بوروسيا مونشنغلادباخ" },
+        { "Borussia Mönchengladbach": "بوروسيا مونشنغلادباخ" },
         { "SC Freiburg": "فرايبورغ" },
         { "TSG Hoffenheim": "هوفنهايم" },
         { "Union Berlin": "يونيون برلين" },
@@ -109,12 +109,13 @@ const teams = {
         { "Fortuna Dusseldorf": "فورتونا دوسلدورف" },
         { "Hertha Berlin": "هيرتا برلين" },
         { "1. FC Koln": "كولن" },
-        { "Mainz 05": "ماينز 05" }
+        { "Mainz 05": "ماينز 05" },
+        {"FC Augsburg":"اف سي اوجسبورج"}
     ],
     "Italy": [
         { "Juventus": "يوفنتوس" },
         { "AC Milan": "إيه سي ميلان" },
-        { "Inter Milan": "إنتر ميلان" },
+        { "Inter": "إنتر ميلانو" },
         { "AS Roma": "روما" },
         { "Napoli": "نابولي" },
         { "Lazio": "لاتسيو" },
@@ -141,18 +142,21 @@ const teams = {
         { "Cremonese": "كريمونيزي" },
         { "Monza": "مونزا" },
         { "Lecce": "ليتشي" },
-        { "Sassari Torres": "ساساري توريس" }
+        { "Sassari Torres": "ساساري توريس" },
+        {"Como":"كومو"},
+        {"Pisa":"بيزا"}
     ],
     "France": [
-        { "Paris Saint-Germain": "باريس سان جيرمان" },
+        { "Paris Saint Germain": "باريس سان جيرمان" },
         { "Lyon": "أولمبيك ليون" },
-        { "Olympique de Marseille": "أولمبيك مارسيليا" },
+        { "Marseille": "أولمبيك مارسيليا" },
         { "Monaco": "موناكو" },
-        { "Lille OSC": "ليل" },
+        { "Lille": "ليل" },
         { "Stade Rennais": "رين" },
         { "Nice": "نيس" },
         { "Montpellier HSC": "مونبلييه" },
         { "Lens": "لانس" },
+        {"Lorient":"لوريان"},
         { "Nantes": "نانت" },
         { "Girondins de Bordeaux": "بوردو" },
         { "Saint-Etienne": "سانت إتيان" },
@@ -217,7 +221,8 @@ const teams = {
         { "Oliveira do Hospital": "أوليفيرا دو هوسبيتال" },
         { "Fafe": "فافي" },
         { "Lusitano": "لوسيتانو" },
-        { "Marinhense": "مارينينسي" }
+        { "Marinhense": "مارينينسي" },
+        {"Nacional":"ناسيونال"}
     ],
     "Belgium": [
         { "Club Brugge": "كلوب بروج" },
@@ -238,7 +243,8 @@ const teams = {
         { "Cercle Brugge": "سيركل بروج" },
         { "Lierse Kempenzonen": "لييرسي كيمبنزونن" },
         { "OH Leuven": "أو إتش لوفين" },
-        { "Union Saint-Gilloise": "يونيون سانت جيلواز" }
+        { "Union Saint-Gilloise": "يونيون سانت جيلواز" },
+        {"Genk":"جينك"}
     ],
     "Netherlands": [
         { "Ajax": "أياكس" },
@@ -259,7 +265,9 @@ const teams = {
         { "FC Emmen": "إمين" },
         { "Excelsior": "إكسلسيور روتردام" },
         {"NEC Nijmegen": "إن إي سي نايميخن" },
-        { "Twente": "تفينتي" }
+        { "Twente": "تفينتي" },
+        {"GO Ahead Eagles":"جو اهيد ايجلز"},
+        {"Telstar":"تلستار"}
     ],
     "Turkey": [
         { "Galatasaray": "غلطة سراي" },
@@ -326,16 +334,16 @@ const teams = {
         { "CSKA Moscow": "سي إس كيه إيه موسكو" },
         { "Spartak Moscow": "سبارتاك موسكو" },
         { "Lokomotiv Moscow": "لوكوموتيف موسكو" },
-        { "FC Krasnodar": "كراسنودار" },
-        { "FC Rostov": "روستوف" },
-        { "FC Rubin Kazan": "روبين قازان" },
-        { "FC Dynamo Moscow": "دينامو موسكو" },
-        { "FC Ural Yekaterinburg": "أورال يكاترينبورغ" },
-        { "FC Akhmat Grozny": "أخمت غروزني" },
-        { "FC Arsenal Tula": "أرسنال تولا" },
-        { "FC Tambov": "تامبوف" },
-        { "FC Krylia Sovetov Samara": "كريليا سوفيتوف سامارا" },
-        { "FC Sochi": "سوتشي" }
+        { "Krasnodar": "كراسنودار" },
+        { "Rostov": "روستوف" },
+        { "Rubin Kazan": "روبين قازان" },
+        { "Dynamo Moscow": "دينامو موسكو" },
+        { "Ural Yekaterinburg": "أورال يكاترينبورغ" },
+        { "Akhmat Grozny": "ت غروزني" },
+        { "Arsenal Tula": "أرسنال تولا" },
+        { "Tambov": "تامبوف" },
+        { "Krylia Sovetov Samara": "كريليا سوفيتوف سامارا" },
+        { "Sochi": "سوتشي" }
     ],
     "Poland": [
         { "Legia Warsaw": "ليجيا وارسو" },
@@ -359,12 +367,12 @@ const teams = {
         { "Zorya Luhansk": "زوريا لوهانسك" },
         { "Vorskla Poltava": "فورسكلا بولتافا" },
         { "Oleksandriya": "أولكساندريا" },
-        { "FC Mariupol": "ماريوبول" },
-        { "FC Lviv": "إف سي لفيف" },
-        { "FC Desna Chernihiv": "ديشنا تشيرنيهيف" },
-        { "FC Kolos Kovalivka": "كولوس كوفاليفكا" },
-        { "FC Rukh Lviv": "روخ ليفيف" },
-        { "FC Inhulets Petrove": "إنغوليتس بيتروفو" }
+        { "Mariupol": "ماريوبول" },
+        { "Lviv": "إف سي لفيف" },
+        { "Desna Chernihiv": "ديشنا تشيرنيهيف" },
+        { "Kolos Kovalivka": "كولوس كوفاليفكا" },
+        { "Rukh Lviv": "روخ ليفيف" },
+        { "Inhulets Petrove": "إنغوليتس بيتروفو" }
     ],
     "Sweden": [
         { "Malmo FF": "مالمو" },
@@ -411,7 +419,11 @@ const teams = {
     ],
     "Argentina":[
         {"Boca Juniors":"بوكا جونيورز"},
-        {"River Plate":"ريفر بلات"}
+        {"River Plate":"ريفر بلات"},
+        {"Racing Club":"راسينغ كلوب"},
+        {"Independiente":"إنديبندينتي"},
+        {"San Lorenzo":"سان لورينزو"},
+        {"Vélez Sarsfield":"فيليز سارسفيلد"},  
     ],
     "Brazil":[
         {"Flamengo":"فلامينغو"},

@@ -59,7 +59,7 @@ export default function Preferences(params) {
 
 
   return (
-    <div className='w-full flex flex-col items-center h-[480px] p-4 mx-auto overflow-y-scroll bg-slate-100 rounded-lg'>
+    <div className='w-full h-96 flex flex-col items-center px-4 mx-auto rounded-lg'>
       <div className="w-full flex flex-row justify-between space-x-4 border border-slate-400 rounded-lg my-4">
         {/* Languages dropdown */}
         <div className={`flex flex-row items-center justify-start sm:basis-1/3 space-x-2`}>
@@ -116,7 +116,7 @@ export default function Preferences(params) {
 
       <div className="w-full sm:h-auto sm:flex flex-col sm:flex-row sm:justify-between gap-4">
         {/* Search leagues */}
-        <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
+        <div className="w-full h-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
           <div className="w-full  flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"
@@ -142,7 +142,7 @@ export default function Preferences(params) {
         </div>
 
         {/* Search teams */}
-        <div className="w-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
+        <div className="w-full h-full sm:w-[48%] bg-white shadow-md rounded-lg p-4">
           <div className="w-full flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"

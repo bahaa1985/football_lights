@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { groupDateFixtures } from "../../api/Fixtures.js";
+import { groupDateFixtures, getPromisedTeamFixtures } from "../../api/Fixtures.js";
 import "react-calendar/dist/Calendar.css";
 import { leaguesArray } from "../../Components/Leagues.jsx";
 import Tabs from "../../Components/Tabs.jsx";
@@ -30,66 +30,75 @@ export default function DayFixtures() {
   }
 
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
-  const [dateFixtures, setDateFixtures] = useState([]);
+  const [dateFixtures, setDateFixtures] = useState({});
   const [teamsFixtures, setTeamsFixtures] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const [isClicked, setClicked] = useState(false);
+  const [isClicked, setClicked] = useState(true);
   const [message, setMessage] = useState("");
 
   const requests_count = useSelector((state) => state.counter.requestsCount);
   const dispatch = useDispatch();
 
-  const leagues = leaguesArray;
-  const teams = teamsArray;
   const lang =
     JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
+  const allowedTeamIds = teamsArray.map(team => team.id);
+  
   useEffect(() => {
     let intervalId;
     let isMounted = true; // Track if the component is still mounted
 
     async function fetchFixtures() {
       try {
-        if (selectedDate === new Date().toDateString()) {
-          const cached_fixtures = JSON.parse(
-            localStorage.getItem("cached_fixtures")
-          );
-          if (cached_fixtures) {
-            setDateFixtures(
-              JSON.parse(localStorage.getItem("cached_fixtures"))
-            );
-          } else {
-            const fixtures_response = await groupDateFixtures(selectedDate);
-            if (isMounted) {
-              setDateFixtures(fixtures_response);
-              setLoaded(true);
-              setClicked(false);
-              console.log("Fixtures fetched!");
-              //redux reducer increase requests count by one:
-              dispatch(requestsIncrement());
-              //set cached fixtures:
-              localStorage.setItem("cached_fixtures", fixtures_response);
-            }
-          }
-        } else {
-          const fixtures_response = await groupDateFixtures(selectedDate);
-          if (isMounted) {
-            setDateFixtures(fixtures_response);
-            setLoaded(true);
-            setClicked(false);
-            console.log("Fixtures fetched!");
-            //redux reducer increase requests count by one:
-            dispatch(requestsIncrement());
-          }
+        // if (selectedDate === new Date().toDateString()) {
+        //   const cached_fixtures = JSON.parse(
+        //     localStorage.getItem("cached_fixtures")
+        //   );
+        //   if (cached_fixtures) {
+        //     setDateFixtures(
+        //       JSON.parse(localStorage.getItem("cached_fixtures"))
+        //     );
+        //   } else {
+        //     const fixtures_response = await groupDateFixtures(selectedDate);
+        //     if (isMounted) {
+        //       setDateFixtures(fixtures_response);
+        //       setLoaded(true);
+        //       setClicked(false);
+        //       console.log("Fixtures fetched!");
+        //       //redux reducer increase requests count by one:
+        //       dispatch(requestsIncrement());
+        //       //set cached fixtures:
+        //       localStorage.setItem("cached_fixtures", fixtures_response);
+        //     }
+        //   }
+        // } 
+        // else {
+          
+        if (isMounted) {
+          const date_response = await groupDateFixtures(selectedDate);
+          const teams_response = await getPromisedTeamFixtures(selectedDate);
+
+          setDateFixtures(date_response);
+          // console.log("Fixtures fetched!",dateFixtures);
+          setTeamsFixtures(teams_response);
+          
+          // console.log("Teams Fixtures!",teamsFixtures);
+          setLoaded(true);
+          setClicked(false);
+          //redux reducer increase requests count by one:
+          dispatch(requestsIncrement());
         }
+        // }
       } catch (error) {
+        console.log("error",error);
+        
         alert("Error fetching fixtures:", error);
       }
     }
 
     //fetch data from api if the confirm button is clicked:
-    if (leagues.length > 0 && teams.length > 0 && isClicked) {
+    if (isClicked) {
       if (requests_count < 6) {
         fetchFixtures();
       } else {
@@ -173,9 +182,9 @@ export default function DayFixtures() {
               onTabChange={handleSelectedTab}
             />
             <div className="w-full h-auto sm:h-96 sm:overflow-y-scroll text-center">
-              {leagues.length > 0 ? (
+              {
                 activeTab === 0 ? (
-                  dateFixtures ? (
+                  Object.entries(dateFixtures).length > 0 ? (
                     <FixtureRow
                       type={"day_matches"}
                       fixturesSource={dateFixtures}
@@ -198,9 +207,7 @@ export default function DayFixtures() {
                     </div>
                   )
                 ) : null
-              ) : (
-                "No Prefered Leagues Or Teams Selected. Go To Preferences"
-              )}
+              }
             </div>
           </div>
         </div>

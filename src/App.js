@@ -33,6 +33,8 @@ function App() {
             <Route path="/teams" element={<Team />}>
               <Route path=":teamId" />
             </Route>
+            <Route path="/search" element={<Search/>}>
+            </Route>
             <Route path="/players" element={<Player season={season} />}>
               <Route path=":playerId" />
             </Route>

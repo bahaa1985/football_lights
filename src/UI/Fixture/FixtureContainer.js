@@ -18,9 +18,10 @@ function Fixture() {
   const params = useParams();
   const fixtureId = params.fixtureId;
   const fixture_data = useLocation().state?.fixture_data;
-  console.log("fixture_data", fixture_data);
+  // console.log("fixture_data", fixture_data);
 
   const [tab, setTab] = useState(0);
+
   const lang = JSON.parse(localStorage.getItem('user_preferences'))?.lang || 'en';
 
   const handleTabChange = (index) => {
@@ -28,8 +29,7 @@ function Fixture() {
   };
 
   return (
-    <TeamsContext.Provider value={fixture_data.teams} className="w-full">
-
+    <TeamsContext.Provider  value={fixture_data.teams} >
       <div className="flex-1  mt-20 font-bold h-full">
         {/*  */}
         <div className='w-[90%] flex flex-col justify-center items-center sm:w-[80%] lg:w-[60%] bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-md 

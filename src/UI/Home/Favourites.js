@@ -5,6 +5,7 @@ import { getLeagueTranslationByCountry } from '../../Translation/leagues.js';
 import { NavLink } from 'react-router-dom';
 import Favourite from '../../Components/Favourite.jsx';
 import { getTeamByCountry } from '../../Translation/teams.js';
+import { getCountryNameBylang } from '../../Translation/countries.js';
 
 function Favourites() {
     const leagues = getCookie("prefered_leagues");
@@ -63,11 +64,18 @@ function Favourites() {
                                         <img className='h-8 w-8 sm:h-10 sm:w-10 rounded bg-slate-50' alt={team.name} src={team.logo} />
                                         <div className='text-sm lg:text-lg'>
                                             {
-                                                lang === 'ar' ? getTeamByCountry(team.country, team.name) : team.name
+                                                team.national ? getCountryNameBylang(team.name,lang)
+                                                :
+                                                lang === 'ar' && !team.national ? getTeamByCountry(team.country, team.name) 
+                                                :
+                                                team.name
                                             }
                                         </div>
                                     </NavLink>
-                                    <Favourite elem_id={team.id} cookie_name={'prefered_teams'} obj={{ 'id': team.id, 'name': team.name, 'country': team.country, 'logo': team.logo }} />
+                                    <Favourite 
+                                        elem_id={team.id} 
+                                        cookie_name={'prefered_teams'} 
+                                        obj={{ 'id': team.id, 'name': team.name, 'country': team.country,'national':team.national, 'logo': team.logo }} />
                                 </div>
                             )
                         })

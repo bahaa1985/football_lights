@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Favourites from "./Favourites.js";
-import DayFixtures from './DayFixtures.jsx';
+import DateFixtures from './DateFixtures.jsx';
 import News from './News.jsx';
 import { getCountryNameTranslation } from '../../Translation/countries.js';
 import setPreferences from '../../api/UserPreferences.js';
@@ -22,9 +22,9 @@ export default function Home() {
     }, []);
 
     return (
-        <div className={`flex-1 mt-20 w-[90%] mx-auto`}>
+        <div className={`flex-1 mt-20 w-[90%] mx-auto bg-slate-100`}>
             <div className={`flex flex-col sm:flex-row sm:justify-between w-full my-2`}>
-                 <DayFixtures />
+                 <DateFixtures />
                 <Favourites />
             </div>
             <div className='flex flex-col sm:flex-row sm:justify-between w-full mb-2'>

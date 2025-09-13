@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getTeamByCountry } from "../Translation/teams.js";
+import { getCookie } from "../api/Cookie.js";
 
 const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
+const preferedTeams = getCookie('prefered_teams');
 
 export const teamsArray = [
   {
@@ -145,6 +147,7 @@ export const teamsArray = [
         : "Sporting CP",
     logo: "https://media.api-sports.io/football/teams/228.png",
   },
+  ...preferedTeams
 ];
 
 export default function Teams() {

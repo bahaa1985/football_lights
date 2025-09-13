@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { getTeamByName } from "../../Translation/teams.js";
 import { getTranslation } from "../../Translation/labels.js";
+import { NavLink } from "react-router-dom";
 
 export default function CoachAndSubs(props) {
   const homeTeamProfile = props.profiles.home;
@@ -78,7 +79,11 @@ export default function CoachAndSubs(props) {
               className="flex flex-row justify-between p-1 border-b border-solid border-slate-400"
             >
               <span className="flex space-x-3 border-none text-sm sm:text-lg">
-                {sub.player.number}&nbsp;&nbsp;{sub.player.name}
+                {sub.player.number}&nbsp;&nbsp;
+                <NavLink to={`/players/${sub.player.id}`}>
+                  {sub.player.name}
+                </NavLink>
+                
               </span>
               <span className="border-none text-sm sm:text-lg flex justify-center items-center">
                 {sub.player.pos === "D"

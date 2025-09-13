@@ -52,7 +52,7 @@ function Pagination(props) {
                                     {items_type === 'league' && !leaguesArray.find(league => league.id === elem.league?.id) &&
                                         <Favourite
                                             elem_id={elem.league?.id}
-                                            cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
+                                            cookie_name={'prefered_leagues'}
                                             obj={{
                                                 id: elem.league.id,
                                                 name: elem.league.name,
@@ -69,12 +69,13 @@ function Pagination(props) {
                                     {items_type === 'teams' && !teamsArray.find(team => team.id === elem.team?.id) &&
                                         <Favourite
                                             elem_id={elem.team?.id}
-                                            cookie_name={items_type === 'league' ? 'prefered_leagues' : 'prefered_teams'}
+                                            cookie_name={'prefered_teams'}
                                             obj={
                                                 {
                                                     id: elem.team.id,
                                                     name: elem.team.name,
                                                     country: elem.team.country,
+                                                    national:elem.team.national,
                                                     logo: elem.team.logo,
                                                 }
                                             }
