@@ -17,7 +17,7 @@ export default function Team() {
     const teams = getCookie("prefered_teams");
     const [searchParams] = useSearchParams();
     const leagueParam = searchParams.get('league');
-    const season = searchParams.get('season');
+    const season = searchParams.get('season') || 2025;
 
     const [team, setTeam] = useState(teamIdParam || teams[0].id);
     const [selectedTeam, setSelectedTeam] = useState(teamIdParam || teams[0].id);
@@ -50,7 +50,7 @@ export default function Team() {
             alert("API request limit reached. Please wait a minute before making more requests.");
         }
 
-    }, [team,selectedSeason]);
+    }, [team]);
 
     useEffect(() => {
         async function fetchTeamSeasons() {
@@ -75,7 +75,7 @@ export default function Team() {
             alert("API request limit reached. Please wait a minute before making more requests.");
         }
 
-    }, [team, selectedSeason]);
+    }, [team]);
 
     useEffect(() => {
         if (!selectedSeason) return;
@@ -99,12 +99,12 @@ export default function Team() {
         }
         else {
             alert("API request limit reached. Please wait a minute before making more requests.");
-        }
+        }        
 
-        //reset api requests to zero
-        dispatch(resetRequests());
+    }, [team]);
 
-    }, [team, selectedSeason]);
+    //reset api requests to zero
+    dispatch(resetRequests());
 
     useEffect(() => {
         if (teamSeasons.length > 0 && teamLeagues.length > 0 && Object.keys(teamInformation).length > 0) {
