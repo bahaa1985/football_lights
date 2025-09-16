@@ -198,7 +198,7 @@ function FixtureRow(props) {
 
                       <NavLink
                         className="w-[50%] text-center"
-                        to={`/team/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
+                        to={`/teams/${elem.teams.home.id}?league=${elem.league.id}&season=${elem.league.season}`}
                       >
                         <span className="border-none text-sm  lg:text-lg">
                           {lang === "ar"
@@ -225,7 +225,7 @@ function FixtureRow(props) {
 
                       <NavLink
                         className="w-[50%] text-center"
-                        to={`/team/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
+                        to={`/teams/${elem.teams.away.id}?league=${elem.league.id}&season=${elem.league.season}`}
                       >
                         <span className="border-none text-sm  lg:text-lg">
                           {lang === "ar"

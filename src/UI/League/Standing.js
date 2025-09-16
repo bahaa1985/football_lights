@@ -29,6 +29,8 @@ function Standings(props) {
     useEffect(() => {
         async function fetchStadings() {
             try {
+                if(league === '' || season === '') return;
+                //
                 const standings_response = await getStandings(league, season);
                 setStandings(standings_response.data.response[0].league.standings);
                 //if the champion has groups stage: 

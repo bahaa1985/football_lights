@@ -187,7 +187,8 @@ const teams = {
         { "Troyes": "تروا" },
         { "Nancy": "نانسي" },
         { "Chambly": "شامبلي" },
-        { "Chateauroux": "شاتورو" }
+        { "Chateauroux": "شاتورو" },
+        {"Rennes":"رين"},
     ],
     "Portugal": [
         { "FC Porto": "بورتو" },

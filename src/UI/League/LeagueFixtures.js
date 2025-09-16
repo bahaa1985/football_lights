@@ -24,6 +24,8 @@ export default function LeagueFixtures(props) {
   useEffect(() => {
     async function fetchData() {
       try {
+        if(league === '' || season === '') return;
+        //
         const fixturesData = await groupLeagueFixtures(league, season);
         const roundsData = await getLeagueRounds(league, season);
         setFixtures(fixturesData);

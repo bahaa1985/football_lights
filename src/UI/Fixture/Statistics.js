@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import getStatistics from "../../api/Statistics.js";
 import getPlayers from "../../api/Players.js";
 import PlayerStats from "./PlayerStats.js";
@@ -25,7 +25,7 @@ function Statistics(props) {
     const dispatch = useDispatch();
     const requests_count = useSelector(state => state.counter.requestsCount);
 
-    useMemo(() => {
+    useEffect(() => {
         async function fetchStatistics() {
             const stats_response = await getStatistics(fixtureId);
             const players_response = await getPlayers(fixtureId);

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo } from "react";
+import React, { useState, useMemo, memo, useEffect } from "react";
 import { getTeamStatistics } from "../../api/TeamDetails.js";
 import { getTranslation } from "../../Translation/labels.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ function TeamStatistics({ team, league, season }) {
   const dispatch = useDispatch();
   const requests_count = useSelector((state) => state.counter.requestsCount);
 
-  useMemo(() => {
+  useEffect(() => {
     let isMount = true;
     async function fetchData() {
       try {

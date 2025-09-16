@@ -8,7 +8,7 @@ import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.
 import Pagination from "./Pagination.js";
 import setPreferences from "../../api/UserPreferences.js"
 
-export default function Preferences(params) {
+export default function Preferences() {
   const [searchLeague, setSearchLeague] = useState("");
   const [searchTeam, setSearchTeam] = useState("");
   const [leagues, setLeagues] = useState([]);
@@ -26,6 +26,8 @@ export default function Preferences(params) {
   useEffect(() => {
     const fetchLeaguesTeams = async () => {
       try {
+        if(searchLeague === '' && searchTeam === '') return;
+        
         const leagues_response = await getLeagues(searchLeague);
         const teams_response = await getTeams(searchTeam);
         //
@@ -49,7 +51,7 @@ export default function Preferences(params) {
     //reset api requests to zero
     dispatch(resetRequests());
 
-  }, [searchLeague, searchTeam]);
+  }, [searchLeague, searchTeam, dispatch, requests_count]);
 
   const [closed, setClosed] = useState(false);
 
@@ -59,7 +61,7 @@ export default function Preferences(params) {
 
 
   return (
-    <div className='w-full h-96 flex flex-col items-center px-4 mx-auto rounded-lg'>
+    <div className='w-full h-auto sm:h-[450px] overflow-y-scroll flex flex-col items-center px-4 mx-auto rounded-lg'>
       <div className="w-full flex flex-row justify-between space-x-4 border border-slate-400 rounded-lg my-4">
         {/* Languages dropdown */}
         <div className={`flex flex-row items-center justify-start sm:basis-1/3 space-x-2`}>

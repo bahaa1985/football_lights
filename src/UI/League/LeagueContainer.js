@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getLeagues } from "../../api/LeaguesTeams.js";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../api/Cookie.js";
@@ -28,6 +28,8 @@ export default function League() {
   const [leagueInfo, setLeagueInfo] = useState();
   const [isLoaded, setLoaded] = useState(false);
 
+  const startSeason= useRef(),endSeason=useRef();
+
   const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || 'en';
 
   const requests_count = useSelector((state) => state.counter.requestsCount);
@@ -50,7 +52,10 @@ export default function League() {
         } else {
           setLeagueInfo(leagueData.data.response[0]);
           setSeasons(leagueData.data.response[0].seasons);
-          // console.log("seasons", leagueData.data.response[0].seasons);
+          startSeason.current=leagueData.data.response[0].seasons.at(-1).start;
+          endSeason.current = leagueData.data.response[0].seasons.at(-1).end;
+
+          console.log("seasons",startSeason.current,endSeason.current);
 
         }
         //redux reducer increase requests count by one:
@@ -145,11 +150,35 @@ export default function League() {
               <img className="w-12 h-10 rounded object-cover" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
               <span className="text-xl font-bold text-gray-700 border-none">{getCountryNameBylang(leagueInfo?.country.name, lang)}</span>
             </div>
-          </div>
-        </div>
-      )}
+            {/*  */}
+                  <div>
+                    <progress
+                    className="w-full h-4 rounded-lg overflow-hidden mt-4"
+                    value={
+                      Math.floor((Date.now() - Date.parse(startSeason.current)) / (1000 * 60 * 60 * 24))
+                    }
+                    max={
+                      Math.floor((Date.parse(endSeason.current) - Date.parse(startSeason.current)) / (1000 * 60 * 60 * 24))
+                    }
+                    >
+                    {
+                      (
+                      (Math.floor((Date.now() - Date.parse(startSeason.current)) / (1000 * 60 * 60 * 24)) /
+                        Math.floor((Date.parse(endSeason.current) - Date.parse(startSeason.current)) / (1000 * 60 * 60 * 24))
+                      ) * 100
+                      ).toFixed(2)
+                    }%
+                    </progress>
+                    <div className="flex justify-between text-sm text-gray-600 mt-1">
+                    <span className="border-none">{startSeason.current}</span>
+                    <span className="border-none">{endSeason.current}</span>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                )}
 
-      {/* Season Selector */}
+                {/* Season Selector */}
       {isLoaded && (
         <div className="flex flex-wrap items-center gap-4 bg-white my-6 py-4 px-4 rounded-xl shadow">
           <span className="font-medium text-gray-700 border-none">{getTranslation('Select Season', lang)}</span>

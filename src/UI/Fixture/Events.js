@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from "react";
+import { useState, useMemo, memo, useEffect } from "react";
 import getEvents from '../../api/Events.js'
 import '../../styles/events.css'
 import penalty from '../../icons/penalty.png';
@@ -22,7 +22,7 @@ function Events(props) {
     const requests_count = useSelector(state => state.counter.requestsCount);
     const dispatch = useDispatch();
 
-    useMemo(() => {
+    useEffect(() => {
         async function fetchEvents() {
             const eventsData = await getEvents(fixtureId);
             setEvents(eventsData.data.response);

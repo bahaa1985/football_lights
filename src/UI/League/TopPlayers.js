@@ -20,6 +20,8 @@ export default function TopPlayers(props) {
 
   useEffect(() => {
     const fetchTopPlayers = async () => {
+      if(leagueId === '' || season === '') return;
+      //
       if (stats_type === "Goals") {
         const scorers_response = await getTopScorers(leagueId, season);
         setTopPlayers(scorers_response.data.response);
@@ -68,7 +70,7 @@ export default function TopPlayers(props) {
                     <td>{index + 1}</td>
                     
                     <td>
-                      <div className="flex flex-row justify-center space-x-2">
+                      <div className="flex flex-row justify-start space-x-2">
                         <img className="size-10 sm:size-10 md:size-12 rounded-full" src={elem.player.photo} alt={elem.player.name} />
                         <span className="border-none text-sm sm:text-xl">{elem.player.name}</span>
                       </div>
