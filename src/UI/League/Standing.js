@@ -57,8 +57,8 @@ function Standings(props) {
                 //redux reducer increase requests count by one:
                 dispatch(requestsIncrement());
             }
-            catch {
-                alert('Error in Standings')
+            catch(err) {
+                console.log('Error in Standings',err)
             }
 
         }

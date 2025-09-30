@@ -202,7 +202,7 @@ const teams = {
         { "Rio Ave": "ريو آفي" },
         { "Estoril": "إستوريل" },
         { "Famalicao": "فاماليكاو" },
-        { "Gil Vicente": "جيل فيسنتي" },
+        { "GIL Vicente": "جيل فيسنتي" },
         { "Moreirense": "موريرينسي" },
         { "Santa Clara": "سانتا كلارا" },
         { "Tondela": "تونديلا" },
@@ -215,7 +215,7 @@ const teams = {
         { "Oliveirense": "أوليفيرينسي" },
         { "Portimonense": "بورتيمونينسي" },
         { "Varzim": "فارزيم" },
-        { "Estrela da Amadora": "استريلا دا أمادورا" },
+        { "Estrela": "استريلا دا أمادورا" },
         { "Cova da Piedade": "كوفا دا بيدادي" },
         { "Casa Pia": "كازا بيا" },
         { "Leiria": "ليريا" },
@@ -223,10 +223,11 @@ const teams = {
         { "Fafe": "فافي" },
         { "Lusitano": "لوسيتانو" },
         { "Marinhense": "مارينينسي" },
-        {"Nacional":"ناسيونال"}
+        {"Nacional":"ناسيونال"},
+        {"Alverca":"ألفيركا"}
     ],
     "Belgium": [
-        { "Club Brugge": "كلوب بروج" },
+        { "Club Brugge KV": "كلوب بروج" },
         { "RSC Anderlecht": "أندرلخت" },
         { "KRC Genk": "كي آر سي جينك" },
         { "Standard Liege": "ستاندارد لييج" },
@@ -481,13 +482,21 @@ const teams = {
     ] 
 };
 
-
+export function getTeamByArabicName(arabicName){
+    for (const country in teams) {
+        const teamObj = teams[country]?.find(t => t[arabicName]);
+        if (teamObj) {
+            return teamObj[arabicName]; // Return the English name if found
+        }
+    }
+    return arabicName; // Return the original name if not found
+}
 export function getTeamByCountry(country,team) {
     if (teams[country]) {
         const teamObj = teams[country]?.find(t => t[team]);
-        return teamObj ? teamObj[team] : null; // Return the Arabic name or null if not found
+        return teamObj ? teamObj[team] : team; // Return the Arabic name or null if not found
     }
-    return null; // Return null if the country is not found   
+    return team; // Return null if the country is not found   
 }
 
 export function getTeamByName(teamName) {
