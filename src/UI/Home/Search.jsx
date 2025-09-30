@@ -18,14 +18,21 @@ export default function Search() {
   const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [isVisible,setVisibility] = useState(true);
-  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
+  const [isVisible, setVisibility] = useState(true);
+  const lang =
+    JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const dispatch = useDispatch();
   const requests_count = useSelector((state) => state.counter.requestsCount);
 
   useEffect(() => {
     async function fetchData() {
+      if (
+        searchRef.current.value.trim === "" ||
+        searchRef.current.value.length < 3 ||
+        searchRef.current.value.length > 20
+      )
+        return null;
       if (searchIndex === 0) {
         const leagues_response = await getLeagues(searchKey);
         setLeagues(leagues_response.data.response);

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import logo from '../../src/images/logo.jpg';
+import logo from "../../src/images/logo.jpg";
 import Search from "../UI/Home/Search.jsx";
 import Preferences from "../UI/Preference/PreferenceContainer.js";
 import { getTranslation } from "../Translation/labels.js";
@@ -13,7 +13,8 @@ function Navbar() {
   const hamburger_items = useRef(null);
 
   const location = useLocation();
-  const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
+  const lang =
+    JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
 
   const [searchWindow, setSearchWindow] = useState(false);
   const [preferenceWindow, setPreferenceWindow] = useState(false);
