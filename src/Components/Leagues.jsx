@@ -89,7 +89,7 @@ export const leaguesArray = [
   ...prefered_leagues,
 ];
 
-console.log(leaguesArray);
+// console.log(leaguesArray);
 
 export default function Leagues() {
  

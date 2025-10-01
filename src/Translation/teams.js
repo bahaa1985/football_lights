@@ -245,7 +245,7 @@ const teams = {
         { "Cercle Brugge": "سيركل بروج" },
         { "Lierse Kempenzonen": "لييرسي كيمبنزونن" },
         { "OH Leuven": "أو إتش لوفين" },
-        { "Union Saint-Gilloise": "يونيون سانت جيلواز" },
+        { "Union St. Gilloise": "يونيون سانت جيلواز" },
         {"Genk":"جينك"}
     ],
     "Netherlands": [

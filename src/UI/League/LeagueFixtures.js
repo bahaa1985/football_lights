@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { requestsIncrement, resetRequests } from "../../ReduxStore/counterSlice.js";
 import FixtureRow from '../../Components/FixtureRow.jsx';
 import Spinner from "../../Components/Spinner.jsx";
+import { getRoundTranslation } from "../../Translation/leagues.js";
 
 export default function LeagueFixtures(props) {
   const league = props.league;
@@ -35,14 +36,10 @@ export default function LeagueFixtures(props) {
 
         setFixtures(fixturesData);
         setFilteredFixtures(fixturesData);
-        setRounds(roundsData.data.response);
+        setRounds(roundsData.data.response); // round names with translation
         setTeams(leagueTeams.data.response
-          .map(elem=>[elem.team.id,lang === 'ar' ? getTeamByName(elem.team.name):elem.team.name])
+          .map(elem=>[elem.team.id,lang === 'ar' ? getTeamByName(elem.team.name):elem.team.name]) // teams names with translation
           .sort((a,b)=>a[1].localeCompare(b[1])));
-          ; // unique team names
-        console.log("teams", teams);
-        // console.log("fixtures", fixturesData);
-        // console.log("rounds", roundsData);
         //
         setLoaded(true);
 
@@ -68,10 +65,11 @@ export default function LeagueFixtures(props) {
 
   
 
-  function filterByGameWeek(e) {
+  function filterByRound(e) {
     if (e.target.value !== "") {
       setFilteredFixtures(Object.keys(fixtures).map((elem, index) =>
-        fixtures[elem].filter(elem => elem.league.round === e.target.value)));
+        fixtures[elem].filter(elem => elem.league.round === rounds[e.target.value])));
+      // setFilteredFixtures(rounds[e.target.value] || []); // filter by selected round
     }
     else {
       setFilteredFixtures(fixtures); // reset to original fixtures
@@ -81,19 +79,9 @@ export default function LeagueFixtures(props) {
 
   function filterByTeam(e) {
     let value = e.target.value;
-    // if(lang === 'ar'){
-    //   value= getTeamByArabicName(e.target.value);
-    // }
-    // else{
-    //   value = e.target.value.toLowerCase();
-    // }
     if (value === "") {
       setFilteredFixtures(fixtures); // Reset to original fixtures
     } else {
-      // setFilteredFixtures(Object.keys(fixtures).map((elem, index) =>
-      //   fixtures[elem].filter((elem) => elem.teams.home.name.toLowerCase().includes(value) ||
-      //     elem.teams.away.name.toLowerCase().includes(value)
-      //   )));
       setFilteredFixtures(Object.keys(fixtures).map((elem, index) =>
         fixtures[elem].filter((elem) => elem.teams.home.id === parseInt(value) ||
           elem.teams.away.id === parseInt(value)
@@ -110,7 +98,7 @@ export default function LeagueFixtures(props) {
               <span className="font-semibold text-gray-700 border-none">{getTranslation('Filter By', lang)}</span>
               <select
                 className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
-                onChange={(e) => [filterByGameWeek(e),console.log("clicked team",e.target.value)]}
+                onChange={(e) => filterByRound(e)}
               >
                 <option value="">
                   {rounds[0]?.includes('Regular Season')
@@ -118,10 +106,8 @@ export default function LeagueFixtures(props) {
                     : getTranslation('Round', lang)}
                 </option>
                 {rounds.map((round, index) => (
-                  <option key={index} value={round}>
-                    {round.includes('Regular Season')
-                      ? (getTranslation('GameWeek', lang) + ' ' + (index + 1).toString())
-                      : round}
+                  <option key={index} value={index}>
+                    {lang === 'ar' ? getRoundTranslation(round) : round}
                   </option>
                 ))}
               </select>
@@ -141,12 +127,6 @@ export default function LeagueFixtures(props) {
                   </option>
                 ))}
               </select>
-              {/* <input
-                className="p-2 border border-gray-300 rounded-md bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
-                type="text"
-                placeholder={getTranslation('Enter Team Name', lang)}
-                onChange={filterByTeam}
-              /> */}
             </div>
           </div>
           <div className="rounded-lg p-2">

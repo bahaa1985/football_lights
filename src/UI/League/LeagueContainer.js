@@ -13,6 +13,7 @@ import LeagueFixtures from "./LeagueFixtures.js";
 import TopPlayers from "./TopPlayers.js";
 import Favourite from '../../Components/Favourite.jsx';
 import Tabs from '../../Components/Tabs.jsx';
+import { faEarth } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function League() {
@@ -147,7 +148,10 @@ export default function League() {
               }
             </div>
             <div className="flex items-center gap-2">
-              <img className="w-12 h-10 rounded object-cover" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
+              {
+                leagueInfo?.country.name !== 'World' &&
+                <img className="w-12 h-10 rounded object-cover" src={leagueInfo?.country.flag} alt={leagueInfo?.country.name} />
+              }
               <span className="text-xl font-bold text-gray-700 border-none">{getCountryNameBylang(leagueInfo?.country.name, lang)}</span>
             </div>
             {/*  */}

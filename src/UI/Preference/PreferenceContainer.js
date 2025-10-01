@@ -33,7 +33,7 @@ export default function Preferences() {
   useEffect(() => {
     const fetchLeaguesTeams = async () => {
       try {
-        if (searchLeague === "" && searchTeam === "") return;
+        if ((searchLeague === "" || searchLeague.length > 20) && (searchTeam === "" || searchTeam.length > 20)) return;
 
         if (searchLeague !== "" && clickedLeagues) {
           const leagues_response = await getLeagues(searchLeague);
@@ -160,6 +160,7 @@ export default function Preferences() {
           <div className="w-full  flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"
+              maxLength={20}
               ref={searchLeagueInput}
               className="w-[90%] mx-auto outline-none rounded-md px-2 py-1 border"
               placeholder={getTranslation(
@@ -194,6 +195,7 @@ export default function Preferences() {
           <div className="w-full flex flex-col justify-between items-center mb-4 space-y-2">
             <input
               type="text"
+              maxLength={20}
               ref={searchTeamInput}
               className="w-[90%] mx-auto outline-none rounded-md px-2 py-1 border"
               placeholder={getTranslation(

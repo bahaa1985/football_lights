@@ -3,6 +3,7 @@ import { getTeamByCountry } from "../Translation/teams.js";
 import { getCookie } from "../api/Cookie.js";
 
 const lang = JSON.parse(localStorage.getItem("user_preferences"))?.lang || "en";
+
 const preferedTeams = getCookie('prefered_teams');
 
 export const teamsArray = [

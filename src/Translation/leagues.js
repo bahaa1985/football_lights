@@ -332,16 +332,16 @@ const rounds = {
     "2nd Qualifying Round": "الجولة التأهيلية الثانية",
     "3rd Qualifying Round": "الجولة التأهيلية الثالثة",
     "4th Qualifying Round": "الجولة التأهيلية الرابعة",
-    "Leage Stage-1": "مرحلة الدوري - 1",
-    "Leage Stage-2": "مرحلة الدوري - 2",
-    "Leage Stage-3": "مرحلة الدوري - 3",
-    "Leage Stage-4": "مرحلة الدوري - 4",
-    "Leage Stage-5": "مرحلة الدوري - 5",
-    "Leage Stage-6": "مرحلة الدوري - 6",
-    "Leage Stage-7": "مرحلة الدوري - 7",
-    "Leage Stage-8": "مرحلة الدوري - 8",
-    "Leage Stage-9": "مرحلة الدوري - 9",
-    "Leage Stage-10": "مرحلة الدوري - 10",
+    "League Stage - 1": "مرحلة الدوري - 1",
+    "League Stage - 2": "مرحلة الدوري - 2",
+    "League Stage - 3": "مرحلة الدوري - 3",
+    "League Stage - 4": "مرحلة الدوري - 4",
+    "League Stage - 5": "مرحلة الدوري - 5",
+    "League Stage - 6": "مرحلة الدوري - 6",
+    "League Stage - 7": "مرحلة الدوري - 7",
+    "League Stage - 8": "مرحلة الدوري - 8",
+    "League Stage - 9": "مرحلة الدوري - 9",
+    "League Stage - 10": "مرحلة الدوري - 10",
     "Play-offs": "مرحلة الترقي",
     "Final": "النهائي",
     "Group Stage": "مرحلة المجموعات",
@@ -373,16 +373,23 @@ export function getLeagueTranslationByCountry(country,league) {
    return leagueName;
 }
 export function getRoundTranslation(round){
-    let roundName = "";
-    Object.keys(rounds).map((elem)=>{
-        if (elem === round.slice(0,round.indexOf('-')-1)) {
-            roundName =  rounds[elem] + ' ' + round.slice(round.indexOf('-'),round.length);
-        }
-        else if(elem === round) {
+    let roundName = round;
+    // Array.from(rounds).forEach(roundKey => {
+    //       if(roundKey === round) {
+    //         roundName =  rounds[roundKey]
+    //      return roundName   
+    //     }
+    // });
+    Object.keys(rounds).forEach((elem)=>{
+        // if (elem === round.slice(0,round.indexOf('-')-1)) {
+        //     roundName =  rounds[elem] + ' ' + round.slice(round.indexOf('-'),round.length);
+        //     return roundName
+        // }
+        if(elem === round) {
             roundName =  rounds[elem]
+            // return roundName   
         }
-        return roundName
     });
-   return roundName;
+    return roundName;
 }
  
