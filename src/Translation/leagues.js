@@ -327,7 +327,7 @@ const leagues = {
 const rounds = {
     "Championship Round":"مرحلة البطولة",
     "Relegation Round": "مرحلة الهبوط",
-    "Regular Season": "الأسبوع",
+    "Regular Season": "الجولة",
     "1st Qualifying Round": "الجولة التأهيلية الأولى",
     "2nd Qualifying Round": "الجولة التأهيلية الثانية",
     "3rd Qualifying Round": "الجولة التأهيلية الثالثة",
@@ -381,10 +381,10 @@ export function getRoundTranslation(round){
     //     }
     // });
     Object.keys(rounds).forEach((elem)=>{
-        // if (elem === round.slice(0,round.indexOf('-')-1)) {
-        //     roundName =  rounds[elem] + ' ' + round.slice(round.indexOf('-'),round.length);
-        //     return roundName
-        // }
+        if (elem === round.slice(0,round.indexOf('-')-1)) {
+            roundName =  rounds[elem] + ' ' + round.slice(round.indexOf('-'),round.length);
+            return roundName
+        }
         if(elem === round) {
             roundName =  rounds[elem]
             // return roundName   

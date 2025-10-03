@@ -118,12 +118,9 @@ export default function League() {
 
       {/* League Info */}
       {isLoaded && leagueInfo && (
-        <div className="flex flex-row gap-3 items-center bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl p-6 my-6 shadow">
-          <div className="flex-shrink-0 flex justify-center items-center w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0">
-            <img className="w-16 h-16 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center gap-3 mb-2">
+        <div className="flex flex-col gap-3 items-start bg-gradient-to-r from-slate-200 via-slate-400 to-slate-300 rounded-xl px-4 py-2 my-6 shadow">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center gap-2">
+               <img className="w-24 h-24 sm:w-20 sm:h-20 object-contain" src={leagueInfo?.league.logo} alt={leagueInfo?.league.name} />
               <span className="text-2xl sm:text-3xl font-bold text-gray-800 border-none">
                 {lang === 'ar' ?
                   getLeagueTranslationByCountry(leagueInfo?.country.name, leagueInfo?.league.name)
@@ -155,7 +152,7 @@ export default function League() {
               <span className="text-xl font-bold text-gray-700 border-none">{getCountryNameBylang(leagueInfo?.country.name, lang)}</span>
             </div>
             {/*  */}
-                  <div>
+                  <div className="w-full">
                     <progress
                     className="w-full h-4 rounded-lg overflow-hidden mt-4"
                     value={
@@ -177,7 +174,6 @@ export default function League() {
                     <span className="border-none">{startSeason.current}</span>
                     <span className="border-none">{endSeason.current}</span>
                     </div>
-                  </div>
                   </div>
                 </div>
                 )}

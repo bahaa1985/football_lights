@@ -98,7 +98,7 @@ const teams = {
         { "VfL Wolfsburg": "فولفسبورغ" },
         { "Borussia Mönchengladbach": "بوروسيا مونشنغلادباخ" },
         { "SC Freiburg": "فرايبورغ" },
-        { "TSG Hoffenheim": "هوفنهايم" },
+        { "1899 Hoffenheim": "هوفنهايم" },
         { "Union Berlin": "يونيون برلين" },
         { "Schalke 04": "شالكه 04" },
         { "Werder Bremen": "فيردر بريمن" },
@@ -108,7 +108,7 @@ const teams = {
         { "1. FC Nurnberg": "نورمبرغ" },
         { "Fortuna Dusseldorf": "فورتونا دوسلدورف" },
         { "Hertha Berlin": "هيرتا برلين" },
-        { "1. FC Koln": "كولن" },
+        { " 1.FC Köln": "كولن" },
         { "Mainz 05": "ماينز 05" },
         {"FC Augsburg":"اف سي اوجسبورج"}
     ],

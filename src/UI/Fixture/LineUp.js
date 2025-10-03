@@ -62,7 +62,7 @@ function LineUp(props) {
       // console.log("lineup",lineup_response.data);
 
       //
-      if (isMounted && lineup_response.data.response.length > 0) {
+      if (isMounted) {
         setHomeTeamProfile({
           id: lineup_response?.data.response[0].team.id,
           name: lineup_response?.data.response[0].team.name,

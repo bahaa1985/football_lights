@@ -68,7 +68,7 @@ export const teamsArray = [
     id: 157,
     name:
       lang === "ar"
-        ? getTeamByCountry("Germany", "Bayern Munich")
+        ? getTeamByCountry("Germany", "Bayern München")
         : "Bayern München",
     logo: "https://media.api-sports.io/football/teams/157.png",
   },
@@ -84,7 +84,7 @@ export const teamsArray = [
     id: 85,
     name:
       lang === "ar"
-        ? getTeamByCountry("France", "Paris Saint-Germain")
+        ? getTeamByCountry("France", "Paris Saint Germain")
         : "Paris Saint Germain",
     logo: "https://media.api-sports.io/football/teams/85.png",
   },
@@ -96,7 +96,7 @@ export const teamsArray = [
   {
     id: 505,
     name:
-      lang === "ar" ? getTeamByCountry("Italy", "Inter Milan") : "Inter Milan",
+      lang === "ar" ? getTeamByCountry("Italy", "Inter") : "Inter Milan",
     logo: "https://media.api-sports.io/football/teams/505.png",
   },
   {
@@ -167,7 +167,7 @@ export default function Teams() {
       {/* <div className={`absolute ${isVisible ? 'flex':'hidden'} top-0 left-0 bg-slate-800 py-3 text-white text-center text-xl font-bold`}>{getTranslation('Teams',lang)}</div> */}
       <div
         className={`${isVisible ? "flex" : "hidden"} flex w-full h-fit flex-row flex-wrap gap-2 justify-between p-6 mb-8 ${screenWidth > 425 ? "bg-white text-slate-800" : "bg-slate-800 text-white"} 
-            border-r border-l border-b border-slate-400 z-50 overflow-scroll`}
+            border-r border-l border-b border-slate-400 z-50 overflow-auto`}
       >
         {teamsArray.map((team, index) => {
           return (
